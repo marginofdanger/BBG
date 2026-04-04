@@ -86,8 +86,9 @@ td.spark-cell { padding: 4px 2px; }
 .analysis-wrap { padding: 12px 24px; overflow: auto; max-height: calc(100vh - 90px); }
 .analysis-section { margin-bottom: 32px; }
 .analysis-section h3 { font-size: 14px; color: #333; margin-bottom: 8px; }
-.analysis-columns { display: flex; gap: 32px; }
-.rank-table { border-collapse: collapse; font-size: 12px; }
+.analysis-columns { display: flex; gap: 16px; }
+.analysis-columns > div { flex: 1; min-width: 0; }
+.rank-table { border-collapse: collapse; font-size: 12px; width: 100%; }
 .rank-table th, .rank-table td { padding: 4px 4px; border-bottom: 1px solid #e8e8e8; text-align: right; }
 .rank-table th { background: #fafafa; font-weight: 600; font-size: 10px; color: #555; border-bottom: 2px solid #ccc; cursor: pointer; user-select: none; }
 .rank-table th:hover { background: #e8e8e8; }
@@ -1249,10 +1250,17 @@ td.spark-cell { padding: 4px 2px; }
       return container;
     }
 
-    // --- Charts side by side ---
-    scatterDiv.appendChild(buildScatter('CY2026 EPS Revision (3m) vs Stock Return (L3M)', 'rev3', 'ret3m', 'EPS Revision 3m (%)', 'Stock Return L3M (%)', sectorDots));
-    scatterDiv.appendChild(buildScatter('CY2026 EPS Revision (12m) vs Stock Return (1Y)', 'rev12', 'ret12m', 'EPS Revision 12m (%)', 'Stock Return 1Y (%)', sectorDots));
-    wrap.appendChild(scatterDiv);
+    // --- Two columns: 3m (chart + tables) | 12m (chart + tables) ---
+    const twoCol = document.createElement('div');
+    twoCol.style.cssText = 'display: flex; gap: 16px;';
+
+    const col3m = document.createElement('div');
+    col3m.style.cssText = 'flex: 1; min-width: 0;';
+    col3m.appendChild(buildScatter('CY2026 EPS Revision (3m) vs Stock Return (L3M)', 'rev3', 'ret3m', 'EPS Revision 3m (%)', 'Stock Return L3M (%)', sectorDots));
+
+    const col12m = document.createElement('div');
+    col12m.style.cssText = 'flex: 1; min-width: 0;';
+    col12m.appendChild(buildScatter('CY2026 EPS Revision (12m) vs Stock Return (1Y)', 'rev12', 'ret12m', 'EPS Revision 12m (%)', 'Stock Return 1Y (%)', sectorDots));
 
     // --- Top/Bottom tables ---
     function buildRankSection(title, sortKey, retKey, retLabel, n) {
@@ -1334,8 +1342,12 @@ td.spark-cell { padding: 4px 2px; }
       return section;
     }
 
-    wrap.appendChild(buildRankSection('Top / Bottom 50 by 3-Month EPS Revision', 'rev3', 'ret3m', 'L3M', 50));
-    wrap.appendChild(buildRankSection('Top / Bottom 50 by 12-Month EPS Revision', 'rev12', 'ret12m', '1Y', 50));
+    col3m.appendChild(buildRankSection('Top / Bottom 50 by 3-Month EPS Revision', 'rev3', 'ret3m', 'L3M', 50));
+    col12m.appendChild(buildRankSection('Top / Bottom 50 by 12-Month EPS Revision', 'rev12', 'ret12m', '1Y', 50));
+
+    twoCol.appendChild(col3m);
+    twoCol.appendChild(col12m);
+    wrap.appendChild(twoCol);
   }
 
   function renderMethodology(qCols) {
