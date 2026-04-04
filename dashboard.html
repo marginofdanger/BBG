@@ -905,11 +905,8 @@ td.spark-cell { padding: 4px 2px; }
       if (portfolioMembers.length > 0) {
         const ptr = buildAggRow('Portfolio', portfolioMembers, statFn, 0);
         ptr.querySelector('td:first-child').style.fontStyle = 'italic';
+        ptr.querySelectorAll('td').forEach(td => td.style.borderBottom = '2px solid #ccc');
         tbody.appendChild(ptr);
-        // Spacer
-        const sp = document.createElement('tr'); sp.className = 'group-spacer';
-        const spTd = document.createElement('td'); spTd.colSpan = 2 + displayYears.length * 4 + 3;
-        sp.appendChild(spTd); tbody.appendChild(sp);
       }
 
       const allKeys = Object.keys(groups).sort((a, b) => {
