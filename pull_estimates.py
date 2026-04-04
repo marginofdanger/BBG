@@ -254,6 +254,10 @@ def main():
         fye_label, _ = fye_data.get(bbg, ("Dec", 0))
         ret = returns_data.get(bbg, {})
         price = ret.get("PX_LAST")
+        # UK stocks: price is in pence, convert to GBP for PE calculation
+        price_for_pe = price
+        if price and bbg.endswith(" LN Equity"):
+            price_for_pe = price / 100
         estimates = ticker_estimates.get(short, [])
 
         for est_row in estimates:
@@ -271,16 +275,16 @@ def main():
             # Price
             row_data.append(price if price is not None else "")
 
-            # PE
+            # PE (use price_for_pe which is adjusted for pence)
             pe = ""
-            if price:
+            if price_for_pe:
                 latest_eps = None
                 for q in reversed(sorted_quarters):
                     if q in est_row and est_row[q] is not None:
                         latest_eps = est_row[q]
                         break
                 if latest_eps and float(latest_eps) != 0:
-                    pe = round(float(price) / float(latest_eps), 1)
+                    pe = round(float(price_for_pe) / float(latest_eps), 1)
             row_data.append(pe)
 
             # 12m Rev
