@@ -1204,9 +1204,21 @@ td.spark-cell { padding: 4px 2px; }
       return container;
     }
 
-    scatterDiv.appendChild(buildScatter('CY2026 EPS Revision (3m) vs Stock Return (L3M)', 'rev3', 'ret3m', 'EPS Revision 3m (%)', 'Stock Return L3M (%)'));
-    scatterDiv.appendChild(buildScatter('CY2026 EPS Revision (12m) vs Stock Return (1Y)', 'rev12', 'ret12m', 'EPS Revision 12m (%)', 'Stock Return 1Y (%)'));
-    wrap.appendChild(scatterDiv);
+    // --- 3-month section: chart + tables ---
+    const section3m = document.createElement('div');
+    section3m.className = 'analysis-section';
+    const chart3m = document.createElement('div');
+    chart3m.appendChild(buildScatter('CY2026 EPS Revision (3m) vs Stock Return (L3M)', 'rev3', 'ret3m', 'EPS Revision 3m (%)', 'Stock Return L3M (%)'));
+    chart3m.style.maxWidth = '700px';
+    section3m.appendChild(chart3m);
+
+    // --- 12-month section: chart + tables ---
+    const section12m = document.createElement('div');
+    section12m.className = 'analysis-section';
+    const chart12m = document.createElement('div');
+    chart12m.appendChild(buildScatter('CY2026 EPS Revision (12m) vs Stock Return (1Y)', 'rev12', 'ret12m', 'EPS Revision 12m (%)', 'Stock Return 1Y (%)'));
+    chart12m.style.maxWidth = '700px';
+    section12m.appendChild(chart12m);
 
     // --- Top/Bottom tables ---
     function buildRankSection(title, sortKey, retKey, retLabel, n) {
@@ -1288,8 +1300,11 @@ td.spark-cell { padding: 4px 2px; }
       return section;
     }
 
-    wrap.appendChild(buildRankSection('CY2026 EPS Estimate Revisions — Last 3 Months', 'rev3', 'ret3m', 'L3M', 50));
-    wrap.appendChild(buildRankSection('CY2026 EPS Estimate Revisions — Last 12 Months', 'rev12', 'ret12m', '1Y', 50));
+    section3m.appendChild(buildRankSection('Top / Bottom 50 by 3-Month EPS Revision', 'rev3', 'ret3m', 'L3M', 50));
+    wrap.appendChild(section3m);
+
+    section12m.appendChild(buildRankSection('Top / Bottom 50 by 12-Month EPS Revision', 'rev12', 'ret12m', '1Y', 50));
+    wrap.appendChild(section12m);
   }
 
   function renderMethodology(qCols) {
