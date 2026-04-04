@@ -921,23 +921,12 @@ td.spark-cell { padding: 4px 2px; }
         tbody.appendChild(buildAggRow(key, groups[key], statFn, idx));
       });
 
-      // Add indices as individual rows at the bottom
-      if (indexMembers.length > 0) {
-        // Spacer
-        const spacer = document.createElement('tr');
-        spacer.className = 'group-spacer';
-        const spTd = document.createElement('td');
-        spTd.colSpan = 2 + displayYears.length * 4 + 3;
-        spacer.appendChild(spTd);
-        tbody.appendChild(spacer);
-
-        indexMembers.forEach((m, i) => {
-          const tr = buildAggRow(m.ticker, [m], statFn, i);
-          // Clear the count column for individual indices
-          tr.children[1].textContent = '';
-          tbody.appendChild(tr);
-        });
-      }
+      // Add indices as individual rows at the bottom (no spacer)
+      indexMembers.forEach((m, i) => {
+        const tr = buildAggRow(m.ticker, [m], statFn, allKeys.length + i);
+        tr.children[1].textContent = '';
+        tbody.appendChild(tr);
+      });
 
       table.appendChild(tbody);
       wrap.appendChild(table);
