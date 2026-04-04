@@ -1148,7 +1148,7 @@ td.spark-cell { padding: 4px 2px; }
     const scatterDiv = document.createElement('div');
     scatterDiv.className = 'scatter-wrap';
 
-    function buildScatter(title, xKey, yKey, xLabel, yLabel, sectors) {
+    function buildScatter(title, xKey, yKey, xLabel, yLabel, sectors, bounds) {
       const container = document.createElement('div');
       container.className = 'scatter-chart';
       const h4 = document.createElement('h4');
@@ -1157,7 +1157,7 @@ td.spark-cell { padding: 4px 2px; }
 
       const W = 700, H = 500, pad = { top: 20, right: 30, bottom: 40, left: 50 };
       const pw = W - pad.left - pad.right, ph = H - pad.top - pad.bottom;
-      const xMin = -50, xMax = 50, yMin = -50, yMax = 100;
+      const xMin = bounds[0], xMax = bounds[1], yMin = bounds[2], yMax = bounds[3];
       const pts = stocks.filter(s => s[xKey] !== null && s[yKey] !== null && s[yKey] !== 0);
 
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -1286,11 +1286,11 @@ td.spark-cell { padding: 4px 2px; }
 
     const col3m = document.createElement('div');
     col3m.style.cssText = 'flex: 1; min-width: 0;';
-    col3m.appendChild(buildScatter('CY2026 EPS Revision (3m) vs Stock Return (L3M)', 'rev3', 'ret3m', 'EPS Revision 3m (%)', 'Stock Return L3M (%)', sectorDots));
+    col3m.appendChild(buildScatter('CY2026 EPS Revision (3m) vs Stock Return (L3M)', 'rev3', 'ret3m', 'EPS Revision 3m (%)', 'Stock Return L3M (%)', sectorDots, [-30, 30, -50, 50]));
 
     const col12m = document.createElement('div');
     col12m.style.cssText = 'flex: 1; min-width: 0;';
-    col12m.appendChild(buildScatter('CY2026 EPS Revision (12m) vs Stock Return (1Y)', 'rev12', 'ret12m', 'EPS Revision 12m (%)', 'Stock Return 1Y (%)', sectorDots));
+    col12m.appendChild(buildScatter('CY2026 EPS Revision (12m) vs Stock Return (1Y)', 'rev12', 'ret12m', 'EPS Revision 12m (%)', 'Stock Return 1Y (%)', sectorDots, [-50, 50, -50, 100]));
 
     // --- Top/Bottom tables ---
     function buildRankSection(title, sortKey, retKey, retLabel, n) {
