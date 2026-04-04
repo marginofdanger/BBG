@@ -39,7 +39,7 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 td.spark-cell { padding: 4px 2px; }
 .sparkline { cursor: pointer; vertical-align: middle; }
 .sparkline:hover { opacity: 0.7; }
-.year-sep { border-left: 3px solid #bbb; }
+.year-sep { border-left: 2px solid #ccc; }
 .detail-row td { text-align: left !important; padding: 8px 16px; font-size: 11px; background: #f8f9fc !important; color: #444; border-bottom: 1px solid #ddd; }
 .detail-row td:first-child { background: #f8f9fc !important; }
 .detail-table { border-collapse: collapse; margin: 4px 0; font-size: 11px; }
@@ -1824,7 +1824,13 @@ td.spark-cell { padding: 4px 2px; }
 
       const table = document.createElement('table');
       table.className = 'rank-table';
-      table.style.cssText = 'margin-bottom:16px;font-size:13px;';
+      table.style.cssText = 'margin-bottom:16px;font-size:13px;table-layout:fixed;width:1100px;';
+
+      // Colgroup for uniform column widths
+      const cg = document.createElement('colgroup');
+      const colWidths = [55, 50, 65, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 55, 55, 55];
+      colWidths.forEach(w => { const col = document.createElement('col'); col.style.width = w + 'px'; cg.appendChild(col); });
+      table.appendChild(cg);
 
       // Track which columns start a new group
       const groupStarts = new Set();
