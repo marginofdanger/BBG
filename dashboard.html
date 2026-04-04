@@ -1045,6 +1045,10 @@ td.spark-cell { padding: 4px 2px; }
       wrap.appendChild(table);
     }
 
+    const hr = document.createElement('hr');
+    hr.style.cssText = 'border: none; border-top: 1px solid #ccc; margin: 24px 0;';
+    wrap.appendChild(hr);
+
     buildDistTable('CY2026');
     buildDistTable('CY2027');
   }
