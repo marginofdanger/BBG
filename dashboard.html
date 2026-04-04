@@ -1065,6 +1065,82 @@ td.spark-cell { padding: 4px 2px; }
 
     distTable.appendChild(dtbody);
     wrap.appendChild(distTable);
+
+    // --- "% above" distribution table ---
+    const distTitle2 = document.createElement('h3');
+    distTitle2.textContent = 'CY2026 EPS Revision & Return Distribution by ' + groupLabel + ' (% of stocks above threshold)';
+    distTitle2.style.cssText = 'padding: 16px 0 4px; font-size: 14px; color: #333;';
+    wrap.appendChild(distTitle2);
+
+    const distTable2 = document.createElement('table');
+    distTable2.className = 'agg-table';
+    const dcg2 = document.createElement('colgroup');
+    dAddCol('col-name'); dAddCol('col-count');
+    for (let i = 0; i < revBuckets.length + retBuckets.length; i++) dAddCol('col-data');
+    distTable2.appendChild(dcg2);
+
+    const d2h1 = document.createElement('tr');
+    const d2AddH = (text, colspan, cls) => { const th = document.createElement('th'); th.textContent = text; if (colspan > 1) th.colSpan = colspan; if (cls) th.className = cls; d2h1.appendChild(th); };
+    d2AddH('', 1, 'agg-group'); d2AddH('#', 1, 'agg-group');
+    d2AddH('CY2026 12m EPS Revision — % above', revBuckets.length, 'agg-group');
+    d2AddH('YTD Return — % above', retBuckets.length, 'agg-group');
+
+    const d2h2 = document.createElement('tr');
+    const d2AddS = (text, cls) => { const th = document.createElement('th'); th.textContent = text; th.className = 'agg-sub' + (cls ? ' ' + cls : ''); d2h2.appendChild(th); };
+    d2AddS(groupLabel); d2AddS('#');
+    revBuckets.forEach((b, i) => d2AddS(b + '%', i === 0 ? 'year-sep' : ''));
+    retBuckets.forEach((b, i) => d2AddS(b + '%', i === 0 ? 'year-sep' : ''));
+
+    const d2thead = document.createElement('thead');
+    d2thead.appendChild(d2h1); d2thead.appendChild(d2h2);
+    distTable2.appendChild(d2thead);
+
+    const d2tbody = document.createElement('tbody');
+
+    function buildDistRowAbove(label, members, idx) {
+      const tr = document.createElement('tr');
+      tr.className = idx % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
+      const tdN = document.createElement('td'); tdN.textContent = label; tr.appendChild(tdN);
+      const tdC = document.createElement('td'); tdC.textContent = members.length; tdC.style.textAlign = 'center'; tr.appendChild(tdC);
+
+      const revVals = members.map(m => m.yearRevs && m.yearRevs['CY2026'] ? m.yearRevs['CY2026'].rev12 : null).filter(v => v !== null);
+      revBuckets.forEach((b, i) => {
+        const td = document.createElement('td');
+        if (revVals.length > 0) {
+          const pct = revVals.filter(v => v > b).length / revVals.length * 100;
+          td.textContent = Math.round(pct) + '%';
+          if (b >= 0) td.className = pct > 50 ? 'pos' : '';
+        }
+        if (i === 0) td.classList.add('year-sep');
+        tr.appendChild(td);
+      });
+
+      const retVals = members.map(m => m.retYtd).filter(v => v && !isNaN(v));
+      retBuckets.forEach((b, i) => {
+        const td = document.createElement('td');
+        if (retVals.length > 0) {
+          const pct = retVals.filter(v => v > b).length / retVals.length * 100;
+          td.textContent = Math.round(pct) + '%';
+        }
+        if (i === 0) td.classList.add('year-sep');
+        tr.appendChild(td);
+      });
+      return tr;
+    }
+
+    const da2All = buildDistRowAbove('All', allNonIndex, 0);
+    da2All.querySelector('td:first-child').style.fontWeight = '700';
+    da2All.querySelectorAll('td').forEach(td => td.style.borderBottom = '2px solid #ccc');
+    d2tbody.appendChild(da2All);
+    if (portfolioMembers.length > 0) {
+      const da2P = buildDistRowAbove('Portfolio', portfolioMembers, 1);
+      da2P.querySelector('td:first-child').style.fontStyle = 'italic';
+      da2P.querySelectorAll('td').forEach(td => td.style.borderBottom = '2px solid #ccc');
+      d2tbody.appendChild(da2P);
+    }
+    allKeys.forEach((key, idx) => d2tbody.appendChild(buildDistRowAbove(key, groups[key], idx + 2)));
+    distTable2.appendChild(d2tbody);
+    wrap.appendChild(distTable2);
   }
 
   // Global sort state for aggregate tables — shared so detail rows inherit the sort
