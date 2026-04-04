@@ -11,11 +11,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .header-left h1 { font-size: 20px; font-weight: 600; }
 .header-left .subtitle { color: #666; font-size: 12px; margin-top: 2px; }
 .header-right { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
-.header-center { display: none; align-items: center; gap: 8px; flex: 1; max-width: 400px; margin: 0 24px; }
+.header-center { display: none; flex-direction: column; gap: 2px; flex: 1; max-width: 450px; margin: 0 24px; }
 .header-center.visible { display: flex; }
-.header-center label { font-size: 11px; color: #555; white-space: nowrap; }
-#dateSlider { flex: 1; }
-#dateLabel { font-weight: 600; font-size: 11px; white-space: nowrap; }
+.header-center label { font-size: 10px; color: #555; white-space: nowrap; }
 .table-wrap { overflow: auto; max-height: calc(100vh - 90px); position: relative; padding: 0 12px; }
 table { border-collapse: collapse; white-space: nowrap; font-size: 12px; }
 th, td { padding: 4px 8px; border-bottom: 1px solid #e8e8e8; text-align: right; }
@@ -117,9 +115,16 @@ td.spark-cell { padding: 4px 2px; }
     <h1>Portfolio Estimate Tracker</h1>
   </div>
   <div class="header-center" id="sliderWrap">
-    <label>BBG consensus estimates as of:</label>
-    <input type="range" id="dateSlider" min="0" max="0" value="0">
-    <span id="dateLabel"></span>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <label>Estimates:</label>
+      <input type="range" id="estSlider" min="0" max="0" value="0" style="width:120px;">
+      <span id="estDateLabel" style="font-weight:600;font-size:11px;min-width:80px;"></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;">
+      <label>Prices:</label>
+      <input type="range" id="priceSlider" min="0" max="0" value="0" style="width:120px;">
+      <span id="priceDateLabel" style="font-weight:600;font-size:11px;min-width:80px;"></span>
+    </div>
   </div>
   <div class="header-right">
     <span class="group-label">Group by:</span>
@@ -156,47 +161,115 @@ td.spark-cell { padding: 4px 2px; }
 <script>
 (async function() {
 
-  let dates, sortedDates, currentDate;
+  // Load both estimate and price indices
+  let estDates = [], priceDates = [], currentEstDate, currentPriceDate;
+  let currentEstData = null, currentPriceData = null;
+
   try {
-    const indexResp = await fetch('output/snapshots/index.json');
-    if (!indexResp.ok) throw new Error('index.json not found');
-    dates = await indexResp.json();
-    sortedDates = [...dates].sort();
-    currentDate = sortedDates[sortedDates.length - 1];
-  } catch (e) {
-    document.getElementById('dateLabel').textContent = 'No snapshots found. Run pull_estimates.py first.';
+    const [estResp, priceResp] = await Promise.all([
+      fetch('output/snapshots/index_estimates.json'),
+      fetch('output/snapshots/index_prices.json').catch(() => null),
+    ]);
+    if (estResp.ok) estDates = [...(await estResp.json())].sort();
+    if (priceResp && priceResp.ok) priceDates = [...(await priceResp.json())].sort();
+    // Fallback: try legacy index.json
+    if (!estDates.length) {
+      const legacyResp = await fetch('output/snapshots/index.json');
+      if (legacyResp.ok) estDates = [...(await legacyResp.json())].sort();
+    }
+  } catch (e) {}
+
+  if (!estDates.length) {
+    document.getElementById('estDateLabel').textContent = 'No snapshots. Run pull_estimates.py';
     return;
   }
 
-  const wrap = document.getElementById('sliderWrap');
-  wrap.classList.add('visible');
-  const slider = document.getElementById('dateSlider');
-  slider.min = 0;
-  slider.max = Math.max(0, sortedDates.length - 1);
-  slider.value = sortedDates.length - 1;
-  document.getElementById('dateLabel').textContent = currentDate;
-  slider.addEventListener('input', () => {
-    currentDate = sortedDates[+slider.value];
-    document.getElementById('dateLabel').textContent = currentDate;
-    loadSnapshot(currentDate);
+  currentEstDate = estDates[estDates.length - 1];
+  currentPriceDate = priceDates.length ? priceDates[priceDates.length - 1] : null;
+
+  const sliderWrap = document.getElementById('sliderWrap');
+  sliderWrap.classList.add('visible');
+
+  // Estimate slider
+  const estSlider = document.getElementById('estSlider');
+  estSlider.max = Math.max(0, estDates.length - 1);
+  estSlider.value = estDates.length - 1;
+  document.getElementById('estDateLabel').textContent = currentEstDate;
+  estSlider.addEventListener('input', () => {
+    currentEstDate = estDates[+estSlider.value];
+    document.getElementById('estDateLabel').textContent = currentEstDate;
+    loadEstimates(currentEstDate);
   });
 
-  loadSnapshot(currentDate);
+  // Price slider
+  const priceSlider = document.getElementById('priceSlider');
+  if (priceDates.length) {
+    priceSlider.max = Math.max(0, priceDates.length - 1);
+    priceSlider.value = priceDates.length - 1;
+    document.getElementById('priceDateLabel').textContent = currentPriceDate;
+    priceSlider.addEventListener('input', () => {
+      currentPriceDate = priceDates[+priceSlider.value];
+      document.getElementById('priceDateLabel').textContent = currentPriceDate;
+      loadPrices(currentPriceDate);
+    });
+  } else {
+    document.getElementById('priceDateLabel').textContent = 'N/A (run pull_prices.py)';
+  }
 
-  async function loadSnapshot(date) {
-    document.getElementById('dateLabel').textContent = date;
+  await loadEstimates(currentEstDate);
+  if (currentPriceDate) await loadPrices(currentPriceDate);
+
+  async function loadEstimates(date) {
+    document.getElementById('estDateLabel').textContent = date;
     try {
-      const resp = await fetch('output/snapshots/' + date + '.csv');
-      if (!resp.ok) throw new Error('CSV not found: ' + date);
+      // Try new naming first, fall back to legacy
+      let resp = await fetch('output/snapshots/estimates_' + date + '.csv');
+      if (!resp.ok) resp = await fetch('output/snapshots/' + date + '.csv');
+      if (!resp.ok) throw new Error('CSV not found');
       const text = await resp.text();
-      const data = parseCSV(text);
-      render(data);
-      renderAggregates(data);
-      renderAnalysis(data);
-      renderMethodology(data.qCols);
+      currentEstData = parseCSV(text);
+      renderAll();
     } catch (e) {
-      document.getElementById('dateLabel').textContent = 'Error: ' + e.message;
+      document.getElementById('estDateLabel').textContent = 'Error: ' + e.message;
     }
+  }
+
+  async function loadPrices(date) {
+    document.getElementById('priceDateLabel').textContent = date;
+    try {
+      const resp = await fetch('output/snapshots/prices_' + date + '.csv');
+      if (!resp.ok) throw new Error('Prices CSV not found');
+      const text = await resp.text();
+      currentPriceData = parseCSV(text);
+      renderAll();
+    } catch (e) {
+      document.getElementById('priceDateLabel').textContent = 'Error: ' + e.message;
+    }
+  }
+
+  function mergeEstimatesWithPrices(estData, priceData) {
+    if (!priceData) return estData;
+    // Build price lookup by ticker
+    const priceLookup = {};
+    priceData.rows.forEach(r => { priceLookup[r.Ticker] = r; });
+    // Override price/return fields in estimate rows
+    const merged = { ...estData, rows: estData.rows.map(r => {
+      const p = priceLookup[r.Ticker];
+      if (!p) return r;
+      return { ...r, Price: p.Price || r.Price, PE: p.PE_CY2026 || r.PE,
+        Return_YTD: p.Return_YTD || r.Return_YTD, Return_3m: p.Return_3m || r.Return_3m,
+        Return_12m: p.Return_12m || r.Return_12m };
+    })};
+    return merged;
+  }
+
+  function renderAll() {
+    if (!currentEstData) return;
+    const data = mergeEstimatesWithPrices(currentEstData, currentPriceData);
+    render(data);
+    renderAggregates(data);
+    renderAnalysis(data);
+    renderMethodology(data.qCols);
   }
 
   function formatDate(s) {

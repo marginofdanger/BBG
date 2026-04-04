@@ -311,7 +311,7 @@ def main():
 
             csv_rows.append(row_data)
 
-    csv_path = os.path.join(SNAPSHOT_DIR, f"{today_str}.csv")
+    csv_path = os.path.join(SNAPSHOT_DIR, f"estimates_{today_str}.csv")
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(header)
@@ -321,18 +321,23 @@ def main():
     print(f"Saved snapshot: {csv_path}")
     print(f"  Rows: {len(csv_rows)}, Columns: {len(header)}")
 
-    _update_index(SNAPSHOT_DIR)
-    print("Done.")
-
-
-def _update_index(snapshots_dir):
-    index_path = os.path.join(snapshots_dir, "index.json")
-    dates = sorted(
-        [f.replace(".csv", "") for f in os.listdir(snapshots_dir) if f.endswith(".csv") and len(f) == 14],
+    # Update estimates index
+    est_dates = sorted(
+        [f.replace("estimates_", "").replace(".csv", "")
+         for f in os.listdir(SNAPSHOT_DIR) if f.startswith("estimates_") and f.endswith(".csv")],
         reverse=True,
     )
-    with open(index_path, "w") as fh:
-        json.dump(dates, fh, indent=2)
+    idx_path = os.path.join(SNAPSHOT_DIR, "index_estimates.json")
+    with open(idx_path, "w") as fh:
+        json.dump(est_dates, fh, indent=2)
+    print(f"Updated: {idx_path}")
+
+    # Also generate a prices snapshot
+    print("\nGenerating prices snapshot...")
+    import subprocess
+    subprocess.run(["python", os.path.join(SCRIPT_DIR, "pull_prices.py")])
+
+    print("Done.")
 
 
 if __name__ == "__main__":
