@@ -67,7 +67,10 @@ td.spark-cell { padding: 4px 2px; }
 .tab.active { color: #1565c0; background: #fff; border-color: #ccc; border-bottom: 2px solid #fff; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-.agg-table { border-collapse: collapse; white-space: nowrap; font-size: 12px; }
+.agg-table { border-collapse: collapse; white-space: nowrap; font-size: 12px; table-layout: fixed; }
+.agg-table col.col-name { width: 200px; }
+.agg-table col.col-count { width: 30px; }
+.agg-table col.col-data { width: 58px; }
 .agg-table th, .agg-table td { padding: 5px 10px; border-bottom: 1px solid #e8e8e8; text-align: right; }
 .agg-table th { background: #fafafa; font-weight: 600; font-size: 11px; color: #555; }
 .agg-table th.agg-group { text-align: center; background: #f4f4f4; border-bottom: 2px solid #999; }
@@ -817,6 +820,12 @@ td.spark-cell { padding: 4px 2px; }
       const table = document.createElement('table');
       table.className = 'agg-table';
 
+      const colgroup = document.createElement('colgroup');
+      const addCol = (cls) => { const c = document.createElement('col'); c.className = cls; colgroup.appendChild(c); };
+      addCol('col-name'); addCol('col-count');
+      for (let i = 0; i < displayYears.length * 4 + 3; i++) addCol('col-data');
+      table.appendChild(colgroup);
+
       // Header row 1
       const h1 = document.createElement('tr');
       const addH = (text, colspan, cls) => {
@@ -901,33 +910,62 @@ td.spark-cell { padding: 4px 2px; }
     }
   }
 
+  // Global sort state for aggregate tables — shared so detail rows inherit the sort
+  let aggSortState = { key: null, dir: 'desc' };
+
   function sortAggTable(table, key, th) {
     const tbody = table.querySelector('tbody');
-    // Remove detail rows first
     tbody.querySelectorAll('.agg-detail').forEach(r => r.remove());
-    // Toggle sort
-    const currentDir = th.classList.contains('sort-asc') ? 'asc' : th.classList.contains('sort-desc') ? 'desc' : null;
-    table.querySelectorAll('th.sortable').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
-    const dir = currentDir === 'desc' ? 'asc' : 'desc';
-    th.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
-    const mult = dir === 'asc' ? 1 : -1;
 
-    const rows = [...tbody.querySelectorAll('tr:not(.agg-detail)')];
-    rows.sort((a, b) => {
-      const av = a._sortData ? a._sortData[key] : 0;
-      const bv = b._sortData ? b._sortData[key] : 0;
-      if (typeof av === 'string' && typeof bv === 'string') return av.localeCompare(bv) * mult;
-      return ((av || 0) - (bv || 0)) * mult;
+    const currentDir = th.classList.contains('sort-asc') ? 'asc' : th.classList.contains('sort-desc') ? 'desc' : null;
+    // Update ALL agg tables' sort indicators to stay in sync
+    document.querySelectorAll('.agg-table th.sortable').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+    const dir = currentDir === 'desc' ? 'asc' : 'desc';
+    aggSortState = { key, dir };
+
+    // Apply sort to ALL agg tables
+    document.querySelectorAll('.agg-table').forEach(t => {
+      // Set sort indicator on matching header
+      t.querySelectorAll('th.sortable').forEach(h => {
+        if (h.dataset.sortKey === key) h.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
+      });
+      const tb = t.querySelector('tbody');
+      if (!tb) return;
+      tb.querySelectorAll('.agg-detail').forEach(r => r.remove());
+      const mult = dir === 'asc' ? 1 : -1;
+      const rows = [...tb.querySelectorAll('tr:not(.agg-detail)')];
+      rows.sort((a, b) => {
+        const av = a._sortData ? a._sortData[key] : 0;
+        const bv = b._sortData ? b._sortData[key] : 0;
+        if (typeof av === 'string' && typeof bv === 'string') return av.localeCompare(bv) * mult;
+        return ((av || 0) - (bv || 0)) * mult;
+      });
+      tb.innerHTML = '';
+      rows.forEach((r, i) => { r.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd'; tb.appendChild(r); });
     });
-    tbody.innerHTML = '';
-    rows.forEach((r, i) => {
-      r.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
-      tbody.appendChild(r);
+  }
+
+  function sortMembersByCurrentKey(members) {
+    if (!aggSortState.key || aggSortState.key === 'name' || aggSortState.key === 'count') return members;
+    const key = aggSortState.key;
+    const mult = aggSortState.dir === 'asc' ? 1 : -1;
+    return [...members].sort((a, b) => {
+      let av = 0, bv = 0;
+      if (key === 'retYtd') { av = a.retYtd || 0; bv = b.retYtd || 0; }
+      else if (key === 'ret3m') { av = a.ret3m || 0; bv = b.ret3m || 0; }
+      else if (key === 'ret12m') { av = a.ret12m || 0; bv = b.ret12m || 0; }
+      else {
+        // Parse year and metric from key like "CY2026_chg3"
+        const parts = key.split('_');
+        const yr = parts[0], metric = parts[1];
+        av = (a.yearRevs[yr] && a.yearRevs[yr][metric]) || 0;
+        bv = (b.yearRevs[yr] && b.yearRevs[yr][metric]) || 0;
+      }
+      return (av - bv) * mult;
     });
   }
 
   function toggleAggDetail(tr, members, tbody) {
-    // Remove existing detail rows for this sector
     const existing = [];
     let next = tr.nextElementSibling;
     while (next && next.classList.contains('agg-detail')) {
@@ -935,13 +973,17 @@ td.spark-cell { padding: 4px 2px; }
     }
     if (existing.length > 0) { existing.forEach(r => r.remove()); return; }
 
-    // Insert detail rows showing each company's 12m revision per year + returns
-    members.forEach(m => {
+    // Sort members by current sort key
+    const sorted = sortMembersByCurrentKey(members);
+
+    // Build detail rows in correct order
+    const detailRows = [];
+    sorted.forEach(m => {
       const dr = document.createElement('tr');
       dr.className = 'agg-detail';
       const tdT = document.createElement('td');
       tdT.textContent = m.ticker || ''; dr.appendChild(tdT);
-      dr.appendChild(document.createElement('td')); // blank # column
+      dr.appendChild(document.createElement('td'));
 
       displayYears.forEach(yr => {
         let first = true;
@@ -953,14 +995,12 @@ td.spark-cell { padding: 4px 2px; }
       });
       const retFirst = appendAggCell(dr, m.retYtd); retFirst.classList.add('year-sep');
       appendAggCell(dr, m.ret3m); appendAggCell(dr, m.ret12m);
-      tr.after(dr);
-      // Insert after last detail row to maintain order
+      detailRows.push(dr);
     });
-    // Reverse to get correct order (we inserted after tr each time)
-    const details = [];
-    next = tr.nextElementSibling;
-    while (next && next.classList.contains('agg-detail')) { details.push(next); next = next.nextElementSibling; }
-    details.reverse().forEach(d => tr.after(d));
+
+    // Insert after tr in correct order
+    let insertAfter = tr;
+    detailRows.forEach(dr => { insertAfter.after(dr); insertAfter = dr; });
   }
 
   function median(arr) {
