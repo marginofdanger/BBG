@@ -97,6 +97,12 @@ td.spark-cell { padding: 4px 2px; }
 .scatter-wrap { display: flex; gap: 16px; margin-bottom: 24px; }
 .scatter-chart { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; flex: 1; min-width: 0; margin-bottom: 20px; }
 .scatter-chart h4 { font-size: 12px; color: #555; margin-bottom: 8px; text-align: center; }
+.chart-controls { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; padding: 6px 0; font-size: 10px; color: #555; }
+.chart-controls label { display: flex; align-items: center; gap: 3px; }
+.chart-controls select, .chart-controls input[type=number] { font-size: 10px; padding: 2px 4px; border: 1px solid #ccc; border-radius: 3px; width: 55px; }
+.chart-controls select { width: auto; }
+.chart-controls .ctrl-group { display: flex; align-items: center; gap: 4px; }
+.chart-controls .ctrl-sep { border-left: 1px solid #ddd; height: 16px; margin: 0 4px; }
 .agg-detail { background: #f8f9fc !important; }
 .agg-detail td { font-size: 11px; color: #555; font-weight: 400 !important; padding: 5px 10px; border-bottom: 1px solid #eee; }
 .agg-detail td:first-child { font-weight: 400 !important; cursor: default; padding-left: 28px; color: #666; }
@@ -1090,7 +1096,7 @@ td.spark-cell { padding: 4px 2px; }
       const ret3m = parsePctStr(r['Return_3m']);
       const ret12m = parsePctStr(r['Return_12m']);
 
-      stocks.push({ ticker: t, group: r.Group, gicsIndustry: r['GICS Industry'] || '', rev3, rev12, retYtd, ret3m, ret12m });
+      stocks.push({ ticker: t, group: r.Group, gicsSector: r['GICS Sector'] || '', gicsIndustry: r['GICS Industry'] || '', rev3, rev12, retYtd, ret3m, ret12m });
     });
 
     // Compute GICS Industry medians for scatter overlay
@@ -1156,17 +1162,90 @@ td.spark-cell { padding: 4px 2px; }
     const scatterDiv = document.createElement('div');
     scatterDiv.className = 'scatter-wrap';
 
-    function buildScatter(title, xKey, yKey, xLabel, yLabel, sectors, bounds, gridStep) {
+    function buildScatter(title, xKey, yKey, xLabel, yLabel, sectors, defaultBounds, defaultStep) {
       const container = document.createElement('div');
       container.className = 'scatter-chart';
       const h4 = document.createElement('h4');
       h4.textContent = title;
       container.appendChild(h4);
 
+      const svgWrap = document.createElement('div');
+      container.appendChild(svgWrap);
+
+      // Collect unique GICS sectors and industries for filter
+      const allSectors = [...new Set(stocks.map(s => s.gicsSector || '').filter(Boolean))].sort();
+      const allIndustries = [...new Set(stocks.map(s => s.gicsIndustry || '').filter(Boolean))].sort();
+
+      // Controls
+      const ctrl = document.createElement('div');
+      ctrl.className = 'chart-controls';
+
+      // Show all labels checkbox
+      const lblChk = document.createElement('input'); lblChk.type = 'checkbox';
+      const lblLabel = document.createElement('label');
+      lblLabel.appendChild(lblChk);
+      lblLabel.appendChild(document.createTextNode(' All labels'));
+      ctrl.appendChild(lblLabel);
+
+      const sep1 = document.createElement('div'); sep1.className = 'ctrl-sep'; ctrl.appendChild(sep1);
+
+      // Sector filter
+      const secSel = document.createElement('select');
+      secSel.innerHTML = '<option value="">All sectors</option>' + allSectors.map(s => `<option value="${s}">${s}</option>`).join('');
+      const secLabel = document.createElement('label');
+      secLabel.textContent = 'Sector: '; secLabel.appendChild(secSel);
+      ctrl.appendChild(secLabel);
+
+      // Industry filter
+      const indSel = document.createElement('select');
+      indSel.innerHTML = '<option value="">All industries</option>' + allIndustries.map(s => `<option value="${s}">${s}</option>`).join('');
+      const indLabel = document.createElement('label');
+      indLabel.textContent = 'Industry: '; indLabel.appendChild(indSel);
+      ctrl.appendChild(indLabel);
+
+      const sep2 = document.createElement('div'); sep2.className = 'ctrl-sep'; ctrl.appendChild(sep2);
+
+      // Axis bounds
+      const mkNum = (label, val) => {
+        const inp = document.createElement('input'); inp.type = 'number'; inp.value = val; inp.step = 5;
+        const lbl = document.createElement('label'); lbl.textContent = label + ' '; lbl.appendChild(inp);
+        ctrl.appendChild(lbl);
+        return inp;
+      };
+      const xMinInp = mkNum('X min', defaultBounds[0]);
+      const xMaxInp = mkNum('X max', defaultBounds[1]);
+      const yMinInp = mkNum('Y min', defaultBounds[2]);
+      const yMaxInp = mkNum('Y max', defaultBounds[3]);
+
+      container.appendChild(ctrl);
+
+      function redraw() {
+        const bounds = [+xMinInp.value, +xMaxInp.value, +yMinInp.value, +yMaxInp.value];
+        const showAll = lblChk.checked;
+        const sectorFilter = secSel.value;
+        const industryFilter = indSel.value;
+        const filteredStocks = stocks.filter(s => {
+          if (sectorFilter && (s.gicsSector || '') !== sectorFilter) return false;
+          if (industryFilter && (s.gicsIndustry || '') !== industryFilter) return false;
+          return true;
+        });
+        svgWrap.innerHTML = '';
+        svgWrap.appendChild(renderScatterSVG(filteredStocks, xKey, yKey, xLabel, yLabel, sectors, bounds, defaultStep, showAll));
+      }
+
+      [lblChk, secSel, indSel, xMinInp, xMaxInp, yMinInp, yMaxInp].forEach(el => el.addEventListener('change', redraw));
+      [xMinInp, xMaxInp, yMinInp, yMaxInp].forEach(el => el.addEventListener('input', redraw));
+
+      redraw();
+      return container;
+    }
+
+    function renderScatterSVG(filteredStocks, xKey, yKey, xLabel, yLabel, sectors, bounds, gridStep, showAllLabels) {
+
       const W = 700, H = 500, pad = { top: 20, right: 30, bottom: 40, left: 50 };
       const pw = W - pad.left - pad.right, ph = H - pad.top - pad.bottom;
       const xMin = bounds[0], xMax = bounds[1], yMin = bounds[2], yMax = bounds[3];
-      const pts = stocks.filter(s => s[xKey] !== null && s[yKey] !== null && s[yKey] !== 0);
+      const pts = filteredStocks.filter(s => s[xKey] !== null && s[yKey] !== null && s[yKey] !== 0);
 
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
@@ -1215,11 +1294,12 @@ td.spark-cell { padding: 4px 2px; }
       yLbl.setAttribute('transform', `rotate(-90, 12, ${pad.top + ph / 2})`);
       yLbl.textContent = yLabel; svg.appendChild(yLbl);
 
-      // Tooltip div
+      // Wrapper for SVG + tooltip
+      const wrapper = document.createElement('div');
+      wrapper.style.position = 'relative';
       const tooltip = document.createElement('div');
       tooltip.style.cssText = 'position:absolute;display:none;background:#333;color:#fff;padding:4px 8px;border-radius:3px;font-size:11px;pointer-events:none;white-space:nowrap;z-index:10;';
-      container.style.position = 'relative';
-      container.appendChild(tooltip);
+      wrapper.appendChild(tooltip);
 
       // Layer 1: Stock dots (smallest, gray)
       pts.forEach(s => {
@@ -1253,6 +1333,11 @@ td.spark-cell { padding: 4px 2px; }
           const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           lbl.setAttribute('x', cx + 6); lbl.setAttribute('y', cy + 3);
           lbl.setAttribute('fill', '#1565c0'); lbl.setAttribute('font-size', '9'); lbl.setAttribute('font-weight', '600');
+          lbl.textContent = s.ticker; svg.appendChild(lbl);
+        } else if (showAllLabels) {
+          const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          lbl.setAttribute('x', cx + 4); lbl.setAttribute('y', cy + 3);
+          lbl.setAttribute('fill', '#666'); lbl.setAttribute('font-size', '7');
           lbl.textContent = s.ticker; svg.appendChild(lbl);
         }
         svg.appendChild(c);
@@ -1305,8 +1390,8 @@ td.spark-cell { padding: 4px 2px; }
         });
       }
 
-      container.appendChild(svg);
-      return container;
+      wrapper.appendChild(svg);
+      return wrapper;
     }
 
     // --- Two columns: 3m (chart + tables) | 12m (chart + tables) ---
