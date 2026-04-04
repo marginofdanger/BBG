@@ -20,8 +20,10 @@ def estimate_history(ticker, target_years, lookback_months=24, field="BEST_EPS")
         list of dicts in Metrics-extraction shared format:
         [{"line_item": "CY2026", "Q2 2024": 30.77, "Q3 2024": 27.93, ...}, ...]
     """
-    short_ticker = ticker.replace(" US Equity", "")
-    if not ticker.endswith(" Equity"):
+    # Extract short ticker for USD override check
+    short_ticker = ticker.split(" ")[0] if " " in ticker else ticker
+    # Ensure ticker has an asset class suffix for Bloomberg
+    if not any(ticker.endswith(s) for s in (" Equity", " Index")):
         ticker = f"{ticker} US Equity"
 
     today = date.today()

@@ -201,11 +201,9 @@ def main():
             print(f"  [{i+1}/{len(entries)}] {short}...")
 
         try:
-            # For indices/ETFs, the ticker format is different
-            est_ticker = bbg.replace(' Equity', '').replace(' Index', '')
-            if bbg.endswith(' Index'):
-                est_ticker = bbg  # pass full ticker for indices
-            rows = estimate_history(est_ticker, fiscal_years, lookback, field)
+            # estimate_history() accepts "HCA" or "HCA US Equity"
+            # Pass the full Bloomberg ticker so it works for international tickers too
+            rows = estimate_history(bbg, fiscal_years, lookback, field)
         except Exception as e:
             print(f"    WARNING: {short}: {e}")
             rows = [{"line_item": f"CY{y}"} for y in fiscal_years]
