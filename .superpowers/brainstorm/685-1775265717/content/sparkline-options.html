@@ -1,0 +1,89 @@
+<h2>Sparkline Interaction — How should numbers appear?</h2>
+<p class="subtitle">Each sparkline shows the 8-quarter estimate history. How do you want to see the values?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Hover tooltip</h3>
+      <p>Hover over a sparkline to see a tooltip with the value and date at that point. Clean default view.</p>
+      <div style="background:#1a1a2e;border-radius:8px;padding:20px;margin-top:12px;font-family:monospace;font-size:12px;color:#e0e0e0;position:relative;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span style="color:#4fc3f7;">HCA CY2027</span>
+          <span>33.33</span>
+          <div style="position:relative;">
+            <svg width="120" height="28">
+              <polyline points="0,24 17,22 34,20 51,19 68,18 85,19 102,14 120,10" fill="none" stroke="#4caf50" stroke-width="2"/>
+              <circle cx="85" cy="19" r="3" fill="#4caf50"/>
+            </svg>
+            <div style="position:absolute;bottom:32px;left:62px;background:#333;border:1px solid #555;border-radius:4px;padding:4px 8px;font-size:10px;white-space:nowrap;color:#fff;">
+              Q3 2025: 31.44<br><span style="color:#f44336;">-0.5% q/q</span>
+            </div>
+          </div>
+          <span style="color:#4caf50;">+7.2%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Dots with labels on hover</h3>
+      <p>Sparkline always shows dots at each data point. Hover any dot to see its value. Gives a sense of data density at a glance.</p>
+      <div style="background:#1a1a2e;border-radius:8px;padding:20px;margin-top:12px;font-family:monospace;font-size:12px;color:#e0e0e0;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span style="color:#4fc3f7;">HCA CY2027</span>
+          <span>33.33</span>
+          <div style="position:relative;">
+            <svg width="120" height="28">
+              <polyline points="0,24 17,22 34,20 51,19 68,18 85,19 102,14 120,10" fill="none" stroke="#4caf50" stroke-width="2"/>
+              <circle cx="0" cy="24" r="2.5" fill="#4caf50" opacity="0.6"/>
+              <circle cx="17" cy="22" r="2.5" fill="#4caf50" opacity="0.6"/>
+              <circle cx="34" cy="20" r="2.5" fill="#4caf50" opacity="0.6"/>
+              <circle cx="51" cy="19" r="2.5" fill="#4caf50" opacity="0.6"/>
+              <circle cx="68" cy="18" r="2.5" fill="#4caf50" opacity="0.6"/>
+              <circle cx="85" cy="19" r="2.5" fill="#4caf50" opacity="0.6"/>
+              <circle cx="102" cy="14" r="2.5" fill="#4caf50"/>
+              <circle cx="120" cy="10" r="3.5" fill="#4caf50"/>
+            </svg>
+          </div>
+          <span style="color:#4caf50;">+7.2%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Click sparkline to expand full row</h3>
+      <p>Sparkline is compact by default. Click it to expand a detail row below showing all 8 quarterly values with q/q changes — similar to option C from the layout question but applied per-year.</p>
+      <div style="background:#1a1a2e;border-radius:8px;padding:20px;margin-top:12px;font-family:monospace;font-size:12px;color:#e0e0e0;">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:8px;">
+          <span style="color:#4fc3f7;">HCA CY2027</span>
+          <span>33.33</span>
+          <svg width="80" height="20" style="cursor:pointer;">
+            <polyline points="0,18 11,16 23,14 34,13 46,12 57,13 69,8 80,4" fill="none" stroke="#4caf50" stroke-width="2"/>
+          </svg>
+          <span style="color:#4caf50;">+7.2%</span>
+          <span style="color:#666;font-size:10px;">▼ click to expand</span>
+        </div>
+        <div style="background:#0d0d1a;border-radius:4px;padding:8px 12px;font-size:10px;color:#aaa;border-left:2px solid #4caf50;">
+          <table style="border-collapse:collapse;width:100%;">
+            <tr style="color:#666;">
+              <td style="padding:2px 8px;">Q2'24</td><td style="padding:2px 8px;">Q3'24</td><td style="padding:2px 8px;">Q4'24</td><td style="padding:2px 8px;">Q1'25</td><td style="padding:2px 8px;">Q2'25</td><td style="padding:2px 8px;">Q3'25</td><td style="padding:2px 8px;">Q4'25</td><td style="padding:2px 8px;color:#e0e0e0;">Q1'26</td>
+            </tr>
+            <tr>
+              <td style="padding:2px 8px;">29.46</td><td style="padding:2px 8px;">31.30</td><td style="padding:2px 8px;">30.93</td><td style="padding:2px 8px;">31.11</td><td style="padding:2px 8px;">31.60</td><td style="padding:2px 8px;">31.44</td><td style="padding:2px 8px;">32.85</td><td style="padding:2px 8px;color:#e0e0e0;font-weight:bold;">33.33</td>
+            </tr>
+            <tr style="color:#666;font-size:9px;">
+              <td style="padding:2px 8px;"></td>
+              <td style="padding:2px 8px;color:#4caf50;">+6.2%</td><td style="padding:2px 8px;color:#f44336;">-1.2%</td><td style="padding:2px 8px;color:#4caf50;">+0.6%</td><td style="padding:2px 8px;color:#4caf50;">+1.6%</td><td style="padding:2px 8px;color:#f44336;">-0.5%</td><td style="padding:2px 8px;color:#4caf50;">+4.5%</td><td style="padding:2px 8px;color:#4caf50;">+1.5%</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
