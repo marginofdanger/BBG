@@ -82,8 +82,8 @@ td.spark-cell { padding: 4px 2px; }
 .agg-controls { padding: 8px 24px; display: flex; align-items: center; gap: 16px; }
 .agg-controls .group-label { font-size: 11px; }
 .analysis-wrap { padding: 12px 24px; overflow: auto; max-height: calc(100vh - 90px); }
-.analysis-section { margin-bottom: 32px; }
-.analysis-section h3 { font-size: 14px; color: #333; margin-bottom: 8px; }
+.analysis-section { margin-bottom: 32px; font-size: 13px; }
+.analysis-section h3 { font-size: 15px; color: #333; margin-bottom: 8px; }
 .analysis-columns { display: flex; gap: 16px; }
 .analysis-columns > div { flex: 1; min-width: 0; }
 .rank-table { border-collapse: collapse; font-size: 12px; }
@@ -1713,6 +1713,7 @@ td.spark-cell { padding: 4px 2px; }
       const nonNull = []; vals.forEach((v, i) => { if (v !== null) nonNull.push({ v, i }); });
       const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
       const m3 = getFromEnd(nonNull, 1);
+      const m6 = getFromEnd(nonNull, 2);
       const m12 = getFromEnd(nonNull, 4);
       const rev3 = pctChgVal(cur, m3);
       const rev12 = pctChgVal(cur, m12);
@@ -1731,9 +1732,24 @@ td.spark-cell { padding: 4px 2px; }
         if (nn27.length > 0 && effPrice) pe27 = effPrice / nn27[nn27.length - 1];
       }
 
+      // CY2028 PE
+      const r28 = rows.find(rr => rr.Ticker === t && rr.Year === 'CY2028');
+      let pe28 = null;
+      if (r28) {
+        const v28 = qCols.map(q => { const v = parseFloat(r28[q]); return isNaN(v) ? null : v; });
+        const nn28 = v28.filter(v => v !== null);
+        let effPrice = parseFloat(r.Price);
+        if (pe && cur) effPrice = pe * cur;
+        if (nn28.length > 0 && effPrice) pe28 = effPrice / nn28[nn28.length - 1];
+      }
+
+      const rev36 = pctChgVal(m3, m6);
+      const rev612 = pctChgVal(m6, m12);
+
       lookup[t] = {
-        ticker: t, eps26: cur, pe26: pe, pe27,
-        rev3, rev12,
+        ticker: t, price: parseFloat(r.Price) || null, eps26: cur,
+        pe26: pe, pe27, pe28,
+        rev3, rev36, rev612, rev12,
         retYtd: parsePctStr(r['Return_YTD']),
         ret3m: parsePctStr(r['Return_3m']),
         ret12m: parsePctStr(r['Return_12m']),
@@ -1743,6 +1759,17 @@ td.spark-cell { padding: 4px 2px; }
 
     // Build peer comparison tables
     const portfolioTickers = Object.keys(PEER_MAP);
+    const peerTableWidth = '900px';
+
+    const peerAddPct0 = (tr, val) => {
+      const td = document.createElement('td');
+      if (val !== null && val !== undefined && !isNaN(val)) {
+        td.textContent = val >= 0 ? '+' + Math.round(val) + '%' : '(' + Math.round(Math.abs(val)) + '%)';
+        td.className = val >= 0 ? 'pos' : 'neg';
+      }
+      td._sortVal = val || 0;
+      tr.appendChild(td);
+    };
 
     portfolioTickers.forEach(pt => {
       const peers = PEER_MAP[pt];
@@ -1753,19 +1780,53 @@ td.spark-cell { padding: 4px 2px; }
       sec.className = 'analysis-section';
       const h = document.createElement('h3');
       h.textContent = pt;
-      h.style.cssText = 'font-size:14px;color:#1565c0;margin-bottom:6px;';
+      h.style.cssText = 'font-size:15px;color:#1565c0;margin-bottom:6px;';
       sec.appendChild(h);
 
       const allTickers = [pt, ...peers];
-      const headers = ['Ticker', 'EPS \'26', 'P/E \'26', 'P/E \'27', '3m Rev', '12m Rev', 'L3M', 'YTD', '1Y'];
+      const colDefs = [
+        { label: 'Ticker', key: 'ticker', type: 'str' },
+        { label: 'Price', key: 'price', type: 'num' },
+        { label: 'EPS \'26', key: 'eps26', type: 'num' },
+        { label: "P/E '26", key: 'pe26', type: 'pe' },
+        { label: "P/E '27", key: 'pe27', type: 'pe' },
+        { label: "P/E '28", key: 'pe28', type: 'pe' },
+        { label: '3m%', key: 'rev3', type: 'pct' },
+        { label: '3-6m%', key: 'rev36', type: 'pct' },
+        { label: '6-12m%', key: 'rev612', type: 'pct' },
+        { label: '12m%', key: 'rev12', type: 'pct' },
+        { label: 'L3M', key: 'ret3m', type: 'pct' },
+        { label: 'YTD', key: 'retYtd', type: 'pct' },
+        { label: '1Y', key: 'ret12m', type: 'pct' },
+      ];
 
       const table = document.createElement('table');
       table.className = 'rank-table';
-      table.style.marginBottom = '16px';
+      table.style.cssText = 'margin-bottom:16px;width:' + peerTableWidth + ';font-size:13px;';
 
       const thead = document.createElement('thead');
       const hr = document.createElement('tr');
-      headers.forEach(h => { const th = document.createElement('th'); th.textContent = h; hr.appendChild(th); });
+      colDefs.forEach((col, ci) => {
+        const th = document.createElement('th');
+        th.textContent = col.label;
+        th.style.cursor = 'pointer';
+        th.addEventListener('click', () => {
+          const rows = [...tbody.children];
+          const curDir = th.classList.contains('sort-asc') ? 'asc' : 'desc';
+          const dir = curDir === 'desc' ? 'asc' : 'desc';
+          table.querySelectorAll('th').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+          th.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
+          const mult = dir === 'asc' ? 1 : -1;
+          rows.sort((a, b) => {
+            const av = a._rowData[col.key], bv = b._rowData[col.key];
+            if (typeof av === 'string' && typeof bv === 'string') return av.localeCompare(bv) * mult;
+            return ((av || 0) - (bv || 0)) * mult;
+          });
+          tbody.innerHTML = '';
+          rows.forEach((r, i) => { r.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd'; tbody.appendChild(r); });
+        });
+        hr.appendChild(th);
+      });
       thead.appendChild(hr);
       table.appendChild(thead);
 
@@ -1775,36 +1836,33 @@ td.spark-cell { padding: 4px 2px; }
         const tr = document.createElement('tr');
         tr.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
         if (t === pt) tr.style.fontWeight = '700';
+        tr._rowData = d || { ticker: t };
 
-        const addTd = (text, cls) => {
-          const td = document.createElement('td');
-          td.textContent = text || '';
-          if (cls) td.className = cls;
-          tr.appendChild(td);
-        };
-        const addPct = (val) => {
-          const td = document.createElement('td');
-          if (val !== null && val !== undefined && !isNaN(val)) {
-            td.textContent = val >= 0 ? '+' + val.toFixed(1) + '%' : '(' + Math.abs(val).toFixed(1) + '%)';
-            td.className = val >= 0 ? 'pos' : 'neg';
-          }
-          tr.appendChild(td);
-        };
-
-        addTd(t); // ticker
-        if (d) {
-          addTd(d.eps26 ? d.eps26.toFixed(2) : '');
-          addTd(d.pe26 ? d.pe26.toFixed(1) + 'x' : '');
-          addTd(d.pe27 ? d.pe27.toFixed(1) + 'x' : '');
-          addPct(d.rev3);
-          addPct(d.rev12);
-          addPct(d.ret3m);
-          addPct(d.retYtd);
-          addPct(d.ret12m);
+        if (!d) {
+          const td = document.createElement('td'); td.textContent = t; td.style.fontWeight = '600'; tr.appendChild(td);
+          for (let c = 1; c < colDefs.length; c++) tr.appendChild(document.createElement('td'));
         } else {
-          for (let c = 0; c < 8; c++) addTd('');
+          colDefs.forEach(col => {
+            const val = d[col.key];
+            if (col.type === 'str') {
+              const td = document.createElement('td'); td.textContent = val || ''; tr.appendChild(td);
+            } else if (col.type === 'num') {
+              const td = document.createElement('td');
+              if (col.key === 'price' && val) {
+                td.textContent = val > 10000 ? '$' + (val/1000).toFixed(0) + 'k' : '$' + Math.round(val);
+              } else {
+                td.textContent = val ? val.toFixed(2) : '';
+              }
+              tr.appendChild(td);
+            } else if (col.type === 'pe') {
+              const td = document.createElement('td');
+              td.textContent = val ? val.toFixed(1) + 'x' : '';
+              tr.appendChild(td);
+            } else if (col.type === 'pct') {
+              peerAddPct0(tr, val);
+            }
+          });
         }
-
         tbody.appendChild(tr);
       });
 
