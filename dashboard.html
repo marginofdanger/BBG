@@ -67,10 +67,7 @@ td.spark-cell { padding: 4px 2px; }
 .tab.active { color: #1565c0; background: #fff; border-color: #ccc; border-bottom: 2px solid #fff; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
-.agg-table { border-collapse: collapse; white-space: nowrap; font-size: 12px; table-layout: fixed; width: 100%; }
-.agg-table col.col-name { width: 220px; }
-.agg-table col.col-count { width: 35px; }
-.agg-table col.col-data { width: 55px; }
+.agg-table { border-collapse: collapse; white-space: nowrap; font-size: 12px; }
 .agg-table th, .agg-table td { padding: 5px 10px; border-bottom: 1px solid #e8e8e8; text-align: right; }
 .agg-table th { background: #fafafa; font-weight: 600; font-size: 11px; color: #555; }
 .agg-table th.agg-group { text-align: center; background: #f4f4f4; border-bottom: 2px solid #999; }
@@ -819,14 +816,6 @@ td.spark-cell { padding: 4px 2px; }
 
       const table = document.createElement('table');
       table.className = 'agg-table';
-
-      // Colgroup for consistent widths across both tables
-      const colgroup = document.createElement('colgroup');
-      const addCol = (cls) => { const c = document.createElement('col'); c.className = cls; colgroup.appendChild(c); };
-      addCol('col-name'); addCol('col-count');
-      const dataCols = displayYears.length * 4 + 3; // 4 per year + 3 returns
-      for (let i = 0; i < dataCols; i++) addCol('col-data');
-      table.appendChild(colgroup);
 
       // Header row 1
       const h1 = document.createElement('tr');
