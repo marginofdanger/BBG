@@ -842,7 +842,7 @@ td.spark-cell { padding: 4px 2px; }
       tab.classList.add('active');
       document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
       // Show Group By only on Companies tab
-      document.querySelector('.header-right').style.display = tab.dataset.tab === 'companies' ? '' : 'none';
+      document.querySelector('.header-right').style.visibility = tab.dataset.tab === 'companies' ? '' : 'hidden';
     });
   });
 
