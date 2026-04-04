@@ -116,12 +116,12 @@ td.spark-cell { padding: 4px 2px; }
   </div>
   <div class="header-center" id="sliderWrap">
     <div style="display:flex;align-items:center;gap:6px;">
-      <label>Estimates:</label>
+      <label style="width:60px;text-align:right;">Estimates:</label>
       <input type="range" id="estSlider" min="0" max="0" value="0" style="width:120px;">
       <span id="estDateLabel" style="font-weight:600;font-size:11px;min-width:80px;"></span>
     </div>
     <div style="display:flex;align-items:center;gap:6px;">
-      <label>Prices:</label>
+      <label style="width:60px;text-align:right;">Prices:</label>
       <input type="range" id="priceSlider" min="0" max="0" value="0" style="width:120px;">
       <span id="priceDateLabel" style="font-weight:600;font-size:11px;min-width:80px;"></span>
     </div>
@@ -841,6 +841,8 @@ td.spark-cell { padding: 4px 2px; }
       document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
       tab.classList.add('active');
       document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+      // Show Group By only on Companies tab
+      document.querySelector('.header-right').style.display = tab.dataset.tab === 'companies' ? '' : 'none';
     });
   });
 
