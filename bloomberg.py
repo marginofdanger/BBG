@@ -43,15 +43,24 @@ def estimate_history(ticker, target_years, lookback_months=24, field="BEST_EPS")
             seg_end = today.strftime("%Y-%m-%d")
         segments.append((seg_start, seg_end, obs_year))
 
-    # Pull data for each target year using absolute period references.
-    # Use "NNY" format (e.g. "26Y" for FY2026) which maps to fixed fiscal years
-    # regardless of observation date. Relative offsets (NCY) are off by one year
-    # for historical queries and should NOT be used.
+    # For equities: use "NNY" absolute period format (e.g. "26Y" for FY2026).
+    # For indices: "NNY" doesn't work — use "NBF" relative offsets instead.
+    #   1BF = current FY, 2BF = next FY, etc.
+    #   The offset shifts each calendar year, so we compute it per segment.
+    is_index = ticker.endswith(" Index")
+
     raw = {ty: {} for ty in target_years}
     for seg_start, seg_end, obs_year in segments:
         for ty in target_years:
-            # Use two-digit absolute year: "25Y", "26Y", etc.
-            period = f"{ty % 100}Y"
+            if is_index:
+                # For indices: NBF relative override. 1BF = obs_year's FY.
+                offset = ty - obs_year + 1
+                if offset < 1:
+                    continue
+                period = f"{offset}BF"
+            else:
+                # For equities: absolute year override
+                period = f"{ty % 100}Y"
             overrides = [("BEST_FPERIOD_OVERRIDE", period)]
             if short_ticker in USD_OVERRIDE_TICKERS:
                 overrides.append(("EQY_FUND_CRNCY", "USD"))
