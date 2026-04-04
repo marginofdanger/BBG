@@ -4102,5 +4102,185 @@
     "bbg": "VST US Equity",
     "category": "Utilities",
     "raw": "VST US"
+  },
+  {
+    "ticker": "AI",
+    "bbg": "AI US Equity",
+    "category": "Technology",
+    "raw": "AI US"
+  },
+  {
+    "ticker": "PATH",
+    "bbg": "PATH US Equity",
+    "category": "Software",
+    "raw": "PATH US"
+  },
+  {
+    "ticker": "ON",
+    "bbg": "ON US Equity",
+    "category": "Technology",
+    "raw": "ON US"
+  },
+  {
+    "ticker": "MCHP",
+    "bbg": "MCHP US Equity",
+    "category": "Technology",
+    "raw": "MCHP US"
+  },
+  {
+    "ticker": "NXPI",
+    "bbg": "NXPI US Equity",
+    "category": "Technology",
+    "raw": "NXPI US"
+  },
+  {
+    "ticker": "HIMS",
+    "bbg": "HIMS US Equity",
+    "category": "Healthcare providers",
+    "raw": "HIMS US"
+  },
+  {
+    "ticker": "DOCS",
+    "bbg": "DOCS US Equity",
+    "category": "Healthcare providers",
+    "raw": "DOCS US"
+  },
+  {
+    "ticker": "COIN",
+    "bbg": "COIN US Equity",
+    "category": "Financials and related",
+    "raw": "COIN US"
+  },
+  {
+    "ticker": "SOFI",
+    "bbg": "SOFI US Equity",
+    "category": "Financials and related",
+    "raw": "SOFI US"
+  },
+  {
+    "ticker": "CPNG",
+    "bbg": "CPNG US Equity",
+    "category": "Retailers",
+    "raw": "CPNG US"
+  },
+  {
+    "ticker": "MELI",
+    "bbg": "MELI US Equity",
+    "category": "Retailers",
+    "raw": "MELI US"
+  },
+  {
+    "ticker": "SE",
+    "bbg": "SE US Equity",
+    "category": "Internet",
+    "raw": "SE US"
+  },
+  {
+    "ticker": "GTLB",
+    "bbg": "GTLB US Equity",
+    "category": "Software",
+    "raw": "GTLB US"
+  },
+  {
+    "ticker": "CFLT",
+    "bbg": "CFLT US Equity",
+    "category": "Software",
+    "raw": "CFLT US"
+  },
+  {
+    "ticker": "IONQ",
+    "bbg": "IONQ US Equity",
+    "category": "Technology",
+    "raw": "IONQ US"
+  },
+  {
+    "ticker": "ZS",
+    "bbg": "ZS US Equity",
+    "category": "Software",
+    "raw": "ZS US"
+  },
+  {
+    "ticker": "S",
+    "bbg": "S US Equity",
+    "category": "Software",
+    "raw": "S US"
+  },
+  {
+    "ticker": "CYBR",
+    "bbg": "CYBR US Equity",
+    "category": "Software",
+    "raw": "CYBR US"
+  },
+  {
+    "ticker": "AFRM",
+    "bbg": "AFRM US Equity",
+    "category": "Payments",
+    "raw": "AFRM US"
+  },
+  {
+    "ticker": "GRAB",
+    "bbg": "GRAB US Equity",
+    "category": "Internet",
+    "raw": "GRAB US"
+  },
+  {
+    "ticker": "GLBE",
+    "bbg": "GLBE US Equity",
+    "category": "Internet",
+    "raw": "GLBE US"
+  },
+  {
+    "ticker": "DUOL",
+    "bbg": "DUOL US Equity",
+    "category": "Internet",
+    "raw": "DUOL US"
+  },
+  {
+    "ticker": "RKLB",
+    "bbg": "RKLB US Equity",
+    "category": "Aerospace / defense",
+    "raw": "RKLB US"
+  },
+  {
+    "ticker": "INSP",
+    "bbg": "INSP US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "INSP US"
+  },
+  {
+    "ticker": "GDRX",
+    "bbg": "GDRX US Equity",
+    "category": "Healthcare providers",
+    "raw": "GDRX US"
+  },
+  {
+    "ticker": "OSCR",
+    "bbg": "OSCR US Equity",
+    "category": "Managed Care",
+    "raw": "OSCR US"
+  },
+  {
+    "ticker": "FSLR",
+    "bbg": "FSLR US Equity",
+    "category": "Energy",
+    "raw": "FSLR US"
+  },
+  {
+    "ticker": "ENPH",
+    "bbg": "ENPH US Equity",
+    "category": "Energy",
+    "raw": "ENPH US"
+  },
+  {
+    "ticker": "RUN",
+    "bbg": "RUN US Equity",
+    "category": "Energy",
+    "raw": "RUN US"
+  },
+  {
+    "ticker": "PLUG",
+    "bbg": "PLUG US Equity",
+    "category": "Energy",
+    "raw": "PLUG US"
   }
 ]
