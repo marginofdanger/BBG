@@ -89,10 +89,11 @@ td.spark-cell { padding: 4px 2px; }
 .analysis-columns { display: flex; gap: 24px; }
 .analysis-columns > div { flex: 1; }
 .rank-table { border-collapse: collapse; font-size: 11px; width: 100%; }
-.rank-table th, .rank-table td { padding: 3px 8px; border-bottom: 1px solid #e8e8e8; text-align: right; }
-.rank-table th { background: #fafafa; font-weight: 600; font-size: 10px; color: #555; border-bottom: 2px solid #ccc; }
+.rank-table th, .rank-table td { padding: 3px 5px; border-bottom: 1px solid #e8e8e8; text-align: right; }
+.rank-table th { background: #fafafa; font-weight: 600; font-size: 10px; color: #555; border-bottom: 2px solid #ccc; cursor: pointer; user-select: none; }
+.rank-table th:hover { background: #e8e8e8; }
 .rank-table td:first-child { text-align: left; font-weight: 600; }
-.rank-table .rank-num { color: #888; font-weight: 400; text-align: center; width: 25px; }
+.rank-table td:nth-child(1) { text-align: center; width: 20px; color: #888; font-weight: 400; }
 .scatter-wrap { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
 .scatter-chart { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; }
 .scatter-chart h4 { font-size: 12px; color: #555; margin-bottom: 8px; text-align: center; }
@@ -1108,12 +1109,8 @@ td.spark-cell { padding: 4px 2px; }
 
       const W = 520, H = 400, pad = { top: 20, right: 30, bottom: 40, left: 50 };
       const pw = W - pad.left - pad.right, ph = H - pad.top - pad.bottom;
-      const xMin = -50, xMax = 50;
+      const xMin = -50, xMax = 50, yMin = -50, yMax = 100;
       const pts = stocks.filter(s => s[xKey] !== null && s[yKey] !== null && s[yKey] !== 0);
-      const yVals = pts.map(s => s[yKey]);
-      let yMin = Math.min(...yVals, -50), yMax = Math.max(...yVals, 50);
-      // Round to nice bounds
-      yMin = Math.floor(yMin / 10) * 10; yMax = Math.ceil(yMax / 10) * 10;
 
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('width', W); svg.setAttribute('height', H);
@@ -1160,6 +1157,12 @@ td.spark-cell { padding: 4px 2px; }
       yLbl.setAttribute('transform', `rotate(-90, 12, ${pad.top + ph / 2})`);
       yLbl.textContent = yLabel; svg.appendChild(yLbl);
 
+      // Tooltip div
+      const tooltip = document.createElement('div');
+      tooltip.style.cssText = 'position:absolute;display:none;background:#333;color:#fff;padding:4px 8px;border-radius:3px;font-size:11px;pointer-events:none;white-space:nowrap;z-index:10;';
+      container.style.position = 'relative';
+      container.appendChild(tooltip);
+
       // Points
       pts.forEach(s => {
         const cx = toX(s[xKey]);
@@ -1172,13 +1175,22 @@ td.spark-cell { padding: 4px 2px; }
         c.setAttribute('opacity', isPortfolio ? 0.9 : 0.5);
         c.setAttribute('stroke', isPortfolio ? '#0d47a1' : 'none');
         c.setAttribute('stroke-width', isPortfolio ? 1 : 0);
+        c.style.cursor = 'pointer';
 
-        // Tooltip
-        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
-        title.textContent = `${s.ticker}: Rev ${s[xKey]?.toFixed(1)}%, Ret ${s[yKey]?.toFixed(1)}%`;
-        c.appendChild(title);
+        c.addEventListener('mouseenter', (e) => {
+          c.setAttribute('r', isPortfolio ? 6 : 4);
+          c.setAttribute('opacity', 1);
+          tooltip.textContent = `${s.ticker}: Rev ${s[xKey]?.toFixed(1)}%, Ret ${s[yKey]?.toFixed(1)}%`;
+          tooltip.style.display = 'block';
+          tooltip.style.left = (cx + 10) + 'px';
+          tooltip.style.top = (cy - 10) + 'px';
+        });
+        c.addEventListener('mouseleave', () => {
+          c.setAttribute('r', isPortfolio ? 4 : 2.5);
+          c.setAttribute('opacity', isPortfolio ? 0.9 : 0.5);
+          tooltip.style.display = 'none';
+        });
 
-        // Label for portfolio
         if (isPortfolio) {
           const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
           lbl.setAttribute('x', cx + 6); lbl.setAttribute('y', cy + 3);
@@ -1222,9 +1234,34 @@ td.spark-cell { padding: 4px 2px; }
         table.className = 'rank-table';
         const thead = document.createElement('thead');
         const hr = document.createElement('tr');
-        ['#', 'Ticker', 'EPS Rev', retLabel, 'YTD'].forEach(h => {
+        const colDefs = [
+          { label: '#', key: null },
+          { label: 'Ticker', key: 'ticker' },
+          { label: 'EPS Rev', key: sortKey },
+          { label: retLabel, key: retKey },
+          { label: 'YTD', key: 'retYtd' },
+        ];
+        colDefs.forEach(col => {
           const th = document.createElement('th');
-          th.textContent = h; hr.appendChild(th);
+          th.textContent = col.label;
+          if (col.key) {
+            th.addEventListener('click', () => {
+              const curDir = th.classList.contains('sort-asc') ? 'asc' : 'desc';
+              const newDir = curDir === 'desc' ? 'asc' : 'desc';
+              table.querySelectorAll('th').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+              th.classList.add(newDir === 'asc' ? 'sort-asc' : 'sort-desc');
+              const mult = newDir === 'asc' ? 1 : -1;
+              const rows = [...tbody.children];
+              rows.sort((a, b) => {
+                const av = a._rankData[col.key], bv = b._rankData[col.key];
+                if (typeof av === 'string') return av.localeCompare(bv) * mult;
+                return ((av || 0) - (bv || 0)) * mult;
+              });
+              tbody.innerHTML = '';
+              rows.forEach((r, i) => { r.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd'; r.children[0].textContent = i + 1; tbody.appendChild(r); });
+            });
+          }
+          hr.appendChild(th);
         });
         thead.appendChild(hr); table.appendChild(thead);
 
@@ -1232,7 +1269,8 @@ td.spark-cell { padding: 4px 2px; }
         list.forEach((s, i) => {
           const tr = document.createElement('tr');
           tr.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
-          const tdR = document.createElement('td'); tdR.className = 'rank-num'; tdR.textContent = i + 1; tr.appendChild(tdR);
+          tr._rankData = { ticker: s.ticker, [sortKey]: s[sortKey] || 0, [retKey]: s[retKey] || 0, retYtd: s.retYtd || 0 };
+          const tdR = document.createElement('td'); tdR.textContent = i + 1; tr.appendChild(tdR);
           const tdT = document.createElement('td'); tdT.textContent = s.ticker; tr.appendChild(tdT);
           appendAggCell(tr, s[sortKey]);
           appendAggCell(tr, s[retKey]);
