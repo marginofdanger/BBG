@@ -22,6 +22,10 @@ th { background: #fafafa; position: sticky; top: 0; z-index: 2; font-weight: 600
 th.col-group { border-bottom: 2px solid #999; text-align: center; background: #f4f4f4; }
 td:first-child, th:first-child { text-align: left; position: sticky; left: 0; z-index: 1; background: inherit; }
 th:first-child { z-index: 3; }
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable:hover { background: #e8e8e8; }
+th.sort-asc::after { content: ' ▲'; font-size: 9px; }
+th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 .row-even { background: #fff; }
 .row-odd { background: #f7f7f7; }
 .row-even td:first-child { background: #fff; }
@@ -34,20 +38,14 @@ th:first-child { z-index: 3; }
 .eps-tag { font-size: 10px; font-weight: 400; color: #888; margin-left: 2px; vertical-align: super; }
 .sparkline { cursor: pointer; vertical-align: middle; }
 .sparkline:hover { opacity: 0.7; }
-
-/* Year section separator - thick left border */
 .year-sep { border-left: 3px solid #bbb; }
-
-/* Detail row */
 .detail-row td { text-align: left !important; padding: 8px 16px; font-size: 11px; background: #f8f9fc !important; color: #444; border-bottom: 1px solid #ddd; }
 .detail-row td:first-child { background: #f8f9fc !important; }
-.detail-table { border-collapse: collapse; margin: 4px 0 4px 0; font-size: 11px; }
+.detail-table { border-collapse: collapse; margin: 4px 0; font-size: 11px; }
 .detail-table th { position: static; background: #eef1f5; font-weight: 600; font-size: 10px; color: #555; padding: 3px 8px; border: 1px solid #ddd; text-align: center; }
 .detail-table td { padding: 3px 8px; border: 1px solid #eee; text-align: right; font-size: 11px; }
 .detail-table .yr-label { text-align: left; font-weight: 600; color: #333; background: #f4f6f9; }
 .detail-table .chg-row td { font-size: 10px; color: #888; border-top: none; padding-top: 0; }
-
-/* Methodology */
 .methodology { padding: 12px 24px; border-top: 1px solid #e0e0e0; font-size: 10px; color: #999; max-width: 1000px; line-height: 1.5; }
 .methodology h3 { font-size: 11px; color: #666; margin-bottom: 4px; }
 </style>
@@ -99,8 +97,7 @@ th:first-child { z-index: 3; }
   loadSnapshot(currentDate);
 
   async function loadSnapshot(date) {
-    const fmt = formatDate(date);
-    document.getElementById('snapshotSubtitle').textContent = 'BBG consensus estimates as of ' + fmt;
+    document.getElementById('snapshotSubtitle').textContent = 'BBG consensus estimates as of ' + formatDate(date);
     try {
       const resp = await fetch('output/snapshots/' + date + '.csv');
       if (!resp.ok) throw new Error('CSV not found: ' + date);
@@ -113,9 +110,8 @@ th:first-child { z-index: 3; }
     }
   }
 
-  function formatDate(dateStr) {
-    const d = new Date(dateStr + 'T00:00:00');
-    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  function formatDate(s) {
+    return new Date(s + 'T00:00:00').toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   }
 
   function parseCSV(text) {
@@ -134,19 +130,21 @@ th:first-child { z-index: 3; }
     return { headers, rows, qCols };
   }
 
-  // Column count per year: 4 estimates + sparkline + 4 changes = 9
-  const COLS_PER_YEAR = 9;
+  const COLS_PER_YEAR = 9; // 4 estimates + sparkline + 4 changes
   const displayYears = ['CY2026', 'CY2027', 'CY2028'];
+  // Total: Ticker + Price + P/E 26 + P/E 27 + FYE + (9 * 3 years) + 3 returns = 5 + 27 + 3 = 35
+  let currentQCols = [];
 
   function render(data) {
     const { rows, qCols } = data;
+    currentQCols = qCols;
 
     const tickers = [];
     const tickerMap = {};
     rows.forEach(r => {
       const t = r.Ticker;
       if (!tickerMap[t]) {
-        tickerMap[t] = { ticker: t, group: r.Group, epsType: r['EPS Type'], years: {} };
+        tickerMap[t] = { ticker: t, group: r.Group, epsType: r['EPS Type'], fye: r['FYE'] || '', years: {} };
         tickers.push(tickerMap[t]);
       }
       tickerMap[t].years[r.Year] = r;
@@ -154,146 +152,251 @@ th:first-child { z-index: 3; }
 
     const portfolio = tickers.filter(t => t.group === 'Portfolio');
     const watchlist = tickers.filter(t => t.group === 'Watchlist');
+    const totalCols = 5 + displayYears.length * COLS_PER_YEAR + 3;
 
     const table = document.createElement('table');
-    const totalCols = 3 + displayYears.length * COLS_PER_YEAR + 3;
+    table.id = 'mainTable';
 
-    // Header row 1: column groups
-    const colGroupRow = document.createElement('tr');
-    addTH(colGroupRow, '', 1, 'col-group');
-    addTH(colGroupRow, '', 1, 'col-group');
-    addTH(colGroupRow, '', 1, 'col-group');
-    displayYears.forEach(y => addTH(colGroupRow, y, COLS_PER_YEAR, 'col-group'));
-    addTH(colGroupRow, 'Returns', 3, 'col-group');
+    // Header row 1
+    const h1 = document.createElement('tr');
+    addTH(h1, '', 1, 'col-group'); // Ticker
+    addTH(h1, '', 1, 'col-group'); // Price
+    addTH(h1, 'P/E', 2, 'col-group'); // P/E 26 + 27
+    addTH(h1, '', 1, 'col-group'); // FYE
+    displayYears.forEach(y => addTH(h1, y, COLS_PER_YEAR, 'col-group'));
+    addTH(h1, 'Returns', 3, 'col-group');
 
-    // Header row 2: sub-headers
-    const subRow = document.createElement('tr');
-    addTH(subRow, 'Ticker');
-    addTH(subRow, 'Price');
-    addTH(subRow, 'P/E');
-    displayYears.forEach(() => {
-      addTH(subRow, 'Cur', 0, 'year-sep');
-      addTH(subRow, '-3m');
-      addTH(subRow, '-6m');
-      addTH(subRow, '-1yr');
-      addTH(subRow, ''); // sparkline
-      addTH(subRow, '3m%');
-      addTH(subRow, '3-6m%');
-      addTH(subRow, '6-12m%');
-      addTH(subRow, '12m%');
+    // Header row 2 (sortable)
+    const h2 = document.createElement('tr');
+    addSortTH(h2, 'Ticker', 'ticker');
+    addSortTH(h2, 'Price', 'price');
+    addSortTH(h2, "'26", 'pe26');
+    addSortTH(h2, "'27", 'pe27');
+    addTH(h2, 'FYE');
+    displayYears.forEach(yr => {
+      addSortTH(h2, 'Cur', 'cur_' + yr, 'year-sep');
+      addTH(h2, '-3m');
+      addTH(h2, '-6m');
+      addTH(h2, '-1yr');
+      addTH(h2, '');
+      addTH(h2, '3m%');
+      addTH(h2, '3-6m%');
+      addTH(h2, '6-12m%');
+      addSortTH(h2, '12m%', 'rev12_' + yr);
     });
-    addTH(subRow, '12m', 0, 'year-sep');
-    addTH(subRow, 'YTD');
-    addTH(subRow, '3m');
+    addSortTH(h2, '12m', 'ret12', 'year-sep');
+    addSortTH(h2, 'YTD', 'retytd');
+    addSortTH(h2, '3m', 'ret3m');
 
     const thead = document.createElement('thead');
-    thead.appendChild(colGroupRow);
-    thead.appendChild(subRow);
+    thead.appendChild(h1);
+    thead.appendChild(h2);
     table.appendChild(thead);
 
+    // Store parsed data for sorting
+    const tickerData = { portfolio, watchlist, qCols };
+    table._tickerData = tickerData;
+
     const tbody = document.createElement('tbody');
-
-    function buildGroup(label, list) {
-      const gr = document.createElement('tr');
-      gr.className = 'group-header';
-      const gdTd = document.createElement('td');
-      gdTd.colSpan = totalCols;
-      gdTd.textContent = label;
-      gr.appendChild(gdTd);
-      tbody.appendChild(gr);
-
-      list.forEach((tk, idx) => {
-        const rowEl = document.createElement('tr');
-        rowEl.className = idx % 2 === 0 ? 'row-even' : 'row-odd';
-
-        // Ticker
-        const tdTicker = document.createElement('td');
-        tdTicker.className = 'ticker-cell';
-        const tag = tk.epsType === 'Adj' ? '[A]' : '[G]';
-        tdTicker.innerHTML = tk.ticker + '<span class="eps-tag">' + tag + '</span>';
-        rowEl.appendChild(tdTicker);
-
-        // Price
-        const anyRow = tk.years['CY2025'] || tk.years['CY2026'] || Object.values(tk.years)[0];
-        const price = parseFloat(anyRow.Price);
-        appendCell(rowEl, isNaN(price) ? '' : Math.round(price).toString());
-
-        // P/E from CY2026
-        const cy26 = tk.years['CY2026'];
-        const pe = cy26 ? parseFloat(cy26.PE) : NaN;
-        appendCell(rowEl, isNaN(pe) ? '' : pe.toFixed(1) + 'x');
-
-        // Year columns
-        displayYears.forEach(yr => {
-          const yearRow = tk.years[yr];
-          const vals = qCols.map(q => {
-            if (!yearRow) return null;
-            const v = parseFloat(yearRow[q]);
-            return isNaN(v) ? null : v;
-          });
-
-          const nonNull = [];
-          vals.forEach((v, i) => { if (v !== null) nonNull.push({ v, i }); });
-
-          const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
-          const m3 = getFromEnd(nonNull, 1);
-          const m6 = getFromEnd(nonNull, 2);
-          const m12 = getFromEnd(nonNull, 4);
-
-          // Estimates - first cell gets year separator border
-          const curTd = appendCell(rowEl, fmtEst(cur));
-          curTd.classList.add('year-sep');
-          appendCell(rowEl, fmtEst(m3));
-          appendCell(rowEl, fmtEst(m6));
-          appendCell(rowEl, fmtEst(m12));
-
-          // Sparkline
-          const sparkTd = document.createElement('td');
-          const sparkVals = vals.filter(v => v !== null);
-          if (sparkVals.length >= 2) {
-            const svg = buildSparkline(sparkVals, 70, 20);
-            svg.classList.add('sparkline');
-            svg.addEventListener('click', (e) => {
-              e.stopPropagation();
-              toggleDetail(tk, rowEl, qCols, totalCols);
-            });
-            sparkTd.appendChild(svg);
-          }
-          rowEl.appendChild(sparkTd);
-
-          // % changes: 3m, 3-6m, 6-12m, 12m
-          appendPctCell(rowEl, cur, m3);
-          appendPctCell(rowEl, m3, m6);
-          appendPctCell(rowEl, m6, m12);
-          appendPctCell(rowEl, cur, m12);
-        });
-
-        // Returns - first cell gets separator
-        const retRow = tk.years['CY2025'] || Object.values(tk.years)[0];
-        const r12 = appendReturnCell(rowEl, retRow['Return_12m']);
-        r12.classList.add('year-sep');
-        appendReturnCell(rowEl, retRow['Return_YTD']);
-        appendReturnCell(rowEl, retRow['Return_3m']);
-
-        tbody.appendChild(rowEl);
-      });
-    }
-
-    buildGroup('Portfolio', portfolio);
+    buildGroup(tbody, 'Portfolio', portfolio, qCols, totalCols);
     const spacer = document.createElement('tr');
     spacer.className = 'group-spacer';
     const spTd = document.createElement('td');
     spTd.colSpan = totalCols;
     spacer.appendChild(spTd);
     tbody.appendChild(spacer);
-    buildGroup('Watchlist', watchlist);
-
+    buildGroup(tbody, 'Watchlist', watchlist, qCols, totalCols);
     table.appendChild(tbody);
+
     const wrap = document.getElementById('tableWrap');
     wrap.innerHTML = '';
     wrap.appendChild(table);
   }
 
+  function buildGroup(tbody, label, list, qCols, totalCols) {
+    const gr = document.createElement('tr');
+    gr.className = 'group-header';
+    const gdTd = document.createElement('td');
+    gdTd.colSpan = totalCols;
+    gdTd.textContent = label;
+    gr.appendChild(gdTd);
+    tbody.appendChild(gr);
+
+    list.forEach((tk, idx) => buildTickerRow(tbody, tk, idx, qCols, totalCols));
+  }
+
+  function buildTickerRow(tbody, tk, idx, qCols, totalCols) {
+    const rowEl = document.createElement('tr');
+    rowEl.className = idx % 2 === 0 ? 'row-even' : 'row-odd';
+    // Store sort values on the row
+    rowEl._sortData = {};
+
+    // Ticker
+    const tdTicker = document.createElement('td');
+    tdTicker.className = 'ticker-cell';
+    const tag = tk.epsType === 'Adj' ? '[A]' : '[G]';
+    tdTicker.innerHTML = tk.ticker + '<span class="eps-tag">' + tag + '</span>';
+    rowEl.appendChild(tdTicker);
+    rowEl._sortData.ticker = tk.ticker;
+
+    // Price with $
+    const anyRow = tk.years['CY2025'] || tk.years['CY2026'] || Object.values(tk.years)[0];
+    const price = parseFloat(anyRow.Price);
+    appendCell(rowEl, isNaN(price) ? '' : '$' + Math.round(price));
+    rowEl._sortData.price = isNaN(price) ? 0 : price;
+
+    // P/E CY2026
+    const cy26 = tk.years['CY2026'];
+    const pe26 = cy26 ? parseFloat(cy26.PE) : NaN;
+    appendCell(rowEl, isNaN(pe26) ? '' : pe26.toFixed(1) + 'x');
+    rowEl._sortData.pe26 = isNaN(pe26) ? 999 : pe26;
+
+    // P/E CY2027
+    const cy27 = tk.years['CY2027'];
+    let pe27 = NaN;
+    if (cy27 && price) {
+      const vals27 = qCols.map(q => { const v = parseFloat(cy27[q]); return isNaN(v) ? null : v; });
+      const nonNull27 = vals27.filter(v => v !== null);
+      if (nonNull27.length > 0) pe27 = price / nonNull27[nonNull27.length - 1];
+    }
+    appendCell(rowEl, isNaN(pe27) ? '' : pe27.toFixed(1) + 'x');
+    rowEl._sortData.pe27 = isNaN(pe27) ? 999 : pe27;
+
+    // FYE
+    appendCell(rowEl, tk.fye || '');
+
+    // Year columns
+    displayYears.forEach(yr => {
+      const yearRow = tk.years[yr];
+      const vals = qCols.map(q => {
+        if (!yearRow) return null;
+        const v = parseFloat(yearRow[q]);
+        return isNaN(v) ? null : v;
+      });
+
+      const nonNull = [];
+      vals.forEach((v, i) => { if (v !== null) nonNull.push({ v, i }); });
+
+      const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
+      const m3 = getFromEnd(nonNull, 1);
+      const m6 = getFromEnd(nonNull, 2);
+      const m12 = getFromEnd(nonNull, 4);
+
+      const curTd = appendCell(rowEl, fmtEst(cur));
+      curTd.classList.add('year-sep');
+      rowEl._sortData['cur_' + yr] = cur || 0;
+      appendCell(rowEl, fmtEst(m3));
+      appendCell(rowEl, fmtEst(m6));
+      appendCell(rowEl, fmtEst(m12));
+
+      // Sparkline
+      const sparkTd = document.createElement('td');
+      const sparkVals = vals.filter(v => v !== null);
+      if (sparkVals.length >= 2) {
+        const svg = buildSparkline(sparkVals, 70, 20);
+        svg.classList.add('sparkline');
+        svg.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleDetail(tk, rowEl, qCols, totalCols);
+        });
+        sparkTd.appendChild(svg);
+      }
+      rowEl.appendChild(sparkTd);
+
+      // % changes: 3m, 3-6m, 6-12m, 12m
+      appendPctCell(rowEl, cur, m3);
+      appendPctCell(rowEl, m3, m6);
+      appendPctCell(rowEl, m6, m12);
+      const rev12 = pctChgVal(cur, m12);
+      appendPctCell(rowEl, cur, m12);
+      rowEl._sortData['rev12_' + yr] = rev12 || 0;
+    });
+
+    // Returns
+    const retRow = tk.years['CY2025'] || Object.values(tk.years)[0];
+    const ret12 = parsePctStr(retRow['Return_12m']);
+    const retytd = parsePctStr(retRow['Return_YTD']);
+    const ret3m = parsePctStr(retRow['Return_3m']);
+    const r12td = appendReturnCell(rowEl, retRow['Return_12m']);
+    r12td.classList.add('year-sep');
+    rowEl._sortData.ret12 = ret12;
+    appendReturnCell(rowEl, retRow['Return_YTD']);
+    rowEl._sortData.retytd = retytd;
+    appendReturnCell(rowEl, retRow['Return_3m']);
+    rowEl._sortData.ret3m = ret3m;
+
+    tbody.appendChild(rowEl);
+  }
+
+  // --- Sorting ---
+  let sortState = { key: null, dir: 'asc' };
+
+  function addSortTH(row, text, sortKey, cls) {
+    const th = document.createElement('th');
+    th.textContent = text;
+    th.className = 'sortable' + (cls ? ' ' + cls : '');
+    th.dataset.sortKey = sortKey;
+    th.addEventListener('click', () => handleSort(sortKey, th));
+    row.appendChild(th);
+    return th;
+  }
+
+  function handleSort(key, th) {
+    // Toggle direction
+    if (sortState.key === key) {
+      sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
+    } else {
+      sortState.key = key;
+      sortState.dir = key === 'ticker' ? 'asc' : 'desc'; // default desc for numbers
+    }
+
+    // Update header styling
+    document.querySelectorAll('th.sortable').forEach(h => h.classList.remove('sort-asc', 'sort-desc'));
+    th.classList.add(sortState.dir === 'asc' ? 'sort-asc' : 'sort-desc');
+
+    // Sort each group independently
+    const table = document.getElementById('mainTable');
+    const tbody = table.querySelector('tbody');
+    const groups = [];
+    let currentGroup = null;
+
+    for (const row of [...tbody.children]) {
+      if (row.classList.contains('group-header')) {
+        currentGroup = { header: row, rows: [] };
+        groups.push(currentGroup);
+      } else if (row.classList.contains('group-spacer')) {
+        if (currentGroup) currentGroup.spacerAfter = row;
+      } else if (row.classList.contains('detail-row')) {
+        // skip detail rows during sort
+      } else if (currentGroup) {
+        currentGroup.rows.push(row);
+      }
+    }
+
+    const dir = sortState.dir === 'asc' ? 1 : -1;
+    groups.forEach(g => {
+      g.rows.sort((a, b) => {
+        const av = a._sortData ? a._sortData[key] : 0;
+        const bv = b._sortData ? b._sortData[key] : 0;
+        if (typeof av === 'string' && typeof bv === 'string') return av.localeCompare(bv) * dir;
+        return ((av || 0) - (bv || 0)) * dir;
+      });
+    });
+
+    // Rebuild tbody
+    tbody.innerHTML = '';
+    groups.forEach((g, gi) => {
+      tbody.appendChild(g.header);
+      g.rows.forEach((r, i) => {
+        r.className = i % 2 === 0 ? 'row-even' : 'row-odd';
+        r.querySelector('td:first-child').style.background = i % 2 === 0 ? '#fff' : '#f7f7f7';
+        tbody.appendChild(r);
+      });
+      if (g.spacerAfter) tbody.appendChild(g.spacerAfter);
+    });
+  }
+
+  // --- Helpers ---
   function addTH(row, text, colspan, cls) {
     const th = document.createElement('th');
     th.textContent = text;
@@ -309,16 +412,24 @@ th:first-child { z-index: 3; }
     return idx >= 0 ? nonNull[idx].v : null;
   }
 
-  function fmtEst(v) {
-    if (v === null || v === undefined) return '';
-    return v.toFixed(2);
+  function fmtEst(v) { return v === null || v === undefined ? '' : v.toFixed(2); }
+
+  function pctChgVal(cur, base) {
+    if (cur === null || base === null || base === 0) return null;
+    return ((cur - base) / Math.abs(base)) * 100;
   }
 
   function fmtPctChg(cur, base) {
-    if (cur === null || base === null || base === 0) return '';
-    const pct = ((cur - base) / Math.abs(base)) * 100;
+    const pct = pctChgVal(cur, base);
+    if (pct === null) return '';
     if (pct >= 0) return '+' + pct.toFixed(0) + '%';
     return '(' + Math.abs(pct).toFixed(0) + '%)';
+  }
+
+  function parsePctStr(s) {
+    if (!s) return 0;
+    const n = parseFloat(s.replace('%', '').replace('+', '').replace('(', '-').replace(')', ''));
+    return isNaN(n) ? 0 : n;
   }
 
   function appendCell(row, text, isChange) {
@@ -333,8 +444,7 @@ th:first-child { z-index: 3; }
   }
 
   function appendPctCell(row, cur, base) {
-    const text = fmtPctChg(cur, base);
-    return appendCell(row, text, true);
+    return appendCell(row, fmtPctChg(cur, base), true);
   }
 
   function appendReturnCell(row, rawVal) {
@@ -342,22 +452,14 @@ th:first-child { z-index: 3; }
     if (!rawVal) { row.appendChild(td); return td; }
     const num = parseFloat(rawVal);
     if (isNaN(num)) { td.textContent = rawVal; row.appendChild(td); return td; }
-    if (num >= 0) {
-      td.textContent = '+' + Math.abs(num).toFixed(1) + '%';
-      td.className = 'pos';
-    } else {
-      td.textContent = '(' + Math.abs(num).toFixed(1) + '%)';
-      td.className = 'neg';
-    }
+    if (num >= 0) { td.textContent = '+' + num.toFixed(1) + '%'; td.className = 'pos'; }
+    else { td.textContent = '(' + Math.abs(num).toFixed(1) + '%)'; td.className = 'neg'; }
     row.appendChild(td);
     return td;
   }
 
   function buildSparkline(vals, w, h) {
-    const pad = 2;
-    const min = Math.min(...vals);
-    const max = Math.max(...vals);
-    const range = max - min || 1;
+    const pad = 2, min = Math.min(...vals), max = Math.max(...vals), range = max - min || 1;
     const points = vals.map((v, i) => {
       const x = pad + (i / (vals.length - 1)) * (w - 2 * pad);
       const y = pad + (1 - (v - min) / range) * (h - 2 * pad);
@@ -365,35 +467,27 @@ th:first-child { z-index: 3; }
     });
     const color = vals[vals.length - 1] >= vals[0] ? '#2e7d32' : '#c62828';
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('width', w);
-    svg.setAttribute('height', h);
+    svg.setAttribute('width', w); svg.setAttribute('height', h);
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
-    const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-    polyline.setAttribute('points', points.join(' '));
-    polyline.setAttribute('fill', 'none');
-    polyline.setAttribute('stroke', color);
-    polyline.setAttribute('stroke-width', '1.5');
-    svg.appendChild(polyline);
+    const pl = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+    pl.setAttribute('points', points.join(' ')); pl.setAttribute('fill', 'none');
+    pl.setAttribute('stroke', color); pl.setAttribute('stroke-width', '1.5');
+    svg.appendChild(pl);
     return svg;
   }
 
-  /* ---- Detail row: table format ---- */
   function toggleDetail(tk, rowEl, qCols, totalCols) {
     const existing = rowEl.nextElementSibling;
-    if (existing && existing.classList.contains('detail-row')) {
-      existing.remove();
-      return;
-    }
+    if (existing && existing.classList.contains('detail-row')) { existing.remove(); return; }
+
     const detailRow = document.createElement('tr');
     detailRow.className = 'detail-row';
     const td = document.createElement('td');
     td.colSpan = totalCols;
 
-    // Build a table with quarters as columns, years as rows
     const dtable = document.createElement('table');
     dtable.className = 'detail-table';
 
-    // Header: quarter labels
     const headerTr = document.createElement('tr');
     const cornerTh = document.createElement('th');
     cornerTh.textContent = '';
@@ -406,12 +500,10 @@ th:first-child { z-index: 3; }
     });
     dtable.appendChild(headerTr);
 
-    // Rows: one per display year, with value row + change row
     displayYears.forEach(yr => {
       const yearRow = tk.years[yr];
       if (!yearRow) return;
 
-      // Value row
       const vr = document.createElement('tr');
       const yrTd = document.createElement('td');
       yrTd.className = 'yr-label';
@@ -425,23 +517,16 @@ th:first-child { z-index: 3; }
         vals.push(isNaN(v) || raw === '' ? null : v);
         const vtd = document.createElement('td');
         vtd.textContent = vals[vals.length - 1] !== null ? vals[vals.length - 1].toFixed(2) : '';
-        // Bold the last non-null value
         vr.appendChild(vtd);
       });
-      // Bold the latest value
       for (let i = vals.length - 1; i >= 0; i--) {
-        if (vals[i] !== null) {
-          vr.children[i + 1].style.fontWeight = '700';
-          break;
-        }
+        if (vals[i] !== null) { vr.children[i + 1].style.fontWeight = '700'; break; }
       }
       dtable.appendChild(vr);
 
-      // Change row
       const cr = document.createElement('tr');
       cr.className = 'chg-row';
-      const blankTd = document.createElement('td');
-      cr.appendChild(blankTd);
+      cr.appendChild(document.createElement('td'));
       let prevVal = null;
       vals.forEach(v => {
         const ctd = document.createElement('td');
@@ -461,28 +546,22 @@ th:first-child { z-index: 3; }
     rowEl.after(detailRow);
   }
 
-  /* ---- Methodology ---- */
   function renderMethodology(qCols) {
-    const el = document.getElementById('methodology');
-    // The quarter columns tell us the exact dates
-    const labels = qCols.map(q => {
-      const m = q.match(/Q(\d) (\d{4})/);
-      return "Q" + m[1] + "'" + m[2].slice(2);
-    });
-    const n = qCols.length;
-    const cur = labels[n - 1] || '?';
-    const m3 = labels[n - 2] || '?';
-    const m6 = labels[n - 3] || '?';
-    const m12 = labels[n - 5] || '?';
-
-    el.innerHTML = '<h3>Methodology</h3>' +
+    const labels = qCols.map(q => { const m = q.match(/Q(\d) (\d{4})/); return "Q" + m[1] + "'" + m[2].slice(2); });
+    const n = labels.length;
+    const cur = labels[n-1]||'?', m3 = labels[n-2]||'?', m6 = labels[n-3]||'?', m12 = labels[n-5]||'?';
+    document.getElementById('methodology').innerHTML =
+      '<h3>Methodology</h3>' +
       '<p><b>Data source:</b> Bloomberg BEST_EPS (adjusted, mkt cap &lt; $200B) or BEST_EPS_GAAP (mkt cap &ge; $200B). ' +
-      'TSM estimates converted to USD. Historical estimates use absolute fiscal period references (e.g. "26Y" for FY2026).</p>' +
+      'TSM estimates converted to USD. Historical estimates use absolute fiscal period references ("NNY" format).</p>' +
+      '<p><b>FY/CY alignment:</b> Companies with fiscal year ending in Jan–Mar (NVDA, VEEV) have estimates shifted so that ' +
+      'CY columns reflect the calendar year the fiscal year mostly covers. E.g. NVDA FY2027 (ending Jan 2027) is shown as CY2026.</p>' +
       '<p><b>Estimate columns:</b> "Cur" = consensus as of end of ' + cur + '. ' +
       '"-3m" = ' + m3 + '. "-6m" = ' + m6 + '. "-1yr" = ' + m12 + '. ' +
       'Each value is the last available monthly consensus snapshot within that calendar quarter.</p>' +
       '<p><b>% change columns:</b> "3m%" = Cur vs -3m. "3-6m%" = -3m vs -6m. "6-12m%" = -6m vs -1yr. "12m%" = Cur vs -1yr.</p>' +
-      '<p><b>Sparklines:</b> Show all available quarterly data points (up to ' + n + ' quarters). Click to expand full history.</p>';
+      '<p><b>Sparklines:</b> Show all available quarterly data points (up to ' + n + ' quarters). Click to expand full history.</p>' +
+      '<p><b>Sorting:</b> Click any column header with ▲▼ to sort. Portfolio and Watchlist sections sort independently.</p>';
   }
 
 })();
