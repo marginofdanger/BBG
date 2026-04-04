@@ -19,7 +19,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .table-wrap { overflow: auto; max-height: calc(100vh - 90px); position: relative; padding: 0 12px; }
 table { border-collapse: collapse; white-space: nowrap; font-size: 12px; }
 th, td { padding: 4px 8px; border-bottom: 1px solid #e8e8e8; text-align: right; }
-th { background: #fafafa; font-weight: 600; font-size: 11px; color: #555; border-bottom: 2px solid #ccc; }
+th { background: #fafafa; position: sticky; z-index: 2; font-weight: 600; font-size: 11px; color: #555; border-bottom: 2px solid #ccc; }
+thead tr:first-child th { top: 0; background: #f4f4f4; }
+thead tr:nth-child(2) th { top: 23px; background: #fafafa; }
 th.col-group { border-bottom: 2px solid #999; text-align: center; background: #f4f4f4; }
 td:first-child, th:first-child { text-align: left; }
 th.sortable { cursor: pointer; user-select: none; }
@@ -83,7 +85,6 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
   <span id="dateLabel"></span>
 </div>
 <div class="table-wrap" id="tableWrap"></div>
-<div class="methodology" id="methodology"></div>
 
 <script>
 (async function() {
@@ -291,6 +292,12 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
     const wrap = document.getElementById('tableWrap');
     wrap.innerHTML = '';
     wrap.appendChild(table);
+
+    // Methodology goes inside the scrollable area, after the table
+    const methDiv = document.createElement('div');
+    methDiv.id = 'methodology';
+    methDiv.className = 'methodology';
+    wrap.appendChild(methDiv);
   }
 
   function addSpacer(tbody, totalCols) {
@@ -515,7 +522,11 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
     return idx >= 0 ? nonNull[idx].v : null;
   }
 
-  function fmtEst(v) { return v === null || v === undefined ? '' : v.toFixed(2); }
+  function fmtEst(v) {
+    if (v === null || v === undefined) return '';
+    if (Math.abs(v) >= 1000) return (v / 1000).toFixed(1) + 'k';
+    return v.toFixed(2);
+  }
 
   function pctChgVal(cur, base) {
     if (cur === null || base === null || base === 0) return null;
