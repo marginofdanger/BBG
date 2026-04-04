@@ -98,7 +98,11 @@ def _build_csv_rows(all_tickers, groups, eps_fields, returns_data):
 
     for ticker in all_tickers:
         field, _ = eps_fields[ticker]
-        rows = estimate_history(ticker, TARGET_YEARS, LOOKBACK_MONTHS, field)
+        try:
+            rows = estimate_history(ticker, TARGET_YEARS, LOOKBACK_MONTHS, field)
+        except Exception as e:
+            print(f"    WARNING: Failed to pull {ticker}: {e}")
+            rows = [{"line_item": f"CY{y}"} for y in TARGET_YEARS]
         ticker_estimates[ticker] = rows
         for row in rows:
             for key in row:
@@ -132,15 +136,6 @@ def _build_csv_rows(all_tickers, groups, eps_fields, returns_data):
         for est_row in estimates:
             year_label = est_row.get("line_item", "")
             row_data = [ticker, group, eps_label, year_label]
-
-            # Get the current year's EPS for PE calculation
-            current_eps = None
-            if year_label == f"CY{date.today().year}":
-                # Use the latest quarter's estimate for current year
-                for q in reversed(sorted_quarters):
-                    if q in est_row:
-                        current_eps = est_row[q]
-                        break
 
             prev_val = None
             for i, q in enumerate(sorted_quarters):
