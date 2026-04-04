@@ -94,10 +94,9 @@ td.spark-cell { padding: 4px 2px; }
 <div class="header">
   <div class="header-left">
     <h1>Portfolio Estimate Tracker</h1>
-    <div class="subtitle" id="snapshotSubtitle"></div>
   </div>
   <div class="header-center" id="sliderWrap">
-    <label>Snapshot:</label>
+    <label>BBG consensus estimates as of:</label>
     <input type="range" id="dateSlider" min="0" max="0" value="0">
     <span id="dateLabel"></span>
   </div>
@@ -140,29 +139,27 @@ td.spark-cell { padding: 4px 2px; }
     sortedDates = [...dates].sort();
     currentDate = sortedDates[sortedDates.length - 1];
   } catch (e) {
-    document.getElementById('snapshotSubtitle').textContent = 'No snapshots found. Run pull_estimates.py first.';
+    document.getElementById('dateLabel').textContent = 'No snapshots found. Run pull_estimates.py first.';
     return;
   }
 
-  if (sortedDates.length > 1) {
-    const wrap = document.getElementById('sliderWrap');
-    wrap.classList.add('visible');
-    const slider = document.getElementById('dateSlider');
-    slider.min = 0;
-    slider.max = sortedDates.length - 1;
-    slider.value = sortedDates.length - 1;
+  const wrap = document.getElementById('sliderWrap');
+  wrap.classList.add('visible');
+  const slider = document.getElementById('dateSlider');
+  slider.min = 0;
+  slider.max = Math.max(0, sortedDates.length - 1);
+  slider.value = sortedDates.length - 1;
+  document.getElementById('dateLabel').textContent = currentDate;
+  slider.addEventListener('input', () => {
+    currentDate = sortedDates[+slider.value];
     document.getElementById('dateLabel').textContent = currentDate;
-    slider.addEventListener('input', () => {
-      currentDate = sortedDates[+slider.value];
-      document.getElementById('dateLabel').textContent = currentDate;
-      loadSnapshot(currentDate);
-    });
-  }
+    loadSnapshot(currentDate);
+  });
 
   loadSnapshot(currentDate);
 
   async function loadSnapshot(date) {
-    document.getElementById('snapshotSubtitle').textContent = 'BBG consensus estimates as of ' + formatDate(date);
+    document.getElementById('dateLabel').textContent = date;
     try {
       const resp = await fetch('output/snapshots/' + date + '.csv');
       if (!resp.ok) throw new Error('CSV not found: ' + date);
@@ -172,7 +169,7 @@ td.spark-cell { padding: 4px 2px; }
       renderAggregates(data);
       renderMethodology(data.qCols);
     } catch (e) {
-      document.getElementById('snapshotSubtitle').textContent = 'Error loading ' + date + ': ' + e.message;
+      document.getElementById('dateLabel').textContent = 'Error: ' + e.message;
     }
   }
 
