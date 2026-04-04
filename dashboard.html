@@ -139,7 +139,8 @@ td.spark-cell { padding: 4px 2px; }
   <div class="tab active" data-tab="companies">Companies</div>
   <div class="tab" data-tab="aggregates">Sector Aggregates</div>
   <div class="tab" data-tab="analysis">Analysis</div>
-  <div class="tab" data-tab="other">Deep Dive</div>
+  <div class="tab" data-tab="peers">Peers</div>
+  <div class="tab" data-tab="other">Other</div>
 </div>
 <div class="tab-content active" id="tab-companies">
   <div class="table-wrap" id="tableWrap"></div>
@@ -156,6 +157,9 @@ td.spark-cell { padding: 4px 2px; }
 </div>
 <div class="tab-content" id="tab-analysis">
   <div class="analysis-wrap" id="analysisWrap"></div>
+</div>
+<div class="tab-content" id="tab-peers">
+  <div class="analysis-wrap" id="peersWrap"></div>
 </div>
 <div class="tab-content" id="tab-other">
   <div class="analysis-wrap" id="otherWrap"></div>
@@ -282,6 +286,7 @@ td.spark-cell { padding: 4px 2px; }
     renderAggregates(data);
     renderAnalysis(data);
     renderOther(data);
+    renderPeers(data);
     renderMethodology(data.qCols);
   }
 
@@ -1676,7 +1681,141 @@ td.spark-cell { padding: 4px 2px; }
     wrap.appendChild(twoCol);
   }
 
-  /* ---- Deep Dive tab ---- */
+  /* ---- Peers tab ---- */
+  const PEER_MAP = {
+    'HCA':  ['THC', 'UHS', 'CYH', 'DVA', 'ENSG'],
+    'UNH':  ['CI', 'ELV', 'HUM', 'CNC', 'MOH'],
+    'TSM':  ['005930', '000660', 'INTC', 'MU', 'GFS'],
+    'AVGO': ['QCOM', 'MRVL', 'AMD', 'TXN', 'ADI'],
+    'NVDA': ['AMD', 'INTC', 'AVGO', 'MRVL', 'ARM'],
+    'META': ['GOOG', 'PINS', 'SNAP', 'RDDT', 'TTD'],
+    'AMZN': ['GOOG', 'MSFT', 'SHOP', 'BKNG', 'EBAY'],
+    'JPM':  ['GS', 'BAC', 'MS', 'WFC', 'C'],
+    'APO':  ['BX', 'KKR', 'ARES', 'CG', 'OWL'],
+    'PGR':  ['ALL', 'TRV', 'CB', 'AIG', 'ACGL'],
+    'CVNA': ['KMX', 'AN', 'CPRT', 'GPI', 'SAH'],
+    'APP':  ['RDDT', 'TTD', 'PINS', 'DASH', 'DDOG'],
+    'VEEV': ['CRM', 'WDAY', 'NOW', 'DDOG', 'GWRE'],
+  };
+
+  function renderPeers(data) {
+    const { rows, qCols } = data;
+    const wrap = document.getElementById('peersWrap');
+    wrap.innerHTML = '';
+
+    // Build lookup: ticker → metrics from CY2026 row
+    const lookup = {};
+    rows.forEach(r => {
+      const t = r.Ticker;
+      if (r.Year !== 'CY2026') return;
+      if (lookup[t]) return;
+
+      const vals = qCols.map(q => { const v = parseFloat(r[q]); return isNaN(v) ? null : v; });
+      const nonNull = []; vals.forEach((v, i) => { if (v !== null) nonNull.push({ v, i }); });
+      const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
+      const m3 = getFromEnd(nonNull, 1);
+      const m12 = getFromEnd(nonNull, 4);
+      const rev3 = pctChgVal(cur, m3);
+      const rev12 = pctChgVal(cur, m12);
+      const pe = parseFloat(r.PE) || null;
+
+      // CY2027 PE
+      const r27 = rows.find(rr => rr.Ticker === t && rr.Year === 'CY2027');
+      let pe27 = null;
+      if (r27) {
+        const v27 = qCols.map(q => { const v = parseFloat(r27[q]); return isNaN(v) ? null : v; });
+        const nn27 = v27.filter(v => v !== null);
+        const price = parseFloat(r.Price);
+        // Derive effective price from CY26 PE
+        let effPrice = price;
+        if (pe && cur) effPrice = pe * cur;
+        if (nn27.length > 0 && effPrice) pe27 = effPrice / nn27[nn27.length - 1];
+      }
+
+      lookup[t] = {
+        ticker: t, eps26: cur, pe26: pe, pe27,
+        rev3, rev12,
+        retYtd: parsePctStr(r['Return_YTD']),
+        ret3m: parsePctStr(r['Return_3m']),
+        ret12m: parsePctStr(r['Return_12m']),
+        sector: r['GICS Sector'] || '',
+      };
+    });
+
+    // Build peer comparison tables
+    const portfolioTickers = Object.keys(PEER_MAP);
+
+    portfolioTickers.forEach(pt => {
+      const peers = PEER_MAP[pt];
+      const ptData = lookup[pt];
+      if (!ptData) return;
+
+      const sec = document.createElement('div');
+      sec.className = 'analysis-section';
+      const h = document.createElement('h3');
+      h.textContent = pt;
+      h.style.cssText = 'font-size:14px;color:#1565c0;margin-bottom:6px;';
+      sec.appendChild(h);
+
+      const allTickers = [pt, ...peers];
+      const headers = ['Ticker', 'EPS \'26', 'P/E \'26', 'P/E \'27', '3m Rev', '12m Rev', 'L3M', 'YTD', '1Y'];
+
+      const table = document.createElement('table');
+      table.className = 'rank-table';
+      table.style.marginBottom = '16px';
+
+      const thead = document.createElement('thead');
+      const hr = document.createElement('tr');
+      headers.forEach(h => { const th = document.createElement('th'); th.textContent = h; hr.appendChild(th); });
+      thead.appendChild(hr);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      allTickers.forEach((t, i) => {
+        const d = lookup[t];
+        const tr = document.createElement('tr');
+        tr.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
+        if (t === pt) tr.style.fontWeight = '700';
+
+        const addTd = (text, cls) => {
+          const td = document.createElement('td');
+          td.textContent = text || '';
+          if (cls) td.className = cls;
+          tr.appendChild(td);
+        };
+        const addPct = (val) => {
+          const td = document.createElement('td');
+          if (val !== null && val !== undefined && !isNaN(val)) {
+            td.textContent = val >= 0 ? '+' + val.toFixed(1) + '%' : '(' + Math.abs(val).toFixed(1) + '%)';
+            td.className = val >= 0 ? 'pos' : 'neg';
+          }
+          tr.appendChild(td);
+        };
+
+        addTd(t); // ticker
+        if (d) {
+          addTd(d.eps26 ? d.eps26.toFixed(2) : '');
+          addTd(d.pe26 ? d.pe26.toFixed(1) + 'x' : '');
+          addTd(d.pe27 ? d.pe27.toFixed(1) + 'x' : '');
+          addPct(d.rev3);
+          addPct(d.rev12);
+          addPct(d.ret3m);
+          addPct(d.retYtd);
+          addPct(d.ret12m);
+        } else {
+          for (let c = 0; c < 8; c++) addTd('');
+        }
+
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      sec.appendChild(table);
+      wrap.appendChild(sec);
+    });
+  }
+
+  /* ---- Other tab ---- */
   function renderOther(data) {
     const { rows, qCols } = data;
     const wrap = document.getElementById('otherWrap');
