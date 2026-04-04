@@ -95,7 +95,7 @@ td.spark-cell { padding: 4px 2px; }
 .rank-table td:first-child { text-align: left; font-weight: 600; }
 .rank-table td:nth-child(1) { text-align: center; width: 20px; color: #888; font-weight: 400; }
 .scatter-wrap { display: flex; gap: 16px; margin-bottom: 24px; }
-.scatter-chart { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; flex: 1; min-width: 0; }
+.scatter-chart { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; flex: 1; min-width: 0; margin-bottom: 20px; }
 .scatter-chart h4 { font-size: 12px; color: #555; margin-bottom: 8px; text-align: center; }
 .agg-detail { background: #f8f9fc !important; }
 .agg-detail td { font-size: 11px; color: #555; font-weight: 400 !important; padding: 5px 10px; border-bottom: 1px solid #eee; }
@@ -1156,7 +1156,7 @@ td.spark-cell { padding: 4px 2px; }
     const scatterDiv = document.createElement('div');
     scatterDiv.className = 'scatter-wrap';
 
-    function buildScatter(title, xKey, yKey, xLabel, yLabel, sectors, bounds) {
+    function buildScatter(title, xKey, yKey, xLabel, yLabel, sectors, bounds, gridStep) {
       const container = document.createElement('div');
       container.className = 'scatter-chart';
       const h4 = document.createElement('h4');
@@ -1179,38 +1179,39 @@ td.spark-cell { padding: 4px 2px; }
       const toY = v => pad.top + (1 - (Math.max(yMin, Math.min(yMax, v)) - yMin) / (yMax - yMin)) * ph;
 
       // Gridlines
-      for (let g = xMin; g <= xMax; g += 10) {
+      const step = gridStep || 10;
+      for (let g = xMin; g <= xMax; g += step) {
         const x = toX(g);
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute('x1', x); line.setAttribute('y1', pad.top);
         line.setAttribute('x2', x); line.setAttribute('y2', pad.top + ph);
-        line.setAttribute('stroke', g === 0 ? '#999' : '#e8e8e8'); line.setAttribute('stroke-width', g === 0 ? 1 : 0.5);
+        line.setAttribute('stroke', g === 0 ? '#777' : '#ddd'); line.setAttribute('stroke-width', g === 0 ? 1 : 0.5);
         svg.appendChild(line);
         const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        txt.setAttribute('x', x); txt.setAttribute('y', H - 5); txt.setAttribute('text-anchor', 'middle'); txt.setAttribute('fill', '#888');
+        txt.setAttribute('x', x); txt.setAttribute('y', H - 5); txt.setAttribute('text-anchor', 'middle'); txt.setAttribute('fill', '#444');
         txt.textContent = g + '%'; svg.appendChild(txt);
       }
-      for (let g = yMin; g <= yMax; g += 10) {
+      for (let g = yMin; g <= yMax; g += step) {
         const y = toY(g);
         const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
         line.setAttribute('x1', pad.left); line.setAttribute('y1', y);
         line.setAttribute('x2', pad.left + pw); line.setAttribute('y2', y);
-        line.setAttribute('stroke', g === 0 ? '#999' : '#e8e8e8'); line.setAttribute('stroke-width', g === 0 ? 1 : 0.5);
+        line.setAttribute('stroke', g === 0 ? '#777' : '#ddd'); line.setAttribute('stroke-width', g === 0 ? 1 : 0.5);
         svg.appendChild(line);
         const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        txt.setAttribute('x', pad.left - 5); txt.setAttribute('y', y + 3); txt.setAttribute('text-anchor', 'end'); txt.setAttribute('fill', '#888');
+        txt.setAttribute('x', pad.left - 5); txt.setAttribute('y', y + 3); txt.setAttribute('text-anchor', 'end'); txt.setAttribute('fill', '#444');
         txt.textContent = g + '%'; svg.appendChild(txt);
       }
 
       // Axis labels
       const xLbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       xLbl.setAttribute('x', pad.left + pw / 2); xLbl.setAttribute('y', H - 22);
-      xLbl.setAttribute('text-anchor', 'middle'); xLbl.setAttribute('fill', '#555'); xLbl.setAttribute('font-size', '11');
+      xLbl.setAttribute('text-anchor', 'middle'); xLbl.setAttribute('fill', '#333'); xLbl.setAttribute('font-size', '11');
       xLbl.textContent = xLabel; svg.appendChild(xLbl);
 
       const yLbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       yLbl.setAttribute('x', 12); yLbl.setAttribute('y', pad.top + ph / 2);
-      yLbl.setAttribute('text-anchor', 'middle'); yLbl.setAttribute('fill', '#555'); yLbl.setAttribute('font-size', '11');
+      yLbl.setAttribute('text-anchor', 'middle'); yLbl.setAttribute('fill', '#333'); yLbl.setAttribute('font-size', '11');
       yLbl.setAttribute('transform', `rotate(-90, 12, ${pad.top + ph / 2})`);
       yLbl.textContent = yLabel; svg.appendChild(yLbl);
 
@@ -1219,6 +1220,19 @@ td.spark-cell { padding: 4px 2px; }
       tooltip.style.cssText = 'position:absolute;display:none;background:#333;color:#fff;padding:4px 8px;border-radius:3px;font-size:11px;pointer-events:none;white-space:nowrap;z-index:10;';
       container.style.position = 'relative';
       container.appendChild(tooltip);
+
+      // Toggle checkbox
+      const toggleDiv = document.createElement('div');
+      toggleDiv.style.cssText = 'text-align: right; margin-bottom: 4px;';
+      const chk = document.createElement('input');
+      chk.type = 'checkbox'; chk.id = 'lblToggle_' + Math.random().toString(36).slice(2);
+      const chkLabel = document.createElement('label');
+      chkLabel.textContent = ' Show all labels'; chkLabel.setAttribute('for', chk.id);
+      chkLabel.style.cssText = 'font-size: 10px; color: #666; cursor: pointer;';
+      toggleDiv.appendChild(chk); toggleDiv.appendChild(chkLabel);
+      container.appendChild(toggleDiv);
+
+      const allStockLabels = [];
 
       // Layer 1: Stock dots (smallest, gray)
       pts.forEach(s => {
@@ -1253,8 +1267,21 @@ td.spark-cell { padding: 4px 2px; }
           lbl.setAttribute('x', cx + 6); lbl.setAttribute('y', cy + 3);
           lbl.setAttribute('fill', '#1565c0'); lbl.setAttribute('font-size', '9'); lbl.setAttribute('font-weight', '600');
           lbl.textContent = s.ticker; svg.appendChild(lbl);
+        } else {
+          // Hidden label for non-portfolio stocks
+          const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          lbl.setAttribute('x', cx + 4); lbl.setAttribute('y', cy + 3);
+          lbl.setAttribute('fill', '#666'); lbl.setAttribute('font-size', '7');
+          lbl.textContent = s.ticker;
+          lbl.style.display = 'none';
+          svg.appendChild(lbl);
+          allStockLabels.push(lbl);
         }
         svg.appendChild(c);
+      });
+
+      chk.addEventListener('change', () => {
+        allStockLabels.forEach(l => l.style.display = chk.checked ? '' : 'none');
       });
 
       // Layer 2: Sector/industry dots (medium, orange) with label collision avoidance
@@ -1314,11 +1341,11 @@ td.spark-cell { padding: 4px 2px; }
 
     const col3m = document.createElement('div');
     col3m.style.cssText = 'flex: 1; min-width: 0;';
-    col3m.appendChild(buildScatter('CY2026 EPS Revision (3m) vs Stock Return (L3M)', 'rev3', 'ret3m', 'EPS Revision 3m (%)', 'Stock Return L3M (%)', sectorDots, [-20, 20, -40, 40]));
+    col3m.appendChild(buildScatter('CY2026 EPS Revision (3m) vs Stock Return (L3M)', 'rev3', 'ret3m', 'EPS Revision 3m (%)', 'Stock Return L3M (%)', sectorDots, [-20, 20, -40, 40], 5));
 
     const col12m = document.createElement('div');
     col12m.style.cssText = 'flex: 1; min-width: 0;';
-    col12m.appendChild(buildScatter('CY2026 EPS Revision (12m) vs Stock Return (1Y)', 'rev12', 'ret12m', 'EPS Revision 12m (%)', 'Stock Return 1Y (%)', sectorDots, [-50, 50, -50, 100]));
+    col12m.appendChild(buildScatter('CY2026 EPS Revision (12m) vs Stock Return (1Y)', 'rev12', 'ret12m', 'EPS Revision 12m (%)', 'Stock Return 1Y (%)', sectorDots, [-50, 50, -50, 100], 10));
 
     // --- Top/Bottom tables ---
     function buildRankSection(title, sortKey, retKey, retLabel, n) {
