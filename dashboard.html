@@ -1100,6 +1100,35 @@ td.spark-cell { padding: 4px 2px; }
       if (!indGroups[key]) indGroups[key] = [];
       indGroups[key].push(s);
     });
+    const INDUSTRY_SHORT = {
+      'Semiconductors & Semiconductor Equipment': 'Semis',
+      'Software & Services': 'Software',
+      'Technology Hardware & Equipment': 'Tech HW',
+      'Capital Goods': 'Cap Goods',
+      'Automobiles & Components': 'Auto',
+      'Pharmaceuticals, Biotechnology & Life Sciences': 'Pharma',
+      'Pharmaceuticals, Biotechnology': 'Pharma',
+      'Food, Beverage & Tobacco': 'F&B',
+      'Food & Staples Retailing': 'Food Retail',
+      'Health Care Equipment & Services': 'HC Equip',
+      'Health Care Equipment & Servic': 'HC Equip',
+      'Consumer Services': 'Cons Svc',
+      'Consumer Durables & Apparel': 'Cons Dur',
+      'Household & Personal Products': 'HH&PP',
+      'Media & Entertainment': 'Media',
+      'Transportation': 'Transport',
+      'Telecommunication Services': 'Telecom',
+      'Diversified Financials': 'Div Fin',
+      'Banks': 'Banks',
+      'Insurance': 'Insurance',
+      'Real Estate': 'Real Est',
+      'Materials': 'Materials',
+      'Energy': 'Energy',
+      'Utilities': 'Utilities',
+      'Commercial & Professional Services': 'Comm Svc',
+      'Retailing': 'Retail',
+      'Consumer Staples Distribution': 'Staples Dist',
+    };
     const sectorDots = [];
     for (const [name, members] of Object.entries(indGroups)) {
       if (name === 'Other' || members.length < 3) continue;
@@ -1108,7 +1137,8 @@ td.spark-cell { padding: 4px 2px; }
       const v12 = med(members.map(m => m.rev12).filter(v => v !== null));
       const r3 = med(members.map(m => m.ret3m).filter(v => v && !isNaN(v)));
       const r12 = med(members.map(m => m.ret12m).filter(v => v && !isNaN(v)));
-      sectorDots.push({ name, count: members.length, rev3: v3, rev12: v12, ret3m: r3, ret12m: r12 });
+      const shortName = INDUSTRY_SHORT[name] || (name.length > 12 ? name.slice(0, 10) + '..' : name);
+      sectorDots.push({ name: shortName, fullName: name, count: members.length, rev3: v3, rev12: v12, ret3m: r3, ret12m: r12 });
     }
 
     const wrap = document.getElementById('analysisWrap');
@@ -1226,17 +1256,17 @@ td.spark-cell { padding: 4px 2px; }
           if (xv === null || yv === null) return;
           const cx = toX(xv), cy = toY(yv);
           const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-          c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', 5);
+          c.setAttribute('cx', cx); c.setAttribute('cy', cy); c.setAttribute('r', 3.5);
           c.setAttribute('fill', '#e65100'); c.setAttribute('opacity', 0.7);
-          c.setAttribute('stroke', '#bf360c'); c.setAttribute('stroke-width', 1);
+          c.setAttribute('stroke', '#bf360c'); c.setAttribute('stroke-width', 0.5);
           c.style.cursor = 'pointer';
           c.addEventListener('mouseenter', () => {
-            c.setAttribute('r', 7); c.setAttribute('opacity', 1);
-            tooltip.textContent = `${s.name} (${s.count}): Rev ${xv?.toFixed(1)}%, Ret ${yv?.toFixed(1)}%`;
+            c.setAttribute('r', 5); c.setAttribute('opacity', 1);
+            tooltip.textContent = `${s.fullName || s.name} (${s.count}): Rev ${xv?.toFixed(1)}%, Ret ${yv?.toFixed(1)}%`;
             tooltip.style.display = 'block'; tooltip.style.left = (cx + 10) + 'px'; tooltip.style.top = (cy - 10) + 'px';
           });
           c.addEventListener('mouseleave', () => {
-            c.setAttribute('r', 5); c.setAttribute('opacity', 0.7); tooltip.style.display = 'none';
+            c.setAttribute('r', 3.5); c.setAttribute('opacity', 0.7); tooltip.style.display = 'none';
           });
           svg.appendChild(c);
           const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
