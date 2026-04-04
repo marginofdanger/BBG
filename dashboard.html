@@ -48,6 +48,15 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 .detail-table .chg-row td { font-size: 10px; color: #888; border-top: none; padding-top: 0; }
 .methodology { padding: 12px 24px; border-top: 1px solid #e0e0e0; font-size: 10px; color: #999; max-width: 1000px; line-height: 1.5; }
 .methodology h3 { font-size: 11px; color: #666; margin-bottom: 4px; }
+.controls { padding: 8px 24px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.controls label { font-size: 12px; color: #555; font-weight: 600; }
+.controls .btn-group { display: flex; gap: 0; }
+.controls .btn-group button { padding: 4px 12px; font-size: 11px; border: 1px solid #ccc; background: #fff; cursor: pointer; color: #555; }
+.controls .btn-group button:first-child { border-radius: 4px 0 0 4px; }
+.controls .btn-group button:last-child { border-radius: 0 4px 4px 0; }
+.controls .btn-group button + button { border-left: none; }
+.controls .btn-group button.active { background: #1565c0; color: #fff; border-color: #1565c0; }
+.subgroup-header td { font-weight: 600; font-size: 12px; background: #f0f0f0 !important; color: #555; padding: 6px 7px 3px; border-bottom: 1px solid #ccc; font-style: italic; }
 </style>
 </head>
 <body>
@@ -60,6 +69,15 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
   <label>Snapshot:</label>
   <input type="range" id="dateSlider" min="0" max="0" value="0">
   <span id="dateLabel"></span>
+</div>
+<div class="controls" id="controls">
+  <label>Extended watchlist grouping:</label>
+  <div class="btn-group" id="groupToggle">
+    <button data-group="none" class="active">None</button>
+    <button data-group="category">Category</button>
+    <button data-group="gics_sector">GICS Sector</button>
+    <button data-group="gics_industry">GICS Industry</button>
+  </div>
 </div>
 <div class="table-wrap" id="tableWrap"></div>
 <div class="methodology" id="methodology"></div>
@@ -132,10 +150,22 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 
   const COLS_PER_YEAR = 9; // 4 estimates + sparkline + 4 changes
   const displayYears = ['CY2026', 'CY2027', 'CY2028'];
-  // Total: Ticker + Price + P/E 26 + P/E 27 + FYE + (9 * 3 years) + 3 returns = 5 + 27 + 3 = 35
   let currentQCols = [];
+  let currentGrouping = 'none';
+  let lastData = null;
+
+  // Grouping toggle
+  document.querySelectorAll('#groupToggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#groupToggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentGrouping = btn.dataset.group;
+      if (lastData) render(lastData);
+    });
+  });
 
   function render(data) {
+    lastData = data;
     const { rows, qCols } = data;
     currentQCols = qCols;
 
@@ -144,7 +174,12 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
     rows.forEach(r => {
       const t = r.Ticker;
       if (!tickerMap[t]) {
-        tickerMap[t] = { ticker: t, group: r.Group, epsType: r['EPS Type'], fye: r['FYE'] || '', years: {} };
+        tickerMap[t] = {
+          ticker: t, group: r.Group, epsType: r['EPS Type'] || 'Adj',
+          fye: r['FYE'] || '', category: r['Category'] || '',
+          gicsSector: r['GICS Sector'] || '', gicsIndustry: r['GICS Industry'] || '',
+          years: {},
+        };
         tickers.push(tickerMap[t]);
       }
       tickerMap[t].years[r.Year] = r;
@@ -152,7 +187,8 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 
     const portfolio = tickers.filter(t => t.group === 'Portfolio');
     const watchlist = tickers.filter(t => t.group === 'Watchlist');
-    const totalCols = 6 + displayYears.length * COLS_PER_YEAR + 3; // +1 for PE28
+    const extended = tickers.filter(t => t.group === 'Extended');
+    const totalCols = 6 + displayYears.length * COLS_PER_YEAR + 3;
 
     const table = document.createElement('table');
     table.id = 'mainTable';
@@ -200,18 +236,67 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 
     const tbody = document.createElement('tbody');
     buildGroup(tbody, 'Portfolio', portfolio, qCols, totalCols);
+    addSpacer(tbody, totalCols);
+    buildGroup(tbody, 'Watchlist', watchlist, qCols, totalCols);
+
+    // Extended watchlist with optional sub-grouping
+    if (extended.length > 0) {
+      addSpacer(tbody, totalCols);
+      if (currentGrouping === 'none') {
+        buildGroup(tbody, 'Extended Watchlist', extended, qCols, totalCols);
+      } else {
+        // Group header
+        const gr = document.createElement('tr');
+        gr.className = 'group-header';
+        const gdTd = document.createElement('td');
+        gdTd.colSpan = totalCols;
+        gdTd.textContent = 'Extended Watchlist';
+        gr.appendChild(gdTd);
+        tbody.appendChild(gr);
+
+        // Sub-group by selected field
+        const groupField = currentGrouping === 'category' ? 'category'
+          : currentGrouping === 'gics_sector' ? 'gicsSector' : 'gicsIndustry';
+        const subGroups = {};
+        extended.forEach(tk => {
+          const key = tk[groupField] || 'Other';
+          if (!subGroups[key]) subGroups[key] = [];
+          subGroups[key].push(tk);
+        });
+        const sortedKeys = Object.keys(subGroups).sort((a, b) => {
+          if (a === 'Other') return 1;
+          if (b === 'Other') return -1;
+          return a.localeCompare(b);
+        });
+        let rowIdx = 0;
+        for (const key of sortedKeys) {
+          // Sub-group header
+          const sgr = document.createElement('tr');
+          sgr.className = 'subgroup-header';
+          const sgTd = document.createElement('td');
+          sgTd.colSpan = totalCols;
+          sgTd.textContent = key + ' (' + subGroups[key].length + ')';
+          sgr.appendChild(sgTd);
+          tbody.appendChild(sgr);
+          subGroups[key].forEach((tk, idx) => buildTickerRow(tbody, tk, rowIdx++, qCols, totalCols));
+        }
+      }
+    }
+
+    table.appendChild(tbody);
+
+    const wrap = document.getElementById('tableWrap');
+    wrap.innerHTML = '';
+    wrap.appendChild(table);
+  }
+
+  function addSpacer(tbody, totalCols) {
     const spacer = document.createElement('tr');
     spacer.className = 'group-spacer';
     const spTd = document.createElement('td');
     spTd.colSpan = totalCols;
     spacer.appendChild(spTd);
     tbody.appendChild(spacer);
-    buildGroup(tbody, 'Watchlist', watchlist, qCols, totalCols);
-    table.appendChild(tbody);
-
-    const wrap = document.getElementById('tableWrap');
-    wrap.innerHTML = '';
-    wrap.appendChild(table);
   }
 
   function buildGroup(tbody, label, list, qCols, totalCols) {

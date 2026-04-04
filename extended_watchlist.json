@@ -1,0 +1,4130 @@
+[
+  {
+    "ticker": "SPX",
+    "bbg": "SPX Index",
+    "category": "Uncategorized",
+    "raw": "SPX"
+  },
+  {
+    "ticker": "QQQ",
+    "bbg": "QQQ US Equity",
+    "category": "Uncategorized",
+    "raw": "QQQ US"
+  },
+  {
+    "ticker": "IWM",
+    "bbg": "IWM US Equity",
+    "category": "Uncategorized",
+    "raw": "IWM US"
+  },
+  {
+    "ticker": "SOX",
+    "bbg": "SOX Index",
+    "category": "Uncategorized",
+    "raw": "SOX"
+  },
+  {
+    "ticker": "IGV",
+    "bbg": "IGV US Equity",
+    "category": "Uncategorized",
+    "raw": "IGV US"
+  },
+  {
+    "ticker": "AER",
+    "bbg": "AER US Equity",
+    "category": "Uncategorized",
+    "raw": "AER US"
+  },
+  {
+    "ticker": "MA",
+    "bbg": "MA US Equity",
+    "category": "Uncategorized",
+    "raw": "MA US"
+  },
+  {
+    "ticker": "BRK/A",
+    "bbg": "BRK/A US Equity",
+    "category": "Uncategorized",
+    "raw": "BRK/A US"
+  },
+  {
+    "ticker": "CSU",
+    "bbg": "CSU CN Equity",
+    "category": "Uncategorized",
+    "raw": "CSU CN"
+  },
+  {
+    "ticker": "TMO",
+    "bbg": "TMO US Equity",
+    "category": "Uncategorized",
+    "raw": "TMO"
+  },
+  {
+    "ticker": "DHR",
+    "bbg": "DHR US Equity",
+    "category": "Uncategorized",
+    "raw": "DHR US"
+  },
+  {
+    "ticker": "AAPL",
+    "bbg": "AAPL US Equity",
+    "category": "Uncategorized",
+    "raw": "AAPL US"
+  },
+  {
+    "ticker": "NFLX",
+    "bbg": "NFLX US Equity",
+    "category": "Uncategorized",
+    "raw": "NFLX"
+  },
+  {
+    "ticker": "QCOM",
+    "bbg": "QCOM US Equity",
+    "category": "Uncategorized",
+    "raw": "QCOM US"
+  },
+  {
+    "ticker": "TSLA",
+    "bbg": "TSLA US Equity",
+    "category": "Uncategorized",
+    "raw": "TSLA US"
+  },
+  {
+    "ticker": "UMG",
+    "bbg": "UMG NA Equity",
+    "category": "Uncategorized",
+    "raw": "UMG NA"
+  },
+  {
+    "ticker": "ASML",
+    "bbg": "ASML NA Equity",
+    "category": "Uncategorized",
+    "raw": "ASML NA"
+  },
+  {
+    "ticker": "AMAT",
+    "bbg": "AMAT US Equity",
+    "category": "Uncategorized",
+    "raw": "AMAT US"
+  },
+  {
+    "ticker": "KLAC",
+    "bbg": "KLAC US Equity",
+    "category": "Uncategorized",
+    "raw": "KLAC US"
+  },
+  {
+    "ticker": "2330 TT",
+    "bbg": "2330 TT US Equity",
+    "category": "Uncategorized",
+    "raw": "2330 TT"
+  },
+  {
+    "ticker": "BX",
+    "bbg": "BX US Equity",
+    "category": "Uncategorized",
+    "raw": "BX US"
+  },
+  {
+    "ticker": "KKR",
+    "bbg": "KKR US Equity",
+    "category": "Uncategorized",
+    "raw": "KKR US"
+  },
+  {
+    "ticker": "BAM",
+    "bbg": "BAM US Equity",
+    "category": "Uncategorized",
+    "raw": "BAM US"
+  },
+  {
+    "ticker": "ARES",
+    "bbg": "ARES US Equity",
+    "category": "Uncategorized",
+    "raw": "ARES US"
+  },
+  {
+    "ticker": "OWL",
+    "bbg": "OWL US Equity",
+    "category": "Uncategorized",
+    "raw": "OWL US"
+  },
+  {
+    "ticker": "CG",
+    "bbg": "CG US Equity",
+    "category": "Uncategorized",
+    "raw": "CG US"
+  },
+  {
+    "ticker": "BN",
+    "bbg": "BN US Equity",
+    "category": "Uncategorized",
+    "raw": "BN US"
+  },
+  {
+    "ticker": "TPG",
+    "bbg": "TPG US Equity",
+    "category": "Uncategorized",
+    "raw": "TPG US"
+  },
+  {
+    "ticker": "BEP",
+    "bbg": "BEP US Equity",
+    "category": "Uncategorized",
+    "raw": "BEP US"
+  },
+  {
+    "ticker": "BIP",
+    "bbg": "BIP US Equity",
+    "category": "Uncategorized",
+    "raw": "BIP US"
+  },
+  {
+    "ticker": "BBU",
+    "bbg": "BBU US Equity",
+    "category": "Uncategorized",
+    "raw": "BBU US"
+  },
+  {
+    "ticker": "HLT",
+    "bbg": "HLT US Equity",
+    "category": "Uncategorized",
+    "raw": "HLT US"
+  },
+  {
+    "ticker": "MAR",
+    "bbg": "MAR US Equity",
+    "category": "Uncategorized",
+    "raw": "MAR US"
+  },
+  {
+    "ticker": "BKNG",
+    "bbg": "BKNG US Equity",
+    "category": "Uncategorized",
+    "raw": "BKNG"
+  },
+  {
+    "ticker": "DPZ",
+    "bbg": "DPZ US Equity",
+    "category": "Uncategorized",
+    "raw": "DPZ"
+  },
+  {
+    "ticker": "CMG",
+    "bbg": "CMG US Equity",
+    "category": "Uncategorized",
+    "raw": "CMG US"
+  },
+  {
+    "ticker": "MCO",
+    "bbg": "MCO US Equity",
+    "category": "Uncategorized",
+    "raw": "MCO"
+  },
+  {
+    "ticker": "SPGI",
+    "bbg": "SPGI US Equity",
+    "category": "Uncategorized",
+    "raw": "SPGI US"
+  },
+  {
+    "ticker": "MSCI",
+    "bbg": "MSCI US Equity",
+    "category": "Uncategorized",
+    "raw": "MSCI US"
+  },
+  {
+    "ticker": "CSGP",
+    "bbg": "CSGP US Equity",
+    "category": "Uncategorized",
+    "raw": "CSGP US"
+  },
+  {
+    "ticker": "IBKR",
+    "bbg": "IBKR US Equity",
+    "category": "Uncategorized",
+    "raw": "IBKR US"
+  },
+  {
+    "ticker": "LPLA",
+    "bbg": "LPLA US Equity",
+    "category": "Uncategorized",
+    "raw": "LPLA US"
+  },
+  {
+    "ticker": "SCHW",
+    "bbg": "SCHW US Equity",
+    "category": "Uncategorized",
+    "raw": "SCHW US"
+  },
+  {
+    "ticker": "CRM",
+    "bbg": "CRM US Equity",
+    "category": "Uncategorized",
+    "raw": "CRM"
+  },
+  {
+    "ticker": "WDAY",
+    "bbg": "WDAY US Equity",
+    "category": "Uncategorized",
+    "raw": "WDAY US"
+  },
+  {
+    "ticker": "ADBE",
+    "bbg": "ADBE US Equity",
+    "category": "Uncategorized",
+    "raw": "ADBE US"
+  },
+  {
+    "ticker": "SHOP",
+    "bbg": "SHOP US Equity",
+    "category": "Uncategorized",
+    "raw": "SHOP US"
+  },
+  {
+    "ticker": "GWRE",
+    "bbg": "GWRE US Equity",
+    "category": "Uncategorized",
+    "raw": "GWRE US"
+  },
+  {
+    "ticker": "NOW",
+    "bbg": "NOW US Equity",
+    "category": "Uncategorized",
+    "raw": "NOW US"
+  },
+  {
+    "ticker": "NET",
+    "bbg": "NET US Equity",
+    "category": "Uncategorized",
+    "raw": "NET US"
+  },
+  {
+    "ticker": "ELV",
+    "bbg": "ELV US Equity",
+    "category": "Uncategorized",
+    "raw": "ELV US"
+  },
+  {
+    "ticker": "ISRG",
+    "bbg": "ISRG US Equity",
+    "category": "Uncategorized",
+    "raw": "ISRG US"
+  },
+  {
+    "ticker": "BLDR",
+    "bbg": "BLDR US Equity",
+    "category": "Uncategorized",
+    "raw": "BLDR US"
+  },
+  {
+    "ticker": "FERG",
+    "bbg": "FERG US Equity",
+    "category": "Uncategorized",
+    "raw": "FERG US"
+  },
+  {
+    "ticker": "CRH",
+    "bbg": "CRH US Equity",
+    "category": "Uncategorized",
+    "raw": "CRH US"
+  },
+  {
+    "ticker": "FND",
+    "bbg": "FND US Equity",
+    "category": "Uncategorized",
+    "raw": "FND US"
+  },
+  {
+    "ticker": "COST",
+    "bbg": "COST US Equity",
+    "category": "Uncategorized",
+    "raw": "COST US"
+  },
+  {
+    "ticker": "WMT",
+    "bbg": "WMT US Equity",
+    "category": "Uncategorized",
+    "raw": "WMT US"
+  },
+  {
+    "ticker": "MC",
+    "bbg": "MC FP Equity",
+    "category": "Uncategorized",
+    "raw": "MC FP"
+  },
+  {
+    "ticker": "PM",
+    "bbg": "PM US Equity",
+    "category": "Uncategorized",
+    "raw": "PM US"
+  },
+  {
+    "ticker": "CP",
+    "bbg": "CP US Equity",
+    "category": "Uncategorized",
+    "raw": "CP US"
+  },
+  {
+    "ticker": "CNR",
+    "bbg": "CNR CN Equity",
+    "category": "Uncategorized",
+    "raw": "CNR CN"
+  },
+  {
+    "ticker": "UNP",
+    "bbg": "UNP US Equity",
+    "category": "Uncategorized",
+    "raw": "UNP US"
+  },
+  {
+    "ticker": "CSX",
+    "bbg": "CSX US Equity",
+    "category": "Uncategorized",
+    "raw": "CSX US"
+  },
+  {
+    "ticker": "NVR",
+    "bbg": "NVR US Equity",
+    "category": "Uncategorized",
+    "raw": "NVR US"
+  },
+  {
+    "ticker": "PDD",
+    "bbg": "PDD US Equity",
+    "category": "Uncategorized",
+    "raw": "PDD US"
+  },
+  {
+    "ticker": "MSI",
+    "bbg": "MSI US Equity",
+    "category": "Uncategorized",
+    "raw": "MSI US"
+  },
+  {
+    "ticker": "TPL",
+    "bbg": "TPL US Equity",
+    "category": "Uncategorized",
+    "raw": "TPL US"
+  },
+  {
+    "ticker": "APG",
+    "bbg": "APG US Equity",
+    "category": "Uncategorized",
+    "raw": "APG US"
+  },
+  {
+    "ticker": "CACC",
+    "bbg": "CACC US Equity",
+    "category": "Uncategorized",
+    "raw": "CACC"
+  },
+  {
+    "ticker": "GL",
+    "bbg": "GL US Equity",
+    "category": "Uncategorized",
+    "raw": "GL US"
+  },
+  {
+    "ticker": "LAD",
+    "bbg": "LAD US Equity",
+    "category": "Uncategorized",
+    "raw": "LAD US"
+  },
+  {
+    "ticker": "LLYVK",
+    "bbg": "LLYVK US Equity",
+    "category": "Uncategorized",
+    "raw": "LLYVK US"
+  },
+  {
+    "ticker": "CHTR",
+    "bbg": "CHTR US Equity",
+    "category": "Uncategorized",
+    "raw": "CHTR"
+  },
+  {
+    "ticker": "ABG",
+    "bbg": "ABG US Equity",
+    "category": "Uncategorized",
+    "raw": "ABG US"
+  },
+  {
+    "ticker": "ALRM",
+    "bbg": "ALRM US Equity",
+    "category": "Uncategorized",
+    "raw": "ALRM US"
+  },
+  {
+    "ticker": "OPTU",
+    "bbg": "OPTU US Equity",
+    "category": "Uncategorized",
+    "raw": "OPTU US"
+  },
+  {
+    "ticker": "CMCSA",
+    "bbg": "CMCSA US Equity",
+    "category": "Uncategorized",
+    "raw": "CMCSA"
+  },
+  {
+    "ticker": "WRLD",
+    "bbg": "WRLD US Equity",
+    "category": "Uncategorized",
+    "raw": "WRLD US"
+  },
+  {
+    "ticker": "CARG",
+    "bbg": "CARG US Equity",
+    "category": "Uncategorized",
+    "raw": "CARG US"
+  },
+  {
+    "ticker": "ARMK",
+    "bbg": "ARMK US Equity",
+    "category": "Uncategorized",
+    "raw": "ARMK US"
+  },
+  {
+    "ticker": "QSR",
+    "bbg": "QSR US Equity",
+    "category": "Uncategorized",
+    "raw": "QSR US"
+  },
+  {
+    "ticker": "W",
+    "bbg": "W US Equity",
+    "category": "Uncategorized",
+    "raw": "W US"
+  },
+  {
+    "ticker": "MO",
+    "bbg": "MO US Equity",
+    "category": "Uncategorized",
+    "raw": "MO US"
+  },
+  {
+    "ticker": "CI",
+    "bbg": "CI US Equity",
+    "category": "Uncategorized",
+    "raw": "CI"
+  },
+  {
+    "ticker": "CVS",
+    "bbg": "CVS US Equity",
+    "category": "Uncategorized",
+    "raw": "CVS"
+  },
+  {
+    "ticker": "WBD",
+    "bbg": "WBD US Equity",
+    "category": "Uncategorized",
+    "raw": "WBD US"
+  },
+  {
+    "ticker": "QVCGA",
+    "bbg": "QVCGA US Equity",
+    "category": "Uncategorized",
+    "raw": "QVCGA US"
+  },
+  {
+    "ticker": "SSNC",
+    "bbg": "SSNC US Equity",
+    "category": "Uncategorized",
+    "raw": "SSNC"
+  },
+  {
+    "ticker": "SPOT",
+    "bbg": "SPOT US Equity",
+    "category": "Uncategorized",
+    "raw": "SPOT US"
+  },
+  {
+    "ticker": "BABA",
+    "bbg": "BABA US Equity",
+    "category": "Uncategorized",
+    "raw": "BABA"
+  },
+  {
+    "ticker": "IAC",
+    "bbg": "IAC US Equity",
+    "category": "Uncategorized",
+    "raw": "IAC"
+  },
+  {
+    "ticker": "PYPL",
+    "bbg": "PYPL US Equity",
+    "category": "Uncategorized",
+    "raw": "PYPL US"
+  },
+  {
+    "ticker": "THC",
+    "bbg": "THC US Equity",
+    "category": "Healthcare providers",
+    "raw": "THC"
+  },
+  {
+    "ticker": "UHS",
+    "bbg": "UHS US Equity",
+    "category": "Healthcare providers",
+    "raw": "UHS"
+  },
+  {
+    "ticker": "CYH",
+    "bbg": "CYH US Equity",
+    "category": "Healthcare providers",
+    "raw": "CYH US"
+  },
+  {
+    "ticker": "DVA",
+    "bbg": "DVA US Equity",
+    "category": "Healthcare providers",
+    "raw": "DVA"
+  },
+  {
+    "ticker": "LH",
+    "bbg": "LH US Equity",
+    "category": "Healthcare providers",
+    "raw": "LH"
+  },
+  {
+    "ticker": "DGX",
+    "bbg": "DGX US Equity",
+    "category": "Healthcare providers",
+    "raw": "DGX"
+  },
+  {
+    "ticker": "IDXX",
+    "bbg": "IDXX US Equity",
+    "category": "Healthcare providers",
+    "raw": "IDXX"
+  },
+  {
+    "ticker": "ENSG",
+    "bbg": "ENSG US Equity",
+    "category": "Healthcare providers",
+    "raw": "ENSG US"
+  },
+  {
+    "ticker": "MD",
+    "bbg": "MD US Equity",
+    "category": "Healthcare providers",
+    "raw": "MD"
+  },
+  {
+    "ticker": "AMN",
+    "bbg": "AMN US Equity",
+    "category": "Healthcare providers",
+    "raw": "AMN US"
+  },
+  {
+    "ticker": "CCRN",
+    "bbg": "CCRN US Equity",
+    "category": "Healthcare providers",
+    "raw": "CCRN US"
+  },
+  {
+    "ticker": "EVH",
+    "bbg": "EVH US Equity",
+    "category": "Healthcare providers",
+    "raw": "EVH"
+  },
+  {
+    "ticker": "HUM",
+    "bbg": "HUM US Equity",
+    "category": "Managed Care",
+    "raw": "HUM"
+  },
+  {
+    "ticker": "ALHC",
+    "bbg": "ALHC US Equity",
+    "category": "Managed Care",
+    "raw": "ALHC US"
+  },
+  {
+    "ticker": "CNC",
+    "bbg": "CNC US Equity",
+    "category": "Managed Care",
+    "raw": "CNC"
+  },
+  {
+    "ticker": "MOH",
+    "bbg": "MOH US Equity",
+    "category": "Managed Care",
+    "raw": "MOH"
+  },
+  {
+    "ticker": "IQV",
+    "bbg": "IQV US Equity",
+    "category": "Clinical Labs",
+    "raw": "IQV"
+  },
+  {
+    "ticker": "ICLR",
+    "bbg": "ICLR US Equity",
+    "category": "Clinical Labs",
+    "raw": "ICLR US"
+  },
+  {
+    "ticker": "MEDP",
+    "bbg": "MEDP US Equity",
+    "category": "Clinical Labs",
+    "raw": "MEDP US"
+  },
+  {
+    "ticker": "CRL",
+    "bbg": "CRL US Equity",
+    "category": "Clinical Labs",
+    "raw": "CRL"
+  },
+  {
+    "ticker": "EHTH",
+    "bbg": "EHTH US Equity",
+    "category": "Clinical Labs",
+    "raw": "EHTH US"
+  },
+  {
+    "ticker": "TMUS",
+    "bbg": "TMUS US Equity",
+    "category": "Cable / Telco",
+    "raw": "TMUS"
+  },
+  {
+    "ticker": "VZ",
+    "bbg": "VZ US Equity",
+    "category": "Cable / Telco",
+    "raw": "VZ"
+  },
+  {
+    "ticker": "T",
+    "bbg": "T US Equity",
+    "category": "Cable / Telco",
+    "raw": "T"
+  },
+  {
+    "ticker": "CABO",
+    "bbg": "CABO US Equity",
+    "category": "Cable / Telco",
+    "raw": "CABO"
+  },
+  {
+    "ticker": "LBRDK",
+    "bbg": "LBRDK US Equity",
+    "category": "Cable / Telco",
+    "raw": "LBRDK US"
+  },
+  {
+    "ticker": "VOD",
+    "bbg": "VOD US Equity",
+    "category": "Cable / Telco",
+    "raw": "VOD"
+  },
+  {
+    "ticker": "DTE",
+    "bbg": "DTE GY Equity",
+    "category": "Cable / Telco",
+    "raw": "DTE GY"
+  },
+  {
+    "ticker": "TEF",
+    "bbg": "TEF SM Equity",
+    "category": "Cable / Telco",
+    "raw": "TEF SM"
+  },
+  {
+    "ticker": "GOOGL",
+    "bbg": "GOOGL US Equity",
+    "category": "Internet",
+    "raw": "GOOGL"
+  },
+  {
+    "ticker": "PINS",
+    "bbg": "PINS US Equity",
+    "category": "Internet",
+    "raw": "PINS US"
+  },
+  {
+    "ticker": "SNAP",
+    "bbg": "SNAP US Equity",
+    "category": "Internet",
+    "raw": "SNAP"
+  },
+  {
+    "ticker": "RDDT",
+    "bbg": "RDDT US Equity",
+    "category": "Internet",
+    "raw": "RDDT US"
+  },
+  {
+    "ticker": "ABNB",
+    "bbg": "ABNB US Equity",
+    "category": "Internet",
+    "raw": "ABNB US"
+  },
+  {
+    "ticker": "EBAY",
+    "bbg": "EBAY US Equity",
+    "category": "Internet",
+    "raw": "EBAY US"
+  },
+  {
+    "ticker": "TTD",
+    "bbg": "TTD US Equity",
+    "category": "Internet",
+    "raw": "TTD US"
+  },
+  {
+    "ticker": "ROKU",
+    "bbg": "ROKU US Equity",
+    "category": "Internet",
+    "raw": "ROKU US"
+  },
+  {
+    "ticker": "ETSY",
+    "bbg": "ETSY US Equity",
+    "category": "Internet",
+    "raw": "ETSY"
+  },
+  {
+    "ticker": "MTCH",
+    "bbg": "MTCH US Equity",
+    "category": "Internet",
+    "raw": "MTCH"
+  },
+  {
+    "ticker": "U",
+    "bbg": "U US Equity",
+    "category": "Internet",
+    "raw": "U US"
+  },
+  {
+    "ticker": "ZG",
+    "bbg": "ZG US Equity",
+    "category": "Internet",
+    "raw": "ZG"
+  },
+  {
+    "ticker": "RMV",
+    "bbg": "RMV LN Equity",
+    "category": "Internet",
+    "raw": "RMV LN"
+  },
+  {
+    "ticker": "YELP",
+    "bbg": "YELP US Equity",
+    "category": "Internet",
+    "raw": "YELP US"
+  },
+  {
+    "ticker": "ANGI",
+    "bbg": "ANGI US Equity",
+    "category": "Internet",
+    "raw": "ANGI"
+  },
+  {
+    "ticker": "TREE",
+    "bbg": "TREE US Equity",
+    "category": "Internet",
+    "raw": "TREE"
+  },
+  {
+    "ticker": "XYZ",
+    "bbg": "XYZ US Equity",
+    "category": "Internet",
+    "raw": "XYZ US"
+  },
+  {
+    "ticker": "CRTO",
+    "bbg": "CRTO US Equity",
+    "category": "Internet",
+    "raw": "CRTO US"
+  },
+  {
+    "ticker": "CARS",
+    "bbg": "CARS US Equity",
+    "category": "Internet",
+    "raw": "CARS US"
+  },
+  {
+    "ticker": "OCDO",
+    "bbg": "OCDO LN Equity",
+    "category": "Internet",
+    "raw": "OCDO LN"
+  },
+  {
+    "ticker": "VRSN",
+    "bbg": "VRSN US Equity",
+    "category": "Internet",
+    "raw": "VRSN US"
+  },
+  {
+    "ticker": "CDLX",
+    "bbg": "CDLX US Equity",
+    "category": "Internet",
+    "raw": "CDLX US"
+  },
+  {
+    "ticker": "DHER",
+    "bbg": "DHER GY Equity",
+    "category": "Internet",
+    "raw": "DHER GY"
+  },
+  {
+    "ticker": "PTON",
+    "bbg": "PTON US Equity",
+    "category": "Internet",
+    "raw": "PTON US"
+  },
+  {
+    "ticker": "LYFT",
+    "bbg": "LYFT US Equity",
+    "category": "Internet",
+    "raw": "LYFT US"
+  },
+  {
+    "ticker": "PRX",
+    "bbg": "PRX NA Equity",
+    "category": "Internet",
+    "raw": "PRX NA"
+  },
+  {
+    "ticker": "AUTO",
+    "bbg": "AUTO LN Equity",
+    "category": "Internet",
+    "raw": "AUTO LN"
+  },
+  {
+    "ticker": "DKNG",
+    "bbg": "DKNG US Equity",
+    "category": "Internet",
+    "raw": "DKNG US"
+  },
+  {
+    "ticker": "FLUT",
+    "bbg": "FLUT US Equity",
+    "category": "Internet",
+    "raw": "FLUT US"
+  },
+  {
+    "ticker": "FLTR",
+    "bbg": "FLTR LN Equity",
+    "category": "Internet",
+    "raw": "FLTR LN"
+  },
+  {
+    "ticker": "WMG",
+    "bbg": "WMG US Equity",
+    "category": "Internet",
+    "raw": "WMG US"
+  },
+  {
+    "ticker": "SCOR",
+    "bbg": "SCOR US Equity",
+    "category": "Internet",
+    "raw": "SCOR"
+  },
+  {
+    "ticker": "ASM",
+    "bbg": "ASM NA Equity",
+    "category": "Technology",
+    "raw": "ASM NA"
+  },
+  {
+    "ticker": "ARM",
+    "bbg": "ARM US Equity",
+    "category": "Technology",
+    "raw": "ARM US"
+  },
+  {
+    "ticker": "MRVL",
+    "bbg": "MRVL US Equity",
+    "category": "Technology",
+    "raw": "MRVL"
+  },
+  {
+    "ticker": "AMD",
+    "bbg": "AMD US Equity",
+    "category": "Technology",
+    "raw": "AMD"
+  },
+  {
+    "ticker": "INTC",
+    "bbg": "INTC US Equity",
+    "category": "Technology",
+    "raw": "INTC"
+  },
+  {
+    "ticker": "TXN",
+    "bbg": "TXN US Equity",
+    "category": "Technology",
+    "raw": "TXN"
+  },
+  {
+    "ticker": "ADI",
+    "bbg": "ADI US Equity",
+    "category": "Technology",
+    "raw": "ADI US"
+  },
+  {
+    "ticker": "005930",
+    "bbg": "005930 KS Equity",
+    "category": "Technology",
+    "raw": "005930 KS"
+  },
+  {
+    "ticker": "000660",
+    "bbg": "000660 KS Equity",
+    "category": "Technology",
+    "raw": "000660 KS"
+  },
+  {
+    "ticker": "STX",
+    "bbg": "STX US Equity",
+    "category": "Technology",
+    "raw": "STX"
+  },
+  {
+    "ticker": "WDC",
+    "bbg": "WDC US Equity",
+    "category": "Technology",
+    "raw": "WDC US"
+  },
+  {
+    "ticker": "SNDK",
+    "bbg": "SNDK US Equity",
+    "category": "Technology",
+    "raw": "SNDK US"
+  },
+  {
+    "ticker": "CLS",
+    "bbg": "CLS US Equity",
+    "category": "Technology",
+    "raw": "CLS US"
+  },
+  {
+    "ticker": "QRVO",
+    "bbg": "QRVO US Equity",
+    "category": "Technology",
+    "raw": "QRVO"
+  },
+  {
+    "ticker": "SWKS",
+    "bbg": "SWKS US Equity",
+    "category": "Technology",
+    "raw": "SWKS"
+  },
+  {
+    "ticker": "DELL",
+    "bbg": "DELL US Equity",
+    "category": "Technology",
+    "raw": "DELL US"
+  },
+  {
+    "ticker": "SMCI",
+    "bbg": "SMCI US Equity",
+    "category": "Technology",
+    "raw": "SMCI US"
+  },
+  {
+    "ticker": "IBM",
+    "bbg": "IBM US Equity",
+    "category": "Technology",
+    "raw": "IBM"
+  },
+  {
+    "ticker": "XRX",
+    "bbg": "XRX US Equity",
+    "category": "Technology",
+    "raw": "XRX"
+  },
+  {
+    "ticker": "HPE",
+    "bbg": "HPE US Equity",
+    "category": "Technology",
+    "raw": "HPE"
+  },
+  {
+    "ticker": "HPQ",
+    "bbg": "HPQ US Equity",
+    "category": "Technology",
+    "raw": "HPQ US"
+  },
+  {
+    "ticker": "FLEX",
+    "bbg": "FLEX US Equity",
+    "category": "Technology",
+    "raw": "FLEX"
+  },
+  {
+    "ticker": "CDW",
+    "bbg": "CDW US Equity",
+    "category": "Technology",
+    "raw": "CDW US"
+  },
+  {
+    "ticker": "SNX",
+    "bbg": "SNX US Equity",
+    "category": "Technology",
+    "raw": "SNX US"
+  },
+  {
+    "ticker": "AVT",
+    "bbg": "AVT US Equity",
+    "category": "Technology",
+    "raw": "AVT US"
+  },
+  {
+    "ticker": "ARW",
+    "bbg": "ARW US Equity",
+    "category": "Technology",
+    "raw": "ARW US"
+  },
+  {
+    "ticker": "BA",
+    "bbg": "BA US Equity",
+    "category": "Aerospace / defense",
+    "raw": "BA"
+  },
+  {
+    "ticker": "AIR",
+    "bbg": "AIR FP Equity",
+    "category": "Aerospace / defense",
+    "raw": "AIR FP"
+  },
+  {
+    "ticker": "SAF",
+    "bbg": "SAF FP Equity",
+    "category": "Aerospace / defense",
+    "raw": "SAF FP"
+  },
+  {
+    "ticker": "RTX",
+    "bbg": "RTX US Equity",
+    "category": "Aerospace / defense",
+    "raw": "RTX US"
+  },
+  {
+    "ticker": "LMT",
+    "bbg": "LMT US Equity",
+    "category": "Aerospace / defense",
+    "raw": "LMT"
+  },
+  {
+    "ticker": "GD",
+    "bbg": "GD US Equity",
+    "category": "Aerospace / defense",
+    "raw": "GD US"
+  },
+  {
+    "ticker": "NOC",
+    "bbg": "NOC US Equity",
+    "category": "Aerospace / defense",
+    "raw": "NOC"
+  },
+  {
+    "ticker": "MOG/A",
+    "bbg": "MOG/A US Equity",
+    "category": "Aerospace / defense",
+    "raw": "MOG/A US"
+  },
+  {
+    "ticker": "HEI",
+    "bbg": "HEI US Equity",
+    "category": "Aerospace / defense",
+    "raw": "HEI"
+  },
+  {
+    "ticker": "RR/",
+    "bbg": "RR/ LN Equity",
+    "category": "Aerospace / defense",
+    "raw": "RR/ LN"
+  },
+  {
+    "ticker": "CRS",
+    "bbg": "CRS US Equity",
+    "category": "Aerospace / defense",
+    "raw": "CRS"
+  },
+  {
+    "ticker": "HWM",
+    "bbg": "HWM US Equity",
+    "category": "Aerospace / defense",
+    "raw": "HWM US"
+  },
+  {
+    "ticker": "WWD",
+    "bbg": "WWD US Equity",
+    "category": "Aerospace / defense",
+    "raw": "WWD US"
+  },
+  {
+    "ticker": "HXL",
+    "bbg": "HXL US Equity",
+    "category": "Aerospace / defense",
+    "raw": "HXL US"
+  },
+  {
+    "ticker": "AL",
+    "bbg": "AL US Equity",
+    "category": "Aerospace / defense",
+    "raw": "AL US"
+  },
+  {
+    "ticker": "2588",
+    "bbg": "2588 HK Equity",
+    "category": "Aerospace / defense",
+    "raw": "2588 HK"
+  },
+  {
+    "ticker": "FDS",
+    "bbg": "FDS US Equity",
+    "category": "Data / Information Svc",
+    "raw": "FDS US"
+  },
+  {
+    "ticker": "EXPN",
+    "bbg": "EXPN LN Equity",
+    "category": "Data / Information Svc",
+    "raw": "EXPN LN"
+  },
+  {
+    "ticker": "EFX",
+    "bbg": "EFX US Equity",
+    "category": "Data / Information Svc",
+    "raw": "EFX"
+  },
+  {
+    "ticker": "TRU",
+    "bbg": "TRU US Equity",
+    "category": "Data / Information Svc",
+    "raw": "TRU US"
+  },
+  {
+    "ticker": "ADP",
+    "bbg": "ADP US Equity",
+    "category": "Data / Information Svc",
+    "raw": "ADP"
+  },
+  {
+    "ticker": "PAYX",
+    "bbg": "PAYX US Equity",
+    "category": "Data / Information Svc",
+    "raw": "PAYX"
+  },
+  {
+    "ticker": "PAYC",
+    "bbg": "PAYC US Equity",
+    "category": "Data / Information Svc",
+    "raw": "PAYC US"
+  },
+  {
+    "ticker": "MKTX",
+    "bbg": "MKTX US Equity",
+    "category": "Data / Information Svc",
+    "raw": "MKTX US"
+  },
+  {
+    "ticker": "DNB",
+    "bbg": "DNB US Equity",
+    "category": "Data / Information Svc",
+    "raw": "DNB US"
+  },
+  {
+    "ticker": "VRSK",
+    "bbg": "VRSK US Equity",
+    "category": "Data / Information Svc",
+    "raw": "VRSK"
+  },
+  {
+    "ticker": "EXPE",
+    "bbg": "EXPE US Equity",
+    "category": "Travel / tourism",
+    "raw": "EXPE"
+  },
+  {
+    "ticker": "TRIP",
+    "bbg": "TRIP US Equity",
+    "category": "Travel / tourism",
+    "raw": "TRIP"
+  },
+  {
+    "ticker": "UHAL",
+    "bbg": "UHAL US Equity",
+    "category": "Travel / tourism",
+    "raw": "UHAL"
+  },
+  {
+    "ticker": "MGM",
+    "bbg": "MGM US Equity",
+    "category": "Travel / tourism",
+    "raw": "MGM US"
+  },
+  {
+    "ticker": "WYNN",
+    "bbg": "WYNN US Equity",
+    "category": "Travel / tourism",
+    "raw": "WYNN US"
+  },
+  {
+    "ticker": "H",
+    "bbg": "H US Equity",
+    "category": "Travel / tourism",
+    "raw": "H US"
+  },
+  {
+    "ticker": "IHG",
+    "bbg": "IHG LN Equity",
+    "category": "Travel / tourism",
+    "raw": "IHG LN"
+  },
+  {
+    "ticker": "AMS",
+    "bbg": "AMS SM Equity",
+    "category": "Travel / tourism",
+    "raw": "AMS SM"
+  },
+  {
+    "ticker": "SABR",
+    "bbg": "SABR US Equity",
+    "category": "Travel / tourism",
+    "raw": "SABR"
+  },
+  {
+    "ticker": "EFN",
+    "bbg": "EFN CN Equity",
+    "category": "Travel / tourism",
+    "raw": "EFN CN"
+  },
+  {
+    "ticker": "CAR",
+    "bbg": "CAR US Equity",
+    "category": "Travel / tourism",
+    "raw": "CAR"
+  },
+  {
+    "ticker": "HTZ",
+    "bbg": "HTZ US Equity",
+    "category": "Travel / tourism",
+    "raw": "HTZ US"
+  },
+  {
+    "ticker": "DAL",
+    "bbg": "DAL US Equity",
+    "category": "Travel / tourism",
+    "raw": "DAL"
+  },
+  {
+    "ticker": "UAL",
+    "bbg": "UAL US Equity",
+    "category": "Travel / tourism",
+    "raw": "UAL"
+  },
+  {
+    "ticker": "AAL",
+    "bbg": "AAL US Equity",
+    "category": "Travel / tourism",
+    "raw": "AAL US"
+  },
+  {
+    "ticker": "LHA",
+    "bbg": "LHA GY Equity",
+    "category": "Travel / tourism",
+    "raw": "LHA GY"
+  },
+  {
+    "ticker": "RYAAY",
+    "bbg": "RYAAY US Equity",
+    "category": "Travel / tourism",
+    "raw": "RYAAY US"
+  },
+  {
+    "ticker": "LUV",
+    "bbg": "LUV US Equity",
+    "category": "Travel / tourism",
+    "raw": "LUV US"
+  },
+  {
+    "ticker": "ULCC",
+    "bbg": "ULCC US Equity",
+    "category": "Travel / tourism",
+    "raw": "ULCC US"
+  },
+  {
+    "ticker": "MTN",
+    "bbg": "MTN US Equity",
+    "category": "Travel / tourism",
+    "raw": "MTN US"
+  },
+  {
+    "ticker": "RCL",
+    "bbg": "RCL US Equity",
+    "category": "Travel / tourism",
+    "raw": "RCL US"
+  },
+  {
+    "ticker": "CCL",
+    "bbg": "CCL US Equity",
+    "category": "Travel / tourism",
+    "raw": "CCL US"
+  },
+  {
+    "ticker": "PK",
+    "bbg": "PK US Equity",
+    "category": "Travel / tourism",
+    "raw": "PK US"
+  },
+  {
+    "ticker": "ORCL",
+    "bbg": "ORCL US Equity",
+    "category": "Software",
+    "raw": "ORCL"
+  },
+  {
+    "ticker": "INTU",
+    "bbg": "INTU US Equity",
+    "category": "Software",
+    "raw": "INTU"
+  },
+  {
+    "ticker": "SAP",
+    "bbg": "SAP GY Equity",
+    "category": "Software",
+    "raw": "SAP GY"
+  },
+  {
+    "ticker": "CRWD",
+    "bbg": "CRWD US Equity",
+    "category": "Software",
+    "raw": "CRWD US"
+  },
+  {
+    "ticker": "PLTR",
+    "bbg": "PLTR US Equity",
+    "category": "Software",
+    "raw": "PLTR US"
+  },
+  {
+    "ticker": "PANW",
+    "bbg": "PANW US Equity",
+    "category": "Software",
+    "raw": "PANW US"
+  },
+  {
+    "ticker": "FTNT",
+    "bbg": "FTNT US Equity",
+    "category": "Software",
+    "raw": "FTNT US"
+  },
+  {
+    "ticker": "TEAM",
+    "bbg": "TEAM US Equity",
+    "category": "Software",
+    "raw": "TEAM US"
+  },
+  {
+    "ticker": "TYL",
+    "bbg": "TYL US Equity",
+    "category": "Software",
+    "raw": "TYL"
+  },
+  {
+    "ticker": "BLKB",
+    "bbg": "BLKB US Equity",
+    "category": "Software",
+    "raw": "BLKB"
+  },
+  {
+    "ticker": "TWLO",
+    "bbg": "TWLO US Equity",
+    "category": "Software",
+    "raw": "TWLO US"
+  },
+  {
+    "ticker": "DBX",
+    "bbg": "DBX US Equity",
+    "category": "Software",
+    "raw": "DBX US"
+  },
+  {
+    "ticker": "BOX",
+    "bbg": "BOX US Equity",
+    "category": "Software",
+    "raw": "BOX US"
+  },
+  {
+    "ticker": "ZM",
+    "bbg": "ZM US Equity",
+    "category": "Software",
+    "raw": "ZM US"
+  },
+  {
+    "ticker": "AXON",
+    "bbg": "AXON US Equity",
+    "category": "Software",
+    "raw": "AXON US"
+  },
+  {
+    "ticker": "UPLD",
+    "bbg": "UPLD US Equity",
+    "category": "Software",
+    "raw": "UPLD US"
+  },
+  {
+    "ticker": "SNOW",
+    "bbg": "SNOW US Equity",
+    "category": "Software",
+    "raw": "SNOW US"
+  },
+  {
+    "ticker": "BILL",
+    "bbg": "BILL US Equity",
+    "category": "Software",
+    "raw": "BILL US"
+  },
+  {
+    "ticker": "WIX",
+    "bbg": "WIX US Equity",
+    "category": "Software",
+    "raw": "WIX US"
+  },
+  {
+    "ticker": "DOCU",
+    "bbg": "DOCU US Equity",
+    "category": "Software",
+    "raw": "DOCU US"
+  },
+  {
+    "ticker": "DDOG",
+    "bbg": "DDOG US Equity",
+    "category": "Software",
+    "raw": "DDOG US"
+  },
+  {
+    "ticker": "MDB",
+    "bbg": "MDB US Equity",
+    "category": "Software",
+    "raw": "MDB US"
+  },
+  {
+    "ticker": "ESTC",
+    "bbg": "ESTC US Equity",
+    "category": "Software",
+    "raw": "ESTC US"
+  },
+  {
+    "ticker": "DT",
+    "bbg": "DT US Equity",
+    "category": "Software",
+    "raw": "DT US"
+  },
+  {
+    "ticker": "GTM",
+    "bbg": "GTM US Equity",
+    "category": "Software",
+    "raw": "GTM US"
+  },
+  {
+    "ticker": "RAMP",
+    "bbg": "RAMP US Equity",
+    "category": "Software",
+    "raw": "RAMP"
+  },
+  {
+    "ticker": "PAR",
+    "bbg": "PAR US Equity",
+    "category": "Software",
+    "raw": "PAR US"
+  },
+  {
+    "ticker": "FSLY",
+    "bbg": "FSLY US Equity",
+    "category": "Software",
+    "raw": "FSLY US"
+  },
+  {
+    "ticker": "ASAN",
+    "bbg": "ASAN US Equity",
+    "category": "Software",
+    "raw": "ASAN US"
+  },
+  {
+    "ticker": "APPN",
+    "bbg": "APPN US Equity",
+    "category": "Software",
+    "raw": "APPN US"
+  },
+  {
+    "ticker": "BL",
+    "bbg": "BL US Equity",
+    "category": "Software",
+    "raw": "BL US"
+  },
+  {
+    "ticker": "DSY",
+    "bbg": "DSY FP Equity",
+    "category": "Software",
+    "raw": "DSY FP"
+  },
+  {
+    "ticker": "WK",
+    "bbg": "WK US Equity",
+    "category": "Software",
+    "raw": "WK US"
+  },
+  {
+    "ticker": "MSTR",
+    "bbg": "MSTR US Equity",
+    "category": "Software",
+    "raw": "MSTR US"
+  },
+  {
+    "ticker": "AXP",
+    "bbg": "AXP US Equity",
+    "category": "Payments",
+    "raw": "AXP"
+  },
+  {
+    "ticker": "COF",
+    "bbg": "COF US Equity",
+    "category": "Payments",
+    "raw": "COF"
+  },
+  {
+    "ticker": "ADYEN",
+    "bbg": "ADYEN NA Equity",
+    "category": "Payments",
+    "raw": "ADYEN NA"
+  },
+  {
+    "ticker": "STNE",
+    "bbg": "STNE US Equity",
+    "category": "Payments",
+    "raw": "STNE US"
+  },
+  {
+    "ticker": "NU",
+    "bbg": "NU US Equity",
+    "category": "Payments",
+    "raw": "NU US"
+  },
+  {
+    "ticker": "FISV",
+    "bbg": "FISV US Equity",
+    "category": "Payments",
+    "raw": "FISV US"
+  },
+  {
+    "ticker": "FIS",
+    "bbg": "FIS US Equity",
+    "category": "Payments",
+    "raw": "FIS"
+  },
+  {
+    "ticker": "GPN",
+    "bbg": "GPN US Equity",
+    "category": "Payments",
+    "raw": "GPN"
+  },
+  {
+    "ticker": "TOST",
+    "bbg": "TOST US Equity",
+    "category": "Payments",
+    "raw": "TOST US"
+  },
+  {
+    "ticker": "FOUR",
+    "bbg": "FOUR US Equity",
+    "category": "Payments",
+    "raw": "FOUR US"
+  },
+  {
+    "ticker": "CPAY",
+    "bbg": "CPAY US Equity",
+    "category": "Payments",
+    "raw": "CPAY US"
+  },
+  {
+    "ticker": "SEIC",
+    "bbg": "SEIC US Equity",
+    "category": "Payments",
+    "raw": "SEIC US"
+  },
+  {
+    "ticker": "DBD",
+    "bbg": "DBD US Equity",
+    "category": "Payments",
+    "raw": "DBD"
+  },
+  {
+    "ticker": "JKHY",
+    "bbg": "JKHY US Equity",
+    "category": "Payments",
+    "raw": "JKHY"
+  },
+  {
+    "ticker": "WU",
+    "bbg": "WU US Equity",
+    "category": "Payments",
+    "raw": "WU"
+  },
+  {
+    "ticker": "FCFS",
+    "bbg": "FCFS US Equity",
+    "category": "Payments",
+    "raw": "FCFS"
+  },
+  {
+    "ticker": "EEFT",
+    "bbg": "EEFT US Equity",
+    "category": "Payments",
+    "raw": "EEFT"
+  },
+  {
+    "ticker": "WEX",
+    "bbg": "WEX US Equity",
+    "category": "Payments",
+    "raw": "WEX"
+  },
+  {
+    "ticker": "EQT",
+    "bbg": "EQT US Equity",
+    "category": "Financials and related",
+    "raw": "EQT US"
+  },
+  {
+    "ticker": "HLNE",
+    "bbg": "HLNE US Equity",
+    "category": "Financials and related",
+    "raw": "HLNE US"
+  },
+  {
+    "ticker": "STEP",
+    "bbg": "STEP US Equity",
+    "category": "Financials and related",
+    "raw": "STEP US"
+  },
+  {
+    "ticker": "TROW",
+    "bbg": "TROW US Equity",
+    "category": "Financials and related",
+    "raw": "TROW US"
+  },
+  {
+    "ticker": "SYF",
+    "bbg": "SYF US Equity",
+    "category": "Financials and related",
+    "raw": "SYF"
+  },
+  {
+    "ticker": "BFH",
+    "bbg": "BFH US Equity",
+    "category": "Financials and related",
+    "raw": "BFH US"
+  },
+  {
+    "ticker": "ICE",
+    "bbg": "ICE US Equity",
+    "category": "Financials and related",
+    "raw": "ICE"
+  },
+  {
+    "ticker": "CME",
+    "bbg": "CME US Equity",
+    "category": "Financials and related",
+    "raw": "CME"
+  },
+  {
+    "ticker": "SLM",
+    "bbg": "SLM US Equity",
+    "category": "Financials and related",
+    "raw": "SLM"
+  },
+  {
+    "ticker": "CBOE",
+    "bbg": "CBOE US Equity",
+    "category": "Financials and related",
+    "raw": "CBOE US"
+  },
+  {
+    "ticker": "NDAQ",
+    "bbg": "NDAQ US Equity",
+    "category": "Financials and related",
+    "raw": "NDAQ US"
+  },
+  {
+    "ticker": "NAVI",
+    "bbg": "NAVI US Equity",
+    "category": "Financials and related",
+    "raw": "NAVI"
+  },
+  {
+    "ticker": "FG",
+    "bbg": "FG US Equity",
+    "category": "Financials and related",
+    "raw": "FG US"
+  },
+  {
+    "ticker": "BEN",
+    "bbg": "BEN US Equity",
+    "category": "Financials and related",
+    "raw": "BEN"
+  },
+  {
+    "ticker": "ALLY",
+    "bbg": "ALLY US Equity",
+    "category": "Financials and related",
+    "raw": "ALLY"
+  },
+  {
+    "ticker": "RM",
+    "bbg": "RM US Equity",
+    "category": "Financials and related",
+    "raw": "RM US"
+  },
+  {
+    "ticker": "OMF",
+    "bbg": "OMF US Equity",
+    "category": "Financials and related",
+    "raw": "OMF US"
+  },
+  {
+    "ticker": "OPRT",
+    "bbg": "OPRT US Equity",
+    "category": "Financials and related",
+    "raw": "OPRT US"
+  },
+  {
+    "ticker": "ENVA",
+    "bbg": "ENVA US Equity",
+    "category": "Financials and related",
+    "raw": "ENVA US"
+  },
+  {
+    "ticker": "PRAA",
+    "bbg": "PRAA US Equity",
+    "category": "Financials and related",
+    "raw": "PRAA US"
+  },
+  {
+    "ticker": "ECPG",
+    "bbg": "ECPG US Equity",
+    "category": "Financials and related",
+    "raw": "ECPG US"
+  },
+  {
+    "ticker": "EQR",
+    "bbg": "EQR US Equity",
+    "category": "Financials and related",
+    "raw": "EQR US"
+  },
+  {
+    "ticker": "MCD",
+    "bbg": "MCD US Equity",
+    "category": "Food / Restaurants",
+    "raw": "MCD"
+  },
+  {
+    "ticker": "YUM",
+    "bbg": "YUM US Equity",
+    "category": "Food / Restaurants",
+    "raw": "YUM"
+  },
+  {
+    "ticker": "WEN",
+    "bbg": "WEN US Equity",
+    "category": "Food / Restaurants",
+    "raw": "WEN"
+  },
+  {
+    "ticker": "YUMC",
+    "bbg": "YUMC US Equity",
+    "category": "Food / Restaurants",
+    "raw": "YUMC"
+  },
+  {
+    "ticker": "SBUX",
+    "bbg": "SBUX US Equity",
+    "category": "Food / Restaurants",
+    "raw": "SBUX"
+  },
+  {
+    "ticker": "WING",
+    "bbg": "WING US Equity",
+    "category": "Food / Restaurants",
+    "raw": "WING US"
+  },
+  {
+    "ticker": "CAVA",
+    "bbg": "CAVA US Equity",
+    "category": "Food / Restaurants",
+    "raw": "CAVA US"
+  },
+  {
+    "ticker": "BROS",
+    "bbg": "BROS US Equity",
+    "category": "Food / Restaurants",
+    "raw": "BROS US"
+  },
+  {
+    "ticker": "SHAK",
+    "bbg": "SHAK US Equity",
+    "category": "Food / Restaurants",
+    "raw": "SHAK US"
+  },
+  {
+    "ticker": "ARCO",
+    "bbg": "ARCO US Equity",
+    "category": "Food / Restaurants",
+    "raw": "ARCO US"
+  },
+  {
+    "ticker": "EAT",
+    "bbg": "EAT PW Equity",
+    "category": "Food / Restaurants",
+    "raw": "EAT PW"
+  },
+  {
+    "ticker": "DMP",
+    "bbg": "DMP AU Equity",
+    "category": "Food / Restaurants",
+    "raw": "DMP AU"
+  },
+  {
+    "ticker": "DOM",
+    "bbg": "DOM LN Equity",
+    "category": "Food / Restaurants",
+    "raw": "DOM LN"
+  },
+  {
+    "ticker": "LW",
+    "bbg": "LW US Equity",
+    "category": "Food / Restaurants",
+    "raw": "LW US"
+  },
+  {
+    "ticker": "SYY",
+    "bbg": "SYY US Equity",
+    "category": "Food / Restaurants",
+    "raw": "SYY"
+  },
+  {
+    "ticker": "USFD",
+    "bbg": "USFD US Equity",
+    "category": "Food / Restaurants",
+    "raw": "USFD"
+  },
+  {
+    "ticker": "PZZA",
+    "bbg": "PZZA US Equity",
+    "category": "Food / Restaurants",
+    "raw": "PZZA US"
+  },
+  {
+    "ticker": "CASY",
+    "bbg": "CASY US Equity",
+    "category": "Food / Restaurants",
+    "raw": "CASY US"
+  },
+  {
+    "ticker": "ACI",
+    "bbg": "ACI US Equity",
+    "category": "Food / Restaurants",
+    "raw": "ACI US"
+  },
+  {
+    "ticker": "DIN",
+    "bbg": "DIN US Equity",
+    "category": "Food / Restaurants",
+    "raw": "DIN"
+  },
+  {
+    "ticker": "KR",
+    "bbg": "KR US Equity",
+    "category": "Food / Restaurants",
+    "raw": "KR"
+  },
+  {
+    "ticker": "MRSH",
+    "bbg": "MRSH US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "MRSH US"
+  },
+  {
+    "ticker": "AON",
+    "bbg": "AON US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "AON"
+  },
+  {
+    "ticker": "WTW",
+    "bbg": "WTW US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "WTW US"
+  },
+  {
+    "ticker": "AJG",
+    "bbg": "AJG US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "AJG US"
+  },
+  {
+    "ticker": "BRO",
+    "bbg": "BRO US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "BRO"
+  },
+  {
+    "ticker": "ACN",
+    "bbg": "ACN US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "ACN"
+  },
+  {
+    "ticker": "CTSH",
+    "bbg": "CTSH US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "CTSH"
+  },
+  {
+    "ticker": "CNDT",
+    "bbg": "CNDT US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "CNDT"
+  },
+  {
+    "ticker": "TCS",
+    "bbg": "TCS IN Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "TCS IN"
+  },
+  {
+    "ticker": "DXC",
+    "bbg": "DXC US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "DXC"
+  },
+  {
+    "ticker": "RHI",
+    "bbg": "RHI US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "RHI"
+  },
+  {
+    "ticker": "MAN",
+    "bbg": "MAN US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "MAN"
+  },
+  {
+    "ticker": "FCN",
+    "bbg": "FCN US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "FCN US"
+  },
+  {
+    "ticker": "JLL",
+    "bbg": "JLL US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "JLL"
+  },
+  {
+    "ticker": "G",
+    "bbg": "G US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "G"
+  },
+  {
+    "ticker": "CBRE",
+    "bbg": "CBRE US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "CBRE US"
+  },
+  {
+    "ticker": "NSP",
+    "bbg": "NSP US Equity",
+    "category": "Insurance Brokers / Consultants",
+    "raw": "NSP US"
+  },
+  {
+    "ticker": "BAC",
+    "bbg": "BAC US Equity",
+    "category": "Banks",
+    "raw": "BAC"
+  },
+  {
+    "ticker": "WFC",
+    "bbg": "WFC US Equity",
+    "category": "Banks",
+    "raw": "WFC"
+  },
+  {
+    "ticker": "USB",
+    "bbg": "USB US Equity",
+    "category": "Banks",
+    "raw": "USB"
+  },
+  {
+    "ticker": "PNC",
+    "bbg": "PNC US Equity",
+    "category": "Banks",
+    "raw": "PNC"
+  },
+  {
+    "ticker": "GS",
+    "bbg": "GS US Equity",
+    "category": "Banks",
+    "raw": "GS"
+  },
+  {
+    "ticker": "MS",
+    "bbg": "MS US Equity",
+    "category": "Banks",
+    "raw": "MS"
+  },
+  {
+    "ticker": "C",
+    "bbg": "C US Equity",
+    "category": "Banks",
+    "raw": "C"
+  },
+  {
+    "ticker": "TFC",
+    "bbg": "TFC US Equity",
+    "category": "Banks",
+    "raw": "TFC US"
+  },
+  {
+    "ticker": "MTB",
+    "bbg": "MTB US Equity",
+    "category": "Banks",
+    "raw": "MTB"
+  },
+  {
+    "ticker": "BK",
+    "bbg": "BK US Equity",
+    "category": "Banks",
+    "raw": "BK"
+  },
+  {
+    "ticker": "STT",
+    "bbg": "STT US Equity",
+    "category": "Banks",
+    "raw": "STT US"
+  },
+  {
+    "ticker": "CB",
+    "bbg": "CB US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "CB"
+  },
+  {
+    "ticker": "CCC",
+    "bbg": "CCC US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "CCC US"
+  },
+  {
+    "ticker": "ALL",
+    "bbg": "ALL US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "ALL US"
+  },
+  {
+    "ticker": "TRV",
+    "bbg": "TRV US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "TRV"
+  },
+  {
+    "ticker": "AIG",
+    "bbg": "AIG US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "AIG"
+  },
+  {
+    "ticker": "ACGL",
+    "bbg": "ACGL US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "ACGL"
+  },
+  {
+    "ticker": "HIG",
+    "bbg": "HIG US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "HIG"
+  },
+  {
+    "ticker": "WRB",
+    "bbg": "WRB US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "WRB"
+  },
+  {
+    "ticker": "MKL",
+    "bbg": "MKL US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "MKL"
+  },
+  {
+    "ticker": "MET",
+    "bbg": "MET US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "MET"
+  },
+  {
+    "ticker": "PRU",
+    "bbg": "PRU US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "PRU"
+  },
+  {
+    "ticker": "LNC",
+    "bbg": "LNC US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "LNC"
+  },
+  {
+    "ticker": "PRI",
+    "bbg": "PRI US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "PRI US"
+  },
+  {
+    "ticker": "AFL",
+    "bbg": "AFL US Equity",
+    "category": "Insurance and reinsurance",
+    "raw": "AFL"
+  },
+  {
+    "ticker": "DIS",
+    "bbg": "DIS US Equity",
+    "category": "Media content",
+    "raw": "DIS"
+  },
+  {
+    "ticker": "FOXA",
+    "bbg": "FOXA US Equity",
+    "category": "Media content",
+    "raw": "FOXA"
+  },
+  {
+    "ticker": "AMCX",
+    "bbg": "AMCX US Equity",
+    "category": "Media content",
+    "raw": "AMCX"
+  },
+  {
+    "ticker": "TTWO",
+    "bbg": "TTWO US Equity",
+    "category": "Media content",
+    "raw": "TTWO US"
+  },
+  {
+    "ticker": "RBLX",
+    "bbg": "RBLX US Equity",
+    "category": "Media content",
+    "raw": "RBLX US"
+  },
+  {
+    "ticker": "EA",
+    "bbg": "EA US Equity",
+    "category": "Media content",
+    "raw": "EA"
+  },
+  {
+    "ticker": "SBGI",
+    "bbg": "SBGI US Equity",
+    "category": "Media content",
+    "raw": "SBGI US"
+  },
+  {
+    "ticker": "TGNA",
+    "bbg": "TGNA US Equity",
+    "category": "Media content",
+    "raw": "TGNA"
+  },
+  {
+    "ticker": "NYT",
+    "bbg": "NYT US Equity",
+    "category": "Media content",
+    "raw": "NYT US"
+  },
+  {
+    "ticker": "NXST",
+    "bbg": "NXST US Equity",
+    "category": "Media content",
+    "raw": "NXST"
+  },
+  {
+    "ticker": "FWONA",
+    "bbg": "FWONA US Equity",
+    "category": "Media content",
+    "raw": "FWONA"
+  },
+  {
+    "ticker": "FWONK",
+    "bbg": "FWONK US Equity",
+    "category": "Media content",
+    "raw": "FWONK"
+  },
+  {
+    "ticker": "LYV",
+    "bbg": "LYV US Equity",
+    "category": "Media content",
+    "raw": "LYV"
+  },
+  {
+    "ticker": "SIRI",
+    "bbg": "SIRI US Equity",
+    "category": "Media content",
+    "raw": "SIRI"
+  },
+  {
+    "ticker": ".LBRDDISC U",
+    "bbg": ".LBRDDISC U US Equity",
+    "category": "Media content",
+    "raw": ".LBRDDISC U"
+  },
+  {
+    "ticker": "LBTYA",
+    "bbg": "LBTYA US Equity",
+    "category": "Media content",
+    "raw": "LBTYA"
+  },
+  {
+    "ticker": "BATRK",
+    "bbg": "BATRK US Equity",
+    "category": "Media content",
+    "raw": "BATRK"
+  },
+  {
+    "ticker": "LAMR",
+    "bbg": "LAMR US Equity",
+    "category": "Media content",
+    "raw": "LAMR"
+  },
+  {
+    "ticker": "OUT",
+    "bbg": "OUT US Equity",
+    "category": "Media content",
+    "raw": "OUT"
+  },
+  {
+    "ticker": "TV",
+    "bbg": "TV US Equity",
+    "category": "Media content",
+    "raw": "TV"
+  },
+  {
+    "ticker": "LUMN",
+    "bbg": "LUMN US Equity",
+    "category": "Media content",
+    "raw": "LUMN US"
+  },
+  {
+    "ticker": "WPP",
+    "bbg": "WPP LN Equity",
+    "category": "Media content",
+    "raw": "WPP LN"
+  },
+  {
+    "ticker": "BCE",
+    "bbg": "BCE CN Equity",
+    "category": "Media content",
+    "raw": "BCE CN"
+  },
+  {
+    "ticker": "IPG",
+    "bbg": "IPG US Equity",
+    "category": "Media content",
+    "raw": "IPG"
+  },
+  {
+    "ticker": "OMC",
+    "bbg": "OMC US Equity",
+    "category": "Media content",
+    "raw": "OMC"
+  },
+  {
+    "ticker": "AMT",
+    "bbg": "AMT US Equity",
+    "category": "Telco infrastructure",
+    "raw": "AMT"
+  },
+  {
+    "ticker": "SBAC",
+    "bbg": "SBAC US Equity",
+    "category": "Telco infrastructure",
+    "raw": "SBAC"
+  },
+  {
+    "ticker": "CCI",
+    "bbg": "CCI US Equity",
+    "category": "Telco infrastructure",
+    "raw": "CCI"
+  },
+  {
+    "ticker": "EQIX",
+    "bbg": "EQIX US Equity",
+    "category": "Telco infrastructure",
+    "raw": "EQIX"
+  },
+  {
+    "ticker": "ERICB",
+    "bbg": "ERICB SS Equity",
+    "category": "Telco infrastructure",
+    "raw": "ERICB SS"
+  },
+  {
+    "ticker": "GDS",
+    "bbg": "GDS US Equity",
+    "category": "Telco infrastructure",
+    "raw": "GDS US"
+  },
+  {
+    "ticker": "NOK",
+    "bbg": "NOK US Equity",
+    "category": "Telco infrastructure",
+    "raw": "NOK"
+  },
+  {
+    "ticker": "BDC",
+    "bbg": "BDC US Equity",
+    "category": "Telco infrastructure",
+    "raw": "BDC"
+  },
+  {
+    "ticker": "HLIT",
+    "bbg": "HLIT US Equity",
+    "category": "Telco infrastructure",
+    "raw": "HLIT US"
+  },
+  {
+    "ticker": "VISN",
+    "bbg": "VISN US Equity",
+    "category": "Telco infrastructure",
+    "raw": "VISN US"
+  },
+  {
+    "ticker": "ANET",
+    "bbg": "ANET US Equity",
+    "category": "Telco infrastructure",
+    "raw": "ANET US"
+  },
+  {
+    "ticker": "VRT",
+    "bbg": "VRT US Equity",
+    "category": "Telco infrastructure",
+    "raw": "VRT US"
+  },
+  {
+    "ticker": "MTZ",
+    "bbg": "MTZ US Equity",
+    "category": "Telco infrastructure",
+    "raw": "MTZ"
+  },
+  {
+    "ticker": "DY",
+    "bbg": "DY US Equity",
+    "category": "Telco infrastructure",
+    "raw": "DY"
+  },
+  {
+    "ticker": "GLW",
+    "bbg": "GLW US Equity",
+    "category": "Telco infrastructure",
+    "raw": "GLW"
+  },
+  {
+    "ticker": "APH",
+    "bbg": "APH US Equity",
+    "category": "Telco infrastructure",
+    "raw": "APH"
+  },
+  {
+    "ticker": "UI",
+    "bbg": "UI US Equity",
+    "category": "Telco infrastructure",
+    "raw": "UI US"
+  },
+  {
+    "ticker": "CALX",
+    "bbg": "CALX US Equity",
+    "category": "Telco infrastructure",
+    "raw": "CALX"
+  },
+  {
+    "ticker": "JNPR",
+    "bbg": "JNPR US Equity",
+    "category": "Telco infrastructure",
+    "raw": "JNPR"
+  },
+  {
+    "ticker": "PRY",
+    "bbg": "PRY IM Equity",
+    "category": "Telco infrastructure",
+    "raw": "PRY IM"
+  },
+  {
+    "ticker": "NTCT",
+    "bbg": "NTCT US Equity",
+    "category": "Telco infrastructure",
+    "raw": "NTCT"
+  },
+  {
+    "ticker": "DOX",
+    "bbg": "DOX US Equity",
+    "category": "Telco infrastructure",
+    "raw": "DOX"
+  },
+  {
+    "ticker": "MCK",
+    "bbg": "MCK US Equity",
+    "category": "Drug distributors / PBMs",
+    "raw": "MCK"
+  },
+  {
+    "ticker": "CAH",
+    "bbg": "CAH US Equity",
+    "category": "Drug distributors / PBMs",
+    "raw": "CAH"
+  },
+  {
+    "ticker": "COR",
+    "bbg": "COR US Equity",
+    "category": "Drug distributors / PBMs",
+    "raw": "COR US"
+  },
+  {
+    "ticker": "AZO",
+    "bbg": "AZO US Equity",
+    "category": "Autos",
+    "raw": "AZO"
+  },
+  {
+    "ticker": "AAP",
+    "bbg": "AAP US Equity",
+    "category": "Autos",
+    "raw": "AAP"
+  },
+  {
+    "ticker": "ORLY",
+    "bbg": "ORLY US Equity",
+    "category": "Autos",
+    "raw": "ORLY"
+  },
+  {
+    "ticker": "KMX",
+    "bbg": "KMX US Equity",
+    "category": "Autos",
+    "raw": "KMX"
+  },
+  {
+    "ticker": "MNRO",
+    "bbg": "MNRO US Equity",
+    "category": "Autos",
+    "raw": "MNRO"
+  },
+  {
+    "ticker": "AN",
+    "bbg": "AN US Equity",
+    "category": "Autos",
+    "raw": "AN"
+  },
+  {
+    "ticker": "GPI",
+    "bbg": "GPI US Equity",
+    "category": "Autos",
+    "raw": "GPI"
+  },
+  {
+    "ticker": "SAH",
+    "bbg": "SAH US Equity",
+    "category": "Autos",
+    "raw": "SAH US"
+  },
+  {
+    "ticker": "CPRT",
+    "bbg": "CPRT US Equity",
+    "category": "Autos",
+    "raw": "CPRT"
+  },
+  {
+    "ticker": "KAR",
+    "bbg": "KAR US Equity",
+    "category": "Autos",
+    "raw": "KAR US"
+  },
+  {
+    "ticker": "LKQ",
+    "bbg": "LKQ US Equity",
+    "category": "Autos",
+    "raw": "LKQ"
+  },
+  {
+    "ticker": "WAB",
+    "bbg": "WAB US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "WAB"
+  },
+  {
+    "ticker": "ALSN",
+    "bbg": "ALSN US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "ALSN"
+  },
+  {
+    "ticker": "GNTX",
+    "bbg": "GNTX US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "GNTX"
+  },
+  {
+    "ticker": "TEL",
+    "bbg": "TEL US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "TEL"
+  },
+  {
+    "ticker": "GT",
+    "bbg": "GT US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "GT"
+  },
+  {
+    "ticker": "TEN",
+    "bbg": "TEN US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "TEN"
+  },
+  {
+    "ticker": "LEA",
+    "bbg": "LEA US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "LEA"
+  },
+  {
+    "ticker": "ADNT",
+    "bbg": "ADNT US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "ADNT"
+  },
+  {
+    "ticker": "JCI",
+    "bbg": "JCI US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "JCI"
+  },
+  {
+    "ticker": "LNR",
+    "bbg": "LNR CN Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "LNR CN"
+  },
+  {
+    "ticker": "CON",
+    "bbg": "CON GY Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "CON GY"
+  },
+  {
+    "ticker": "PCAR",
+    "bbg": "PCAR US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "PCAR"
+  },
+  {
+    "ticker": "HOG",
+    "bbg": "HOG US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "HOG"
+  },
+  {
+    "ticker": "CPSS",
+    "bbg": "CPSS US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "CPSS US"
+  },
+  {
+    "ticker": "GM",
+    "bbg": "GM US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "GM"
+  },
+  {
+    "ticker": "BC",
+    "bbg": "BC US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "BC US"
+  },
+  {
+    "ticker": "F",
+    "bbg": "F US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "F"
+  },
+  {
+    "ticker": "STLA",
+    "bbg": "STLA US Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "STLA US"
+  },
+  {
+    "ticker": "EXO",
+    "bbg": "EXO NA Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "EXO NA"
+  },
+  {
+    "ticker": "VOW",
+    "bbg": "VOW GY Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "VOW GY"
+  },
+  {
+    "ticker": "BMW",
+    "bbg": "BMW GY Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "BMW GY"
+  },
+  {
+    "ticker": "005380",
+    "bbg": "005380 KS Equity",
+    "category": "Auto / Truck Supply Chain",
+    "raw": "005380 KS"
+  },
+  {
+    "ticker": "ECL",
+    "bbg": "ECL US Equity",
+    "category": "Recurring services",
+    "raw": "ECL"
+  },
+  {
+    "ticker": "CLH",
+    "bbg": "CLH US Equity",
+    "category": "Recurring services",
+    "raw": "CLH"
+  },
+  {
+    "ticker": "PSA",
+    "bbg": "PSA US Equity",
+    "category": "Recurring services",
+    "raw": "PSA US"
+  },
+  {
+    "ticker": "EXR",
+    "bbg": "EXR US Equity",
+    "category": "Recurring services",
+    "raw": "EXR US"
+  },
+  {
+    "ticker": "SCI",
+    "bbg": "SCI US Equity",
+    "category": "Recurring services",
+    "raw": "SCI"
+  },
+  {
+    "ticker": "ADT",
+    "bbg": "ADT US Equity",
+    "category": "Recurring services",
+    "raw": "ADT US"
+  },
+  {
+    "ticker": "IRM",
+    "bbg": "IRM US Equity",
+    "category": "Recurring services",
+    "raw": "IRM"
+  },
+  {
+    "ticker": "SECUB",
+    "bbg": "SECUB SS Equity",
+    "category": "Recurring services",
+    "raw": "SECUB SS"
+  },
+  {
+    "ticker": "CTAS",
+    "bbg": "CTAS US Equity",
+    "category": "Recurring services",
+    "raw": "CTAS"
+  },
+  {
+    "ticker": "ROL",
+    "bbg": "ROL US Equity",
+    "category": "Recurring services",
+    "raw": "ROL"
+  },
+  {
+    "ticker": "TRUP",
+    "bbg": "TRUP US Equity",
+    "category": "Recurring services",
+    "raw": "TRUP"
+  },
+  {
+    "ticker": "WAT",
+    "bbg": "WAT US Equity",
+    "category": "Instruments",
+    "raw": "WAT"
+  },
+  {
+    "ticker": "QGEN",
+    "bbg": "QGEN US Equity",
+    "category": "Instruments",
+    "raw": "QGEN US"
+  },
+  {
+    "ticker": "BRKR",
+    "bbg": "BRKR US Equity",
+    "category": "Instruments",
+    "raw": "BRKR"
+  },
+  {
+    "ticker": "MTD",
+    "bbg": "MTD US Equity",
+    "category": "Instruments",
+    "raw": "MTD"
+  },
+  {
+    "ticker": "KEYS",
+    "bbg": "KEYS US Equity",
+    "category": "Instruments",
+    "raw": "KEYS"
+  },
+  {
+    "ticker": "A",
+    "bbg": "A US Equity",
+    "category": "Instruments",
+    "raw": "A"
+  },
+  {
+    "ticker": "ILMN",
+    "bbg": "ILMN US Equity",
+    "category": "Instruments",
+    "raw": "ILMN"
+  },
+  {
+    "ticker": "ABBV",
+    "bbg": "ABBV US Equity",
+    "category": "Instruments",
+    "raw": "ABBV"
+  },
+  {
+    "ticker": "TGT",
+    "bbg": "TGT US Equity",
+    "category": "Retailers",
+    "raw": "TGT"
+  },
+  {
+    "ticker": "BJ",
+    "bbg": "BJ US Equity",
+    "category": "Retailers",
+    "raw": "BJ US"
+  },
+  {
+    "ticker": "KSS",
+    "bbg": "KSS US Equity",
+    "category": "Retailers",
+    "raw": "KSS"
+  },
+  {
+    "ticker": "TJX",
+    "bbg": "TJX US Equity",
+    "category": "Retailers",
+    "raw": "TJX"
+  },
+  {
+    "ticker": "SIG",
+    "bbg": "SIG US Equity",
+    "category": "Retailers",
+    "raw": "SIG"
+  },
+  {
+    "ticker": "ROST",
+    "bbg": "ROST US Equity",
+    "category": "Retailers",
+    "raw": "ROST"
+  },
+  {
+    "ticker": "JWN",
+    "bbg": "JWN US Equity",
+    "category": "Retailers",
+    "raw": "JWN US"
+  },
+  {
+    "ticker": "M",
+    "bbg": "M US Equity",
+    "category": "Retailers",
+    "raw": "M"
+  },
+  {
+    "ticker": "DKS",
+    "bbg": "DKS US Equity",
+    "category": "Retailers",
+    "raw": "DKS US"
+  },
+  {
+    "ticker": "ZAL",
+    "bbg": "ZAL GY Equity",
+    "category": "Retailers",
+    "raw": "ZAL GY"
+  },
+  {
+    "ticker": "CHWY",
+    "bbg": "CHWY US Equity",
+    "category": "Retailers",
+    "raw": "CHWY US"
+  },
+  {
+    "ticker": "SFIX",
+    "bbg": "SFIX US Equity",
+    "category": "Retailers",
+    "raw": "SFIX US"
+  },
+  {
+    "ticker": "LEVI",
+    "bbg": "LEVI US Equity",
+    "category": "Retailers",
+    "raw": "LEVI US"
+  },
+  {
+    "ticker": "DG",
+    "bbg": "DG US Equity",
+    "category": "Retailers",
+    "raw": "DG"
+  },
+  {
+    "ticker": "DLTR",
+    "bbg": "DLTR US Equity",
+    "category": "Retailers",
+    "raw": "DLTR"
+  },
+  {
+    "ticker": "FIVE",
+    "bbg": "FIVE US Equity",
+    "category": "Retailers",
+    "raw": "FIVE US"
+  },
+  {
+    "ticker": "BURL",
+    "bbg": "BURL US Equity",
+    "category": "Retailers",
+    "raw": "BURL US"
+  },
+  {
+    "ticker": "BBY",
+    "bbg": "BBY US Equity",
+    "category": "Retailers",
+    "raw": "BBY"
+  },
+  {
+    "ticker": "HD",
+    "bbg": "HD US Equity",
+    "category": "Retailers",
+    "raw": "HD"
+  },
+  {
+    "ticker": "LOW",
+    "bbg": "LOW US Equity",
+    "category": "Retailers",
+    "raw": "LOW"
+  },
+  {
+    "ticker": "SBH",
+    "bbg": "SBH US Equity",
+    "category": "Retailers",
+    "raw": "SBH"
+  },
+  {
+    "ticker": "ULTA",
+    "bbg": "ULTA US Equity",
+    "category": "Retailers",
+    "raw": "ULTA"
+  },
+  {
+    "ticker": "TPR",
+    "bbg": "TPR US Equity",
+    "category": "Luxury / fashion",
+    "raw": "TPR"
+  },
+  {
+    "ticker": "CPRI",
+    "bbg": "CPRI US Equity",
+    "category": "Luxury / fashion",
+    "raw": "CPRI US"
+  },
+  {
+    "ticker": "FOSL",
+    "bbg": "FOSL US Equity",
+    "category": "Luxury / fashion",
+    "raw": "FOSL"
+  },
+  {
+    "ticker": "RMS",
+    "bbg": "RMS FP Equity",
+    "category": "Luxury / fashion",
+    "raw": "RMS FP"
+  },
+  {
+    "ticker": "UHR",
+    "bbg": "UHR SW Equity",
+    "category": "Luxury / fashion",
+    "raw": "UHR SW"
+  },
+  {
+    "ticker": "KER",
+    "bbg": "KER FP Equity",
+    "category": "Luxury / fashion",
+    "raw": "KER FP"
+  },
+  {
+    "ticker": "CFR",
+    "bbg": "CFR SW Equity",
+    "category": "Luxury / fashion",
+    "raw": "CFR SW"
+  },
+  {
+    "ticker": "DECK",
+    "bbg": "DECK US Equity",
+    "category": "Apparel",
+    "raw": "DECK US"
+  },
+  {
+    "ticker": "PVH",
+    "bbg": "PVH US Equity",
+    "category": "Apparel",
+    "raw": "PVH"
+  },
+  {
+    "ticker": "VFC",
+    "bbg": "VFC US Equity",
+    "category": "Apparel",
+    "raw": "VFC"
+  },
+  {
+    "ticker": "KTB",
+    "bbg": "KTB US Equity",
+    "category": "Apparel",
+    "raw": "KTB US"
+  },
+  {
+    "ticker": "ONON",
+    "bbg": "ONON US Equity",
+    "category": "Apparel",
+    "raw": "ONON US"
+  },
+  {
+    "ticker": "GIL",
+    "bbg": "GIL US Equity",
+    "category": "Apparel",
+    "raw": "GIL"
+  },
+  {
+    "ticker": "CRI",
+    "bbg": "CRI US Equity",
+    "category": "Apparel",
+    "raw": "CRI"
+  },
+  {
+    "ticker": "LULU",
+    "bbg": "LULU US Equity",
+    "category": "Apparel",
+    "raw": "LULU"
+  },
+  {
+    "ticker": "LB",
+    "bbg": "LB US Equity",
+    "category": "Apparel",
+    "raw": "LB"
+  },
+  {
+    "ticker": "RL",
+    "bbg": "RL US Equity",
+    "category": "Apparel",
+    "raw": "RL"
+  },
+  {
+    "ticker": "NKE",
+    "bbg": "NKE US Equity",
+    "category": "Apparel",
+    "raw": "NKE"
+  },
+  {
+    "ticker": "UA",
+    "bbg": "UA US Equity",
+    "category": "Apparel",
+    "raw": "UA"
+  },
+  {
+    "ticker": "AS",
+    "bbg": "AS US Equity",
+    "category": "Apparel",
+    "raw": "AS US"
+  },
+  {
+    "ticker": "GOOS",
+    "bbg": "GOOS US Equity",
+    "category": "Apparel",
+    "raw": "GOOS"
+  },
+  {
+    "ticker": "GAP",
+    "bbg": "GAP US Equity",
+    "category": "Apparel",
+    "raw": "GAP US"
+  },
+  {
+    "ticker": "CROX",
+    "bbg": "CROX US Equity",
+    "category": "Apparel",
+    "raw": "CROX US"
+  },
+  {
+    "ticker": "SN",
+    "bbg": "SN US Equity",
+    "category": "Apparel",
+    "raw": "SN US"
+  },
+  {
+    "ticker": "ANF",
+    "bbg": "ANF US Equity",
+    "category": "Apparel",
+    "raw": "ANF"
+  },
+  {
+    "ticker": "AEO",
+    "bbg": "AEO US Equity",
+    "category": "Apparel",
+    "raw": "AEO"
+  },
+  {
+    "ticker": "URBN",
+    "bbg": "URBN US Equity",
+    "category": "Apparel",
+    "raw": "URBN"
+  },
+  {
+    "ticker": "BALL",
+    "bbg": "BALL US Equity",
+    "category": "Packaging",
+    "raw": "BALL US"
+  },
+  {
+    "ticker": "CCK",
+    "bbg": "CCK US Equity",
+    "category": "Packaging",
+    "raw": "CCK"
+  },
+  {
+    "ticker": "SLGN",
+    "bbg": "SLGN US Equity",
+    "category": "Packaging",
+    "raw": "SLGN"
+  },
+  {
+    "ticker": "OI",
+    "bbg": "OI US Equity",
+    "category": "Packaging",
+    "raw": "OI"
+  },
+  {
+    "ticker": "AA",
+    "bbg": "AA US Equity",
+    "category": "Packaging",
+    "raw": "AA"
+  },
+  {
+    "ticker": "PKG",
+    "bbg": "PKG US Equity",
+    "category": "Packaging",
+    "raw": "PKG"
+  },
+  {
+    "ticker": "GPK",
+    "bbg": "GPK US Equity",
+    "category": "Packaging",
+    "raw": "GPK"
+  },
+  {
+    "ticker": "SEE",
+    "bbg": "SEE US Equity",
+    "category": "Packaging",
+    "raw": "SEE US"
+  },
+  {
+    "ticker": "IP",
+    "bbg": "IP US Equity",
+    "category": "Packaging",
+    "raw": "IP"
+  },
+  {
+    "ticker": "MHK",
+    "bbg": "MHK US Equity",
+    "category": "Housing",
+    "raw": "MHK"
+  },
+  {
+    "ticker": "JELD",
+    "bbg": "JELD US Equity",
+    "category": "Housing",
+    "raw": "JELD"
+  },
+  {
+    "ticker": "AMWD",
+    "bbg": "AMWD US Equity",
+    "category": "Housing",
+    "raw": "AMWD"
+  },
+  {
+    "ticker": "MAS",
+    "bbg": "MAS US Equity",
+    "category": "Housing",
+    "raw": "MAS"
+  },
+  {
+    "ticker": "FBIN",
+    "bbg": "FBIN US Equity",
+    "category": "Housing",
+    "raw": "FBIN US"
+  },
+  {
+    "ticker": "TOL",
+    "bbg": "TOL US Equity",
+    "category": "Housing",
+    "raw": "TOL"
+  },
+  {
+    "ticker": "KBH",
+    "bbg": "KBH US Equity",
+    "category": "Housing",
+    "raw": "KBH"
+  },
+  {
+    "ticker": "LEN",
+    "bbg": "LEN US Equity",
+    "category": "Housing",
+    "raw": "LEN US"
+  },
+  {
+    "ticker": "LGIH",
+    "bbg": "LGIH US Equity",
+    "category": "Housing",
+    "raw": "LGIH US"
+  },
+  {
+    "ticker": "WMS",
+    "bbg": "WMS US Equity",
+    "category": "Housing",
+    "raw": "WMS US"
+  },
+  {
+    "ticker": "POOL",
+    "bbg": "POOL US Equity",
+    "category": "Housing",
+    "raw": "POOL"
+  },
+  {
+    "ticker": "ALLE",
+    "bbg": "ALLE US Equity",
+    "category": "Housing",
+    "raw": "ALLE"
+  },
+  {
+    "ticker": "FDX",
+    "bbg": "FDX US Equity",
+    "category": "Transportation",
+    "raw": "FDX"
+  },
+  {
+    "ticker": "UPS",
+    "bbg": "UPS US Equity",
+    "category": "Transportation",
+    "raw": "UPS"
+  },
+  {
+    "ticker": "XPO",
+    "bbg": "XPO US Equity",
+    "category": "Transportation",
+    "raw": "XPO"
+  },
+  {
+    "ticker": "EXPD",
+    "bbg": "EXPD US Equity",
+    "category": "Transportation",
+    "raw": "EXPD"
+  },
+  {
+    "ticker": "CHRW",
+    "bbg": "CHRW US Equity",
+    "category": "Transportation",
+    "raw": "CHRW"
+  },
+  {
+    "ticker": "KNX",
+    "bbg": "KNX US Equity",
+    "category": "Transportation",
+    "raw": "KNX"
+  },
+  {
+    "ticker": "JBHT",
+    "bbg": "JBHT US Equity",
+    "category": "Transportation",
+    "raw": "JBHT"
+  },
+  {
+    "ticker": "WERN",
+    "bbg": "WERN US Equity",
+    "category": "Transportation",
+    "raw": "WERN"
+  },
+  {
+    "ticker": "NOVOB",
+    "bbg": "NOVOB DC Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "NOVOB DC"
+  },
+  {
+    "ticker": "BIIB",
+    "bbg": "BIIB US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "BIIB US"
+  },
+  {
+    "ticker": "REGN",
+    "bbg": "REGN US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "REGN US"
+  },
+  {
+    "ticker": "VRTX",
+    "bbg": "VRTX US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "VRTX US"
+  },
+  {
+    "ticker": "MRK",
+    "bbg": "MRK US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "MRK"
+  },
+  {
+    "ticker": "JNJ",
+    "bbg": "JNJ US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "JNJ"
+  },
+  {
+    "ticker": "ABT",
+    "bbg": "ABT US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "ABT"
+  },
+  {
+    "ticker": "PFE",
+    "bbg": "PFE US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "PFE"
+  },
+  {
+    "ticker": "GSK",
+    "bbg": "GSK US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "GSK"
+  },
+  {
+    "ticker": "BHC",
+    "bbg": "BHC US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "BHC"
+  },
+  {
+    "ticker": "TEVA",
+    "bbg": "TEVA US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "TEVA"
+  },
+  {
+    "ticker": "BMY",
+    "bbg": "BMY US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "BMY US"
+  },
+  {
+    "ticker": "ALGN",
+    "bbg": "ALGN US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "ALGN US"
+  },
+  {
+    "ticker": "ZBH",
+    "bbg": "ZBH US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "ZBH"
+  },
+  {
+    "ticker": "XRAY",
+    "bbg": "XRAY US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "XRAY US"
+  },
+  {
+    "ticker": "SYK",
+    "bbg": "SYK US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "SYK"
+  },
+  {
+    "ticker": "GILD",
+    "bbg": "GILD US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "GILD"
+  },
+  {
+    "ticker": "GRF",
+    "bbg": "GRF SM Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "GRF SM"
+  },
+  {
+    "ticker": "CSL",
+    "bbg": "CSL AU Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "CSL AU"
+  },
+  {
+    "ticker": "PRGO",
+    "bbg": "PRGO US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "PRGO"
+  },
+  {
+    "ticker": "DXCM",
+    "bbg": "DXCM US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "DXCM US"
+  },
+  {
+    "ticker": "PODD",
+    "bbg": "PODD US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "PODD US"
+  },
+  {
+    "ticker": "MASI",
+    "bbg": "MASI US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "MASI US"
+  },
+  {
+    "ticker": "UTHR",
+    "bbg": "UTHR US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "UTHR"
+  },
+  {
+    "ticker": "HOLX",
+    "bbg": "HOLX US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "HOLX US"
+  },
+  {
+    "ticker": "MDT",
+    "bbg": "MDT US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "MDT"
+  },
+  {
+    "ticker": "COO",
+    "bbg": "COO US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "COO"
+  },
+  {
+    "ticker": "ELAN",
+    "bbg": "ELAN US Equity",
+    "category": "Pharma / Med Devices",
+    "raw": "ELAN US"
+  },
+  {
+    "ticker": "XOM",
+    "bbg": "XOM US Equity",
+    "category": "Energy",
+    "raw": "XOM"
+  },
+  {
+    "ticker": "CVX",
+    "bbg": "CVX US Equity",
+    "category": "Energy",
+    "raw": "CVX US"
+  },
+  {
+    "ticker": "PSX",
+    "bbg": "PSX US Equity",
+    "category": "Energy",
+    "raw": "PSX US"
+  },
+  {
+    "ticker": "VLO",
+    "bbg": "VLO US Equity",
+    "category": "Energy",
+    "raw": "VLO US"
+  },
+  {
+    "ticker": "MPC",
+    "bbg": "MPC US Equity",
+    "category": "Energy",
+    "raw": "MPC US"
+  },
+  {
+    "ticker": "KMI",
+    "bbg": "KMI US Equity",
+    "category": "Energy",
+    "raw": "KMI"
+  },
+  {
+    "ticker": "HAL",
+    "bbg": "HAL US Equity",
+    "category": "Energy",
+    "raw": "HAL"
+  },
+  {
+    "ticker": "LNG",
+    "bbg": "LNG US Equity",
+    "category": "Energy",
+    "raw": "LNG"
+  },
+  {
+    "ticker": "OII",
+    "bbg": "OII US Equity",
+    "category": "Energy",
+    "raw": "OII"
+  },
+  {
+    "ticker": "NOV",
+    "bbg": "NOV US Equity",
+    "category": "Energy",
+    "raw": "NOV"
+  },
+  {
+    "ticker": "AR",
+    "bbg": "AR US Equity",
+    "category": "Energy",
+    "raw": "AR"
+  },
+  {
+    "ticker": "SLB",
+    "bbg": "SLB US Equity",
+    "category": "Energy",
+    "raw": "SLB"
+  },
+  {
+    "ticker": "CLB",
+    "bbg": "CLB US Equity",
+    "category": "Energy",
+    "raw": "CLB"
+  },
+  {
+    "ticker": "KO",
+    "bbg": "KO US Equity",
+    "category": "Cons. staples",
+    "raw": "KO"
+  },
+  {
+    "ticker": "PEP",
+    "bbg": "PEP US Equity",
+    "category": "Cons. staples",
+    "raw": "PEP"
+  },
+  {
+    "ticker": "ABI",
+    "bbg": "ABI BB Equity",
+    "category": "Cons. staples",
+    "raw": "ABI BB"
+  },
+  {
+    "ticker": "TAP",
+    "bbg": "TAP US Equity",
+    "category": "Cons. staples",
+    "raw": "TAP"
+  },
+  {
+    "ticker": "STZ",
+    "bbg": "STZ US Equity",
+    "category": "Cons. staples",
+    "raw": "STZ"
+  },
+  {
+    "ticker": "MNST",
+    "bbg": "MNST US Equity",
+    "category": "Cons. staples",
+    "raw": "MNST US"
+  },
+  {
+    "ticker": "OR",
+    "bbg": "OR FP Equity",
+    "category": "Cons. staples",
+    "raw": "OR FP"
+  },
+  {
+    "ticker": "EL",
+    "bbg": "EL US Equity",
+    "category": "Cons. staples",
+    "raw": "EL"
+  },
+  {
+    "ticker": "NESN",
+    "bbg": "NESN SW Equity",
+    "category": "Cons. staples",
+    "raw": "NESN SW"
+  },
+  {
+    "ticker": "PG",
+    "bbg": "PG US Equity",
+    "category": "Cons. staples",
+    "raw": "PG"
+  },
+  {
+    "ticker": "UNA",
+    "bbg": "UNA NA Equity",
+    "category": "Cons. staples",
+    "raw": "UNA NA"
+  },
+  {
+    "ticker": "MDLZ",
+    "bbg": "MDLZ US Equity",
+    "category": "Cons. staples",
+    "raw": "MDLZ"
+  },
+  {
+    "ticker": "MKC",
+    "bbg": "MKC US Equity",
+    "category": "Cons. staples",
+    "raw": "MKC"
+  },
+  {
+    "ticker": "GIS",
+    "bbg": "GIS US Equity",
+    "category": "Cons. staples",
+    "raw": "GIS"
+  },
+  {
+    "ticker": "CPB",
+    "bbg": "CPB US Equity",
+    "category": "Cons. staples",
+    "raw": "CPB"
+  },
+  {
+    "ticker": "HSY",
+    "bbg": "HSY US Equity",
+    "category": "Cons. staples",
+    "raw": "HSY"
+  },
+  {
+    "ticker": "K",
+    "bbg": "K US Equity",
+    "category": "Cons. staples",
+    "raw": "K US"
+  },
+  {
+    "ticker": "ENR",
+    "bbg": "ENR US Equity",
+    "category": "Cons. staples",
+    "raw": "ENR"
+  },
+  {
+    "ticker": "NWL",
+    "bbg": "NWL US Equity",
+    "category": "Cons. staples",
+    "raw": "NWL"
+  },
+  {
+    "ticker": "HRL",
+    "bbg": "HRL US Equity",
+    "category": "Cons. staples",
+    "raw": "HRL"
+  },
+  {
+    "ticker": "HLF",
+    "bbg": "HLF US Equity",
+    "category": "Cons. staples",
+    "raw": "HLF"
+  },
+  {
+    "ticker": "NUS",
+    "bbg": "NUS US Equity",
+    "category": "Cons. staples",
+    "raw": "NUS"
+  },
+  {
+    "ticker": "IFF",
+    "bbg": "IFF US Equity",
+    "category": "Cons. staples",
+    "raw": "IFF"
+  },
+  {
+    "ticker": "KHC",
+    "bbg": "KHC US Equity",
+    "category": "Cons. staples",
+    "raw": "KHC"
+  },
+  {
+    "ticker": "BATS",
+    "bbg": "BATS LN Equity",
+    "category": "Cons. staples",
+    "raw": "BATS LN"
+  },
+  {
+    "ticker": "POST",
+    "bbg": "POST US Equity",
+    "category": "Cons. staples",
+    "raw": "POST"
+  },
+  {
+    "ticker": "DGE",
+    "bbg": "DGE LN Equity",
+    "category": "Cons. staples",
+    "raw": "DGE LN"
+  },
+  {
+    "ticker": "SGI",
+    "bbg": "SGI US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "SGI US"
+  },
+  {
+    "ticker": "WSM",
+    "bbg": "WSM US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "WSM"
+  },
+  {
+    "ticker": "RH",
+    "bbg": "RH US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "RH"
+  },
+  {
+    "ticker": "WHR",
+    "bbg": "WHR US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "WHR"
+  },
+  {
+    "ticker": "SNBR",
+    "bbg": "SNBR US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "SNBR US"
+  },
+  {
+    "ticker": "HVT",
+    "bbg": "HVT US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "HVT"
+  },
+  {
+    "ticker": "LEG",
+    "bbg": "LEG US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "LEG"
+  },
+  {
+    "ticker": "CULP",
+    "bbg": "CULP US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "CULP"
+  },
+  {
+    "ticker": "SCS",
+    "bbg": "SCS US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "SCS"
+  },
+  {
+    "ticker": "AWI",
+    "bbg": "AWI US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "AWI"
+  },
+  {
+    "ticker": "REZI",
+    "bbg": "REZI US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "REZI US"
+  },
+  {
+    "ticker": "INVH",
+    "bbg": "INVH US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "INVH US"
+  },
+  {
+    "ticker": "AMH",
+    "bbg": "AMH US Equity",
+    "category": "Bedding / furniture / household goods",
+    "raw": "AMH US"
+  },
+  {
+    "ticker": "HON",
+    "bbg": "HON US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "HON"
+  },
+  {
+    "ticker": "GEV",
+    "bbg": "GEV US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "GEV US"
+  },
+  {
+    "ticker": "ETN",
+    "bbg": "ETN US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "ETN"
+  },
+  {
+    "ticker": "PH",
+    "bbg": "PH US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "PH"
+  },
+  {
+    "ticker": "ROP",
+    "bbg": "ROP US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "ROP"
+  },
+  {
+    "ticker": "AME",
+    "bbg": "AME US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "AME"
+  },
+  {
+    "ticker": "FTV",
+    "bbg": "FTV US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "FTV US"
+  },
+  {
+    "ticker": "EMN",
+    "bbg": "EMN US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "EMN"
+  },
+  {
+    "ticker": "NDSN",
+    "bbg": "NDSN US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "NDSN"
+  },
+  {
+    "ticker": "IEX",
+    "bbg": "IEX US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "IEX"
+  },
+  {
+    "ticker": "TDY",
+    "bbg": "TDY US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "TDY"
+  },
+  {
+    "ticker": "SWK",
+    "bbg": "SWK US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "SWK"
+  },
+  {
+    "ticker": "CAT",
+    "bbg": "CAT US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "CAT"
+  },
+  {
+    "ticker": "MMM",
+    "bbg": "MMM US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "MMM US"
+  },
+  {
+    "ticker": "PPG",
+    "bbg": "PPG US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "PPG"
+  },
+  {
+    "ticker": "AXTA",
+    "bbg": "AXTA US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "AXTA"
+  },
+  {
+    "ticker": "SHW",
+    "bbg": "SHW US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "SHW US"
+  },
+  {
+    "ticker": "AVY",
+    "bbg": "AVY US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "AVY"
+  },
+  {
+    "ticker": "SNA",
+    "bbg": "SNA US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "SNA"
+  },
+  {
+    "ticker": "ST",
+    "bbg": "ST US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "ST"
+  },
+  {
+    "ticker": "ZBRA",
+    "bbg": "ZBRA US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "ZBRA"
+  },
+  {
+    "ticker": "LIN",
+    "bbg": "LIN US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "LIN US"
+  },
+  {
+    "ticker": "APD",
+    "bbg": "APD US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "APD"
+  },
+  {
+    "ticker": "URI",
+    "bbg": "URI US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "URI"
+  },
+  {
+    "ticker": "AHT",
+    "bbg": "AHT LN Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "AHT LN"
+  },
+  {
+    "ticker": "WSC",
+    "bbg": "WSC US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "WSC US"
+  },
+  {
+    "ticker": "FLR",
+    "bbg": "FLR US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "FLR"
+  },
+  {
+    "ticker": "J",
+    "bbg": "J US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "J US"
+  },
+  {
+    "ticker": "ACM",
+    "bbg": "ACM US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "ACM"
+  },
+  {
+    "ticker": "DE",
+    "bbg": "DE US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "DE"
+  },
+  {
+    "ticker": "DOW",
+    "bbg": "DOW US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "DOW US"
+  },
+  {
+    "ticker": "FMC",
+    "bbg": "FMC US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "FMC"
+  },
+  {
+    "ticker": "MWA",
+    "bbg": "MWA US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "MWA"
+  },
+  {
+    "ticker": "BNR",
+    "bbg": "BNR GR Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "BNR GR"
+  },
+  {
+    "ticker": "MIDD",
+    "bbg": "MIDD US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "MIDD"
+  },
+  {
+    "ticker": "LECO",
+    "bbg": "LECO US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "LECO"
+  },
+  {
+    "ticker": "GWW",
+    "bbg": "GWW US Equity",
+    "category": "Distributors",
+    "raw": "GWW"
+  },
+  {
+    "ticker": "FAST",
+    "bbg": "FAST US Equity",
+    "category": "Distributors",
+    "raw": "FAST"
+  },
+  {
+    "ticker": "WSO",
+    "bbg": "WSO US Equity",
+    "category": "Distributors",
+    "raw": "WSO US"
+  },
+  {
+    "ticker": "WCC",
+    "bbg": "WCC US Equity",
+    "category": "Distributors",
+    "raw": "WCC"
+  },
+  {
+    "ticker": "MSM",
+    "bbg": "MSM US Equity",
+    "category": "Distributors",
+    "raw": "MSM"
+  },
+  {
+    "ticker": "SITE",
+    "bbg": "SITE US Equity",
+    "category": "Distributors",
+    "raw": "SITE US"
+  },
+  {
+    "ticker": "GPC",
+    "bbg": "GPC US Equity",
+    "category": "Distributors",
+    "raw": "GPC"
+  },
+  {
+    "ticker": "MRC",
+    "bbg": "MRC US Equity",
+    "category": "Distributors",
+    "raw": "MRC"
+  },
+  {
+    "ticker": "DNOW",
+    "bbg": "DNOW US Equity",
+    "category": "Distributors",
+    "raw": "DNOW"
+  },
+  {
+    "ticker": "TCEHY",
+    "bbg": "TCEHY US Equity",
+    "category": "China equities",
+    "raw": "TCEHY"
+  },
+  {
+    "ticker": "BIDU",
+    "bbg": "BIDU US Equity",
+    "category": "China equities",
+    "raw": "BIDU"
+  },
+  {
+    "ticker": "JD",
+    "bbg": "JD US Equity",
+    "category": "China equities",
+    "raw": "JD US"
+  },
+  {
+    "ticker": "700",
+    "bbg": "700 HK Equity",
+    "category": "China equities",
+    "raw": "700 HK"
+  },
+  {
+    "ticker": "TCOM",
+    "bbg": "TCOM US Equity",
+    "category": "China equities",
+    "raw": "TCOM US"
+  },
+  {
+    "ticker": "3988",
+    "bbg": "3988 HK Equity",
+    "category": "China equities",
+    "raw": "3988 HK"
+  },
+  {
+    "ticker": "3690",
+    "bbg": "3690 HK Equity",
+    "category": "China equities",
+    "raw": "3690 HK"
+  },
+  {
+    "ticker": "1398",
+    "bbg": "1398 HK Equity",
+    "category": "China equities",
+    "raw": "1398 HK"
+  },
+  {
+    "ticker": "VIPS",
+    "bbg": "VIPS US Equity",
+    "category": "China equities",
+    "raw": "VIPS"
+  },
+  {
+    "ticker": "2199",
+    "bbg": "2199 HK Equity",
+    "category": "China equities",
+    "raw": "2199 HK"
+  },
+  {
+    "ticker": "600104",
+    "bbg": "600104 CH Equity",
+    "category": "China equities",
+    "raw": "600104 CH"
+  },
+  {
+    "ticker": "175",
+    "bbg": "175 HK Equity",
+    "category": "China equities",
+    "raw": "175 HK"
+  },
+  {
+    "ticker": "2333",
+    "bbg": "2333 HK Equity",
+    "category": "China equities",
+    "raw": "2333 HK"
+  },
+  {
+    "ticker": "NRG",
+    "bbg": "NRG US Equity",
+    "category": "Utilities",
+    "raw": "NRG US"
+  },
+  {
+    "ticker": "CEG",
+    "bbg": "CEG US Equity",
+    "category": "Utilities",
+    "raw": "CEG US"
+  },
+  {
+    "ticker": "VST",
+    "bbg": "VST US Equity",
+    "category": "Utilities",
+    "raw": "VST US"
+  }
+]

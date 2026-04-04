@@ -7,31 +7,27 @@ from datetime import date
 
 from xbbg import blp
 
-from bloomberg import estimate_history
+from bloomberg import estimate_history, USD_OVERRIDE_TICKERS
 
 # ---------------------------------------------------------------------------
 # Ticker lists
 # ---------------------------------------------------------------------------
 PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV"]
-WATCHLIST = ["FICO", "GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V"]
+WATCHLIST_CORE = ["FICO", "GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V"]
 
 CALENDAR_YEARS = [2025, 2026, 2027, 2028]
-LOOKBACK_MONTHS = 24
-MKTCAP_GAAP_THRESHOLD = 200_000_000_000  # $200B in raw dollars
+LOOKBACK_CORE = 24   # months for portfolio + core watchlist
+LOOKBACK_EXT = 12    # months for extended watchlist
+MKTCAP_GAAP_THRESHOLD = 200_000_000_000
+Q1_FYE_SHIFT = 1
 
-# Companies with FYE in Jan-Mar: their FY(N) covers mostly CY(N-1).
-# To get estimates aligned to calendar year, shift target year by +1.
-# e.g. NVDA FY2027 (ends Jan 2027) ≈ CY2026, so pull "27Y" for CY2026.
-Q1_FYE_SHIFT = 1  # add this to calendar year to get the right fiscal year
-
-
-def _bbg_ticker(ticker):
-    """Return Bloomberg-style 'X US Equity' ticker."""
-    return f"{ticker} US Equity"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+EXTENDED_WATCHLIST_PATH = os.path.join(SCRIPT_DIR, "extended_watchlist.json")
+SNAPSHOT_DIR = os.path.join(SCRIPT_DIR, "output", "snapshots")
 
 
 def _bdp_to_dict(df):
-    """Convert Narwhals bdp DataFrame (ticker, field, value) to nested dict {ticker: {field: value}}."""
+    """Convert xbbg bdp result to {ticker: {field: value}}."""
     result = {}
     for row in df.rows():
         ticker, field, value = row[0], row[1], row[2]
@@ -44,65 +40,70 @@ def _bdp_to_dict(df):
     return result
 
 
-def _determine_eps_field(tickers):
-    """Return dict {ticker: ('BEST_EPS_GAAP'|'BEST_EPS', 'GAAP'|'Adj')} based on market cap."""
-    bbg_tickers = [_bbg_ticker(t) for t in tickers]
-    df = blp.bdp(bbg_tickers, "CUR_MKT_CAP")
-    data = _bdp_to_dict(df)
+def _bdp_batch(bbg_tickers, fields, batch_size=50):
+    """Pull bdp in batches to avoid Bloomberg request size limits."""
     result = {}
-    for t in tickers:
-        bt = _bbg_ticker(t)
-        mktcap = data.get(bt, {}).get("CUR_MKT_CAP", 0)
+    for i in range(0, len(bbg_tickers), batch_size):
+        batch = bbg_tickers[i:i+batch_size]
+        try:
+            df = blp.bdp(batch, fields)
+            result.update(_bdp_to_dict(df))
+        except Exception as e:
+            print(f"    WARNING: bdp batch failed: {e}")
+    return result
+
+
+def _determine_eps_fields(bbg_tickers):
+    """Return {bbg_ticker: ('BEST_EPS_GAAP'|'BEST_EPS', 'GAAP'|'Adj')} based on market cap."""
+    data = _bdp_batch(bbg_tickers, "CUR_MKT_CAP")
+    result = {}
+    for bt in bbg_tickers:
+        mktcap = data.get(bt, {}).get("CUR_MKT_CAP", 0) or 0
         if mktcap > MKTCAP_GAAP_THRESHOLD:
-            result[t] = ("BEST_EPS_GAAP", "GAAP")
+            result[bt] = ("BEST_EPS_GAAP", "GAAP")
         else:
-            result[t] = ("BEST_EPS", "Adj")
+            result[bt] = ("BEST_EPS", "Adj")
     return result
 
 
-def _pull_fye(tickers):
-    """Pull fiscal year end month for all tickers. Returns {ticker: 'Dec', ...} and {ticker: offset}."""
-    bbg_tickers = [_bbg_ticker(t) for t in tickers]
-    df = blp.bdp(bbg_tickers, "EQY_FISCAL_YR_END")
-    data = _bdp_to_dict(df)
-    month_names = {1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun',
-                   7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec'}
-    fye_labels = {}
-    fye_offsets = {}
-    for t in tickers:
-        bt = _bbg_ticker(t)
-        raw = data.get(bt, {}).get("EQY_FISCAL_YR_END", "")
-        if raw and "/" in str(raw):
-            month = int(str(raw).split("/")[0])
-        else:
-            month = 12
-        fye_labels[t] = month_names.get(month, 'Dec')
-        fye_offsets[t] = Q1_FYE_SHIFT if month <= 3 else 0
-    return fye_labels, fye_offsets
-
-
-def _pull_returns(tickers):
-    """Pull current price and return fields for all tickers via bdp."""
-    fields = ["PX_LAST", "CHG_PCT_YTD", "CHG_PCT_3M", "CHG_PCT_1YR"]
-    bbg_tickers = [_bbg_ticker(t) for t in tickers]
-    df = blp.bdp(bbg_tickers, fields)
-    data = _bdp_to_dict(df)
+def _pull_fye(bbg_tickers):
+    """Pull FYE month. Returns {bbg_ticker: ('Dec', 0)} or ('Jan', 1) etc."""
+    data = _bdp_batch(bbg_tickers, "EQY_FISCAL_YR_END")
+    month_names = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',
+                   7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'}
     result = {}
-    for t in tickers:
-        bt = _bbg_ticker(t)
-        ticker_data = data.get(bt, {})
-        result[t] = {f: ticker_data.get(f) for f in fields}
+    for bt in bbg_tickers:
+        raw = data.get(bt, {}).get("EQY_FISCAL_YR_END", "")
+        month = 12
+        if raw and "/" in str(raw):
+            try:
+                month = int(str(raw).split("/")[0])
+            except ValueError:
+                month = 12
+        label = month_names.get(month, 'Dec')
+        offset = Q1_FYE_SHIFT if month <= 3 else 0
+        result[bt] = (label, offset)
     return result
+
+
+def _pull_returns(bbg_tickers):
+    """Pull price and return fields."""
+    fields = ["PX_LAST", "CHG_PCT_YTD", "CHG_PCT_3M", "CHG_PCT_1YR"]
+    return _bdp_batch(bbg_tickers, fields)
+
+
+def _pull_gics(bbg_tickers):
+    """Pull GICS sector and industry group."""
+    fields = ["GICS_SECTOR_NAME", "GICS_INDUSTRY_GROUP_NAME"]
+    return _bdp_batch(bbg_tickers, fields)
 
 
 def _sort_quarter_key(col):
-    """Sort key for quarter column like 'Q2 2024'."""
     parts = col.split(" ")
     return (int(parts[1]), int(parts[0][1]))
 
 
 def _format_pct_change(prev, curr):
-    """Format q/q % change as '+3.2%' or '-1.5%'. Returns '' if either value is missing."""
     if prev is None or curr is None or prev == "" or curr == "":
         return ""
     try:
@@ -112,69 +113,148 @@ def _format_pct_change(prev, curr):
     if prev_f == 0:
         return ""
     chg = (curr_f - prev_f) / abs(prev_f) * 100
-    sign = "+" if chg >= 0 else ""
-    return f"{sign}{chg:.1f}%"
+    return f"{'+' if chg >= 0 else ''}{chg:.1f}%"
 
 
-def _build_csv_rows(all_tickers, groups, eps_fields, returns_data, fye_labels, fye_offsets):
-    """Pull estimates for all tickers and build CSV row dicts."""
-    # First pass: collect all quarter columns across all tickers
+def _load_extended_watchlist():
+    """Load extended watchlist from JSON. Returns list of {ticker, bbg, category}."""
+    if not os.path.exists(EXTENDED_WATCHLIST_PATH):
+        return []
+    with open(EXTENDED_WATCHLIST_PATH) as f:
+        return json.load(f)
+
+
+def _build_ticker_list():
+    """Build the full ticker list with metadata. Returns list of dicts."""
+    entries = []
+
+    # Portfolio
+    for t in PORTFOLIO:
+        entries.append({
+            'short': t, 'bbg': f'{t} US Equity',
+            'group': 'Portfolio', 'category': '', 'lookback': LOOKBACK_CORE,
+        })
+
+    # Core watchlist
+    for t in WATCHLIST_CORE:
+        entries.append({
+            'short': t, 'bbg': f'{t} US Equity',
+            'group': 'Watchlist', 'category': '', 'lookback': LOOKBACK_CORE,
+        })
+
+    # Extended watchlist
+    seen = {e['short'] for e in entries}
+    for item in _load_extended_watchlist():
+        if item['ticker'] in seen:
+            continue
+        seen.add(item['ticker'])
+        entries.append({
+            'short': item['ticker'], 'bbg': item['bbg'],
+            'group': 'Extended', 'category': item.get('category', ''),
+            'lookback': LOOKBACK_EXT,
+        })
+
+    return entries
+
+
+def main():
+    today_str = date.today().strftime("%Y-%m-%d")
+    os.makedirs(SNAPSHOT_DIR, exist_ok=True)
+
+    entries = _build_ticker_list()
+    all_bbg = [e['bbg'] for e in entries]
+    print(f"Total tickers: {len(entries)} (Portfolio: {sum(1 for e in entries if e['group']=='Portfolio')}, "
+          f"Watchlist: {sum(1 for e in entries if e['group']=='Watchlist')}, "
+          f"Extended: {sum(1 for e in entries if e['group']=='Extended')})")
+
+    # Step 1: EPS field determination
+    print(f"\n[1/6] Determining EPS field per ticker...")
+    eps_fields = _determine_eps_fields(all_bbg)
+
+    # Step 2: FYE
+    print(f"\n[2/6] Pulling fiscal year end months...")
+    fye_data = _pull_fye(all_bbg)
+
+    # Step 3: Returns
+    print(f"\n[3/6] Pulling stock returns...")
+    returns_data = _pull_returns(all_bbg)
+
+    # Step 4: GICS sectors
+    print(f"\n[4/6] Pulling GICS sectors...")
+    gics_data = _pull_gics(all_bbg)
+
+    # Step 5: Estimate histories
+    print(f"\n[5/6] Pulling estimate histories...")
     all_quarters = set()
     ticker_estimates = {}
 
-    for ticker in all_tickers:
-        field, _ = eps_fields[ticker]
-        offset = fye_offsets.get(ticker, 0)
-        # For Q1-FYE companies, shift target years so fiscal years align with calendar years
-        # e.g. NVDA: to get CY2026 estimates, pull FY2027 (27Y) which ends Jan 2027
-        fiscal_years = [cy + offset for cy in CALENDAR_YEARS]
+    for i, entry in enumerate(entries):
+        bbg = entry['bbg']
+        short = entry['short']
+        field, label = eps_fields.get(bbg, ("BEST_EPS", "Adj"))
+        fye_label, fye_offset = fye_data.get(bbg, ("Dec", 0))
+        lookback = entry['lookback']
+
+        fiscal_years = [cy + fye_offset for cy in CALENDAR_YEARS]
+
+        if (i + 1) % 25 == 0 or i == 0:
+            print(f"  [{i+1}/{len(entries)}] {short}...")
+
         try:
-            rows = estimate_history(ticker, fiscal_years, LOOKBACK_MONTHS, field)
+            # For indices/ETFs, the ticker format is different
+            est_ticker = bbg.replace(' Equity', '').replace(' Index', '')
+            if bbg.endswith(' Index'):
+                est_ticker = bbg  # pass full ticker for indices
+            rows = estimate_history(est_ticker, fiscal_years, lookback, field)
         except Exception as e:
-            print(f"    WARNING: Failed to pull {ticker}: {e}")
+            print(f"    WARNING: {short}: {e}")
             rows = [{"line_item": f"CY{y}"} for y in fiscal_years]
-        # Relabel fiscal years back to calendar years
-        if offset != 0:
+
+        # Relabel fiscal years to calendar years
+        if fye_offset:
             for row in rows:
                 li = row.get("line_item", "")
                 if li.startswith("CY"):
                     fy = int(li[2:])
-                    row["line_item"] = f"CY{fy - offset}"
-        ticker_estimates[ticker] = rows
+                    row["line_item"] = f"CY{fy - fye_offset}"
+
+        ticker_estimates[short] = rows
         for row in rows:
             for key in row:
                 if key != "line_item":
                     all_quarters.add(key)
 
-    # Sort quarters chronologically
     sorted_quarters = sorted(all_quarters, key=_sort_quarter_key)
 
-    # Build interleaved columns: first quarter has no chg, rest have chg
+    # Build CSV
+    print(f"\n[6/6] Writing CSV...")
     interleaved_cols = []
     for i, q in enumerate(sorted_quarters):
         interleaved_cols.append(q)
         if i > 0:
             interleaved_cols.append(f"{q} chg")
 
-    # Build header
-    header = ["Ticker", "Group", "EPS Type", "FYE", "Year"] + interleaved_cols + [
-        "Price", "PE", "12m Rev", "Return_YTD", "Return_3m", "Return_12m"
-    ]
+    header = ["Ticker", "Group", "Category", "GICS Sector", "GICS Industry", "EPS Type", "FYE", "Year"] + \
+             interleaved_cols + ["Price", "PE", "12m Rev", "Return_YTD", "Return_3m", "Return_12m"]
 
-    # Build rows
     csv_rows = []
-    for ticker in all_tickers:
-        group = groups[ticker]
-        _, eps_label = eps_fields[ticker]
-        ret = returns_data.get(ticker, {})
+    for entry in entries:
+        short = entry['short']
+        bbg = entry['bbg']
+        group = entry['group']
+        category = entry.get('category', '')
+        gics = gics_data.get(bbg, {})
+        gics_sector = gics.get("GICS_SECTOR_NAME", "")
+        gics_industry = gics.get("GICS_INDUSTRY_GROUP_NAME", "")
+        _, eps_label = eps_fields.get(bbg, ("BEST_EPS", "Adj"))
+        fye_label, _ = fye_data.get(bbg, ("Dec", 0))
+        ret = returns_data.get(bbg, {})
         price = ret.get("PX_LAST")
-        estimates = ticker_estimates[ticker]
-
-        fye = fye_labels.get(ticker, "Dec")
+        estimates = ticker_estimates.get(short, [])
 
         for est_row in estimates:
             year_label = est_row.get("line_item", "")
-            row_data = [ticker, group, eps_label, fye, year_label]
+            row_data = [short, group, category, gics_sector, gics_industry, eps_label, fye_label, year_label]
 
             prev_val = None
             for i, q in enumerate(sorted_quarters):
@@ -184,12 +264,12 @@ def _build_csv_rows(all_tickers, groups, eps_fields, returns_data, fye_labels, f
                     row_data.append(_format_pct_change(prev_val, val))
                 prev_val = val if val is not None else prev_val
 
-            # Price, PE, 12m Rev
+            # Price
             row_data.append(price if price is not None else "")
 
-            # PE: price / latest estimate for this year row
+            # PE
             pe = ""
-            if price is not None:
+            if price:
                 latest_eps = None
                 for q in reversed(sorted_quarters):
                     if q in est_row and est_row[q] is not None:
@@ -199,112 +279,52 @@ def _build_csv_rows(all_tickers, groups, eps_fields, returns_data, fye_labels, f
                     pe = round(float(price) / float(latest_eps), 1)
             row_data.append(pe)
 
-            # 12m Rev: year-over-year EPS revision (latest vs same quarter 1 year ago)
+            # 12m Rev
             rev_12m = ""
             for q in reversed(sorted_quarters):
                 if q in est_row and est_row[q] is not None:
-                    latest_q = q
-                    latest_val = est_row[q]
-                    # Find same quarter 1 year ago
-                    parts = latest_q.split(" ")
+                    parts = q.split(" ")
                     prev_year_q = f"{parts[0]} {int(parts[1]) - 1}"
                     if prev_year_q in est_row and est_row[prev_year_q] is not None:
                         prev_val_12m = est_row[prev_year_q]
                         if float(prev_val_12m) != 0:
-                            chg = (float(latest_val) - float(prev_val_12m)) / abs(float(prev_val_12m)) * 100
-                            sign = "+" if chg >= 0 else ""
-                            rev_12m = f"{sign}{chg:.1f}%"
+                            chg = (float(est_row[q]) - float(prev_val_12m)) / abs(float(prev_val_12m)) * 100
+                            rev_12m = f"{'+' if chg >= 0 else ''}{chg:.1f}%"
                     break
             row_data.append(rev_12m)
 
             # Returns
-            ytd = ret.get("CHG_PCT_YTD")
-            r3m = ret.get("CHG_PCT_3M")
-            r12m = ret.get("CHG_PCT_1YR")
-            for r in [ytd, r3m, r12m]:
+            for f in ["CHG_PCT_YTD", "CHG_PCT_3M", "CHG_PCT_1YR"]:
+                r = ret.get(f)
                 if r is not None:
-                    sign = "+" if r >= 0 else ""
-                    row_data.append(f"{sign}{r:.1f}%")
+                    row_data.append(f"{'+' if r >= 0 else ''}{r:.1f}%")
                 else:
                     row_data.append("")
 
             csv_rows.append(row_data)
 
-    return header, csv_rows
-
-
-def _update_index(snapshots_dir):
-    """Update index.json with sorted list of available snapshot dates."""
-    index_path = os.path.join(snapshots_dir, "index.json")
-    dates = []
-    for f in os.listdir(snapshots_dir):
-        if f.endswith(".csv") and len(f) == 14:  # YYYY-MM-DD.csv
-            dates.append(f.replace(".csv", ""))
-    dates.sort(reverse=True)
-    with open(index_path, "w") as fh:
-        json.dump(dates, fh, indent=2)
-    return index_path
-
-
-def main():
-    today_str = date.today().strftime("%Y-%m-%d")
-    snapshots_dir = os.path.join(os.path.dirname(__file__), "output", "snapshots")
-    os.makedirs(snapshots_dir, exist_ok=True)
-
-    all_tickers = PORTFOLIO + WATCHLIST
-    groups = {}
-    for t in PORTFOLIO:
-        groups[t] = "Portfolio"
-    for t in WATCHLIST:
-        groups[t] = "Watchlist"
-
-    print(f"[1/5] Determining EPS field per ticker (market cap check)...")
-    eps_fields = _determine_eps_field(all_tickers)
-    for t in all_tickers:
-        field, label = eps_fields[t]
-        print(f"  {t:6s} -> {label} ({field})")
-
-    print(f"\n[2/5] Pulling fiscal year end months...")
-    fye_labels, fye_offsets = _pull_fye(all_tickers)
-    for t in all_tickers:
-        offset_str = f" (CY shift +{fye_offsets[t]})" if fye_offsets[t] else ""
-        print(f"  {t:6s}  FYE={fye_labels[t]}{offset_str}")
-
-    print(f"\n[3/5] Pulling stock returns...")
-    returns_data = _pull_returns(all_tickers)
-    for t in all_tickers:
-        ret = returns_data.get(t, {})
-        px = ret.get("PX_LAST", "N/A")
-        print(f"  {t:6s}  Price={px}")
-
-    print(f"\n[4/5] Pulling estimate histories (this may take a few minutes)...")
-    header, csv_rows = _build_csv_rows(all_tickers, groups, eps_fields, returns_data, fye_labels, fye_offsets)
-
-    # Save CSV
-    csv_path = os.path.join(snapshots_dir, f"{today_str}.csv")
+    csv_path = os.path.join(SNAPSHOT_DIR, f"{today_str}.csv")
     with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
         writer.writerow(header)
         for row in csv_rows:
             writer.writerow(row)
-    print(f"\n[5/5] Saved snapshot: {csv_path}")
+
+    print(f"Saved snapshot: {csv_path}")
     print(f"  Rows: {len(csv_rows)}, Columns: {len(header)}")
 
-    # Update index
-    index_path = _update_index(snapshots_dir)
-    print(f"  Updated index: {index_path}")
+    _update_index(SNAPSHOT_DIR)
+    print("Done.")
 
-    # Also save to the legacy flat file for backward compat
-    legacy_path = os.path.join(os.path.dirname(__file__), "output", "estimate_revisions.csv")
-    try:
-        with open(legacy_path, "w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow(header)
-            for row in csv_rows:
-                writer.writerow(row)
-        print(f"  Updated legacy file: {legacy_path}")
-    except PermissionError:
-        print(f"  WARNING: Could not update legacy file (file may be open): {legacy_path}")
+
+def _update_index(snapshots_dir):
+    index_path = os.path.join(snapshots_dir, "index.json")
+    dates = sorted(
+        [f.replace(".csv", "") for f in os.listdir(snapshots_dir) if f.endswith(".csv") and len(f) == 14],
+        reverse=True,
+    )
+    with open(index_path, "w") as fh:
+        json.dump(dates, fh, indent=2)
 
 
 if __name__ == "__main__":
