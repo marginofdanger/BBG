@@ -1787,6 +1787,7 @@ td.spark-cell { padding: 4px 2px; }
       }
       td._sortVal = val || 0;
       tr.appendChild(td);
+      return td;
     };
 
     portfolioTickers.forEach(pt => {
@@ -1825,6 +1826,11 @@ td.spark-cell { padding: 4px 2px; }
       table.className = 'rank-table';
       table.style.cssText = 'margin-bottom:16px;font-size:13px;';
 
+      // Track which columns start a new group
+      const groupStarts = new Set();
+      let _pg = null;
+      colDefs.forEach((col, ci) => { if (col.group && col.group !== _pg) { groupStarts.add(ci); } _pg = col.group; });
+
       const thead = document.createElement('thead');
 
       // Group header row
@@ -1843,7 +1849,7 @@ td.spark-cell { padding: 4px 2px; }
         const th = document.createElement('th');
         th.textContent = g.label;
         if (g.span > 1) th.colSpan = g.span;
-        th.style.cssText = 'text-align:center;background:#f4f4f4;border-bottom:2px solid #999;';
+        th.style.cssText = 'text-align:center;background:#f4f4f4;box-shadow:inset 0 -1px 0 #ccc;';
         if (g.label) th.classList.add('year-sep');
         gr.appendChild(th);
       });
@@ -1854,6 +1860,7 @@ td.spark-cell { padding: 4px 2px; }
         const th = document.createElement('th');
         th.textContent = col.label;
         th.style.cursor = 'pointer';
+        if (groupStarts.has(ci)) th.classList.add('year-sep');
         th.addEventListener('click', () => {
           const rows = [...tbody.children];
           const curDir = th.classList.contains('sort-asc') ? 'asc' : 'desc';
@@ -1884,12 +1891,17 @@ td.spark-cell { padding: 4px 2px; }
 
         if (!d) {
           const td = document.createElement('td'); td.textContent = t; td.style.fontWeight = '600'; tr.appendChild(td);
-          for (let c = 1; c < colDefs.length; c++) tr.appendChild(document.createElement('td'));
+          for (let c = 1; c < colDefs.length; c++) {
+            const td = document.createElement('td');
+            if (groupStarts.has(c)) td.classList.add('year-sep');
+            tr.appendChild(td);
+          }
         } else {
-          colDefs.forEach(col => {
+          colDefs.forEach((col, ci) => {
             const val = d[col.key];
+            const isSep = groupStarts.has(ci);
             if (col.type === 'str') {
-              const td = document.createElement('td'); td.textContent = val || ''; tr.appendChild(td);
+              const td = document.createElement('td'); td.textContent = val || ''; if (isSep) td.classList.add('year-sep'); tr.appendChild(td);
             } else if (col.type === 'num') {
               const td = document.createElement('td');
               if (col.key === 'price' && val) {
@@ -1897,13 +1909,16 @@ td.spark-cell { padding: 4px 2px; }
               } else {
                 td.textContent = val ? val.toFixed(2) : '';
               }
+              if (isSep) td.classList.add('year-sep');
               tr.appendChild(td);
             } else if (col.type === 'pe') {
               const td = document.createElement('td');
               td.textContent = val ? val.toFixed(1) + 'x' : '';
+              if (isSep) td.classList.add('year-sep');
               tr.appendChild(td);
             } else if (col.type === 'pct') {
-              peerAddPct0(tr, val);
+              const td = peerAddPct0(tr, val);
+              if (isSep) td.classList.add('year-sep');
             }
           });
         }
