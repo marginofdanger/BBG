@@ -163,6 +163,9 @@ td.spark-cell { padding: 4px 2px; }
 
   let lastData = null;
   let currentGrouping = 'none';
+  let currentQCols = [];
+  const COLS_PER_YEAR = 9;
+  const displayYears = ['CY2026', 'CY2027', 'CY2028'];
 
   // Load both estimate and price indices
   let estDates = [], priceDates = [], currentEstDate, currentPriceDate;
@@ -308,9 +311,7 @@ td.spark-cell { padding: 4px 2px; }
     return result;
   }
 
-  const COLS_PER_YEAR = 9; // 4 estimates + sparkline + 4 changes
-  const displayYears = ['CY2026', 'CY2027', 'CY2028'];
-  let currentQCols = [];
+  // --- Render functions ---
 
   // Grouping toggle
   document.querySelectorAll('#groupToggle button').forEach(btn => {
