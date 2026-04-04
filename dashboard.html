@@ -57,10 +57,17 @@ th:first-child { z-index: 3; }
 (async function() {
 
   /* ---- Load index ---- */
-  const indexResp = await fetch('output/snapshots/index.json');
-  const dates = await indexResp.json();           // newest first
-  const sortedDates = [...dates].sort();          // oldest first for slider
-  let currentDate = sortedDates[sortedDates.length - 1]; // latest
+  let dates, sortedDates, currentDate;
+  try {
+    const indexResp = await fetch('output/snapshots/index.json');
+    if (!indexResp.ok) throw new Error('index.json not found');
+    dates = await indexResp.json();
+    sortedDates = [...dates].sort();
+    currentDate = sortedDates[sortedDates.length - 1];
+  } catch (e) {
+    document.getElementById('snapshotDate').textContent = 'No snapshots found. Run pull_estimates.py first.';
+    return;
+  }
 
   /* ---- Slider ---- */
   if (sortedDates.length > 1) {
@@ -82,9 +89,14 @@ th:first-child { z-index: 3; }
 
   async function loadSnapshot(date) {
     document.getElementById('snapshotDate').textContent = date;
-    const resp = await fetch('output/snapshots/' + date + '.csv');
-    const text = await resp.text();
-    render(parseCSV(text));
+    try {
+      const resp = await fetch('output/snapshots/' + date + '.csv');
+      if (!resp.ok) throw new Error('CSV not found: ' + date);
+      const text = await resp.text();
+      render(parseCSV(text));
+    } catch (e) {
+      document.getElementById('snapshotDate').textContent = 'Error loading ' + date + ': ' + e.message;
+    }
   }
 
   /* ---- CSV parser ---- */
@@ -112,7 +124,6 @@ th:first-child { z-index: 3; }
   function render(data) {
     const { headers, rows } = data;
     const qCols = getQuarterCols(headers);
-    const nQ = qCols.length;
 
     // Group rows by ticker
     const tickers = [];
@@ -180,7 +191,6 @@ th:first-child { z-index: 3; }
     table.appendChild(thead);
 
     const tbody = document.createElement('tbody');
-    const expandedSet = new Set();
 
     function buildGroup(label, list) {
       // Group header
