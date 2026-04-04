@@ -1339,6 +1339,7 @@ td.spark-cell { padding: 4px 2px; }
         const sectorFilter = secSel.value;
         const industryFilter = indSel.value;
         const filteredStocks = stocks.filter(s => {
+          if (s.group === 'Portfolio') return true;
           if (sectorFilter && (s.gicsSector || '') !== sectorFilter) return false;
           if (industryFilter && (s.gicsIndustry || '') !== industryFilter) return false;
           return true;
