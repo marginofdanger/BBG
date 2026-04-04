@@ -1221,19 +1221,6 @@ td.spark-cell { padding: 4px 2px; }
       container.style.position = 'relative';
       container.appendChild(tooltip);
 
-      // Toggle checkbox
-      const toggleDiv = document.createElement('div');
-      toggleDiv.style.cssText = 'text-align: right; margin-bottom: 4px;';
-      const chk = document.createElement('input');
-      chk.type = 'checkbox'; chk.id = 'lblToggle_' + Math.random().toString(36).slice(2);
-      const chkLabel = document.createElement('label');
-      chkLabel.textContent = ' Show all labels'; chkLabel.setAttribute('for', chk.id);
-      chkLabel.style.cssText = 'font-size: 10px; color: #666; cursor: pointer;';
-      toggleDiv.appendChild(chk); toggleDiv.appendChild(chkLabel);
-      container.appendChild(toggleDiv);
-
-      const allStockLabels = [];
-
       // Layer 1: Stock dots (smallest, gray)
       pts.forEach(s => {
         const cx = toX(s[xKey]);
@@ -1267,21 +1254,8 @@ td.spark-cell { padding: 4px 2px; }
           lbl.setAttribute('x', cx + 6); lbl.setAttribute('y', cy + 3);
           lbl.setAttribute('fill', '#1565c0'); lbl.setAttribute('font-size', '9'); lbl.setAttribute('font-weight', '600');
           lbl.textContent = s.ticker; svg.appendChild(lbl);
-        } else {
-          // Hidden label for non-portfolio stocks
-          const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          lbl.setAttribute('x', cx + 4); lbl.setAttribute('y', cy + 3);
-          lbl.setAttribute('fill', '#666'); lbl.setAttribute('font-size', '7');
-          lbl.textContent = s.ticker;
-          lbl.style.display = 'none';
-          svg.appendChild(lbl);
-          allStockLabels.push(lbl);
         }
         svg.appendChild(c);
-      });
-
-      chk.addEventListener('change', () => {
-        allStockLabels.forEach(l => l.style.display = chk.checked ? '' : 'none');
       });
 
       // Layer 2: Sector/industry dots (medium, orange) with label collision avoidance
