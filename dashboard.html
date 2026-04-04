@@ -793,77 +793,87 @@ td.spark-cell { padding: 4px 2px; }
       groups[key].push(m);
     }
 
-    // Build table
-    const table = document.createElement('table');
-    table.className = 'agg-table';
-
-    // Header row 1: group labels
-    const h1 = document.createElement('tr');
-    const addH = (text, colspan, cls) => {
-      const th = document.createElement('th');
-      th.textContent = text; if (colspan > 1) th.colSpan = colspan;
-      if (cls) th.className = cls; h1.appendChild(th);
-    };
-    addH('', 1, 'agg-group'); // sector name
-    addH('n', 1, 'agg-group');
-    displayYears.forEach(yr => addH(yr + ' EPS Rev', 8, 'agg-group'));
-    addH('Returns', 6, 'agg-group');
-
-    // Header row 2: sub-labels
-    const h2 = document.createElement('tr');
-    const addS = (text) => { const th = document.createElement('th'); th.textContent = text; th.className = 'agg-sub'; h2.appendChild(th); };
-    addS(currentAggGroup === 'gics_sector' ? 'Sector' : 'Industry');
-    addS('#');
-    displayYears.forEach(() => {
-      addS('3m med'); addS('3m avg'); addS('3-6m med'); addS('3-6m avg');
-      addS('6-12m med'); addS('6-12m avg'); addS('12m med'); addS('12m avg');
-    });
-    addS('YTD med'); addS('YTD avg'); addS('L3M med'); addS('L3M avg');
-    addS('1Y med'); addS('1Y avg');
-
-    const thead = document.createElement('thead');
-    thead.appendChild(h1); thead.appendChild(h2);
-    table.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
     const sortedKeys = Object.keys(groups).sort((a, b) => {
       if (a === 'Other') return 1; if (b === 'Other') return -1;
       return a.localeCompare(b);
     });
+    const groupLabel = currentAggGroup === 'gics_sector' ? 'Sector' : 'Industry';
 
-    sortedKeys.forEach((key, idx) => {
-      const members = groups[key];
-      const tr = document.createElement('tr');
-      tr.className = idx % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
-
-      const tdName = document.createElement('td');
-      tdName.textContent = key; tr.appendChild(tdName);
-      const tdN = document.createElement('td');
-      tdN.textContent = members.length; tr.appendChild(tdN);
-
-      // Per-year revision aggregates
-      displayYears.forEach(yr => {
-        for (const metric of ['chg3', 'chg36', 'chg612', 'rev12']) {
-          const vals = members.map(m => m.yearRevs[yr] ? m.yearRevs[yr][metric] : null).filter(v => v !== null);
-          const med = median(vals);
-          const avg = mean(vals);
-          appendAggCell(tr, med); appendAggCell(tr, avg);
-        }
-      });
-
-      // Return aggregates
-      for (const ret of ['retYtd', 'ret3m', 'ret12m']) {
-        const vals = members.map(m => m[ret]).filter(v => v !== 0 && v !== null && !isNaN(v));
-        appendAggCell(tr, median(vals)); appendAggCell(tr, mean(vals));
-      }
-
-      tbody.appendChild(tr);
-    });
-
-    table.appendChild(tbody);
     const wrap = document.getElementById('aggTableWrap');
     wrap.innerHTML = '';
-    wrap.appendChild(table);
+
+    // Build two tables: Median, then Mean
+    for (const [statLabel, statFn] of [['Median', median], ['Mean', mean]]) {
+      const title = document.createElement('h3');
+      title.textContent = statLabel + ' EPS Revisions & Returns by ' + groupLabel;
+      title.style.cssText = 'padding: 16px 0 4px; font-size: 14px; color: #333;';
+      wrap.appendChild(title);
+
+      const table = document.createElement('table');
+      table.className = 'agg-table';
+
+      // Header row 1
+      const h1 = document.createElement('tr');
+      const addH = (text, colspan, cls) => {
+        const th = document.createElement('th');
+        th.textContent = text; if (colspan > 1) th.colSpan = colspan;
+        if (cls) th.className = cls; h1.appendChild(th);
+      };
+      addH('', 1, 'agg-group');
+      addH('#', 1, 'agg-group');
+      displayYears.forEach(yr => addH(yr, 4, 'agg-group'));
+      addH('Returns', 3, 'agg-group');
+
+      // Header row 2
+      const h2 = document.createElement('tr');
+      const addS = (text, cls) => {
+        const th = document.createElement('th');
+        th.textContent = text; th.className = 'agg-sub' + (cls ? ' ' + cls : '');
+        h2.appendChild(th);
+      };
+      addS(groupLabel);
+      addS('#');
+      displayYears.forEach(() => {
+        addS('3m', 'year-sep'); addS('3-6m'); addS('6-12m'); addS('12m');
+      });
+      addS('YTD', 'year-sep'); addS('L3M'); addS('1Y');
+
+      const thead = document.createElement('thead');
+      thead.appendChild(h1); thead.appendChild(h2);
+      table.appendChild(thead);
+
+      const tbody = document.createElement('tbody');
+      sortedKeys.forEach((key, idx) => {
+        const members = groups[key];
+        const tr = document.createElement('tr');
+        tr.className = idx % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
+
+        const tdName = document.createElement('td');
+        tdName.textContent = key; tr.appendChild(tdName);
+        const tdN = document.createElement('td');
+        tdN.textContent = members.length; tdN.style.textAlign = 'center';
+        tr.appendChild(tdN);
+
+        displayYears.forEach(yr => {
+          let first = true;
+          for (const metric of ['chg3', 'chg36', 'chg612', 'rev12']) {
+            const vals = members.map(m => m.yearRevs[yr] ? m.yearRevs[yr][metric] : null).filter(v => v !== null);
+            const td = appendAggCell(tr, statFn(vals));
+            if (first) { td.classList.add('year-sep'); first = false; }
+          }
+        });
+
+        const retFirst = appendAggCell(tr, statFn(members.map(m => m.retYtd).filter(v => v && !isNaN(v))));
+        retFirst.classList.add('year-sep');
+        appendAggCell(tr, statFn(members.map(m => m.ret3m).filter(v => v && !isNaN(v))));
+        appendAggCell(tr, statFn(members.map(m => m.ret12m).filter(v => v && !isNaN(v))));
+
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      wrap.appendChild(table);
+    }
   }
 
   function median(arr) {
@@ -880,10 +890,12 @@ td.spark-cell { padding: 4px 2px; }
 
   function appendAggCell(row, val) {
     const td = document.createElement('td');
-    if (val === null) { row.appendChild(td); return; }
-    if (val >= 0) { td.textContent = '+' + val.toFixed(0) + '%'; td.className = 'pos'; }
-    else { td.textContent = '(' + Math.abs(val).toFixed(0) + '%)'; td.className = 'neg'; }
+    if (val !== null) {
+      if (val >= 0) { td.textContent = '+' + val.toFixed(0) + '%'; td.className = 'pos'; }
+      else { td.textContent = '(' + Math.abs(val).toFixed(0) + '%)'; td.className = 'neg'; }
+    }
     row.appendChild(td);
+    return td;
   }
 
   function renderMethodology(qCols) {
