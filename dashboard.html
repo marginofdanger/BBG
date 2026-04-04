@@ -1929,24 +1929,47 @@ td.spark-cell { padding: 4px 2px; }
       return s;
     }
 
+    const OTHER_TABLE_WIDTH = '700px';
+
     function makeTable(headers, rowData, opts = {}) {
       const t = document.createElement('table');
       t.className = 'rank-table';
-      t.style.marginBottom = '16px';
+      t.style.cssText = 'margin-bottom:16px;width:' + (opts.width || OTHER_TABLE_WIDTH) + ';';
       const thead = document.createElement('thead');
       const hr = document.createElement('tr');
-      headers.forEach(h => { const th = document.createElement('th'); th.textContent = h; hr.appendChild(th); });
+      headers.forEach((h, hi) => {
+        const th = document.createElement('th');
+        th.textContent = h;
+        th.style.cursor = 'pointer';
+        th.addEventListener('click', () => {
+          const rows = [...tbody.children];
+          const curDir = th.classList.contains('sort-asc') ? 'asc' : 'desc';
+          const dir = curDir === 'desc' ? 'asc' : 'desc';
+          t.querySelectorAll('th').forEach(x => x.classList.remove('sort-asc', 'sort-desc'));
+          th.classList.add(dir === 'asc' ? 'sort-asc' : 'sort-desc');
+          const mult = dir === 'asc' ? 1 : -1;
+          rows.sort((a, b) => {
+            const av = a._cells[hi], bv = b._cells[hi];
+            if (typeof av === 'string' && typeof bv === 'string') return av.localeCompare(bv) * mult;
+            return ((av || 0) - (bv || 0)) * mult;
+          });
+          tbody.innerHTML = '';
+          rows.forEach((r, i) => { r.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd'; tbody.appendChild(r); });
+        });
+        hr.appendChild(th);
+      });
       thead.appendChild(hr); t.appendChild(thead);
       const tbody = document.createElement('tbody');
       rowData.forEach((row, i) => {
         const tr = document.createElement('tr');
         tr.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
+        tr._cells = row; // store raw values for sorting
         row.forEach((cell, ci) => {
           const td = document.createElement('td');
           if (typeof cell === 'number') {
             let fmt;
             if (opts.pctCols && opts.pctCols.includes(ci)) {
-              fmt = cell >= 0 ? '+' + cell.toFixed(1) + '%' : '(' + Math.abs(cell).toFixed(1) + '%)';
+              fmt = cell >= 0 ? '+' + Math.round(cell) + '%' : '(' + Math.round(Math.abs(cell)) + '%)';
             } else if (Number.isInteger(cell) || Math.abs(cell) > 10) {
               fmt = Math.round(cell).toString();
             } else {
@@ -2073,7 +2096,7 @@ td.spark-cell { padding: 4px 2px; }
       lh.style.cssText = 'font-size:12px;color:#555;margin-bottom:4px;';
       leftDiv.appendChild(lh);
       leftDiv.appendChild(makeTable(['Ticker', 'CY26 EPS', 'CY28 EPS', '2yr CAGR', 'YTD'],
-        top20.map(s => [s.ticker, s.cur26, s.cur28, s.cagr, s.retYtd]), { pctCols: [3, 4] }));
+        top20.map(s => [s.ticker, s.cur26, s.cur28, s.cagr, s.retYtd]), { pctCols: [3, 4], width: '100%' }));
 
       const rightDiv = document.createElement('div');
       const rh = document.createElement('h4');
@@ -2081,7 +2104,7 @@ td.spark-cell { padding: 4px 2px; }
       rh.style.cssText = 'font-size:12px;color:#555;margin-bottom:4px;';
       rightDiv.appendChild(rh);
       rightDiv.appendChild(makeTable(['Ticker', 'CY26 EPS', 'CY28 EPS', '2yr CAGR', 'YTD'],
-        bot20.map(s => [s.ticker, s.cur26, s.cur28, s.cagr, s.retYtd]), { pctCols: [3, 4] }));
+        bot20.map(s => [s.ticker, s.cur26, s.cur28, s.cagr, s.retYtd]), { pctCols: [3, 4], width: '100%' }));
 
       cols.appendChild(leftDiv); cols.appendChild(rightDiv);
       sec.appendChild(cols);
