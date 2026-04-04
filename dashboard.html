@@ -176,6 +176,21 @@ td.spark-cell { padding: 4px 2px; }
   const COLS_PER_YEAR = 9;
   const displayYears = ['CY2026', 'CY2027', 'CY2028'];
   const INDEX_TICKERS = new Set(['SPX', 'SOX', 'QQQ', 'IWM', 'IGV']);
+  const PEER_MAP = {
+    'HCA':  ['THC', 'UHS', 'CYH', 'DVA', 'DGX'],
+    'UNH':  ['CI', 'ELV', 'HUM', 'CNC', 'MOH'],
+    'TSM':  ['005930', '000660', 'INTC', 'MU', 'GFS'],
+    'AVGO': ['QCOM', 'MRVL', 'AMD', 'TXN', 'ADI'],
+    'NVDA': ['AMD', 'INTC', 'AVGO', 'MRVL', 'ARM'],
+    'META': ['GOOG', 'PINS', 'SNAP', 'RDDT', 'TTD'],
+    'AMZN': ['GOOG', 'MSFT', 'SHOP', 'BKNG', 'EBAY', 'WMT', 'COST'],
+    'JPM':  ['GS', 'BAC', 'MS', 'WFC', 'C'],
+    'APO':  ['BX', 'KKR', 'ARES', 'CG', 'OWL'],
+    'PGR':  ['ALL', 'TRV', 'CB', 'AIG', 'ACGL', 'KMPR'],
+    'CVNA': ['KMX', 'AN', 'CPRT', 'GPI', 'SAH', 'LAD'],
+    'APP':  ['RDDT', 'TTD', 'PINS', 'DASH', 'U'],
+    'VEEV': ['CRM', 'WDAY', 'NOW', 'DDOG', 'GWRE'],
+  };
 
   // Load both estimate and price indices
   let estDates = [], priceDates = [], currentEstDate, currentPriceDate;
@@ -1682,22 +1697,6 @@ td.spark-cell { padding: 4px 2px; }
   }
 
   /* ---- Peers tab ---- */
-  const PEER_MAP = {
-    'HCA':  ['THC', 'UHS', 'CYH', 'DVA', 'DGX'],
-    'UNH':  ['CI', 'ELV', 'HUM', 'CNC', 'MOH'],
-    'TSM':  ['005930', '000660', 'INTC', 'MU', 'GFS'],
-    'AVGO': ['QCOM', 'MRVL', 'AMD', 'TXN', 'ADI'],
-    'NVDA': ['AMD', 'INTC', 'AVGO', 'MRVL', 'ARM'],
-    'META': ['GOOG', 'PINS', 'SNAP', 'RDDT', 'TTD'],
-    'AMZN': ['GOOG', 'MSFT', 'SHOP', 'BKNG', 'EBAY', 'WMT', 'COST'],
-    'JPM':  ['GS', 'BAC', 'MS', 'WFC', 'C'],
-    'APO':  ['BX', 'KKR', 'ARES', 'CG', 'OWL'],
-    'PGR':  ['ALL', 'TRV', 'CB', 'AIG', 'ACGL', 'KMPR'],
-    'CVNA': ['KMX', 'AN', 'CPRT', 'GPI', 'SAH', 'LAD'],
-    'APP':  ['RDDT', 'TTD', 'PINS', 'DASH', 'U'],
-    'VEEV': ['CRM', 'WDAY', 'NOW', 'DDOG', 'GWRE'],
-  };
-
   function renderPeers(data) {
     const { rows, qCols } = data;
     const wrap = document.getElementById('peersWrap');
