@@ -61,6 +61,23 @@ td.spark-cell { padding: 4px 2px; }
 .btn-group button.active { background: #1565c0; color: #fff; border-color: #1565c0; }
 .group-label { font-size: 10px; color: #888; }
 .subgroup-header td { font-weight: 600; font-size: 12px; background: #f0f0f0 !important; color: #555; padding: 6px 7px 3px; border-bottom: 1px solid #ccc; font-style: italic; }
+.tabs { display: flex; gap: 0; padding: 0 24px; border-bottom: 2px solid #ccc; }
+.tab { padding: 8px 20px; font-size: 13px; font-weight: 600; cursor: pointer; color: #888; border: 1px solid transparent; border-bottom: none; margin-bottom: -2px; border-radius: 4px 4px 0 0; }
+.tab:hover { color: #333; }
+.tab.active { color: #1565c0; background: #fff; border-color: #ccc; border-bottom: 2px solid #fff; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.agg-table { border-collapse: collapse; white-space: nowrap; font-size: 12px; width: 100%; }
+.agg-table th, .agg-table td { padding: 4px 10px; border-bottom: 1px solid #e8e8e8; text-align: right; }
+.agg-table th { background: #fafafa; font-weight: 600; font-size: 11px; color: #555; }
+.agg-table th.agg-group { text-align: center; background: #f4f4f4; border-bottom: 2px solid #999; }
+.agg-table th.agg-sub { border-bottom: 2px solid #ccc; }
+.agg-table td:first-child { text-align: left; font-weight: 600; }
+.agg-table .section-header td { background: #e8e8e8 !important; font-weight: 700; font-size: 12px; border-bottom: 2px solid #ccc; }
+.agg-row-even { background: #fff; }
+.agg-row-odd { background: #f7f7f7; }
+.agg-controls { padding: 8px 24px; display: flex; align-items: center; gap: 16px; }
+.agg-controls .group-label { font-size: 11px; }
 </style>
 </head>
 <body>
@@ -85,7 +102,23 @@ td.spark-cell { padding: 4px 2px; }
   <input type="range" id="dateSlider" min="0" max="0" value="0">
   <span id="dateLabel"></span>
 </div>
-<div class="table-wrap" id="tableWrap"></div>
+<div class="tabs">
+  <div class="tab active" data-tab="companies">Companies</div>
+  <div class="tab" data-tab="aggregates">Sector Aggregates</div>
+</div>
+<div class="tab-content active" id="tab-companies">
+  <div class="table-wrap" id="tableWrap"></div>
+</div>
+<div class="tab-content" id="tab-aggregates">
+  <div class="agg-controls">
+    <span class="group-label">Aggregate by:</span>
+    <div class="btn-group" id="aggGroupToggle">
+      <button data-agg="gics_sector" class="active">GICS Sector</button>
+      <button data-agg="gics_industry">GICS Industry</button>
+    </div>
+  </div>
+  <div class="table-wrap" id="aggTableWrap"></div>
+</div>
 
 <script>
 (async function() {
@@ -127,6 +160,7 @@ td.spark-cell { padding: 4px 2px; }
       const text = await resp.text();
       const data = parseCSV(text);
       render(data);
+      renderAggregates(data);
       renderMethodology(data.qCols);
     } catch (e) {
       document.getElementById('snapshotSubtitle').textContent = 'Error loading ' + date + ': ' + e.message;
@@ -690,11 +724,175 @@ td.spark-cell { padding: 4px 2px; }
     rowEl.after(detailRow);
   }
 
+  /* ---- Tabs ---- */
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  let currentAggGroup = 'gics_sector';
+  document.querySelectorAll('#aggGroupToggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#aggGroupToggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentAggGroup = btn.dataset.agg;
+      if (lastData) renderAggregates(lastData);
+    });
+  });
+
+  /* ---- Aggregates tab ---- */
+  function renderAggregates(data) {
+    const { rows, qCols } = data;
+
+    // Parse all tickers with their metrics
+    const tickerMap = {};
+    rows.forEach(r => {
+      const t = r.Ticker;
+      if (!tickerMap[t]) {
+        tickerMap[t] = {
+          gicsSector: r['GICS Sector'] || '', gicsIndustry: r['GICS Industry'] || '',
+          years: {}, retYtd: parsePctStr(r['Return_YTD']), ret3m: parsePctStr(r['Return_3m']),
+          ret12m: parsePctStr(r['Return_12m']),
+        };
+      }
+      tickerMap[t].years[r.Year] = r;
+    });
+
+    // Compute revision metrics per ticker per year
+    const tickerMetrics = {};
+    for (const [t, info] of Object.entries(tickerMap)) {
+      tickerMetrics[t] = { gicsSector: info.gicsSector, gicsIndustry: info.gicsIndustry,
+        retYtd: info.retYtd, ret3m: info.ret3m, ret12m: info.ret12m, yearRevs: {} };
+      for (const yr of displayYears) {
+        const yearRow = info.years[yr];
+        if (!yearRow) continue;
+        const vals = qCols.map(q => { const v = parseFloat(yearRow[q]); return isNaN(v) ? null : v; });
+        const nonNull = [];
+        vals.forEach((v, i) => { if (v !== null) nonNull.push({ v, i }); });
+        const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
+        const m3 = getFromEnd(nonNull, 1);
+        const m6 = getFromEnd(nonNull, 2);
+        const m12 = getFromEnd(nonNull, 4);
+        tickerMetrics[t].yearRevs[yr] = {
+          chg3: pctChgVal(cur, m3), chg36: pctChgVal(m3, m6),
+          chg612: pctChgVal(m6, m12), rev12: pctChgVal(cur, m12),
+        };
+      }
+    }
+
+    // Group by selected field
+    const groupField = currentAggGroup === 'gics_sector' ? 'gicsSector' : 'gicsIndustry';
+    const groups = {};
+    for (const [t, m] of Object.entries(tickerMetrics)) {
+      const key = m[groupField] || 'Other';
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(m);
+    }
+
+    // Build table
+    const table = document.createElement('table');
+    table.className = 'agg-table';
+
+    // Header row 1: group labels
+    const h1 = document.createElement('tr');
+    const addH = (text, colspan, cls) => {
+      const th = document.createElement('th');
+      th.textContent = text; if (colspan > 1) th.colSpan = colspan;
+      if (cls) th.className = cls; h1.appendChild(th);
+    };
+    addH('', 1, 'agg-group'); // sector name
+    addH('n', 1, 'agg-group');
+    displayYears.forEach(yr => addH(yr + ' EPS Rev', 8, 'agg-group'));
+    addH('Returns', 6, 'agg-group');
+
+    // Header row 2: sub-labels
+    const h2 = document.createElement('tr');
+    const addS = (text) => { const th = document.createElement('th'); th.textContent = text; th.className = 'agg-sub'; h2.appendChild(th); };
+    addS(currentAggGroup === 'gics_sector' ? 'Sector' : 'Industry');
+    addS('#');
+    displayYears.forEach(() => {
+      addS('3m med'); addS('3m avg'); addS('3-6m med'); addS('3-6m avg');
+      addS('6-12m med'); addS('6-12m avg'); addS('12m med'); addS('12m avg');
+    });
+    addS('YTD med'); addS('YTD avg'); addS('L3M med'); addS('L3M avg');
+    addS('1Y med'); addS('1Y avg');
+
+    const thead = document.createElement('thead');
+    thead.appendChild(h1); thead.appendChild(h2);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    const sortedKeys = Object.keys(groups).sort((a, b) => {
+      if (a === 'Other') return 1; if (b === 'Other') return -1;
+      return a.localeCompare(b);
+    });
+
+    sortedKeys.forEach((key, idx) => {
+      const members = groups[key];
+      const tr = document.createElement('tr');
+      tr.className = idx % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
+
+      const tdName = document.createElement('td');
+      tdName.textContent = key; tr.appendChild(tdName);
+      const tdN = document.createElement('td');
+      tdN.textContent = members.length; tr.appendChild(tdN);
+
+      // Per-year revision aggregates
+      displayYears.forEach(yr => {
+        for (const metric of ['chg3', 'chg36', 'chg612', 'rev12']) {
+          const vals = members.map(m => m.yearRevs[yr] ? m.yearRevs[yr][metric] : null).filter(v => v !== null);
+          const med = median(vals);
+          const avg = mean(vals);
+          appendAggCell(tr, med); appendAggCell(tr, avg);
+        }
+      });
+
+      // Return aggregates
+      for (const ret of ['retYtd', 'ret3m', 'ret12m']) {
+        const vals = members.map(m => m[ret]).filter(v => v !== 0 && v !== null && !isNaN(v));
+        appendAggCell(tr, median(vals)); appendAggCell(tr, mean(vals));
+      }
+
+      tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    const wrap = document.getElementById('aggTableWrap');
+    wrap.innerHTML = '';
+    wrap.appendChild(table);
+  }
+
+  function median(arr) {
+    if (!arr.length) return null;
+    const s = [...arr].sort((a, b) => a - b);
+    const mid = Math.floor(s.length / 2);
+    return s.length % 2 === 0 ? (s[mid - 1] + s[mid]) / 2 : s[mid];
+  }
+
+  function mean(arr) {
+    if (!arr.length) return null;
+    return arr.reduce((a, b) => a + b, 0) / arr.length;
+  }
+
+  function appendAggCell(row, val) {
+    const td = document.createElement('td');
+    if (val === null) { row.appendChild(td); return; }
+    if (val >= 0) { td.textContent = '+' + val.toFixed(0) + '%'; td.className = 'pos'; }
+    else { td.textContent = '(' + Math.abs(val).toFixed(0) + '%)'; td.className = 'neg'; }
+    row.appendChild(td);
+  }
+
   function renderMethodology(qCols) {
+    const el = document.getElementById('methodology');
+    if (!el) return;
     const labels = qCols.map(q => { const m = q.match(/Q(\d) (\d{4})/); return "Q" + m[1] + "'" + m[2].slice(2); });
     const n = labels.length;
     const cur = labels[n-1]||'?', m3 = labels[n-2]||'?', m6 = labels[n-3]||'?', m12 = labels[n-5]||'?';
-    document.getElementById('methodology').innerHTML =
+    el.innerHTML =
       '<details><summary>Methodology</summary>' +
       '<p><b>Data source:</b> Bloomberg BEST_EPS (adjusted, mkt cap &lt; $200B) or BEST_EPS_GAAP (mkt cap &ge; $200B). ' +
       'TSM estimates converted to USD. Historical estimates use absolute fiscal period references ("NNY" format).</p>' +
