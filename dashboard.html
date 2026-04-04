@@ -19,10 +19,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .table-wrap { overflow: auto; max-height: calc(100vh - 90px); position: relative; padding: 0 12px; }
 table { border-collapse: collapse; white-space: nowrap; font-size: 12px; }
 th, td { padding: 4px 8px; border-bottom: 1px solid #e8e8e8; text-align: right; }
-th { background: #fafafa; position: sticky; z-index: 2; font-weight: 600; font-size: 11px; color: #555; border-bottom: 2px solid #ccc; }
-thead tr:first-child th { top: 0; background: #f4f4f4; }
-thead tr:nth-child(2) th { top: 23px; background: #fafafa; }
-th.col-group { border-bottom: 2px solid #999; text-align: center; background: #f4f4f4; }
+th { background: #fafafa; position: sticky; z-index: 2; font-weight: 600; font-size: 11px; color: #555; }
+thead tr:first-child th { top: 0; background: #f4f4f4; box-shadow: inset 0 -2px 0 #999; }
+thead tr:nth-child(2) th { top: 23px; background: #fafafa; box-shadow: inset 0 -2px 0 #ccc; }
+th.col-group { text-align: center; background: #f4f4f4; }
 td:first-child, th:first-child { text-align: left; }
 th.sortable { cursor: pointer; user-select: none; }
 th.sortable:hover { background: #e8e8e8; }
@@ -138,11 +138,11 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 
   function parseCSV(text) {
     const lines = text.replace(/\r/g, '').trim().split('\n');
-    const headers = lines[0].split(',');
+    const headers = parseCsvLine(lines[0]);
     const rows = [];
     for (let i = 1; i < lines.length; i++) {
       if (!lines[i].trim()) continue;
-      const vals = lines[i].split(',');
+      const vals = parseCsvLine(lines[i]);
       const obj = {};
       headers.forEach((h, idx) => obj[h] = vals[idx] || '');
       rows.push(obj);
@@ -150,6 +150,19 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
     const re = /^Q[1-4] 20\d{2}$/;
     const qCols = headers.filter(h => re.test(h));
     return { headers, rows, qCols };
+  }
+
+  function parseCsvLine(line) {
+    const result = [];
+    let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQ = !inQ; }
+      else if (ch === ',' && !inQ) { result.push(cur); cur = ''; }
+      else { cur += ch; }
+    }
+    result.push(cur);
+    return result;
   }
 
   const COLS_PER_YEAR = 9; // 4 estimates + sparkline + 4 changes

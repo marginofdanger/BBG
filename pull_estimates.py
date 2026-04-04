@@ -58,6 +58,10 @@ def _determine_eps_fields(bbg_tickers):
     data = _bdp_batch(bbg_tickers, "CUR_MKT_CAP")
     result = {}
     for bt in bbg_tickers:
+        # Indices only support BEST_EPS, not BEST_EPS_GAAP
+        if bt.endswith(' Index'):
+            result[bt] = ("BEST_EPS", "Adj")
+            continue
         mktcap = data.get(bt, {}).get("CUR_MKT_CAP", 0) or 0
         if mktcap > MKTCAP_GAAP_THRESHOLD:
             result[bt] = ("BEST_EPS_GAAP", "GAAP")
