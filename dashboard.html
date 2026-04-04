@@ -103,6 +103,7 @@ td.spark-cell { padding: 4px 2px; }
 .chart-controls select { width: auto; }
 .chart-controls .ctrl-group { display: flex; align-items: center; gap: 4px; }
 .chart-controls .ctrl-sep { border-left: 1px solid #ddd; height: 16px; margin: 0 4px; }
+.zero-sep { border-left: 2px solid #bbb; }
 .agg-detail { background: #f8f9fc !important; }
 .agg-detail td { font-size: 11px; color: #555; font-weight: 400 !important; padding: 5px 10px; border-bottom: 1px solid #eee; }
 .agg-detail td:first-child { font-weight: 400 !important; cursor: default; padding-left: 28px; color: #666; }
@@ -972,9 +973,11 @@ td.spark-cell { padding: 4px 2px; }
 
     const distTable2 = document.createElement('table');
     distTable2.className = 'agg-table';
+
     const dcg2 = document.createElement('colgroup');
-    dAddCol('col-name'); dAddCol('col-count');
-    for (let i = 0; i < revBuckets.length + retBuckets.length; i++) dAddCol('col-data');
+    const d2AddCol = (cls) => { const c = document.createElement('col'); c.className = cls; dcg2.appendChild(c); };
+    d2AddCol('col-name'); d2AddCol('col-count');
+    for (let i = 0; i < revBuckets.length + retBuckets.length; i++) d2AddCol('col-data');
     distTable2.appendChild(dcg2);
 
     const d2h1 = document.createElement('tr');
@@ -986,8 +989,15 @@ td.spark-cell { padding: 4px 2px; }
     const d2h2 = document.createElement('tr');
     const d2AddS = (text, cls) => { const th = document.createElement('th'); th.textContent = text; th.className = 'agg-sub' + (cls ? ' ' + cls : ''); d2h2.appendChild(th); };
     d2AddS(groupLabel); d2AddS('#');
-    revBuckets.forEach((b, i) => d2AddS(b + '%', i === 0 ? 'year-sep' : ''));
-    retBuckets.forEach((b, i) => d2AddS(b + '%', i === 0 ? 'year-sep' : ''));
+    // Add year-sep at start of each group, and a zero-sep at the 0% column
+    revBuckets.forEach((b, i) => {
+      const cls = i === 0 ? 'year-sep' : (b === 0 ? 'zero-sep' : '');
+      d2AddS(b + '%', cls);
+    });
+    retBuckets.forEach((b, i) => {
+      const cls = i === 0 ? 'year-sep' : (b === 0 ? 'zero-sep' : '');
+      d2AddS(b + '%', cls);
+    });
 
     const d2thead = document.createElement('thead');
     d2thead.appendChild(d2h1); d2thead.appendChild(d2h2);
@@ -1010,6 +1020,7 @@ td.spark-cell { padding: 4px 2px; }
           if (b >= 0) td.className = pct > 50 ? 'pos' : '';
         }
         if (i === 0) td.classList.add('year-sep');
+        if (b === 0) td.classList.add('zero-sep');
         tr.appendChild(td);
       });
 
@@ -1021,6 +1032,7 @@ td.spark-cell { padding: 4px 2px; }
           td.textContent = Math.round(pct) + '%';
         }
         if (i === 0) td.classList.add('year-sep');
+        if (b === 0) td.classList.add('zero-sep');
         tr.appendChild(td);
       });
       return tr;
