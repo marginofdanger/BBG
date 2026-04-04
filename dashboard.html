@@ -1420,8 +1420,9 @@ td.spark-cell { padding: 4px 2px; }
           if (industryFilter && (s.gicsIndustry || '') !== industryFilter) return false;
           return true;
         });
+        const isFiltered = !!(sectorFilter || industryFilter);
         svgWrap.innerHTML = '';
-        svgWrap.appendChild(renderScatterSVG(filteredStocks, xKey, yKey, xLabel, yLabel, sectors, bounds, defaultStep, showAll));
+        svgWrap.appendChild(renderScatterSVG(filteredStocks, xKey, yKey, xLabel, yLabel, isFiltered ? [] : sectors, bounds, defaultStep, showAll));
       }
 
       [lblChk, secSel, indSel, xMinInp, xMaxInp, yMinInp, yMaxInp].forEach(el => el.addEventListener('change', redraw));
