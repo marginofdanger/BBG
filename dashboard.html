@@ -790,10 +790,13 @@ td.spark-cell { padding: 4px 2px; }
       }
     }
 
-    // Group by selected field
+    // Separate indices/ETFs from regular tickers
+    const INDEX_TICKERS = new Set(['SPX', 'SOX', 'QQQ', 'IWM', 'IGV']);
+    const indexMembers = [];
     const groupField = currentAggGroup === 'gics_sector' ? 'gicsSector' : 'gicsIndustry';
     const groups = {};
     for (const [t, m] of Object.entries(tickerMetrics)) {
+      if (INDEX_TICKERS.has(t)) { indexMembers.push(m); continue; }
       const key = m[groupField] || 'Other';
       if (!groups[key]) groups[key] = [];
       groups[key].push(m);
@@ -901,6 +904,46 @@ td.spark-cell { padding: 4px 2px; }
 
         tbody.appendChild(tr);
       });
+
+      // Add indices as individual rows at the bottom
+      if (indexMembers.length > 0) {
+        // Spacer
+        const spacer = document.createElement('tr');
+        spacer.className = 'group-spacer';
+        const spTd = document.createElement('td');
+        spTd.colSpan = 2 + displayYears.length * 4 + 3;
+        spacer.appendChild(spTd);
+        tbody.appendChild(spacer);
+
+        indexMembers.forEach(m => {
+          const tr = document.createElement('tr');
+          tr.className = 'agg-row-even';
+          tr._sortData = { name: m.ticker, count: 1 };
+          const tdName = document.createElement('td');
+          tdName.textContent = m.ticker;
+          tdName.style.fontWeight = '700';
+          tr.appendChild(tdName);
+          const tdN = document.createElement('td');
+          tdN.textContent = ''; tdN.style.textAlign = 'center';
+          tr.appendChild(tdN);
+
+          displayYears.forEach(yr => {
+            let first = true;
+            for (const metric of ['chg3', 'chg36', 'chg612', 'rev12']) {
+              const v = m.yearRevs[yr] ? m.yearRevs[yr][metric] : null;
+              const td = appendAggCell(tr, v);
+              if (first) { td.classList.add('year-sep'); first = false; }
+              tr._sortData[yr + '_' + metric] = v || 0;
+            }
+          });
+          const retFirst = appendAggCell(tr, m.retYtd); retFirst.classList.add('year-sep');
+          appendAggCell(tr, m.ret3m); appendAggCell(tr, m.ret12m);
+          tr._sortData.retYtd = m.retYtd || 0;
+          tr._sortData.ret3m = m.ret3m || 0;
+          tr._sortData.ret12m = m.ret12m || 0;
+          tbody.appendChild(tr);
+        });
+      }
 
       table.appendChild(tbody);
       wrap.appendChild(table);
