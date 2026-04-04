@@ -1205,17 +1205,19 @@ td.spark-cell { padding: 4px 2px; }
 
       const sep2 = document.createElement('div'); sep2.className = 'ctrl-sep'; ctrl.appendChild(sep2);
 
-      // Axis bounds
+      // Axis bounds — all in one row
       const mkNum = (label, val) => {
         const inp = document.createElement('input'); inp.type = 'number'; inp.value = val; inp.step = 5;
-        const lbl = document.createElement('label'); lbl.textContent = label + ' '; lbl.appendChild(inp);
-        ctrl.appendChild(lbl);
-        return inp;
+        const span = document.createElement('span');
+        span.textContent = label; span.style.marginRight = '2px';
+        return { span, inp };
       };
-      const xMinInp = mkNum('X min', defaultBounds[0]);
-      const xMaxInp = mkNum('X max', defaultBounds[1]);
-      const yMinInp = mkNum('Y min', defaultBounds[2]);
-      const yMaxInp = mkNum('Y max', defaultBounds[3]);
+      const x1 = mkNum('X:', defaultBounds[0]); const x2 = mkNum('to', defaultBounds[1]);
+      const y1 = mkNum('Y:', defaultBounds[2]); const y2 = mkNum('to', defaultBounds[3]);
+      const axisGrp = document.createElement('div'); axisGrp.className = 'ctrl-group';
+      [x1, x2, y1, y2].forEach(({span, inp}) => { axisGrp.appendChild(span); axisGrp.appendChild(inp); });
+      ctrl.appendChild(axisGrp);
+      const xMinInp = x1.inp, xMaxInp = x2.inp, yMinInp = y1.inp, yMaxInp = y2.inp;
 
       container.appendChild(ctrl);
 
