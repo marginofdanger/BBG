@@ -875,6 +875,12 @@ td.spark-cell { padding: 4px 2px; }
       return tr;
     }
 
+    const allNonIndex = Object.values(groups).flat();
+    const allKeys = Object.keys(groups).sort((a, b) => {
+      if (a === 'Other') return 1; if (b === 'Other') return -1;
+      return a.localeCompare(b);
+    });
+
     for (const [statLabel, statFn] of [['Median', median], ['Mean', mean]]) {
       const title = document.createElement('h3');
       title.textContent = statLabel + ' EPS Revisions & Returns by ' + groupLabel;
@@ -927,7 +933,6 @@ td.spark-cell { padding: 4px 2px; }
       const tbody = document.createElement('tbody');
 
       // "All" total row
-      const allNonIndex = Object.values(groups).flat();
       const allRow = buildAggRow('All', allNonIndex, statFn, 0);
       allRow.querySelector('td:first-child').style.fontWeight = '700';
       allRow.querySelectorAll('td').forEach(td => td.style.borderBottom = '2px solid #ccc');
@@ -940,11 +945,6 @@ td.spark-cell { padding: 4px 2px; }
         ptr.querySelectorAll('td').forEach(td => td.style.borderBottom = '2px solid #ccc');
         tbody.appendChild(ptr);
       }
-
-      const allKeys = Object.keys(groups).sort((a, b) => {
-        if (a === 'Other') return 1; if (b === 'Other') return -1;
-        return a.localeCompare(b);
-      });
 
       allKeys.forEach((key, idx) => {
         tbody.appendChild(buildAggRow(key, groups[key], statFn, idx));
