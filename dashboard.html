@@ -140,6 +140,7 @@ td.spark-cell { padding: 4px 2px; }
   <div class="tab active" data-tab="companies">Companies</div>
   <div class="tab" data-tab="aggregates">Sector Aggregates</div>
   <div class="tab" data-tab="analysis">Analysis</div>
+  <div class="tab" data-tab="other">Deep Dive</div>
 </div>
 <div class="tab-content active" id="tab-companies">
   <div class="table-wrap" id="tableWrap"></div>
@@ -156,6 +157,9 @@ td.spark-cell { padding: 4px 2px; }
 </div>
 <div class="tab-content" id="tab-analysis">
   <div class="analysis-wrap" id="analysisWrap"></div>
+</div>
+<div class="tab-content" id="tab-other">
+  <div class="analysis-wrap" id="otherWrap"></div>
 </div>
 
 <script>
@@ -278,6 +282,7 @@ td.spark-cell { padding: 4px 2px; }
     render(data);
     renderAggregates(data);
     renderAnalysis(data);
+    renderOther(data);
     renderMethodology(data.qCols);
   }
 
@@ -1670,6 +1675,399 @@ td.spark-cell { padding: 4px 2px; }
     twoCol.appendChild(col3m);
     twoCol.appendChild(col12m);
     wrap.appendChild(twoCol);
+  }
+
+  /* ---- Deep Dive tab ---- */
+  function renderOther(data) {
+    const { rows, qCols } = data;
+    const wrap = document.getElementById('otherWrap');
+    wrap.innerHTML = '';
+
+    // Build per-ticker metrics using CY2026
+    const stocks = [];
+    const tickerSeen = new Set();
+    rows.forEach(r => {
+      const t = r.Ticker;
+      if (tickerSeen.has(t) || INDEX_TICKERS.has(t)) return;
+      if (r.Year !== 'CY2026') return;
+      tickerSeen.add(t);
+
+      const vals26 = qCols.map(q => { const v = parseFloat(r[q]); return isNaN(v) ? null : v; });
+      const nonNull26 = []; vals26.forEach((v, i) => { if (v !== null) nonNull26.push({ v, i }); });
+      const cur26 = nonNull26.length > 0 ? nonNull26[nonNull26.length - 1].v : null;
+      const m3_26 = getFromEnd(nonNull26, 1);
+      const m6_26 = getFromEnd(nonNull26, 2);
+      const m12_26 = getFromEnd(nonNull26, 4);
+      const rev3 = pctChgVal(cur26, m3_26);
+      const rev612 = pctChgVal(m6_26, m12_26);
+      const rev12 = pctChgVal(cur26, m12_26);
+
+      // CY2028 for dispersion
+      const r28 = rows.find(rr => rr.Ticker === t && rr.Year === 'CY2028');
+      let cur28 = null;
+      if (r28) {
+        const v28 = qCols.map(q => { const v = parseFloat(r28[q]); return isNaN(v) ? null : v; });
+        const nn28 = []; v28.forEach((v, i) => { if (v !== null) nn28.push({ v, i }); });
+        cur28 = nn28.length > 0 ? nn28[nn28.length - 1].v : null;
+      }
+
+      const pe = parseFloat(r.PE) || null;
+      const retYtd = parsePctStr(r['Return_YTD']);
+      const ret3m = parsePctStr(r['Return_3m']);
+      const ret12m = parsePctStr(r['Return_12m']);
+      const group = r.Group;
+      const sector = r['GICS Sector'] || '';
+
+      stocks.push({ ticker: t, group, sector, rev3, rev612, rev12, cur26, cur28, pe, retYtd, ret3m, ret12m });
+    });
+
+    const portfolio = stocks.filter(s => s.group === 'Portfolio');
+    const nonPortfolio = stocks.filter(s => s.group !== 'Portfolio');
+
+    function makeSection(title) {
+      const s = document.createElement('div');
+      s.className = 'analysis-section';
+      const h = document.createElement('h3');
+      h.textContent = title; h.style.cssText = 'font-size:14px;color:#333;margin-bottom:8px;';
+      s.appendChild(h);
+      return s;
+    }
+
+    function makeTable(headers, rowData, opts = {}) {
+      const t = document.createElement('table');
+      t.className = 'rank-table';
+      t.style.marginBottom = '16px';
+      const thead = document.createElement('thead');
+      const hr = document.createElement('tr');
+      headers.forEach(h => { const th = document.createElement('th'); th.textContent = h; hr.appendChild(th); });
+      thead.appendChild(hr); t.appendChild(thead);
+      const tbody = document.createElement('tbody');
+      rowData.forEach((row, i) => {
+        const tr = document.createElement('tr');
+        tr.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
+        row.forEach((cell, ci) => {
+          const td = document.createElement('td');
+          if (typeof cell === 'number') {
+            const fmt = opts.pctCols && opts.pctCols.includes(ci) ? (cell >= 0 ? '+' + cell.toFixed(1) + '%' : '(' + Math.abs(cell).toFixed(1) + '%)') : cell.toFixed(2);
+            td.textContent = fmt;
+            if (opts.pctCols && opts.pctCols.includes(ci)) td.className = cell >= 0 ? 'pos' : 'neg';
+          } else { td.textContent = cell || ''; }
+          if (ci === 0) td.style.fontWeight = '600';
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      t.appendChild(tbody);
+      return t;
+    }
+
+    // ===== 1. QUINTILE ANALYSIS =====
+    {
+      const sec = makeSection('1. Revision Quintile Analysis — CY2026 3m revision vs returns');
+      const valid = stocks.filter(s => s.rev3 !== null && s.ret3m);
+      valid.sort((a, b) => a.rev3 - b.rev3);
+      const n = Math.floor(valid.length / 5);
+      const quintiles = [];
+      for (let q = 0; q < 5; q++) {
+        const slice = valid.slice(q * n, q === 4 ? valid.length : (q + 1) * n);
+        const medRev = median(slice.map(s => s.rev3));
+        const medRet3 = median(slice.map(s => s.ret3m).filter(v => v));
+        const medRetYtd = median(slice.map(s => s.retYtd).filter(v => v));
+        const avgRev = mean(slice.map(s => s.rev3));
+        const avgRet3 = mean(slice.map(s => s.ret3m).filter(v => v));
+        quintiles.push(['Q' + (q + 1) + (q === 0 ? ' (worst)' : q === 4 ? ' (best)' : ''), slice.length, medRev, avgRev, medRet3, avgRet3, medRetYtd]);
+      }
+      const p = document.createElement('p');
+      p.style.cssText = 'font-size:12px;color:#555;margin-bottom:8px;';
+      p.textContent = 'Stocks ranked by 3m EPS revision into quintiles. Shows median/mean revision and returns per quintile.';
+      sec.appendChild(p);
+      sec.appendChild(makeTable(['Quintile', '#', 'Med Rev', 'Avg Rev', 'Med L3M', 'Avg L3M', 'Med YTD'], quintiles, { pctCols: [2, 3, 4, 5, 6] }));
+      wrap.appendChild(sec);
+    }
+
+    // ===== 2. REVISION ACCELERATION =====
+    {
+      const sec = makeSection('2. Revision Acceleration — 3m revision vs 6-12m revision');
+      const valid = stocks.filter(s => s.rev3 !== null && s.rev612 !== null);
+      const accel = valid.filter(s => s.rev3 > s.rev612);
+      const decel = valid.filter(s => s.rev3 <= s.rev612);
+      const rowData = [
+        ['Accelerating (3m > 6-12m)', accel.length, median(accel.map(s => s.rev3)), median(accel.map(s => s.ret3m).filter(v => v)), median(accel.map(s => s.retYtd).filter(v => v))],
+        ['Decelerating (3m <= 6-12m)', decel.length, median(decel.map(s => s.rev3)), median(decel.map(s => s.ret3m).filter(v => v)), median(decel.map(s => s.retYtd).filter(v => v))],
+      ];
+      sec.appendChild(makeTable(['Group', '#', 'Med 3m Rev', 'Med L3M', 'Med YTD'], rowData, { pctCols: [2, 3, 4] }));
+      wrap.appendChild(sec);
+    }
+
+    // ===== 3. REVISION BREADTH BY SECTOR =====
+    {
+      const sec = makeSection('3. Revision Breadth by Sector — % of stocks with positive 3m revisions');
+      const sectorGroups = {};
+      stocks.filter(s => s.rev3 !== null && s.sector).forEach(s => {
+        if (!sectorGroups[s.sector]) sectorGroups[s.sector] = [];
+        sectorGroups[s.sector].push(s);
+      });
+      const rowData = Object.entries(sectorGroups).map(([sec, members]) => {
+        const pos = members.filter(s => s.rev3 > 0).length;
+        const breadth = pos / members.length * 100;
+        return [sec, members.length, breadth, median(members.map(s => s.rev3)), median(members.map(s => s.ret3m).filter(v => v))];
+      }).sort((a, b) => b[2] - a[2]);
+      sec.appendChild(makeTable(['Sector', '#', '% Positive', 'Med 3m Rev', 'Med L3M'], rowData, { pctCols: [2, 3, 4] }));
+      wrap.appendChild(sec);
+    }
+
+    // ===== 4. PE COMPRESSION / EXPANSION =====
+    {
+      const sec = makeSection('4. PE Compression vs Expansion — revision sign vs return sign');
+      const valid = stocks.filter(s => s.rev12 !== null && s.ret12m);
+      const upUp = valid.filter(s => s.rev12 > 0 && s.ret12m > 0);
+      const upDown = valid.filter(s => s.rev12 > 0 && s.ret12m <= 0);
+      const downUp = valid.filter(s => s.rev12 <= 0 && s.ret12m > 0);
+      const downDown = valid.filter(s => s.rev12 <= 0 && s.ret12m <= 0);
+      const rowData = [
+        ['Rev+ / Ret+ (expansion)', upUp.length, median(upUp.map(s => s.rev12)), median(upUp.map(s => s.ret12m))],
+        ['Rev+ / Ret- (compression)', upDown.length, median(upDown.map(s => s.rev12)), median(upDown.map(s => s.ret12m))],
+        ['Rev- / Ret+ (re-rating)', downUp.length, median(downUp.map(s => s.rev12)), median(downUp.map(s => s.ret12m))],
+        ['Rev- / Ret- (de-rating)', downDown.length, median(downDown.map(s => s.rev12)), median(downDown.map(s => s.ret12m))],
+      ];
+      const p = document.createElement('p');
+      p.style.cssText = 'font-size:12px;color:#555;margin-bottom:8px;';
+      p.textContent = 'Rev+ / Ret- stocks may be value opportunities (earnings improving but stock falling). Rev- / Ret+ stocks may be at risk.';
+      sec.appendChild(p);
+      sec.appendChild(makeTable(['Quadrant', '#', 'Med 12m Rev', 'Med 1Y Ret'], rowData, { pctCols: [2, 3] }));
+
+      // Show specific Rev+ / Ret- stocks (compression candidates)
+      if (upDown.length > 0) {
+        const p2 = document.createElement('p');
+        p2.style.cssText = 'font-size:12px;color:#555;margin:8px 0 4px;font-weight:600;';
+        p2.textContent = 'Rev+ / Ret- stocks (potential value):';
+        sec.appendChild(p2);
+        const candidates = upDown.sort((a, b) => b.rev12 - a.rev12).slice(0, 25);
+        sec.appendChild(makeTable(['Ticker', 'Group', '12m Rev', '1Y Ret', 'YTD'],
+          candidates.map(s => [s.ticker, s.group, s.rev12, s.ret12m, s.retYtd]), { pctCols: [2, 3, 4] }));
+      }
+      wrap.appendChild(sec);
+    }
+
+    // ===== 5. ESTIMATE DISPERSION =====
+    {
+      const sec = makeSection('5. Estimate Dispersion — CY2026 vs CY2028 implied growth');
+      const valid = stocks.filter(s => s.cur26 && s.cur28 && s.cur26 > 0);
+      const withGrowth = valid.map(s => {
+        const cagr = (Math.pow(s.cur28 / s.cur26, 1 / 2) - 1) * 100;
+        return { ...s, cagr };
+      }).sort((a, b) => b.cagr - a.cagr);
+
+      const top20 = withGrowth.slice(0, 20);
+      const bot20 = withGrowth.slice(-20).reverse();
+
+      const cols = document.createElement('div');
+      cols.className = 'analysis-columns';
+
+      const leftDiv = document.createElement('div');
+      const lh = document.createElement('h4');
+      lh.textContent = 'Highest implied 2-year EPS CAGR';
+      lh.style.cssText = 'font-size:12px;color:#555;margin-bottom:4px;';
+      leftDiv.appendChild(lh);
+      leftDiv.appendChild(makeTable(['Ticker', 'CY26 EPS', 'CY28 EPS', '2yr CAGR', 'YTD'],
+        top20.map(s => [s.ticker, s.cur26, s.cur28, s.cagr, s.retYtd]), { pctCols: [3, 4] }));
+
+      const rightDiv = document.createElement('div');
+      const rh = document.createElement('h4');
+      rh.textContent = 'Lowest implied 2-year EPS CAGR';
+      rh.style.cssText = 'font-size:12px;color:#555;margin-bottom:4px;';
+      rightDiv.appendChild(rh);
+      rightDiv.appendChild(makeTable(['Ticker', 'CY26 EPS', 'CY28 EPS', '2yr CAGR', 'YTD'],
+        bot20.map(s => [s.ticker, s.cur26, s.cur28, s.cagr, s.retYtd]), { pctCols: [3, 4] }));
+
+      cols.appendChild(leftDiv); cols.appendChild(rightDiv);
+      sec.appendChild(cols);
+      wrap.appendChild(sec);
+    }
+
+    // ===== 6. PORTFOLIO HIT RATE =====
+    {
+      const sec = makeSection('6. Portfolio Hit Rate — % with positive revisions AND positive returns');
+      if (portfolio.length > 0) {
+        const posRevPosRet = portfolio.filter(s => s.rev3 > 0 && s.ret3m > 0).length;
+        const posRev = portfolio.filter(s => s.rev3 > 0).length;
+        const posRet = portfolio.filter(s => s.ret3m > 0).length;
+        const total = portfolio.length;
+
+        const summary = [
+          ['Positive 3m revision', posRev, (posRev / total * 100)],
+          ['Positive L3M return', posRet, (posRet / total * 100)],
+          ['Both positive (hit)', posRevPosRet, (posRevPosRet / total * 100)],
+          ['Total portfolio', total, null],
+        ];
+        sec.appendChild(makeTable(['Metric', '#', '%'], summary, { pctCols: [2] }));
+
+        // Per-stock breakdown
+        const p = document.createElement('p');
+        p.style.cssText = 'font-size:12px;color:#555;margin:8px 0 4px;font-weight:600;';
+        p.textContent = 'Portfolio stock detail:';
+        sec.appendChild(p);
+        sec.appendChild(makeTable(['Ticker', '3m Rev', 'L3M Ret', 'YTD', '12m Rev', '1Y Ret'],
+          portfolio.sort((a, b) => (b.rev3 || 0) - (a.rev3 || 0)).map(s => [s.ticker, s.rev3, s.ret3m, s.retYtd, s.rev12, s.ret12m]),
+          { pctCols: [1, 2, 3, 4, 5] }));
+      }
+      wrap.appendChild(sec);
+    }
+
+    // ===== 7. WATCHLIST SCREENING =====
+    {
+      const sec = makeSection('7. Watchlist Screening — positive 12m revision + negative 3m return (beaten-down improvers)');
+      const candidates = stocks.filter(s => s.rev12 !== null && s.rev12 > 0 && s.ret3m < 0 && s.group !== 'Portfolio')
+        .sort((a, b) => b.rev12 - a.rev12).slice(0, 30);
+
+      if (candidates.length > 0) {
+        const p = document.createElement('p');
+        p.style.cssText = 'font-size:12px;color:#555;margin-bottom:8px;';
+        p.textContent = 'Stocks with improving fundamentals (positive 12m EPS revision) but recent price weakness (negative L3M return). Potential buy candidates.';
+        sec.appendChild(p);
+        sec.appendChild(makeTable(['Ticker', 'Sector', '12m Rev', 'L3M Ret', 'YTD', 'PE'],
+          candidates.map(s => [s.ticker, s.sector, s.rev12, s.ret3m, s.retYtd, s.pe ? s.pe.toFixed(1) + 'x' : '']),
+          { pctCols: [2, 3, 4] }));
+      }
+      wrap.appendChild(sec);
+    }
+
+    // ===== 8. PORTFOLIO REVISION BETA =====
+    {
+      const sec = makeSection('8. Portfolio vs Market Revision Summary');
+      if (portfolio.length > 0) {
+        const allValid = stocks.filter(s => s.rev3 !== null);
+        const mktMed3 = median(allValid.map(s => s.rev3));
+        const mktMed12 = median(allValid.filter(s => s.rev12 !== null).map(s => s.rev12));
+        const pfMed3 = median(portfolio.filter(s => s.rev3 !== null).map(s => s.rev3));
+        const pfMed12 = median(portfolio.filter(s => s.rev12 !== null).map(s => s.rev12));
+        const mktMedRet = median(allValid.map(s => s.retYtd).filter(v => v));
+        const pfMedRet = median(portfolio.map(s => s.retYtd).filter(v => v));
+
+        sec.appendChild(makeTable(['Metric', 'Portfolio', 'Market', 'Delta'], [
+          ['Median 3m revision', pfMed3, mktMed3, pfMed3 !== null && mktMed3 !== null ? pfMed3 - mktMed3 : null],
+          ['Median 12m revision', pfMed12, mktMed12, pfMed12 !== null && mktMed12 !== null ? pfMed12 - mktMed12 : null],
+          ['Median YTD return', pfMedRet, mktMedRet, pfMedRet !== null && mktMedRet !== null ? pfMedRet - mktMedRet : null],
+        ], { pctCols: [1, 2, 3] }));
+      }
+      wrap.appendChild(sec);
+    }
+
+    // ===== 9. MULTI-FACTOR REGRESSION =====
+    {
+      const sec = makeSection('9. Multi-Factor Regression — L3M Return = α + β₁(3m Rev) + β₂(PE)');
+
+      // Simple OLS implementation
+      function ols(y, X) {
+        // X is array of arrays (each row = [1, x1, x2, ...]), y is array
+        const n = y.length, k = X[0].length;
+        // X'X
+        const XtX = Array(k).fill(null).map(() => Array(k).fill(0));
+        const XtY = Array(k).fill(0);
+        for (let i = 0; i < n; i++) {
+          for (let j = 0; j < k; j++) {
+            XtY[j] += X[i][j] * y[i];
+            for (let l = 0; l < k; l++) XtX[j][l] += X[i][j] * X[i][l];
+          }
+        }
+        // Solve via Gaussian elimination
+        const aug = XtX.map((row, i) => [...row, XtY[i]]);
+        for (let i = 0; i < k; i++) {
+          let maxRow = i;
+          for (let r = i + 1; r < k; r++) if (Math.abs(aug[r][i]) > Math.abs(aug[maxRow][i])) maxRow = r;
+          [aug[i], aug[maxRow]] = [aug[maxRow], aug[i]];
+          if (Math.abs(aug[i][i]) < 1e-10) continue;
+          for (let r = 0; r < k; r++) {
+            if (r === i) continue;
+            const f = aug[r][i] / aug[i][i];
+            for (let c = i; c <= k; c++) aug[r][c] -= f * aug[i][c];
+          }
+        }
+        const beta = aug.map((row, i) => row[k] / row[i]);
+
+        // R²
+        const yMean = y.reduce((a, b) => a + b, 0) / n;
+        let ssTot = 0, ssRes = 0;
+        for (let i = 0; i < n; i++) {
+          const yHat = X[i].reduce((s, x, j) => s + x * beta[j], 0);
+          ssTot += (y[i] - yMean) ** 2;
+          ssRes += (y[i] - yHat) ** 2;
+        }
+        const r2 = 1 - ssRes / ssTot;
+        return { beta, r2, n };
+      }
+
+      // Model 1: Ret = a + b1*Rev3m
+      const valid1 = stocks.filter(s => s.rev3 !== null && s.ret3m);
+      if (valid1.length > 10) {
+        const y1 = valid1.map(s => s.ret3m);
+        const X1 = valid1.map(s => [1, s.rev3]);
+        const r1 = ols(y1, X1);
+
+        // Model 2: Ret = a + b1*Rev3m + b2*Rev12m
+        const valid2 = stocks.filter(s => s.rev3 !== null && s.rev12 !== null && s.ret3m);
+        const y2 = valid2.map(s => s.ret3m);
+        const X2 = valid2.map(s => [1, s.rev3, s.rev12]);
+        const r2 = ols(y2, X2);
+
+        // Model 3: 1Y Ret = a + b1*Rev12m
+        const valid3 = stocks.filter(s => s.rev12 !== null && s.ret12m);
+        const y3 = valid3.map(s => s.ret12m);
+        const X3 = valid3.map(s => [1, s.rev12]);
+        const r3 = ols(y3, X3);
+
+        sec.appendChild(makeTable(['Model', 'n', 'R²', 'α (intercept)', 'β₁', 'β₂'], [
+          ['L3M = α + β₁(3m Rev)', r1.n, r1.r2, r1.beta[0], r1.beta[1], ''],
+          ['L3M = α + β₁(3m Rev) + β₂(12m Rev)', r2.n, r2.r2, r2.beta[0], r2.beta[1], r2.beta[2]],
+          ['1Y = α + β₁(12m Rev)', r3.n, r3.r2, r3.beta[0], r3.beta[1], ''],
+        ], {}));
+
+        const p = document.createElement('p');
+        p.style.cssText = 'font-size:11px;color:#888;margin-top:4px;';
+        p.textContent = 'β₁ interpretation: a 1 percentage point increase in 3m EPS revision is associated with a ' + r1.beta[1].toFixed(2) + ' pp change in L3M stock return. R² of ' + r1.r2.toFixed(3) + ' means revisions explain ' + (r1.r2 * 100).toFixed(1) + '% of return variance.';
+        sec.appendChild(p);
+      }
+      wrap.appendChild(sec);
+    }
+
+    // ===== 10. SECTOR-ADJUSTED REVISIONS =====
+    {
+      const sec = makeSection('10. Sector-Adjusted Revisions — do sector-adjusted revisions predict returns better?');
+      const sectorMed = {};
+      stocks.filter(s => s.rev3 !== null && s.sector).forEach(s => {
+        if (!sectorMed[s.sector]) sectorMed[s.sector] = [];
+        sectorMed[s.sector].push(s.rev3);
+      });
+      Object.keys(sectorMed).forEach(k => sectorMed[k] = median(sectorMed[k]));
+
+      const adjusted = stocks.filter(s => s.rev3 !== null && s.sector && sectorMed[s.sector] !== null && s.ret3m)
+        .map(s => ({ ...s, adjRev3: s.rev3 - (sectorMed[s.sector] || 0) }));
+
+      if (adjusted.length > 10) {
+        // Raw regression
+        const yRaw = adjusted.map(s => s.ret3m);
+        const XRaw = adjusted.map(s => [1, s.rev3]);
+        const rRaw = ols(yRaw, XRaw);
+
+        // Adjusted regression
+        const yAdj = adjusted.map(s => s.ret3m);
+        const XAdj = adjusted.map(s => [1, s.adjRev3]);
+        const rAdj = ols(yAdj, XAdj);
+
+        sec.appendChild(makeTable(['Model', 'n', 'R²', 'β (revision)'], [
+          ['Raw 3m revision', rRaw.n, rRaw.r2, rRaw.beta[1]],
+          ['Sector-adjusted 3m revision', rAdj.n, rAdj.r2, rAdj.beta[1]],
+        ], {}));
+
+        const p = document.createElement('p');
+        p.style.cssText = 'font-size:11px;color:#888;margin-top:4px;';
+        p.textContent = rAdj.r2 > rRaw.r2
+          ? 'Sector-adjusted revisions have higher R² (' + (rAdj.r2 * 100).toFixed(1) + '% vs ' + (rRaw.r2 * 100).toFixed(1) + '%), suggesting stock-specific revision signals are more predictive than raw revisions.'
+          : 'Raw revisions have higher R² (' + (rRaw.r2 * 100).toFixed(1) + '% vs ' + (rAdj.r2 * 100).toFixed(1) + '%), suggesting sector-level revision trends drive returns more than stock-specific signals.';
+        sec.appendChild(p);
+      }
+      wrap.appendChild(sec);
+    }
   }
 
   function renderMethodology(qCols) {
