@@ -38,6 +38,7 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 .neg { color: #c62828; }
 .ticker-cell { font-weight: 700; font-size: 13px; }
 .eps-tag { font-size: 10px; font-weight: 400; color: #888; margin-left: 2px; vertical-align: super; }
+td.spark-cell { padding: 4px 2px; }
 .sparkline { cursor: pointer; vertical-align: middle; }
 .sparkline:hover { opacity: 0.7; }
 .year-sep { border-left: 3px solid #bbb; }
@@ -408,6 +409,7 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 
       // Sparkline
       const sparkTd = document.createElement('td');
+      sparkTd.className = 'spark-cell';
       const sparkVals = vals.filter(v => v !== null);
       if (sparkVals.length >= 2) {
         const svg = buildSparkline(sparkVals, 70, 20);
