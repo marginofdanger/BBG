@@ -83,6 +83,19 @@ td.spark-cell { padding: 4px 2px; }
 .agg-row-odd { background: #f7f7f7; }
 .agg-controls { padding: 8px 24px; display: flex; align-items: center; gap: 16px; }
 .agg-controls .group-label { font-size: 11px; }
+.analysis-wrap { padding: 12px 24px; overflow: auto; max-height: calc(100vh - 90px); }
+.analysis-section { margin-bottom: 32px; }
+.analysis-section h3 { font-size: 14px; color: #333; margin-bottom: 8px; }
+.analysis-columns { display: flex; gap: 24px; }
+.analysis-columns > div { flex: 1; }
+.rank-table { border-collapse: collapse; font-size: 11px; width: 100%; }
+.rank-table th, .rank-table td { padding: 3px 8px; border-bottom: 1px solid #e8e8e8; text-align: right; }
+.rank-table th { background: #fafafa; font-weight: 600; font-size: 10px; color: #555; border-bottom: 2px solid #ccc; }
+.rank-table td:first-child { text-align: left; font-weight: 600; }
+.rank-table .rank-num { color: #888; font-weight: 400; text-align: center; width: 25px; }
+.scatter-wrap { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 24px; }
+.scatter-chart { background: #fafafa; border: 1px solid #e0e0e0; border-radius: 4px; padding: 12px; }
+.scatter-chart h4 { font-size: 12px; color: #555; margin-bottom: 8px; text-align: center; }
 .agg-detail { background: #f8f9fc !important; }
 .agg-detail td { font-size: 11px; color: #555; font-weight: 400 !important; padding: 5px 10px; border-bottom: 1px solid #eee; }
 .agg-detail td:first-child { font-weight: 400 !important; cursor: default; padding-left: 28px; color: #666; }
@@ -113,6 +126,7 @@ td.spark-cell { padding: 4px 2px; }
 <div class="tabs">
   <div class="tab active" data-tab="companies">Companies</div>
   <div class="tab" data-tab="aggregates">Sector Aggregates</div>
+  <div class="tab" data-tab="analysis">Analysis</div>
 </div>
 <div class="tab-content active" id="tab-companies">
   <div class="table-wrap" id="tableWrap"></div>
@@ -126,6 +140,9 @@ td.spark-cell { padding: 4px 2px; }
     </div>
   </div>
   <div class="table-wrap" id="aggTableWrap"></div>
+</div>
+<div class="tab-content" id="tab-analysis">
+  <div class="analysis-wrap" id="analysisWrap"></div>
 </div>
 
 <script>
@@ -167,6 +184,7 @@ td.spark-cell { padding: 4px 2px; }
       const data = parseCSV(text);
       render(data);
       renderAggregates(data);
+      renderAnalysis(data);
       renderMethodology(data.qCols);
     } catch (e) {
       document.getElementById('dateLabel').textContent = 'Error: ' + e.message;
@@ -1043,6 +1061,197 @@ td.spark-cell { padding: 4px 2px; }
     }
     row.appendChild(td);
     return td;
+  }
+
+  /* ---- Analysis tab ---- */
+  function renderAnalysis(data) {
+    const { rows, qCols } = data;
+    const INDEX_TICKERS = new Set(['SPX', 'SOX', 'QQQ', 'IWM', 'IGV']);
+
+    // Build per-ticker metrics using CY2026
+    const stocks = [];
+    const tickerSeen = new Set();
+    rows.forEach(r => {
+      const t = r.Ticker;
+      if (tickerSeen.has(t) || INDEX_TICKERS.has(t)) return;
+      if (r.Year !== 'CY2026') return;
+      tickerSeen.add(t);
+
+      const vals = qCols.map(q => { const v = parseFloat(r[q]); return isNaN(v) ? null : v; });
+      const nonNull = [];
+      vals.forEach((v, i) => { if (v !== null) nonNull.push({ v, i }); });
+      const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
+      const m3 = getFromEnd(nonNull, 1);
+      const m12 = getFromEnd(nonNull, 4);
+      const rev3 = pctChgVal(cur, m3);
+      const rev12 = pctChgVal(cur, m12);
+      const retYtd = parsePctStr(r['Return_YTD']);
+      const ret3m = parsePctStr(r['Return_3m']);
+      const ret12m = parsePctStr(r['Return_12m']);
+
+      stocks.push({ ticker: t, group: r.Group, rev3, rev12, retYtd, ret3m, ret12m });
+    });
+
+    const wrap = document.getElementById('analysisWrap');
+    wrap.innerHTML = '';
+
+    // --- Scatter charts ---
+    const scatterDiv = document.createElement('div');
+    scatterDiv.className = 'scatter-wrap';
+
+    function buildScatter(title, xKey, yKey, xLabel, yLabel) {
+      const container = document.createElement('div');
+      container.className = 'scatter-chart';
+      const h4 = document.createElement('h4');
+      h4.textContent = title;
+      container.appendChild(h4);
+
+      const W = 520, H = 400, pad = { top: 20, right: 30, bottom: 40, left: 50 };
+      const pw = W - pad.left - pad.right, ph = H - pad.top - pad.bottom;
+      const xMin = -50, xMax = 50;
+      const pts = stocks.filter(s => s[xKey] !== null && s[yKey] !== null && s[yKey] !== 0);
+      const yVals = pts.map(s => s[yKey]);
+      let yMin = Math.min(...yVals, -50), yMax = Math.max(...yVals, 50);
+      // Round to nice bounds
+      yMin = Math.floor(yMin / 10) * 10; yMax = Math.ceil(yMax / 10) * 10;
+
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('width', W); svg.setAttribute('height', H);
+      svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+      svg.style.fontSize = '10px'; svg.style.fontFamily = 'inherit';
+
+      // Grid lines and axes
+      const toX = v => pad.left + ((Math.max(xMin, Math.min(xMax, v)) - xMin) / (xMax - xMin)) * pw;
+      const toY = v => pad.top + (1 - (Math.max(yMin, Math.min(yMax, v)) - yMin) / (yMax - yMin)) * ph;
+
+      // Gridlines
+      for (let g = xMin; g <= xMax; g += 10) {
+        const x = toX(g);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', x); line.setAttribute('y1', pad.top);
+        line.setAttribute('x2', x); line.setAttribute('y2', pad.top + ph);
+        line.setAttribute('stroke', g === 0 ? '#999' : '#e8e8e8'); line.setAttribute('stroke-width', g === 0 ? 1 : 0.5);
+        svg.appendChild(line);
+        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        txt.setAttribute('x', x); txt.setAttribute('y', H - 5); txt.setAttribute('text-anchor', 'middle'); txt.setAttribute('fill', '#888');
+        txt.textContent = g + '%'; svg.appendChild(txt);
+      }
+      for (let g = yMin; g <= yMax; g += 10) {
+        const y = toY(g);
+        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+        line.setAttribute('x1', pad.left); line.setAttribute('y1', y);
+        line.setAttribute('x2', pad.left + pw); line.setAttribute('y2', y);
+        line.setAttribute('stroke', g === 0 ? '#999' : '#e8e8e8'); line.setAttribute('stroke-width', g === 0 ? 1 : 0.5);
+        svg.appendChild(line);
+        const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        txt.setAttribute('x', pad.left - 5); txt.setAttribute('y', y + 3); txt.setAttribute('text-anchor', 'end'); txt.setAttribute('fill', '#888');
+        txt.textContent = g + '%'; svg.appendChild(txt);
+      }
+
+      // Axis labels
+      const xLbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      xLbl.setAttribute('x', pad.left + pw / 2); xLbl.setAttribute('y', H - 22);
+      xLbl.setAttribute('text-anchor', 'middle'); xLbl.setAttribute('fill', '#555'); xLbl.setAttribute('font-size', '11');
+      xLbl.textContent = xLabel; svg.appendChild(xLbl);
+
+      const yLbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      yLbl.setAttribute('x', 12); yLbl.setAttribute('y', pad.top + ph / 2);
+      yLbl.setAttribute('text-anchor', 'middle'); yLbl.setAttribute('fill', '#555'); yLbl.setAttribute('font-size', '11');
+      yLbl.setAttribute('transform', `rotate(-90, 12, ${pad.top + ph / 2})`);
+      yLbl.textContent = yLabel; svg.appendChild(yLbl);
+
+      // Points
+      pts.forEach(s => {
+        const cx = toX(s[xKey]);
+        const cy = toY(s[yKey]);
+        const isPortfolio = s.group === 'Portfolio';
+        const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+        c.setAttribute('cx', cx); c.setAttribute('cy', cy);
+        c.setAttribute('r', isPortfolio ? 4 : 2.5);
+        c.setAttribute('fill', isPortfolio ? '#1565c0' : '#999');
+        c.setAttribute('opacity', isPortfolio ? 0.9 : 0.5);
+        c.setAttribute('stroke', isPortfolio ? '#0d47a1' : 'none');
+        c.setAttribute('stroke-width', isPortfolio ? 1 : 0);
+
+        // Tooltip
+        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+        title.textContent = `${s.ticker}: Rev ${s[xKey]?.toFixed(1)}%, Ret ${s[yKey]?.toFixed(1)}%`;
+        c.appendChild(title);
+
+        // Label for portfolio
+        if (isPortfolio) {
+          const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+          lbl.setAttribute('x', cx + 6); lbl.setAttribute('y', cy + 3);
+          lbl.setAttribute('fill', '#1565c0'); lbl.setAttribute('font-size', '9'); lbl.setAttribute('font-weight', '600');
+          lbl.textContent = s.ticker; svg.appendChild(lbl);
+        }
+        svg.appendChild(c);
+      });
+
+      container.appendChild(svg);
+      return container;
+    }
+
+    scatterDiv.appendChild(buildScatter('CY2026 EPS Revision (3m) vs Stock Return (L3M)', 'rev3', 'ret3m', 'EPS Revision 3m (%)', 'Stock Return L3M (%)'));
+    scatterDiv.appendChild(buildScatter('CY2026 EPS Revision (12m) vs Stock Return (1Y)', 'rev12', 'ret12m', 'EPS Revision 12m (%)', 'Stock Return 1Y (%)'));
+    wrap.appendChild(scatterDiv);
+
+    // --- Top/Bottom tables ---
+    function buildRankSection(title, sortKey, retKey, retLabel, n) {
+      const section = document.createElement('div');
+      section.className = 'analysis-section';
+      const h3 = document.createElement('h3');
+      h3.textContent = title;
+      section.appendChild(h3);
+
+      const valid = stocks.filter(s => s[sortKey] !== null);
+      const topN = [...valid].sort((a, b) => b[sortKey] - a[sortKey]).slice(0, n);
+      const botN = [...valid].sort((a, b) => a[sortKey] - b[sortKey]).slice(0, n);
+
+      const cols = document.createElement('div');
+      cols.className = 'analysis-columns';
+
+      function buildTable(label, list) {
+        const div = document.createElement('div');
+        const h4 = document.createElement('h4');
+        h4.textContent = label;
+        h4.style.cssText = 'font-size: 12px; color: #555; margin-bottom: 4px;';
+        div.appendChild(h4);
+
+        const table = document.createElement('table');
+        table.className = 'rank-table';
+        const thead = document.createElement('thead');
+        const hr = document.createElement('tr');
+        ['#', 'Ticker', 'EPS Rev', retLabel, 'YTD'].forEach(h => {
+          const th = document.createElement('th');
+          th.textContent = h; hr.appendChild(th);
+        });
+        thead.appendChild(hr); table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+        list.forEach((s, i) => {
+          const tr = document.createElement('tr');
+          tr.className = i % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
+          const tdR = document.createElement('td'); tdR.className = 'rank-num'; tdR.textContent = i + 1; tr.appendChild(tdR);
+          const tdT = document.createElement('td'); tdT.textContent = s.ticker; tr.appendChild(tdT);
+          appendAggCell(tr, s[sortKey]);
+          appendAggCell(tr, s[retKey]);
+          appendAggCell(tr, s.retYtd);
+          tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+        div.appendChild(table);
+        return div;
+      }
+
+      cols.appendChild(buildTable('Top ' + n + ' (highest revisions)', topN));
+      cols.appendChild(buildTable('Bottom ' + n + ' (lowest revisions)', botN));
+      section.appendChild(cols);
+      return section;
+    }
+
+    wrap.appendChild(buildRankSection('CY2026 EPS Estimate Revisions — Last 3 Months', 'rev3', 'ret3m', 'L3M', 50));
+    wrap.appendChild(buildRankSection('CY2026 EPS Estimate Revisions — Last 12 Months', 'rev12', 'ret12m', '1Y', 50));
   }
 
   function renderMethodology(qCols) {
