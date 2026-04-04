@@ -19,12 +19,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .table-wrap { overflow: auto; max-height: calc(100vh - 90px); position: relative; padding: 0 12px; }
 table { border-collapse: collapse; white-space: nowrap; font-size: 12px; }
 th, td { padding: 4px 8px; border-bottom: 1px solid #e8e8e8; text-align: right; }
-th { background: #fafafa; position: sticky; z-index: 2; font-weight: 600; font-size: 11px; color: #555; border-bottom: 2px solid #ccc; }
-thead tr:first-child th { top: 0; }
-thead tr:nth-child(2) th { top: 24px; }
+th { background: #fafafa; font-weight: 600; font-size: 11px; color: #555; border-bottom: 2px solid #ccc; }
 th.col-group { border-bottom: 2px solid #999; text-align: center; background: #f4f4f4; }
-td:first-child, th:first-child { text-align: left; position: sticky; left: 0; z-index: 1; background: inherit; }
-th:first-child { z-index: 3; }
+td:first-child, th:first-child { text-align: left; }
 th.sortable { cursor: pointer; user-select: none; }
 th.sortable:hover { background: #e8e8e8; }
 th.sort-asc::after { content: ' ▲'; font-size: 9px; }
@@ -49,8 +46,10 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 .detail-table td { padding: 3px 8px; border: 1px solid #eee; text-align: right; font-size: 11px; }
 .detail-table .yr-label { text-align: left; font-weight: 600; color: #333; background: #f4f6f9; }
 .detail-table .chg-row td { font-size: 10px; color: #888; border-top: none; padding-top: 0; }
-.methodology { padding: 12px 24px; border-top: 1px solid #e0e0e0; font-size: 10px; color: #999; max-width: 1000px; line-height: 1.5; }
-.methodology h3 { font-size: 11px; color: #666; margin-bottom: 4px; }
+.methodology { padding: 0 24px; font-size: 10px; color: #999; max-width: 1000px; line-height: 1.5; }
+.methodology details { border-top: 1px solid #e0e0e0; padding-top: 8px; }
+.methodology summary { font-size: 11px; color: #888; cursor: pointer; padding: 4px 0; }
+.methodology p { margin-top: 4px; }
 .btn-group { display: flex; gap: 0; }
 .btn-group button { padding: 3px 10px; font-size: 10px; border: 1px solid #ccc; background: #fff; cursor: pointer; color: #555; }
 .btn-group button:first-child { border-radius: 4px 0 0 4px; }
@@ -655,7 +654,7 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
     const n = labels.length;
     const cur = labels[n-1]||'?', m3 = labels[n-2]||'?', m6 = labels[n-3]||'?', m12 = labels[n-5]||'?';
     document.getElementById('methodology').innerHTML =
-      '<h3>Methodology</h3>' +
+      '<details><summary>Methodology</summary>' +
       '<p><b>Data source:</b> Bloomberg BEST_EPS (adjusted, mkt cap &lt; $200B) or BEST_EPS_GAAP (mkt cap &ge; $200B). ' +
       'TSM estimates converted to USD. Historical estimates use absolute fiscal period references ("NNY" format).</p>' +
       '<p><b>FY/CY alignment:</b> Companies with fiscal year ending in Jan–Mar (NVDA, VEEV) have estimates shifted so that ' +
@@ -665,7 +664,8 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
       'Each value is the last available monthly consensus snapshot within that calendar quarter.</p>' +
       '<p><b>% change columns:</b> "3m%" = Cur vs -3m. "3-6m%" = -3m vs -6m. "6-12m%" = -6m vs -1yr. "12m%" = Cur vs -1yr.</p>' +
       '<p><b>Sparklines:</b> Show all available quarterly data points (up to ' + n + ' quarters). Click to expand full history.</p>' +
-      '<p><b>Sorting:</b> Click any column header with ▲▼ to sort. Portfolio and Watchlist sections sort independently.</p>';
+      '<p><b>Sorting:</b> Click any column header with ▲▼ to sort. Portfolio and Watchlist sections sort independently.</p>' +
+      '</details>';
   }
 
 })();
