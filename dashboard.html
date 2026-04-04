@@ -1102,32 +1102,34 @@ td.spark-cell { padding: 4px 2px; }
     });
     const INDUSTRY_SHORT = {
       'Semiconductors & Semiconductor Equipment': 'Semis',
-      'Software & Services': 'Software',
+      'Software & Services': 'SW',
       'Technology Hardware & Equipment': 'Tech HW',
-      'Capital Goods': 'Cap Goods',
+      'Capital Goods': 'CapGds',
       'Automobiles & Components': 'Auto',
       'Pharmaceuticals, Biotechnology & Life Sciences': 'Pharma',
       'Pharmaceuticals, Biotechnology': 'Pharma',
       'Food, Beverage & Tobacco': 'F&B',
-      'Food & Staples Retailing': 'Food Retail',
-      'Health Care Equipment & Services': 'HC Equip',
-      'Health Care Equipment & Servic': 'HC Equip',
+      'Food & Staples Retailing': 'Food Ret',
+      'Health Care Equipment & Services': 'HC Eq',
+      'Health Care Equipment & Servic': 'HC Eq',
       'Consumer Services': 'Cons Svc',
-      'Consumer Durables & Apparel': 'Cons Dur',
-      'Household & Personal Products': 'HH&PP',
+      'Consumer Durables & Apparel': 'Cons Disc',
+      'Household & Personal Products': 'HPC',
       'Media & Entertainment': 'Media',
-      'Transportation': 'Transport',
-      'Telecommunication Services': 'Telecom',
-      'Diversified Financials': 'Div Fin',
+      'Transportation': 'Transp',
+      'Telecommunication Services': 'Telco',
+      'Diversified Financials': 'DivFin',
       'Banks': 'Banks',
-      'Insurance': 'Insurance',
-      'Real Estate': 'Real Est',
-      'Materials': 'Materials',
+      'Insurance': 'Ins',
+      'Real Estate': 'REITs',
+      'Equity Real Estate Investment Trusts (REITs)': 'REITs',
+      'Materials': 'Matls',
       'Energy': 'Energy',
-      'Utilities': 'Utilities',
-      'Commercial & Professional Services': 'Comm Svc',
+      'Utilities': 'Utils',
+      'Commercial & Professional Services': 'BizSvc',
       'Retailing': 'Retail',
-      'Consumer Staples Distribution': 'Staples Dist',
+      'Consumer Staples Distribution': 'Staples',
+      'Consumer Staples Distribution & Retail': 'Staples',
     };
     const sectorDots = [];
     for (const [name, members] of Object.entries(indGroups)) {
@@ -1249,8 +1251,9 @@ td.spark-cell { padding: 4px 2px; }
         svg.appendChild(c);
       });
 
-      // Layer 2: Sector/industry dots (medium, orange)
+      // Layer 2: Sector/industry dots (medium, orange) with label collision avoidance
       if (sectors) {
+        const placed = []; // track placed label positions {x, y}
         sectors.forEach(s => {
           const xv = s[xKey], yv = s[yKey];
           if (xv === null || yv === null) return;
@@ -1269,9 +1272,28 @@ td.spark-cell { padding: 4px 2px; }
             c.setAttribute('r', 3.5); c.setAttribute('opacity', 0.7); tooltip.style.display = 'none';
           });
           svg.appendChild(c);
+
+          // Try multiple label positions to avoid overlap
+          const labelW = s.name.length * 5, labelH = 9;
+          const offsets = [
+            [6, 3], [6, -5], [-labelW - 4, 3], [-labelW - 4, -5],
+            [6, 10], [6, -12], [-labelW - 4, 10], [-labelW - 4, -12],
+          ];
+          let bestX = cx + 6, bestY = cy + 3, bestOverlap = Infinity;
+          for (const [dx, dy] of offsets) {
+            const lx = cx + dx, ly = cy + dy;
+            let overlap = 0;
+            for (const p of placed) {
+              if (Math.abs(lx - p.x) < (labelW + p.w) * 0.5 && Math.abs(ly - p.y) < labelH) overlap++;
+            }
+            if (overlap < bestOverlap) { bestOverlap = overlap; bestX = lx; bestY = ly; }
+            if (overlap === 0) break;
+          }
+          placed.push({ x: bestX, y: bestY, w: labelW });
+
           const lbl = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-          lbl.setAttribute('x', cx + 7); lbl.setAttribute('y', cy + 3);
-          lbl.setAttribute('fill', '#e65100'); lbl.setAttribute('font-size', '8');
+          lbl.setAttribute('x', bestX); lbl.setAttribute('y', bestY);
+          lbl.setAttribute('fill', '#bf360c'); lbl.setAttribute('font-size', '7.5'); lbl.setAttribute('font-weight', '600');
           lbl.textContent = s.name; svg.appendChild(lbl);
         });
       }
