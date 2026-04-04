@@ -1747,6 +1747,22 @@ td.spark-cell { padding: 4px 2px; }
       const rev36 = pctChgVal(m3, m6);
       const rev612 = pctChgVal(m6, m12);
 
+      // Get latest EPS for CY2025, CY2027, CY2028 for growth calc
+      function getLatestEps(year) {
+        const ry = rows.find(rr => rr.Ticker === t && rr.Year === year);
+        if (!ry) return null;
+        const vy = qCols.map(q => { const v = parseFloat(ry[q]); return isNaN(v) ? null : v; });
+        const nny = vy.filter(v => v !== null);
+        return nny.length > 0 ? nny[nny.length - 1] : null;
+      }
+      const eps25 = getLatestEps('CY2025');
+      const eps27 = getLatestEps('CY2027');
+      const eps28 = getLatestEps('CY2028');
+
+      const grow26 = (eps25 && eps25 !== 0 && cur) ? (cur / eps25 - 1) * 100 : null;
+      const grow27 = (cur && cur !== 0 && eps27) ? (eps27 / cur - 1) * 100 : null;
+      const grow28 = (eps27 && eps27 !== 0 && eps28) ? (eps28 / eps27 - 1) * 100 : null;
+
       lookup[t] = {
         ticker: t, price: parseFloat(r.Price) || null, eps26: cur,
         pe26: pe, pe27, pe28,
@@ -1754,6 +1770,7 @@ td.spark-cell { padding: 4px 2px; }
         retYtd: parsePctStr(r['Return_YTD']),
         ret3m: parsePctStr(r['Return_3m']),
         ret12m: parsePctStr(r['Return_12m']),
+        grow26, grow27, grow28,
         sector: r['GICS Sector'] || '',
       };
     });
@@ -1786,26 +1803,52 @@ td.spark-cell { padding: 4px 2px; }
 
       const allTickers = [pt, ...peers];
       const colDefs = [
-        { label: 'Ticker', key: 'ticker', type: 'str' },
-        { label: 'Price', key: 'price', type: 'num' },
-        { label: 'EPS \'26', key: 'eps26', type: 'num' },
-        { label: "P/E '26", key: 'pe26', type: 'pe' },
-        { label: "P/E '27", key: 'pe27', type: 'pe' },
-        { label: "P/E '28", key: 'pe28', type: 'pe' },
-        { label: '3m%', key: 'rev3', type: 'pct' },
-        { label: '3-6m%', key: 'rev36', type: 'pct' },
-        { label: '6-12m%', key: 'rev612', type: 'pct' },
-        { label: '12m%', key: 'rev12', type: 'pct' },
-        { label: 'L3M', key: 'ret3m', type: 'pct' },
-        { label: 'YTD', key: 'retYtd', type: 'pct' },
-        { label: '1Y', key: 'ret12m', type: 'pct' },
+        { label: 'Ticker', key: 'ticker', type: 'str', group: '' },
+        { label: 'Price', key: 'price', type: 'num', group: '' },
+        { label: 'EPS \'26', key: 'eps26', type: 'num', group: '' },
+        { label: "'26", key: 'pe26', type: 'pe', group: 'P/E' },
+        { label: "'27", key: 'pe27', type: 'pe', group: 'P/E' },
+        { label: "'28", key: 'pe28', type: 'pe', group: 'P/E' },
+        { label: '3m%', key: 'rev3', type: 'pct', group: 'Revisions' },
+        { label: '3-6m%', key: 'rev36', type: 'pct', group: 'Revisions' },
+        { label: '6-12m%', key: 'rev612', type: 'pct', group: 'Revisions' },
+        { label: '12m%', key: 'rev12', type: 'pct', group: 'Revisions' },
+        { label: 'L3M', key: 'ret3m', type: 'pct', group: 'Returns' },
+        { label: 'YTD', key: 'retYtd', type: 'pct', group: 'Returns' },
+        { label: '1Y', key: 'ret12m', type: 'pct', group: 'Returns' },
+        { label: "'26", key: 'grow26', type: 'pct', group: 'EPS Growth' },
+        { label: "'27", key: 'grow27', type: 'pct', group: 'EPS Growth' },
+        { label: "'28", key: 'grow28', type: 'pct', group: 'EPS Growth' },
       ];
 
       const table = document.createElement('table');
       table.className = 'rank-table';
-      table.style.cssText = 'margin-bottom:16px;width:' + peerTableWidth + ';font-size:13px;';
+      table.style.cssText = 'margin-bottom:16px;font-size:13px;';
 
       const thead = document.createElement('thead');
+
+      // Group header row
+      const gr = document.createElement('tr');
+      let prevGroup = null;
+      const groupSpans = [];
+      colDefs.forEach(col => {
+        if (col.group !== prevGroup) {
+          groupSpans.push({ label: col.group, span: 1 });
+          prevGroup = col.group;
+        } else {
+          groupSpans[groupSpans.length - 1].span++;
+        }
+      });
+      groupSpans.forEach(g => {
+        const th = document.createElement('th');
+        th.textContent = g.label;
+        if (g.span > 1) th.colSpan = g.span;
+        th.style.cssText = 'text-align:center;background:#f4f4f4;border-bottom:2px solid #999;';
+        if (g.label) th.classList.add('year-sep');
+        gr.appendChild(th);
+      });
+      thead.appendChild(gr);
+
       const hr = document.createElement('tr');
       colDefs.forEach((col, ci) => {
         const th = document.createElement('th');
