@@ -205,6 +205,7 @@ td.spark-cell { padding: 4px 2px; }
 
     const portfolio = tickers.filter(t => t.group === 'Portfolio');
     const watchlist = tickers.filter(t => t.group === 'Watchlist');
+    const indices = tickers.filter(t => t.group === 'Indices');
     const extended = tickers.filter(t => t.group === 'Extended');
     const totalCols = 6 + displayYears.length * COLS_PER_YEAR + 3;
 
@@ -256,6 +257,10 @@ td.spark-cell { padding: 4px 2px; }
     buildGroup(tbody, 'Portfolio', portfolio, qCols, totalCols);
     addSpacer(tbody, totalCols);
     buildGroup(tbody, 'Watchlist', watchlist, qCols, totalCols);
+    if (indices.length > 0) {
+      addSpacer(tbody, totalCols);
+      buildGroup(tbody, 'Indices', indices, qCols, totalCols);
+    }
 
     // Extended watchlist with optional sub-grouping
     if (extended.length > 0) {

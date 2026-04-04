@@ -2,31 +2,31 @@
   {
     "ticker": "SPX",
     "bbg": "SPX Index",
-    "category": "Uncategorized",
+    "category": "Indices",
     "raw": "SPX"
   },
   {
     "ticker": "QQQ",
     "bbg": "QQQ US Equity",
-    "category": "Uncategorized",
+    "category": "Indices",
     "raw": "QQQ US"
   },
   {
     "ticker": "IWM",
     "bbg": "IWM US Equity",
-    "category": "Uncategorized",
+    "category": "Indices",
     "raw": "IWM US"
   },
   {
     "ticker": "SOX",
     "bbg": "SOX Index",
-    "category": "Uncategorized",
+    "category": "Indices",
     "raw": "SOX"
   },
   {
     "ticker": "IGV",
     "bbg": "IGV US Equity",
-    "category": "Uncategorized",
+    "category": "Indices",
     "raw": "IGV US"
   },
   {

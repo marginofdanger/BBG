@@ -146,16 +146,18 @@ def _build_ticker_list():
             'group': 'Watchlist', 'category': '', 'lookback': LOOKBACK_CORE,
         })
 
-    # Extended watchlist
+    # Extended watchlist — split indices into their own group
     seen = {e['short'] for e in entries}
     for item in _load_extended_watchlist():
         if item['ticker'] in seen:
             continue
         seen.add(item['ticker'])
+        is_index = item.get('category') == 'Indices'
         entries.append({
             'short': item['ticker'], 'bbg': item['bbg'],
-            'group': 'Extended', 'category': item.get('category', ''),
-            'lookback': LOOKBACK_EXT,
+            'group': 'Indices' if is_index else 'Extended',
+            'category': item.get('category', ''),
+            'lookback': LOOKBACK_CORE if is_index else LOOKBACK_EXT,
         })
 
     return entries
