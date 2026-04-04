@@ -152,7 +152,7 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
 
     const portfolio = tickers.filter(t => t.group === 'Portfolio');
     const watchlist = tickers.filter(t => t.group === 'Watchlist');
-    const totalCols = 5 + displayYears.length * COLS_PER_YEAR + 3;
+    const totalCols = 6 + displayYears.length * COLS_PER_YEAR + 3; // +1 for PE28
 
     const table = document.createElement('table');
     table.id = 'mainTable';
@@ -161,32 +161,33 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
     const h1 = document.createElement('tr');
     addTH(h1, '', 1, 'col-group'); // Ticker
     addTH(h1, '', 1, 'col-group'); // Price
-    addTH(h1, 'P/E', 2, 'col-group'); // P/E 26 + 27
+    addTH(h1, 'P/E', 3, 'col-group'); // P/E 26 + 27 + 28
     addTH(h1, '', 1, 'col-group'); // FYE
     displayYears.forEach(y => addTH(h1, y, COLS_PER_YEAR, 'col-group'));
     addTH(h1, 'Returns', 3, 'col-group');
 
-    // Header row 2 (sortable)
+    // Header row 2 (all sortable)
     const h2 = document.createElement('tr');
     addSortTH(h2, 'Ticker', 'ticker');
     addSortTH(h2, 'Price', 'price');
     addSortTH(h2, "'26", 'pe26');
     addSortTH(h2, "'27", 'pe27');
-    addTH(h2, 'FYE');
+    addSortTH(h2, "'28", 'pe28');
+    addSortTH(h2, 'FYE', 'fye');
     displayYears.forEach(yr => {
       addSortTH(h2, 'Cur', 'cur_' + yr, 'year-sep');
-      addTH(h2, '-3m');
-      addTH(h2, '-6m');
-      addTH(h2, '-1yr');
-      addTH(h2, '');
-      addTH(h2, '3m%');
-      addTH(h2, '3-6m%');
-      addTH(h2, '6-12m%');
+      addSortTH(h2, '-3m', 'm3_' + yr);
+      addSortTH(h2, '-6m', 'm6_' + yr);
+      addSortTH(h2, '-1yr', 'm12_' + yr);
+      addTH(h2, ''); // sparkline
+      addSortTH(h2, '3m%', 'chg3_' + yr);
+      addSortTH(h2, '3-6m%', 'chg36_' + yr);
+      addSortTH(h2, '6-12m%', 'chg612_' + yr);
       addSortTH(h2, '12m%', 'rev12_' + yr);
     });
-    addSortTH(h2, '12m', 'ret12', 'year-sep');
-    addSortTH(h2, 'YTD', 'retytd');
-    addSortTH(h2, '3m', 'ret3m');
+    addSortTH(h2, 'YTD', 'retytd', 'year-sep');
+    addSortTH(h2, 'L3M', 'ret3m');
+    addSortTH(h2, '1Y', 'ret12');
 
     const thead = document.createElement('thead');
     thead.appendChild(h1);
@@ -245,25 +246,22 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
     appendCell(rowEl, isNaN(price) ? '' : '$' + Math.round(price));
     rowEl._sortData.price = isNaN(price) ? 0 : price;
 
-    // P/E CY2026
-    const cy26 = tk.years['CY2026'];
-    const pe26 = cy26 ? parseFloat(cy26.PE) : NaN;
-    appendCell(rowEl, isNaN(pe26) ? '' : pe26.toFixed(1) + 'x');
-    rowEl._sortData.pe26 = isNaN(pe26) ? 999 : pe26;
-
-    // P/E CY2027
-    const cy27 = tk.years['CY2027'];
-    let pe27 = NaN;
-    if (cy27 && price) {
-      const vals27 = qCols.map(q => { const v = parseFloat(cy27[q]); return isNaN(v) ? null : v; });
-      const nonNull27 = vals27.filter(v => v !== null);
-      if (nonNull27.length > 0) pe27 = price / nonNull27[nonNull27.length - 1];
+    // P/E for CY2026, CY2027, CY2028
+    function calcPE(yr) {
+      const yrRow = tk.years[yr];
+      if (!yrRow || !price) return NaN;
+      const v = qCols.map(q => { const n = parseFloat(yrRow[q]); return isNaN(n) ? null : n; }).filter(v => v !== null);
+      return v.length > 0 ? price / v[v.length - 1] : NaN;
     }
-    appendCell(rowEl, isNaN(pe27) ? '' : pe27.toFixed(1) + 'x');
-    rowEl._sortData.pe27 = isNaN(pe27) ? 999 : pe27;
+    for (const [yr, key] of [['CY2026','pe26'], ['CY2027','pe27'], ['CY2028','pe28']]) {
+      const pe = calcPE(yr);
+      appendCell(rowEl, isNaN(pe) ? '' : pe.toFixed(1) + 'x');
+      rowEl._sortData[key] = isNaN(pe) ? 999 : pe;
+    }
 
     // FYE
     appendCell(rowEl, tk.fye || '');
+    rowEl._sortData.fye = tk.fye || '';
 
     // Year columns
     displayYears.forEach(yr => {
@@ -286,8 +284,11 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
       curTd.classList.add('year-sep');
       rowEl._sortData['cur_' + yr] = cur || 0;
       appendCell(rowEl, fmtEst(m3));
+      rowEl._sortData['m3_' + yr] = m3 || 0;
       appendCell(rowEl, fmtEst(m6));
+      rowEl._sortData['m6_' + yr] = m6 || 0;
       appendCell(rowEl, fmtEst(m12));
+      rowEl._sortData['m12_' + yr] = m12 || 0;
 
       // Sparkline
       const sparkTd = document.createElement('td');
@@ -304,26 +305,32 @@ th.sort-desc::after { content: ' ▼'; font-size: 9px; }
       rowEl.appendChild(sparkTd);
 
       // % changes: 3m, 3-6m, 6-12m, 12m
-      appendPctCell(rowEl, cur, m3);
-      appendPctCell(rowEl, m3, m6);
-      appendPctCell(rowEl, m6, m12);
+      const chg3 = pctChgVal(cur, m3);
+      const chg36 = pctChgVal(m3, m6);
+      const chg612 = pctChgVal(m6, m12);
       const rev12 = pctChgVal(cur, m12);
+      appendPctCell(rowEl, cur, m3);
+      rowEl._sortData['chg3_' + yr] = chg3 || 0;
+      appendPctCell(rowEl, m3, m6);
+      rowEl._sortData['chg36_' + yr] = chg36 || 0;
+      appendPctCell(rowEl, m6, m12);
+      rowEl._sortData['chg612_' + yr] = chg612 || 0;
       appendPctCell(rowEl, cur, m12);
       rowEl._sortData['rev12_' + yr] = rev12 || 0;
     });
 
-    // Returns
+    // Returns: YTD, L3M, 1Y
     const retRow = tk.years['CY2025'] || Object.values(tk.years)[0];
-    const ret12 = parsePctStr(retRow['Return_12m']);
     const retytd = parsePctStr(retRow['Return_YTD']);
     const ret3m = parsePctStr(retRow['Return_3m']);
-    const r12td = appendReturnCell(rowEl, retRow['Return_12m']);
-    r12td.classList.add('year-sep');
-    rowEl._sortData.ret12 = ret12;
-    appendReturnCell(rowEl, retRow['Return_YTD']);
+    const ret12 = parsePctStr(retRow['Return_12m']);
+    const ytdTd = appendReturnCell(rowEl, retRow['Return_YTD']);
+    ytdTd.classList.add('year-sep');
     rowEl._sortData.retytd = retytd;
     appendReturnCell(rowEl, retRow['Return_3m']);
     rowEl._sortData.ret3m = ret3m;
+    appendReturnCell(rowEl, retRow['Return_12m']);
+    rowEl._sortData.ret12 = ret12;
 
     tbody.appendChild(rowEl);
   }
