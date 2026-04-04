@@ -114,12 +114,6 @@
     "raw": "KLAC US"
   },
   {
-    "ticker": "2330 TT",
-    "bbg": "2330 TT US Equity",
-    "category": "Uncategorized",
-    "raw": "2330 TT"
-  },
-  {
     "ticker": "BX",
     "bbg": "BX US Equity",
     "category": "Uncategorized",
@@ -2278,12 +2272,6 @@
     "bbg": "SIRI US Equity",
     "category": "Media content",
     "raw": "SIRI"
-  },
-  {
-    "ticker": ".LBRDDISC U",
-    "bbg": ".LBRDDISC U US Equity",
-    "category": "Media content",
-    "raw": ".LBRDDISC U"
   },
   {
     "ticker": "LBTYA",
