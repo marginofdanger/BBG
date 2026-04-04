@@ -760,7 +760,7 @@ td.spark-cell { padding: 4px 2px; }
       const t = r.Ticker;
       if (!tickerMap[t]) {
         tickerMap[t] = {
-          gicsSector: r['GICS Sector'] || '', gicsIndustry: r['GICS Industry'] || '',
+          group: r['Group'] || '', gicsSector: r['GICS Sector'] || '', gicsIndustry: r['GICS Industry'] || '',
           years: {}, retYtd: parsePctStr(r['Return_YTD']), ret3m: parsePctStr(r['Return_3m']),
           ret12m: parsePctStr(r['Return_12m']),
         };
@@ -771,7 +771,7 @@ td.spark-cell { padding: 4px 2px; }
     // Compute revision metrics per ticker per year
     const tickerMetrics = {};
     for (const [t, info] of Object.entries(tickerMap)) {
-      tickerMetrics[t] = { ticker: t, gicsSector: info.gicsSector, gicsIndustry: info.gicsIndustry,
+      tickerMetrics[t] = { ticker: t, group: info.group, gicsSector: info.gicsSector, gicsIndustry: info.gicsIndustry,
         retYtd: info.retYtd, ret3m: info.ret3m, ret12m: info.ret12m, yearRevs: {} };
       for (const yr of displayYears) {
         const yearRow = info.years[yr];
@@ -790,13 +790,15 @@ td.spark-cell { padding: 4px 2px; }
       }
     }
 
-    // Separate indices/ETFs from regular tickers
+    // Separate indices/ETFs and portfolio from sector groups
     const INDEX_TICKERS = new Set(['SPX', 'SOX', 'QQQ', 'IWM', 'IGV']);
     const indexMembers = [];
+    const portfolioMembers = [];
     const groupField = currentAggGroup === 'gics_sector' ? 'gicsSector' : 'gicsIndustry';
     const groups = {};
     for (const [t, m] of Object.entries(tickerMetrics)) {
       if (INDEX_TICKERS.has(t)) { indexMembers.push(m); continue; }
+      if (m.group === 'Portfolio') portfolioMembers.push(m);
       const key = m[groupField] || 'Other';
       if (!groups[key]) groups[key] = [];
       groups[key].push(m);
@@ -810,6 +812,43 @@ td.spark-cell { padding: 4px 2px; }
     const colKeys = ['name', 'count'];
     displayYears.forEach(yr => { for (const m of ['chg3','chg36','chg612','rev12']) colKeys.push(yr+'_'+m); });
     colKeys.push('retYtd', 'ret3m', 'ret12m');
+
+    function buildAggRow(label, members, statFn, idx) {
+      const tr = document.createElement('tr');
+      tr.className = idx % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
+      tr._sortData = { name: label, count: members.length };
+      tr._aggMembers = members;
+
+      const tdName = document.createElement('td');
+      tdName.textContent = label;
+      tdName.addEventListener('click', () => toggleAggDetail(tr, members, tr.closest('tbody')));
+      tr.appendChild(tdName);
+
+      const tdN = document.createElement('td');
+      tdN.textContent = members.length; tdN.style.textAlign = 'center';
+      tr.appendChild(tdN);
+
+      displayYears.forEach(yr => {
+        let first = true;
+        for (const metric of ['chg3', 'chg36', 'chg612', 'rev12']) {
+          const vals = members.map(m => m.yearRevs[yr] ? m.yearRevs[yr][metric] : null).filter(v => v !== null);
+          const v = statFn(vals);
+          const td = appendAggCell(tr, v);
+          if (first) { td.classList.add('year-sep'); first = false; }
+          tr._sortData[yr + '_' + metric] = v || 0;
+        }
+      });
+
+      const yVals = members.map(m => m.retYtd).filter(v => v && !isNaN(v));
+      const l3Vals = members.map(m => m.ret3m).filter(v => v && !isNaN(v));
+      const y1Vals = members.map(m => m.ret12m).filter(v => v && !isNaN(v));
+      const vy = statFn(yVals), vl = statFn(l3Vals), v1 = statFn(y1Vals);
+      const retFirst = appendAggCell(tr, vy); retFirst.classList.add('year-sep');
+      appendAggCell(tr, vl); appendAggCell(tr, v1);
+      tr._sortData.retYtd = vy || 0; tr._sortData.ret3m = vl || 0; tr._sortData.ret12m = v1 || 0;
+
+      return tr;
+    }
 
     for (const [statLabel, statFn] of [['Median', median], ['Mean', mean]]) {
       const title = document.createElement('h3');
@@ -861,48 +900,25 @@ td.spark-cell { padding: 4px 2px; }
 
       // Build rows with sort data
       const tbody = document.createElement('tbody');
+
+      // Portfolio aggregate row first
+      if (portfolioMembers.length > 0) {
+        const ptr = buildAggRow('Portfolio', portfolioMembers, statFn, 0);
+        ptr.querySelector('td:first-child').style.fontStyle = 'italic';
+        tbody.appendChild(ptr);
+        // Spacer
+        const sp = document.createElement('tr'); sp.className = 'group-spacer';
+        const spTd = document.createElement('td'); spTd.colSpan = 2 + displayYears.length * 4 + 3;
+        sp.appendChild(spTd); tbody.appendChild(sp);
+      }
+
       const allKeys = Object.keys(groups).sort((a, b) => {
         if (a === 'Other') return 1; if (b === 'Other') return -1;
         return a.localeCompare(b);
       });
 
       allKeys.forEach((key, idx) => {
-        const members = groups[key];
-        const tr = document.createElement('tr');
-        tr.className = idx % 2 === 0 ? 'agg-row-even' : 'agg-row-odd';
-        tr._sortData = { name: key, count: members.length };
-        tr._aggMembers = members;
-        tr._aggKey = key;
-
-        const tdName = document.createElement('td');
-        tdName.textContent = key;
-        tdName.addEventListener('click', () => toggleAggDetail(tr, members, tbody));
-        tr.appendChild(tdName);
-
-        const tdN = document.createElement('td');
-        tdN.textContent = members.length; tdN.style.textAlign = 'center';
-        tr.appendChild(tdN);
-
-        displayYears.forEach(yr => {
-          let first = true;
-          for (const metric of ['chg3', 'chg36', 'chg612', 'rev12']) {
-            const vals = members.map(m => m.yearRevs[yr] ? m.yearRevs[yr][metric] : null).filter(v => v !== null);
-            const v = statFn(vals);
-            const td = appendAggCell(tr, v);
-            if (first) { td.classList.add('year-sep'); first = false; }
-            tr._sortData[yr + '_' + metric] = v || 0;
-          }
-        });
-
-        const yVals = members.map(m => m.retYtd).filter(v => v && !isNaN(v));
-        const l3Vals = members.map(m => m.ret3m).filter(v => v && !isNaN(v));
-        const y1Vals = members.map(m => m.ret12m).filter(v => v && !isNaN(v));
-        const vy = statFn(yVals), vl = statFn(l3Vals), v1 = statFn(y1Vals);
-        const retFirst = appendAggCell(tr, vy); retFirst.classList.add('year-sep');
-        appendAggCell(tr, vl); appendAggCell(tr, v1);
-        tr._sortData.retYtd = vy || 0; tr._sortData.ret3m = vl || 0; tr._sortData.ret12m = v1 || 0;
-
-        tbody.appendChild(tr);
+        tbody.appendChild(buildAggRow(key, groups[key], statFn, idx));
       });
 
       // Add indices as individual rows at the bottom
@@ -915,32 +931,10 @@ td.spark-cell { padding: 4px 2px; }
         spacer.appendChild(spTd);
         tbody.appendChild(spacer);
 
-        indexMembers.forEach(m => {
-          const tr = document.createElement('tr');
-          tr.className = 'agg-row-even';
-          tr._sortData = { name: m.ticker, count: 1 };
-          const tdName = document.createElement('td');
-          tdName.textContent = m.ticker;
-          tdName.style.fontWeight = '700';
-          tr.appendChild(tdName);
-          const tdN = document.createElement('td');
-          tdN.textContent = ''; tdN.style.textAlign = 'center';
-          tr.appendChild(tdN);
-
-          displayYears.forEach(yr => {
-            let first = true;
-            for (const metric of ['chg3', 'chg36', 'chg612', 'rev12']) {
-              const v = m.yearRevs[yr] ? m.yearRevs[yr][metric] : null;
-              const td = appendAggCell(tr, v);
-              if (first) { td.classList.add('year-sep'); first = false; }
-              tr._sortData[yr + '_' + metric] = v || 0;
-            }
-          });
-          const retFirst = appendAggCell(tr, m.retYtd); retFirst.classList.add('year-sep');
-          appendAggCell(tr, m.ret3m); appendAggCell(tr, m.ret12m);
-          tr._sortData.retYtd = m.retYtd || 0;
-          tr._sortData.ret3m = m.ret3m || 0;
-          tr._sortData.ret12m = m.ret12m || 0;
+        indexMembers.forEach((m, i) => {
+          const tr = buildAggRow(m.ticker, [m], statFn, i);
+          // Clear the count column for individual indices
+          tr.children[1].textContent = '';
           tbody.appendChild(tr);
         });
       }
