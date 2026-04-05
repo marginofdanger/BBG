@@ -1705,21 +1705,35 @@ td.spark-cell { padding: 4px 2px; }
     const wrap = document.getElementById('peersWrap');
     wrap.innerHTML = '';
 
-    // Build revenue revision lookup from revRows
+    // Build revenue revision + growth lookup from revRows
     const revLookup = {};
+    const revByTickerYear = {};
     (revRows || []).forEach(r => {
       const t = r.Ticker;
-      if (r.Year !== 'CY2026') return;
-      if (revLookup[t]) return;
+      const key = t + '_' + r.Year;
       const vals = qCols.map(q => { const v = parseFloat(r[q]); return isNaN(v) ? null : v; });
       const nonNull = []; vals.forEach((v, i) => { if (v !== null) nonNull.push({ v, i }); });
-      const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
+      const latest = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
+      revByTickerYear[key] = latest;
+
+      if (r.Year !== 'CY2026') return;
+      if (revLookup[t]) return;
       const m3 = getFromEnd(nonNull, 1);
       const m12 = getFromEnd(nonNull, 4);
       revLookup[t] = {
-        revRev3: pctChgVal(cur, m3),
-        revRev12: pctChgVal(cur, m12),
+        revRev3: pctChgVal(latest, m3),
+        revRev12: pctChgVal(latest, m12),
       };
+    });
+    // Compute revenue growth per ticker
+    Object.keys(revLookup).forEach(t => {
+      const r25 = revByTickerYear[t + '_CY2025'];
+      const r26 = revByTickerYear[t + '_CY2026'];
+      const r27 = revByTickerYear[t + '_CY2027'];
+      const r28 = revByTickerYear[t + '_CY2028'];
+      revLookup[t].revGrow26 = (r25 && r25 !== 0 && r26) ? (r26 / r25 - 1) * 100 : null;
+      revLookup[t].revGrow27 = (r26 && r26 !== 0 && r27) ? (r27 / r26 - 1) * 100 : null;
+      revLookup[t].revGrow28 = (r27 && r27 !== 0 && r28) ? (r28 / r27 - 1) * 100 : null;
     });
 
     // Build EPS lookup: ticker → metrics from CY2026 row
@@ -1737,31 +1751,22 @@ td.spark-cell { padding: 4px 2px; }
       const m12 = getFromEnd(nonNull, 4);
       const rev3 = pctChgVal(cur, m3);
       const rev12 = pctChgVal(cur, m12);
-      const pe = parseFloat(r.PE) || null;
 
-      // CY2027 PE
-      const r27 = rows.find(rr => rr.Ticker === t && rr.Year === 'CY2027');
-      let pe27 = null;
-      if (r27) {
-        const v27 = qCols.map(q => { const v = parseFloat(r27[q]); return isNaN(v) ? null : v; });
-        const nn27 = v27.filter(v => v !== null);
-        const price = parseFloat(r.Price);
-        // Derive effective price from CY26 PE
-        let effPrice = price;
-        if (pe && cur) effPrice = pe * cur;
-        if (nn27.length > 0 && effPrice) pe27 = effPrice / nn27[nn27.length - 1];
-      }
+      // Compute PE for all years using effective price (handles UK pence)
+      const csvPE = parseFloat(r.PE);
+      let effPrice = parseFloat(r.Price) || null;
+      if (!isNaN(csvPE) && cur && csvPE > 0) effPrice = csvPE * cur; // back out effective price
+      const pe26 = (effPrice && cur && cur !== 0) ? effPrice / cur : null;
 
-      // CY2028 PE
-      const r28 = rows.find(rr => rr.Ticker === t && rr.Year === 'CY2028');
-      let pe28 = null;
-      if (r28) {
-        const v28 = qCols.map(q => { const v = parseFloat(r28[q]); return isNaN(v) ? null : v; });
-        const nn28 = v28.filter(v => v !== null);
-        let effPrice = parseFloat(r.Price);
-        if (pe && cur) effPrice = pe * cur;
-        if (nn28.length > 0 && effPrice) pe28 = effPrice / nn28[nn28.length - 1];
+      function computePE(year) {
+        const ry = rows.find(rr => rr.Ticker === t && rr.Year === year);
+        if (!ry || !effPrice) return null;
+        const vy = qCols.map(q => { const v = parseFloat(ry[q]); return isNaN(v) ? null : v; });
+        const nny = vy.filter(v => v !== null);
+        return nny.length > 0 && nny[nny.length - 1] !== 0 ? effPrice / nny[nny.length - 1] : null;
       }
+      const pe27 = computePE('CY2027');
+      const pe28 = computePE('CY2028');
 
       const rev36 = pctChgVal(m3, m6);
       const rev612 = pctChgVal(m6, m12);
@@ -1785,9 +1790,10 @@ td.spark-cell { padding: 4px 2px; }
       const rl = revLookup[t] || {};
       lookup[t] = {
         ticker: t, price: parseFloat(r.Price) || null, eps26: cur,
-        pe26: pe, pe27, pe28,
+        pe26, pe27, pe28,
         rev3, rev36, rev612, rev12,
         revRev3: rl.revRev3 || null, revRev12: rl.revRev12 || null,
+        revGrow26: rl.revGrow26 || null, revGrow27: rl.revGrow27 || null, revGrow28: rl.revGrow28 || null,
         retYtd: parsePctStr(r['Return_YTD']),
         ret3m: parsePctStr(r['Return_3m']),
         ret12m: parsePctStr(r['Return_12m']),
@@ -1843,15 +1849,18 @@ td.spark-cell { padding: 4px 2px; }
         { label: "'26", key: 'grow26', type: 'pct', group: 'EPS Growth' },
         { label: "'27", key: 'grow27', type: 'pct', group: 'EPS Growth' },
         { label: "'28", key: 'grow28', type: 'pct', group: 'EPS Growth' },
+        { label: "'26", key: 'revGrow26', type: 'pct', group: 'Rev Growth' },
+        { label: "'27", key: 'revGrow27', type: 'pct', group: 'Rev Growth' },
+        { label: "'28", key: 'revGrow28', type: 'pct', group: 'Rev Growth' },
       ];
 
       const table = document.createElement('table');
       table.className = 'rank-table';
-      table.style.cssText = 'margin-bottom:16px;font-size:13px;table-layout:fixed;width:1200px;';
+      table.style.cssText = 'margin-bottom:16px;font-size:12px;table-layout:fixed;width:1300px;';
 
       // Colgroup for uniform column widths
       const cg = document.createElement('colgroup');
-      const colWidths = [55, 50, 60, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 50, 50, 50];
+      const colWidths = [50, 45, 55, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44, 44];
       colWidths.forEach(w => { const col = document.createElement('col'); col.style.width = w + 'px'; cg.appendChild(col); });
       table.appendChild(cg);
 
