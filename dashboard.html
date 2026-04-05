@@ -281,17 +281,15 @@ td.spark-cell { padding: 4px 2px; }
 
   function mergeEstimatesWithPrices(estData, priceData) {
     if (!priceData) return estData;
-    // Build price lookup by ticker
     const priceLookup = {};
     priceData.rows.forEach(r => { priceLookup[r.Ticker] = r; });
-    // Override price/return fields in estimate rows
     const merged = { ...estData, rows: estData.rows.map(r => {
       const p = priceLookup[r.Ticker];
       if (!p) return r;
       return { ...r, Price: p.Price || r.Price, PE: p.PE_CY2026 || r.PE,
         Return_YTD: p.Return_YTD || r.Return_YTD, Return_3m: p.Return_3m || r.Return_3m,
         Return_12m: p.Return_12m || r.Return_12m };
-    })};
+    }), revRows: estData.revRows || [] };
     return merged;
   }
 
@@ -323,7 +321,10 @@ td.spark-cell { padding: 4px 2px; }
     }
     const re = /^Q[1-4] 20\d{2}$/;
     const qCols = headers.filter(h => re.test(h));
-    return { headers, rows, qCols };
+    // Split by metric (EPS vs Revenue) - backward compatible if no Metric column
+    const epsRows = rows.filter(r => !r.Metric || r.Metric === 'EPS');
+    const revRows = rows.filter(r => r.Metric === 'Revenue');
+    return { headers, rows: epsRows, revRows, qCols };
   }
 
   function parseCsvLine(line) {
@@ -1700,11 +1701,28 @@ td.spark-cell { padding: 4px 2px; }
 
   /* ---- Peers tab ---- */
   function renderPeers(data) {
-    const { rows, qCols } = data;
+    const { rows, qCols, revRows } = data;
     const wrap = document.getElementById('peersWrap');
     wrap.innerHTML = '';
 
-    // Build lookup: ticker → metrics from CY2026 row
+    // Build revenue revision lookup from revRows
+    const revLookup = {};
+    (revRows || []).forEach(r => {
+      const t = r.Ticker;
+      if (r.Year !== 'CY2026') return;
+      if (revLookup[t]) return;
+      const vals = qCols.map(q => { const v = parseFloat(r[q]); return isNaN(v) ? null : v; });
+      const nonNull = []; vals.forEach((v, i) => { if (v !== null) nonNull.push({ v, i }); });
+      const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
+      const m3 = getFromEnd(nonNull, 1);
+      const m12 = getFromEnd(nonNull, 4);
+      revLookup[t] = {
+        revRev3: pctChgVal(cur, m3),
+        revRev12: pctChgVal(cur, m12),
+      };
+    });
+
+    // Build EPS lookup: ticker → metrics from CY2026 row
     const lookup = {};
     rows.forEach(r => {
       const t = r.Ticker;
@@ -1764,10 +1782,12 @@ td.spark-cell { padding: 4px 2px; }
       const grow27 = (cur && cur !== 0 && eps27) ? (eps27 / cur - 1) * 100 : null;
       const grow28 = (eps27 && eps27 !== 0 && eps28) ? (eps28 / eps27 - 1) * 100 : null;
 
+      const rl = revLookup[t] || {};
       lookup[t] = {
         ticker: t, price: parseFloat(r.Price) || null, eps26: cur,
         pe26: pe, pe27, pe28,
         rev3, rev36, rev612, rev12,
+        revRev3: rl.revRev3 || null, revRev12: rl.revRev12 || null,
         retYtd: parsePctStr(r['Return_YTD']),
         ret3m: parsePctStr(r['Return_3m']),
         ret12m: parsePctStr(r['Return_12m']),
@@ -1811,10 +1831,12 @@ td.spark-cell { padding: 4px 2px; }
         { label: "'26", key: 'pe26', type: 'pe', group: 'P/E' },
         { label: "'27", key: 'pe27', type: 'pe', group: 'P/E' },
         { label: "'28", key: 'pe28', type: 'pe', group: 'P/E' },
-        { label: '3m%', key: 'rev3', type: 'pct', group: 'Revisions' },
-        { label: '3-6m%', key: 'rev36', type: 'pct', group: 'Revisions' },
-        { label: '6-12m%', key: 'rev612', type: 'pct', group: 'Revisions' },
-        { label: '12m%', key: 'rev12', type: 'pct', group: 'Revisions' },
+        { label: '3m%', key: 'rev3', type: 'pct', group: 'EPS Revisions' },
+        { label: '3-6m%', key: 'rev36', type: 'pct', group: 'EPS Revisions' },
+        { label: '6-12m%', key: 'rev612', type: 'pct', group: 'EPS Revisions' },
+        { label: '12m%', key: 'rev12', type: 'pct', group: 'EPS Revisions' },
+        { label: '3m%', key: 'revRev3', type: 'pct', group: 'Rev Revisions' },
+        { label: '12m%', key: 'revRev12', type: 'pct', group: 'Rev Revisions' },
         { label: 'L3M', key: 'ret3m', type: 'pct', group: 'Returns' },
         { label: 'YTD', key: 'retYtd', type: 'pct', group: 'Returns' },
         { label: '1Y', key: 'ret12m', type: 'pct', group: 'Returns' },
@@ -1825,11 +1847,11 @@ td.spark-cell { padding: 4px 2px; }
 
       const table = document.createElement('table');
       table.className = 'rank-table';
-      table.style.cssText = 'margin-bottom:16px;font-size:13px;table-layout:fixed;width:1100px;';
+      table.style.cssText = 'margin-bottom:16px;font-size:13px;table-layout:fixed;width:1200px;';
 
       // Colgroup for uniform column widths
       const cg = document.createElement('colgroup');
-      const colWidths = [55, 50, 65, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 55, 55, 55];
+      const colWidths = [55, 50, 60, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 50, 50, 50];
       colWidths.forEach(w => { const col = document.createElement('col'); col.style.width = w + 'px'; cg.appendChild(col); });
       table.appendChild(cg);
 

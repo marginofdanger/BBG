@@ -238,7 +238,7 @@ def main():
         if i > 0:
             interleaved_cols.append(f"{q} chg")
 
-    header = ["Ticker", "Group", "Category", "GICS Sector", "GICS Industry", "EPS Type", "FYE", "Year"] + \
+    header = ["Ticker", "Group", "Category", "GICS Sector", "GICS Industry", "EPS Type", "FYE", "Metric", "Year"] + \
              interleaved_cols + ["Price", "PE", "12m Rev", "Return_YTD", "Return_3m", "Return_12m"]
 
     csv_rows = []
@@ -262,7 +262,7 @@ def main():
 
         for est_row in estimates:
             year_label = est_row.get("line_item", "")
-            row_data = [short, group, category, gics_sector, gics_industry, eps_label, fye_label, year_label]
+            row_data = [short, group, category, gics_sector, gics_industry, eps_label, fye_label, "EPS", year_label]
 
             prev_val = None
             for i, q in enumerate(sorted_quarters):
@@ -302,6 +302,96 @@ def main():
             row_data.append(rev_12m)
 
             # Returns
+            for f in ["CHG_PCT_YTD", "CHG_PCT_3M", "CHG_PCT_1YR"]:
+                r = ret.get(f)
+                if r is not None:
+                    row_data.append(f"{'+' if r >= 0 else ''}{r:.1f}%")
+                else:
+                    row_data.append("")
+
+            csv_rows.append(row_data)
+
+    # --- Revenue estimates for portfolio + peer companies ---
+    print("\n[6b/6] Pulling revenue estimates for portfolio and peer companies...")
+
+    # Collect all tickers that need revenue: portfolio + all peers
+    PEER_TICKERS = set()
+    PEER_MAP = {
+        'HCA': ['THC', 'UHS', 'CYH', 'DVA', 'DGX'],
+        'UNH': ['CI', 'ELV', 'HUM', 'CNC', 'MOH'],
+        'TSM': ['005930', '000660', 'INTC', 'MU', 'GFS', 'LRCX', 'AMAT', 'ASML'],
+        'AVGO': ['QCOM', 'MRVL', 'AMD', 'TXN', 'ADI'],
+        'NVDA': ['AMD', 'INTC', 'AVGO', 'MRVL', 'ARM', '2454'],
+        'META': ['GOOG', 'PINS', 'SNAP', 'RDDT', 'TTD'],
+        'AMZN': ['GOOG', 'MSFT', 'SHOP', 'BKNG', 'EBAY', 'WMT', 'COST'],
+        'JPM': ['GS', 'BAC', 'MS', 'WFC', 'C'],
+        'APO': ['BX', 'KKR', 'ARES', 'CG', 'OWL', 'BAM', 'BN'],
+        'PGR': ['ALL', 'TRV', 'CB', 'AIG', 'ACGL', 'KMPR'],
+        'CVNA': ['KMX', 'AN', 'CPRT', 'GPI', 'SAH', 'LAD'],
+        'APP': ['RDDT', 'TTD', 'PINS', 'DASH', 'U'],
+        'VEEV': ['CRM', 'WDAY', 'NOW', 'DDOG', 'GWRE', 'INTU'],
+    }
+    for peers in PEER_MAP.values():
+        PEER_TICKERS.update(peers)
+
+    rev_entries = [e for e in entries if e['short'] in set(PORTFOLIO) | PEER_TICKERS]
+    for entry in rev_entries:
+        short = entry['short']
+        bbg = entry['bbg']
+        fye_label, fye_offset = fye_data.get(bbg, ("Dec", 0))
+        fiscal_years = [cy + fye_offset for cy in CALENDAR_YEARS]
+        print(f"  {short} (BEST_SALES)...")
+
+        try:
+            rev_rows = estimate_history(bbg, fiscal_years, entry['lookback'], "BEST_SALES")
+        except Exception as e:
+            print(f"    WARNING: {short} revenue: {e}")
+            rev_rows = [{"line_item": f"CY{y}"} for y in fiscal_years]
+
+        if fye_offset:
+            for row in rev_rows:
+                li = row.get("line_item", "")
+                if li.startswith("CY"):
+                    fy = int(li[2:])
+                    row["line_item"] = f"CY{fy - fye_offset}"
+
+        gics = gics_data.get(bbg, {})
+        gics_sector = gics.get("GICS_SECTOR_NAME", "")
+        gics_industry = gics.get("GICS_INDUSTRY_GROUP_NAME", "")
+        ret = returns_data.get(bbg, {})
+        price = ret.get("PX_LAST")
+
+        for est_row in rev_rows:
+            year_label = est_row.get("line_item", "")
+            row_data = [short, entry['group'], entry.get('category', ''),
+                        gics_sector, gics_industry, '', fye_label, "Revenue", year_label]
+
+            prev_val = None
+            for i, q in enumerate(sorted_quarters):
+                val = est_row.get(q)
+                row_data.append(val if val is not None else "")
+                if i > 0:
+                    row_data.append(_format_pct_change(prev_val, val))
+                prev_val = val if val is not None else prev_val
+
+            # Price, PE (N/A for revenue), 12m Rev
+            row_data.append(price if price is not None else "")
+            row_data.append("")  # PE not applicable
+
+            # 12m revision
+            rev_12m = ""
+            for q in reversed(sorted_quarters):
+                if q in est_row and est_row[q] is not None:
+                    parts = q.split(" ")
+                    prev_year_q = f"{parts[0]} {int(parts[1]) - 1}"
+                    if prev_year_q in est_row and est_row[prev_year_q] is not None:
+                        prev_val_12m = est_row[prev_year_q]
+                        if float(prev_val_12m) != 0:
+                            chg = (float(est_row[q]) - float(prev_val_12m)) / abs(float(prev_val_12m)) * 100
+                            rev_12m = f"{'+' if chg >= 0 else ''}{chg:.1f}%"
+                    break
+            row_data.append(rev_12m)
+
             for f in ["CHG_PCT_YTD", "CHG_PCT_3M", "CHG_PCT_1YR"]:
                 r = ret.get(f)
                 if r is not None:
