@@ -512,19 +512,6 @@ td.spark-cell { padding: 4px 2px; }
     wrap.innerHTML = '';
     wrap.appendChild(table);
 
-    // Single delegated click handler for all sparklines
-    wrap.addEventListener('click', (e) => {
-      let el = e.target;
-      while (el && el !== wrap) {
-        if (el._sparkData) {
-          const { tk, rowEl, qCols, totalCols } = el._sparkData;
-          toggleDetail(tk, rowEl, qCols, totalCols);
-          return;
-        }
-        el = el.parentElement || el.parentNode;
-      }
-    });
-
     // Methodology goes inside the scrollable area, after the table
     const methDiv = document.createElement('div');
     methDiv.id = 'methodology';
@@ -640,7 +627,7 @@ td.spark-cell { padding: 4px 2px; }
       const sparkVals = vals.filter(v => v !== null);
       if (sparkVals.length >= 2) {
         sparkTd.appendChild(buildSparkline(sparkVals, 70, 20));
-        sparkTd._sparkData = { tk, rowEl, qCols, totalCols };
+        sparkTd.addEventListener('click', () => toggleDetail(tk, rowEl, qCols, totalCols));
       }
       rowEl.appendChild(sparkTd);
 
