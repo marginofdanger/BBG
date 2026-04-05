@@ -179,6 +179,8 @@ td.spark-cell { padding: 4px 2px; }
   const COLS_PER_YEAR = 9;
   const displayYears = ['CY2026', 'CY2027', 'CY2028'];
   const INDEX_TICKERS = new Set(['SPX', 'SOX', 'QQQ', 'IWM', 'IGV']);
+  let mergedData = null;
+  const tabRendered = {};
   const PEER_MAP = {
     'HCA':  ['THC', 'UHS', 'CYH', 'DVA', 'DGX'],
     'UNH':  ['CI', 'ELV', 'HUM', 'CNC', 'MOH'],
@@ -303,9 +305,6 @@ td.spark-cell { padding: 4px 2px; }
     }), revRows: estData.revRows || [] };
     return merged;
   }
-
-  let mergedData = null;
-  const tabRendered = {};
 
   function renderAll() {
     if (!currentEstData) return;
