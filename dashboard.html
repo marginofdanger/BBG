@@ -180,17 +180,17 @@ td.spark-cell { padding: 4px 2px; }
   const PEER_MAP = {
     'HCA':  ['THC', 'UHS', 'CYH', 'DVA', 'DGX'],
     'UNH':  ['CI', 'ELV', 'HUM', 'CNC', 'MOH'],
-    'TSM':  ['005930', '000660', 'INTC', 'MU', 'GFS'],
+    'TSM':  ['005930', '000660', 'INTC', 'MU', 'GFS', 'LRCX', 'AMAT', 'ASML'],
     'AVGO': ['QCOM', 'MRVL', 'AMD', 'TXN', 'ADI'],
-    'NVDA': ['AMD', 'INTC', 'AVGO', 'MRVL', 'ARM'],
+    'NVDA': ['AMD', 'INTC', 'AVGO', 'MRVL', 'ARM', '2454'],
     'META': ['GOOG', 'PINS', 'SNAP', 'RDDT', 'TTD'],
     'AMZN': ['GOOG', 'MSFT', 'SHOP', 'BKNG', 'EBAY', 'WMT', 'COST'],
     'JPM':  ['GS', 'BAC', 'MS', 'WFC', 'C'],
-    'APO':  ['BX', 'KKR', 'ARES', 'CG', 'OWL'],
+    'APO':  ['BX', 'KKR', 'ARES', 'CG', 'OWL', 'BAM', 'BN'],
     'PGR':  ['ALL', 'TRV', 'CB', 'AIG', 'ACGL', 'KMPR'],
     'CVNA': ['KMX', 'AN', 'CPRT', 'GPI', 'SAH', 'LAD'],
     'APP':  ['RDDT', 'TTD', 'PINS', 'DASH', 'U'],
-    'VEEV': ['CRM', 'WDAY', 'NOW', 'DDOG', 'GWRE'],
+    'VEEV': ['CRM', 'WDAY', 'NOW', 'DDOG', 'GWRE', 'INTU'],
   };
 
   // Load both estimate and price indices
@@ -847,6 +847,7 @@ td.spark-cell { padding: 4px 2px; }
           const chg = ((v - prevVal) / Math.abs(prevVal)) * 100;
           ctd.textContent = chg >= 0 ? '+' + chg.toFixed(1) + '%' : '(' + Math.abs(chg).toFixed(1) + '%)';
           ctd.className = chg >= 0 ? 'pos' : 'neg';
+          if (Math.abs(chg) >= 5) ctd.style.fontWeight = '700';
         }
         cr.appendChild(ctd);
         if (v !== null) prevVal = v;
@@ -1912,8 +1913,8 @@ td.spark-cell { padding: 4px 2px; }
               const td = document.createElement('td');
               if (col.key === 'price' && val) {
                 td.textContent = val > 10000 ? '$' + (val/1000).toFixed(0) + 'k' : '$' + Math.round(val);
-              } else {
-                td.textContent = val ? val.toFixed(2) : '';
+              } else if (val) {
+                td.textContent = Math.abs(val) >= 1000 ? (val/1000).toFixed(1) + 'k' : val.toFixed(2);
               }
               if (isSep) td.classList.add('year-sep');
               tr.appendChild(td);

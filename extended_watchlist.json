@@ -4282,5 +4282,17 @@
     "bbg": "PLUG US Equity",
     "category": "Energy",
     "raw": "PLUG US"
+  },
+  {
+    "ticker": "GFS",
+    "bbg": "GFS US Equity",
+    "category": "Technology",
+    "raw": "GFS"
+  },
+  {
+    "ticker": "2454",
+    "bbg": "2454 TT Equity",
+    "category": "Technology",
+    "raw": "2454"
   }
 ]
