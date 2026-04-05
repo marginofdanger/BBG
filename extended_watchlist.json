@@ -4186,5 +4186,41 @@
     "bbg": "2454 TT Equity",
     "category": "Technology",
     "raw": "2454"
+  },
+  {
+    "ticker": "AMG",
+    "bbg": "AMG US Equity",
+    "category": "Financials and related",
+    "raw": "AMG"
+  },
+  {
+    "ticker": "AB",
+    "bbg": "AB US Equity",
+    "category": "Financials and related",
+    "raw": "AB"
+  },
+  {
+    "ticker": "BLK",
+    "bbg": "BLK US Equity",
+    "category": "Financials and related",
+    "raw": "BLK"
+  },
+  {
+    "ticker": "FHI",
+    "bbg": "FHI US Equity",
+    "category": "Financials and related",
+    "raw": "FHI"
+  },
+  {
+    "ticker": "JHG",
+    "bbg": "JHG US Equity",
+    "category": "Financials and related",
+    "raw": "JHG"
+  },
+  {
+    "ticker": "IVZ",
+    "bbg": "IVZ US Equity",
+    "category": "Financials and related",
+    "raw": "IVZ"
   }
 ]
