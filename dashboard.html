@@ -538,22 +538,22 @@ td.spark-cell { padding: 4px 2px; }
     appendCell(rowEl, priceDisplay);
     rowEl._sortData.price = isNaN(price) ? 0 : price;
 
-    // P/E: use CSV PE for CY2026 (already pence-adjusted), compute CY2027/28
-    // Derive the effective price-for-PE from CY2026's PE and EPS
+    // P/E: compute from price and latest EPS. Use CSV PE to derive effective price (handles UK pence).
     let priceForPE = price;
     const cy26Row = tk.years['CY2026'];
-    if (cy26Row) {
+    if (cy26Row && price) {
       const csvPE = parseFloat(cy26Row.PE);
-      const cy26vals = qCols.map(q => { const n = parseFloat(cy26Row[q]); return isNaN(n) ? null : n; }).filter(v => v !== null);
-      if (!isNaN(csvPE) && cy26vals.length > 0) {
-        priceForPE = csvPE * cy26vals[cy26vals.length - 1]; // back out effective price
+      const cy26v = qCols.map(q => { const n = parseFloat(cy26Row[q]); return isNaN(n) ? null : n; }).filter(v => v !== null);
+      if (!isNaN(csvPE) && csvPE > 0 && cy26v.length > 0) {
+        priceForPE = csvPE * cy26v[cy26v.length - 1];
       }
     }
+    if (!priceForPE || isNaN(priceForPE)) priceForPE = price;
     function calcPE(yr) {
       const yrRow = tk.years[yr];
-      if (!yrRow || !priceForPE) return NaN;
+      if (!yrRow || !priceForPE || isNaN(priceForPE)) return NaN;
       const v = qCols.map(q => { const n = parseFloat(yrRow[q]); return isNaN(n) ? null : n; }).filter(v => v !== null);
-      return v.length > 0 ? priceForPE / v[v.length - 1] : NaN;
+      return v.length > 0 && v[v.length - 1] !== 0 ? priceForPE / v[v.length - 1] : NaN;
     }
     for (const [yr, key] of [['CY2026','pe26'], ['CY2027','pe27'], ['CY2028','pe28']]) {
       const pe = calcPE(yr);
@@ -733,11 +733,16 @@ td.spark-cell { padding: 4px 2px; }
     return ((cur - base) / Math.abs(base)) * 100;
   }
 
+  function fmtPctRaw(pct) {
+    if (pct === null || pct === undefined) return '';
+    const abs = Math.abs(pct);
+    const num = abs >= 1000 ? (abs / 1000).toFixed(0) + 'k' : Math.round(abs).toString();
+    if (pct >= 0) return '+' + num + '%';
+    return '(' + num + '%)';
+  }
+
   function fmtPctChg(cur, base) {
-    const pct = pctChgVal(cur, base);
-    if (pct === null) return '';
-    if (pct >= 0) return '+' + pct.toFixed(0) + '%';
-    return '(' + Math.abs(pct).toFixed(0) + '%)';
+    return fmtPctRaw(pctChgVal(cur, base));
   }
 
   function parsePctStr(s) {
@@ -766,8 +771,8 @@ td.spark-cell { padding: 4px 2px; }
     if (!rawVal) { row.appendChild(td); return td; }
     const num = parseFloat(rawVal);
     if (isNaN(num)) { td.textContent = rawVal; row.appendChild(td); return td; }
-    if (num >= 0) { td.textContent = '+' + Math.round(num) + '%'; td.className = 'pos'; }
-    else { td.textContent = '(' + Math.round(Math.abs(num)) + '%)'; td.className = 'neg'; }
+    td.textContent = fmtPctRaw(num);
+    td.className = num >= 0 ? 'pos' : 'neg';
     row.appendChild(td);
     return td;
   }
@@ -1265,8 +1270,8 @@ td.spark-cell { padding: 4px 2px; }
   function appendAggCell(row, val) {
     const td = document.createElement('td');
     if (val !== null) {
-      if (val >= 0) { td.textContent = '+' + val.toFixed(0) + '%'; td.className = 'pos'; }
-      else { td.textContent = '(' + Math.abs(val).toFixed(0) + '%)'; td.className = 'neg'; }
+      td.textContent = fmtPctRaw(val);
+      td.className = val >= 0 ? 'pos' : 'neg';
     }
     row.appendChild(td);
     return td;
@@ -1809,7 +1814,7 @@ td.spark-cell { padding: 4px 2px; }
     const peerAddPct0 = (tr, val) => {
       const td = document.createElement('td');
       if (val !== null && val !== undefined && !isNaN(val)) {
-        td.textContent = val >= 0 ? '+' + Math.round(val) + '%' : '(' + Math.round(Math.abs(val)) + '%)';
+        td.textContent = fmtPctRaw(val);
         td.className = val >= 0 ? 'pos' : 'neg';
       }
       td._sortVal = val || 0;
