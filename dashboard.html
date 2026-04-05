@@ -512,6 +512,15 @@ td.spark-cell { padding: 4px 2px; }
     wrap.innerHTML = '';
     wrap.appendChild(table);
 
+    // Single delegated click handler for all sparklines
+    wrap.addEventListener('click', (e) => {
+      const sparkCell = e.target.closest('.spark-cell');
+      if (sparkCell && sparkCell._sparkData) {
+        const { tk, rowEl, qCols, totalCols } = sparkCell._sparkData;
+        toggleDetail(tk, rowEl, qCols, totalCols);
+      }
+    });
+
     // Methodology goes inside the scrollable area, after the table
     const methDiv = document.createElement('div');
     methDiv.id = 'methodology';
@@ -627,10 +636,7 @@ td.spark-cell { padding: 4px 2px; }
       const sparkVals = vals.filter(v => v !== null);
       if (sparkVals.length >= 2) {
         sparkTd.innerHTML = buildSparklineHTML(sparkVals, 70, 20);
-        sparkTd.firstChild.addEventListener('click', (e) => {
-          e.stopPropagation();
-          toggleDetail(tk, rowEl, qCols, totalCols);
-        });
+        sparkTd._sparkData = { tk, rowEl, qCols, totalCols };
       }
       rowEl.appendChild(sparkTd);
 
@@ -1782,14 +1788,16 @@ td.spark-cell { padding: 4px 2px; }
       const rev3 = pctChgVal(cur, m3);
       const rev12 = pctChgVal(cur, m12);
 
+      const tickerIdx = data.rowIndex ? data.rowIndex[t] : null;
+
       // Compute PE for all years using effective price (handles UK pence)
       const csvPE = parseFloat(r.PE);
       let effPrice = parseFloat(r.Price) || null;
-      if (!isNaN(csvPE) && cur && csvPE > 0) effPrice = csvPE * cur; // back out effective price
+      if (!isNaN(csvPE) && cur && csvPE > 0) effPrice = csvPE * cur;
       const pe26 = (effPrice && cur && cur !== 0) ? effPrice / cur : null;
 
       function computePE(year) {
-        const ry = tickerIndex ? tickerIndex[year] : rows.find(rr => rr.Ticker === t && rr.Year === year);
+        const ry = tickerIdx ? tickerIdx[year] : rows.find(rr => rr.Ticker === t && rr.Year === year);
         if (!ry || !effPrice) return null;
         const vy = qCols.map(q => { const v = parseFloat(ry[q]); return isNaN(v) ? null : v; });
         const nny = vy.filter(v => v !== null);
@@ -1802,9 +1810,8 @@ td.spark-cell { padding: 4px 2px; }
       const rev612 = pctChgVal(m6, m12);
 
       // Get latest EPS for CY2025, CY2027, CY2028 for growth calc
-      const tickerIndex = data.rowIndex ? data.rowIndex[t] : null;
       function getLatestEps(year) {
-        const ry = tickerIndex ? tickerIndex[year] : rows.find(rr => rr.Ticker === t && rr.Year === year);
+        const ry = tickerIdx ? tickerIdx[year] : rows.find(rr => rr.Ticker === t && rr.Year === year);
         if (!ry) return null;
         const vy = qCols.map(q => { const v = parseFloat(ry[q]); return isNaN(v) ? null : v; });
         const nny = vy.filter(v => v !== null);
