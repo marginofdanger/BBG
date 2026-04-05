@@ -15,7 +15,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 .header-center.visible { display: flex; }
 .header-center label { font-size: 10px; color: #555; white-space: nowrap; }
 .table-wrap { overflow: auto; max-height: calc(100vh - 90px); position: relative; padding: 0 12px 60px; }
-table { border-collapse: collapse; white-space: nowrap; font-size: 12px; }
+table { border-collapse: collapse; white-space: nowrap; font-size: 12px; table-layout: fixed; }
 th, td { padding: 4px 6px; border-bottom: 1px solid #e8e8e8; text-align: right; }
 th { background: #fafafa; position: sticky; z-index: 2; font-weight: 600; font-size: 11px; color: #555; }
 thead tr:first-child th { top: 0; background: #f4f4f4; box-shadow: inset 0 -2px 0 #999; }
@@ -824,74 +824,70 @@ td.spark-cell { padding: 4px 2px; }
     const existing = rowEl.nextElementSibling;
     if (existing && existing.classList.contains('detail-row')) { existing.remove(); return; }
 
-    const detailRow = document.createElement('tr');
-    detailRow.className = 'detail-row';
-    const td = document.createElement('td');
-    td.colSpan = totalCols;
-
-    const dtable = document.createElement('table');
-    dtable.className = 'detail-table';
-
-    const headerTr = document.createElement('tr');
-    const cornerTh = document.createElement('th');
-    cornerTh.textContent = '';
-    headerTr.appendChild(cornerTh);
+    // Build detail table as HTML string for speed
+    let html = '<table class="detail-table"><tr><th></th>';
     qCols.forEach((q, qi) => {
-      const th = document.createElement('th');
       const m = q.match(/Q(\d) (\d{4})/);
-      th.textContent = m[1] + 'Q' + m[2].slice(2);
-      if (m[1] === '1' && qi > 0) th.style.borderLeft = '2px solid #bbb';
-      headerTr.appendChild(th);
+      const border = (m[1] === '1' && qi > 0) ? 'border-left:2px solid #bbb;' : '';
+      html += '<th style="' + border + '">' + m[1] + 'Q' + m[2].slice(2) + '</th>';
     });
-    dtable.appendChild(headerTr);
+    html += '</tr>';
 
     displayYears.forEach(yr => {
       const yearRow = tk.years[yr];
       if (!yearRow) return;
 
-      const vr = document.createElement('tr');
-      const yrTd = document.createElement('td');
-      yrTd.className = 'yr-label';
-      yrTd.textContent = yr;
-      vr.appendChild(yrTd);
-
       const vals = [];
+      html += '<tr><td class="yr-label">' + yr + '</td>';
       qCols.forEach((q, qi) => {
         const raw = yearRow[q];
         const v = parseFloat(raw);
-        vals.push(isNaN(v) || raw === '' ? null : v);
-        const vtd = document.createElement('td');
-        vtd.textContent = vals[vals.length - 1] !== null ? vals[vals.length - 1].toFixed(2) : '';
-        const m = q.match(/Q(\d) (\d{4})/);
-        if (m[1] === '1' && qi > 0) vtd.style.borderLeft = '2px solid #bbb';
-        vr.appendChild(vtd);
+        const val = (isNaN(v) || raw === '') ? null : v;
+        vals.push(val);
+        const border = (q.match(/Q(\d)/)[1] === '1' && qi > 0) ? 'border-left:2px solid #bbb;' : '';
+        const isLast = vals.filter(x => x !== null).length === vals.length && qi === qCols.length - 1;
+        html += '<td style="' + border + '">' + (val !== null ? val.toFixed(2) : '') + '</td>';
       });
-      for (let i = vals.length - 1; i >= 0; i--) {
-        if (vals[i] !== null) { vr.children[i + 1].style.fontWeight = '700'; break; }
-      }
-      dtable.appendChild(vr);
+      // Bold the last non-null value (will be applied after innerHTML)
+      html += '</tr>';
 
-      const cr = document.createElement('tr');
-      cr.className = 'chg-row';
-      cr.appendChild(document.createElement('td'));
+      // Change row
+      html += '<tr class="chg-row"><td></td>';
       let prevVal = null;
       vals.forEach((v, vi) => {
-        const ctd = document.createElement('td');
+        const qm = qCols[vi].match(/Q(\d) (\d{4})/);
+        const border = (qm[1] === '1' && vi > 0) ? 'border-left:2px solid #bbb;' : '';
+        let cellHtml = '';
         if (v !== null && prevVal !== null && prevVal !== 0) {
           const chg = ((v - prevVal) / Math.abs(prevVal)) * 100;
-          ctd.textContent = fmtPctRaw(chg);
-          ctd.className = chg >= 0 ? 'pos' : 'neg';
-          if (Math.abs(chg) >= 5) ctd.style.fontWeight = '700';
+          const cls = chg >= 0 ? 'pos' : 'neg';
+          const bold = Math.abs(chg) >= 5 ? 'font-weight:700;' : '';
+          cellHtml = '<td class="' + cls + '" style="' + border + bold + '">' + fmtPctRaw(chg) + '</td>';
+        } else {
+          cellHtml = '<td style="' + border + '"></td>';
         }
-        const qm = qCols[vi].match(/Q(\d) (\d{4})/);
-        if (qm[1] === '1' && vi > 0) ctd.style.borderLeft = '2px solid #bbb';
-        cr.appendChild(ctd);
+        html += cellHtml;
         if (v !== null) prevVal = v;
       });
-      dtable.appendChild(cr);
+      html += '</tr>';
+    });
+    html += '</table>';
+
+    const detailRow = document.createElement('tr');
+    detailRow.className = 'detail-row';
+    const td = document.createElement('td');
+    td.colSpan = totalCols;
+    td.innerHTML = html;
+
+    // Bold last non-null value in each value row
+    td.querySelectorAll('tr:not(.chg-row)').forEach(vr => {
+      if (vr.querySelector('th')) return; // skip header
+      const cells = [...vr.children];
+      for (let i = cells.length - 1; i >= 1; i--) {
+        if (cells[i].textContent) { cells[i].style.fontWeight = '700'; break; }
+      }
     });
 
-    td.appendChild(dtable);
     detailRow.appendChild(td);
     rowEl.after(detailRow);
   }
