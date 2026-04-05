@@ -819,10 +819,11 @@ td.spark-cell { padding: 4px 2px; }
     const cornerTh = document.createElement('th');
     cornerTh.textContent = '';
     headerTr.appendChild(cornerTh);
-    qCols.forEach(q => {
+    qCols.forEach((q, qi) => {
       const th = document.createElement('th');
       const m = q.match(/Q(\d) (\d{4})/);
-      th.textContent = 'Q' + m[1] + "'" + m[2].slice(2);
+      th.textContent = m[1] + 'Q' + m[2].slice(2);
+      if (m[1] === '1' && qi > 0) th.style.borderLeft = '2px solid #bbb';
       headerTr.appendChild(th);
     });
     dtable.appendChild(headerTr);
@@ -838,12 +839,14 @@ td.spark-cell { padding: 4px 2px; }
       vr.appendChild(yrTd);
 
       const vals = [];
-      qCols.forEach(q => {
+      qCols.forEach((q, qi) => {
         const raw = yearRow[q];
         const v = parseFloat(raw);
         vals.push(isNaN(v) || raw === '' ? null : v);
         const vtd = document.createElement('td');
         vtd.textContent = vals[vals.length - 1] !== null ? vals[vals.length - 1].toFixed(2) : '';
+        const m = q.match(/Q(\d) (\d{4})/);
+        if (m[1] === '1' && qi > 0) vtd.style.borderLeft = '2px solid #bbb';
         vr.appendChild(vtd);
       });
       for (let i = vals.length - 1; i >= 0; i--) {
@@ -855,14 +858,16 @@ td.spark-cell { padding: 4px 2px; }
       cr.className = 'chg-row';
       cr.appendChild(document.createElement('td'));
       let prevVal = null;
-      vals.forEach(v => {
+      vals.forEach((v, vi) => {
         const ctd = document.createElement('td');
         if (v !== null && prevVal !== null && prevVal !== 0) {
           const chg = ((v - prevVal) / Math.abs(prevVal)) * 100;
-          ctd.textContent = chg >= 0 ? '+' + chg.toFixed(1) + '%' : '(' + Math.abs(chg).toFixed(1) + '%)';
+          ctd.textContent = fmtPctRaw(chg);
           ctd.className = chg >= 0 ? 'pos' : 'neg';
           if (Math.abs(chg) >= 5) ctd.style.fontWeight = '700';
         }
+        const qm = qCols[vi].match(/Q(\d) (\d{4})/);
+        if (qm[1] === '1' && vi > 0) ctd.style.borderLeft = '2px solid #bbb';
         cr.appendChild(ctd);
         if (v !== null) prevVal = v;
       });
@@ -2408,7 +2413,7 @@ td.spark-cell { padding: 4px 2px; }
   function renderMethodology(qCols) {
     const el = document.getElementById('methodology');
     if (!el) return;
-    const labels = qCols.map(q => { const m = q.match(/Q(\d) (\d{4})/); return "Q" + m[1] + "'" + m[2].slice(2); });
+    const labels = qCols.map(q => { const m = q.match(/Q(\d) (\d{4})/); return m[1] + "Q" + m[2].slice(2); });
     const n = labels.length;
     const cur = labels[n-1]||'?', m3 = labels[n-2]||'?', m6 = labels[n-3]||'?', m12 = labels[n-5]||'?';
     el.innerHTML =
