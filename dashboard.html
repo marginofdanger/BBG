@@ -639,7 +639,7 @@ td.spark-cell { padding: 4px 2px; }
       sparkTd.className = 'spark-cell';
       const sparkVals = vals.filter(v => v !== null);
       if (sparkVals.length >= 2) {
-        sparkTd.innerHTML = buildSparklineHTML(sparkVals, 70, 20);
+        sparkTd.appendChild(buildSparkline(sparkVals, 70, 20));
         sparkTd._sparkData = { tk, rowEl, qCols, totalCols };
       }
       rowEl.appendChild(sparkTd);
@@ -814,7 +814,7 @@ td.spark-cell { padding: 4px 2px; }
     return td;
   }
 
-  function buildSparklineHTML(vals, w, h) {
+  function buildSparkline(vals, w, h) {
     const pad = 2, min = Math.min(...vals), max = Math.max(...vals), range = max - min || 1;
     const points = vals.map((v, i) => {
       const x = pad + (i / (vals.length - 1)) * (w - 2 * pad);
@@ -822,7 +822,15 @@ td.spark-cell { padding: 4px 2px; }
       return x.toFixed(1) + ',' + y.toFixed(1);
     }).join(' ');
     const color = vals[vals.length - 1] >= vals[0] ? '#2e7d32' : '#c62828';
-    return '<svg class="sparkline" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '"><polyline points="' + points + '" fill="none" stroke="' + color + '" stroke-width="1.5"/></svg>';
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('width', w); svg.setAttribute('height', h);
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    svg.classList.add('sparkline');
+    const pl = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+    pl.setAttribute('points', points); pl.setAttribute('fill', 'none');
+    pl.setAttribute('stroke', color); pl.setAttribute('stroke-width', '1.5');
+    svg.appendChild(pl);
+    return svg;
   }
 
   function toggleDetail(tk, rowEl, qCols, totalCols) {
