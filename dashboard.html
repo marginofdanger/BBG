@@ -744,7 +744,7 @@ td.spark-cell { padding: 4px 2px; }
   function fmtPctRaw(pct) {
     if (pct === null || pct === undefined) return '';
     const abs = Math.abs(pct);
-    const num = abs >= 1000 ? (abs / 1000).toFixed(0) + 'k' : Math.round(abs).toString();
+    const num = abs >= 1000 ? (abs / 1000).toFixed(1) + 'k' : Math.round(abs).toString();
     if (pct >= 0) return '+' + num + '%';
     return '(' + num + '%)';
   }
