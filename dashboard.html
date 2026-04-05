@@ -547,29 +547,21 @@ td.spark-cell { padding: 4px 2px; }
     appendCell(rowEl, priceDisplay);
     rowEl._sortData.price = isNaN(price) ? 0 : price;
 
-    // P/E: compute dynamically from price and latest EPS estimate.
-    // Use CSV PE to detect pence-denominated prices (if CSV PE exists and implies a different price base).
-    const anyYearRow = tk.years['CY2026'] || tk.years['CY2025'] || Object.values(tk.years)[0];
-    let priceForPE = price;
-    if (anyYearRow && price) {
-      const csvPE = parseFloat(anyYearRow.PE);
-      if (!isNaN(csvPE) && csvPE > 0) {
-        const latestEps = qCols.map(q => { const n = parseFloat(anyYearRow[q]); return isNaN(n) ? null : n; }).filter(v => v !== null);
-        if (latestEps.length > 0) {
-          const impliedPrice = csvPE * latestEps[latestEps.length - 1];
-          // If price/impliedPrice ratio suggests pence (ratio ~100), adjust
-          if (price > 0 && impliedPrice > 0 && (price / impliedPrice) > 10) {
-            priceForPE = price / Math.round(price / impliedPrice);
-          }
-        }
-      }
-    }
-    if (!priceForPE || isNaN(priceForPE)) priceForPE = price;
+    // P/E: compute dynamically from price / latest EPS.
+    // UK stocks (FYE field won't help, but PE from CSV can detect pence).
+    // Simple approach: use price directly, let pull_prices handle pence adjustment via PE_CY columns.
     function calcPE(yr) {
       const yrRow = tk.years[yr];
-      if (!yrRow || !priceForPE || isNaN(priceForPE)) return NaN;
+      if (!yrRow || !price || isNaN(price)) return NaN;
+      // If prices CSV provided a PE for this year, use it (already pence-adjusted)
+      if (yr === 'CY2026' && yrRow.PE) { const v = parseFloat(yrRow.PE); if (!isNaN(v) && v > 0) return v; }
+      // Otherwise compute from price / EPS
       const v = qCols.map(q => { const n = parseFloat(yrRow[q]); return isNaN(n) ? null : n; }).filter(v => v !== null);
-      return v.length > 0 && v[v.length - 1] !== 0 ? priceForPE / v[v.length - 1] : NaN;
+      if (!v.length || v[v.length - 1] === 0) return NaN;
+      const rawPE = price / v[v.length - 1];
+      // Sanity check: if PE > 500, probably pence issue, try /100
+      if (rawPE > 500 && price > 100) return (price / 100) / v[v.length - 1];
+      return rawPE;
     }
     for (const [yr, key] of [['CY2026','pe26'], ['CY2027','pe27'], ['CY2028','pe28']]) {
       const pe = calcPE(yr);
