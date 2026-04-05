@@ -514,10 +514,14 @@ td.spark-cell { padding: 4px 2px; }
 
     // Single delegated click handler for all sparklines
     wrap.addEventListener('click', (e) => {
-      const sparkCell = e.target.closest('.spark-cell');
-      if (sparkCell && sparkCell._sparkData) {
-        const { tk, rowEl, qCols, totalCols } = sparkCell._sparkData;
-        toggleDetail(tk, rowEl, qCols, totalCols);
+      let el = e.target;
+      while (el && el !== wrap) {
+        if (el._sparkData) {
+          const { tk, rowEl, qCols, totalCols } = el._sparkData;
+          toggleDetail(tk, rowEl, qCols, totalCols);
+          return;
+        }
+        el = el.parentElement || el.parentNode;
       }
     });
 
