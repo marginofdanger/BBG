@@ -174,12 +174,6 @@
     "raw": "BIP US"
   },
   {
-    "ticker": "BBU",
-    "bbg": "BBU US Equity",
-    "category": "Uncategorized",
-    "raw": "BBU US"
-  },
-  {
     "ticker": "HLT",
     "bbg": "HLT US Equity",
     "category": "Uncategorized",
@@ -426,12 +420,6 @@
     "raw": "LAD US"
   },
   {
-    "ticker": "LLYVK",
-    "bbg": "LLYVK US Equity",
-    "category": "Uncategorized",
-    "raw": "LLYVK US"
-  },
-  {
     "ticker": "CHTR",
     "bbg": "CHTR US Equity",
     "category": "Uncategorized",
@@ -508,12 +496,6 @@
     "bbg": "CVS US Equity",
     "category": "Uncategorized",
     "raw": "CVS"
-  },
-  {
-    "ticker": "QVCGA",
-    "bbg": "QVCGA US Equity",
-    "category": "Uncategorized",
-    "raw": "QVCGA US"
   },
   {
     "ticker": "SSNC",
@@ -1212,12 +1194,6 @@
     "raw": "MKTX US"
   },
   {
-    "ticker": "DNB",
-    "bbg": "DNB US Equity",
-    "category": "Data / Information Svc",
-    "raw": "DNB US"
-  },
-  {
     "ticker": "VRSK",
     "bbg": "VRSK US Equity",
     "category": "Data / Information Svc",
@@ -1782,12 +1758,6 @@
     "raw": "ENVA US"
   },
   {
-    "ticker": "PRAA",
-    "bbg": "PRAA US Equity",
-    "category": "Financials and related",
-    "raw": "PRAA US"
-  },
-  {
     "ticker": "ECPG",
     "bbg": "ECPG US Equity",
     "category": "Financials and related",
@@ -2310,12 +2280,6 @@
     "raw": "BCE CN"
   },
   {
-    "ticker": "IPG",
-    "bbg": "IPG US Equity",
-    "category": "Media content",
-    "raw": "IPG"
-  },
-  {
     "ticker": "OMC",
     "bbg": "OMC US Equity",
     "category": "Media content",
@@ -2430,12 +2394,6 @@
     "raw": "CALX"
   },
   {
-    "ticker": "JNPR",
-    "bbg": "JNPR US Equity",
-    "category": "Telco infrastructure",
-    "raw": "JNPR"
-  },
-  {
     "ticker": "PRY",
     "bbg": "PRY IM Equity",
     "category": "Telco infrastructure",
@@ -2526,12 +2484,6 @@
     "raw": "CPRT"
   },
   {
-    "ticker": "KAR",
-    "bbg": "KAR US Equity",
-    "category": "Autos",
-    "raw": "KAR US"
-  },
-  {
     "ticker": "LKQ",
     "bbg": "LKQ US Equity",
     "category": "Autos",
@@ -2614,12 +2566,6 @@
     "bbg": "HOG US Equity",
     "category": "Auto / Truck Supply Chain",
     "raw": "HOG"
-  },
-  {
-    "ticker": "CPSS",
-    "bbg": "CPSS US Equity",
-    "category": "Auto / Truck Supply Chain",
-    "raw": "CPSS US"
   },
   {
     "ticker": "GM",
@@ -2820,12 +2766,6 @@
     "raw": "ROST"
   },
   {
-    "ticker": "JWN",
-    "bbg": "JWN US Equity",
-    "category": "Retailers",
-    "raw": "JWN US"
-  },
-  {
     "ticker": "M",
     "bbg": "M US Equity",
     "category": "Retailers",
@@ -3022,12 +2962,6 @@
     "bbg": "NKE US Equity",
     "category": "Apparel",
     "raw": "NKE"
-  },
-  {
-    "ticker": "UA",
-    "bbg": "UA US Equity",
-    "category": "Apparel",
-    "raw": "UA"
   },
   {
     "ticker": "AS",
@@ -3594,12 +3528,6 @@
     "raw": "HSY"
   },
   {
-    "ticker": "K",
-    "bbg": "K US Equity",
-    "category": "Cons. staples",
-    "raw": "K US"
-  },
-  {
     "ticker": "ENR",
     "bbg": "ENR US Equity",
     "category": "Cons. staples",
@@ -3622,12 +3550,6 @@
     "bbg": "HLF US Equity",
     "category": "Cons. staples",
     "raw": "HLF"
-  },
-  {
-    "ticker": "NUS",
-    "bbg": "NUS US Equity",
-    "category": "Cons. staples",
-    "raw": "NUS"
   },
   {
     "ticker": "IFF",
@@ -3706,12 +3628,6 @@
     "bbg": "CULP US Equity",
     "category": "Bedding / furniture / household goods",
     "raw": "CULP"
-  },
-  {
-    "ticker": "SCS",
-    "bbg": "SCS US Equity",
-    "category": "Bedding / furniture / household goods",
-    "raw": "SCS"
   },
   {
     "ticker": "AWI",
@@ -3882,12 +3798,6 @@
     "raw": "URI"
   },
   {
-    "ticker": "AHT",
-    "bbg": "AHT LN Equity",
-    "category": "Industrial / Cyclical",
-    "raw": "AHT LN"
-  },
-  {
     "ticker": "WSC",
     "bbg": "WSC US Equity",
     "category": "Industrial / Cyclical",
@@ -3994,12 +3904,6 @@
     "bbg": "GPC US Equity",
     "category": "Distributors",
     "raw": "GPC"
-  },
-  {
-    "ticker": "MRC",
-    "bbg": "MRC US Equity",
-    "category": "Distributors",
-    "raw": "MRC"
   },
   {
     "ticker": "DNOW",
@@ -4206,12 +4110,6 @@
     "raw": "S US"
   },
   {
-    "ticker": "CYBR",
-    "bbg": "CYBR US Equity",
-    "category": "Software",
-    "raw": "CYBR US"
-  },
-  {
     "ticker": "AFRM",
     "bbg": "AFRM US Equity",
     "category": "Payments",
@@ -4234,12 +4132,6 @@
     "bbg": "DUOL US Equity",
     "category": "Internet",
     "raw": "DUOL US"
-  },
-  {
-    "ticker": "RKLB",
-    "bbg": "RKLB US Equity",
-    "category": "Aerospace / defense",
-    "raw": "RKLB US"
   },
   {
     "ticker": "INSP",
