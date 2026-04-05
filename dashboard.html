@@ -286,9 +286,18 @@ td.spark-cell { padding: 4px 2px; }
     const merged = { ...estData, rows: estData.rows.map(r => {
       const p = priceLookup[r.Ticker];
       if (!p) return r;
-      return { ...r, Price: p.Price || r.Price, PE: p.PE_CY2026 || r.PE,
-        Return_YTD: p.Return_YTD || r.Return_YTD, Return_3m: p.Return_3m || r.Return_3m,
-        Return_12m: p.Return_12m || r.Return_12m };
+      // Override price, returns, AND PE from fresh prices
+      const updated = { ...r,
+        Price: p.Price || r.Price,
+        Return_YTD: p.Return_YTD || r.Return_YTD,
+        Return_3m: p.Return_3m || r.Return_3m,
+        Return_12m: p.Return_12m || r.Return_12m,
+      };
+      // Override PE per year from prices CSV if available
+      if (r.Year === 'CY2026' && p.PE_CY2026) updated.PE = p.PE_CY2026;
+      if (r.Year === 'CY2027' && p.PE_CY2027) updated.PE = p.PE_CY2027;
+      if (r.Year === 'CY2028' && p.PE_CY2028) updated.PE = p.PE_CY2028;
+      return updated;
     }), revRows: estData.revRows || [] };
     return merged;
   }
@@ -538,14 +547,21 @@ td.spark-cell { padding: 4px 2px; }
     appendCell(rowEl, priceDisplay);
     rowEl._sortData.price = isNaN(price) ? 0 : price;
 
-    // P/E: compute from price and latest EPS. Use CSV PE to derive effective price (handles UK pence).
+    // P/E: compute dynamically from price and latest EPS estimate.
+    // Use CSV PE to detect pence-denominated prices (if CSV PE exists and implies a different price base).
+    const anyYearRow = tk.years['CY2026'] || tk.years['CY2025'] || Object.values(tk.years)[0];
     let priceForPE = price;
-    const cy26Row = tk.years['CY2026'];
-    if (cy26Row && price) {
-      const csvPE = parseFloat(cy26Row.PE);
-      const cy26v = qCols.map(q => { const n = parseFloat(cy26Row[q]); return isNaN(n) ? null : n; }).filter(v => v !== null);
-      if (!isNaN(csvPE) && csvPE > 0 && cy26v.length > 0) {
-        priceForPE = csvPE * cy26v[cy26v.length - 1];
+    if (anyYearRow && price) {
+      const csvPE = parseFloat(anyYearRow.PE);
+      if (!isNaN(csvPE) && csvPE > 0) {
+        const latestEps = qCols.map(q => { const n = parseFloat(anyYearRow[q]); return isNaN(n) ? null : n; }).filter(v => v !== null);
+        if (latestEps.length > 0) {
+          const impliedPrice = csvPE * latestEps[latestEps.length - 1];
+          // If price/impliedPrice ratio suggests pence (ratio ~100), adjust
+          if (price > 0 && impliedPrice > 0 && (price / impliedPrice) > 10) {
+            priceForPE = price / Math.round(price / impliedPrice);
+          }
+        }
       }
     }
     if (!priceForPE || isNaN(priceForPE)) priceForPE = price;
