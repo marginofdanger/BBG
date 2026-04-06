@@ -29,23 +29,24 @@ body {
 
 /* Mini timeline */
 .mini-timeline {
-  margin-bottom: 20px; padding: 8px 16px 4px; background: #fff; border-radius: 8px; border: 1px solid #e2e5e9;
+  margin-bottom: 20px; padding: 0; background: #fff; border-radius: 8px; border: 1px solid #e2e5e9;
+  overflow: hidden;
 }
-.mini-timeline .track {
-  width: 100%; height: auto; min-height: 16px; background: transparent;
-  position: relative; padding-bottom: 18px;
+.mini-timeline .tickers-row {
+  position: relative; height: 14px; margin: 8px 16px 0;
+}
+.mini-timeline .months-row {
+  position: relative; height: 16px; margin: 0 16px; border-top: 1px solid #e2e5e9;
 }
 .mini-timeline .month-marker {
-  position: absolute; bottom: 0; transform: translateX(-50%);
-  font-size: 10px; color: #aaa; border-left: 1px solid #ddd; padding-left: 4px; height: 100%;
+  position: absolute; top: 0; font-size: 10px; color: #aaa; padding-top: 2px;
 }
-.mini-timeline .month-marker span { position: absolute; bottom: 2px; left: 4px; }
 .mini-timeline .tick-group {
-  position: absolute; display: flex; flex-direction: column; align-items: center;
-  transform: translateX(-50%); gap: 0; cursor: pointer;
+  position: absolute; top: 0; display: flex; align-items: baseline; gap: 0;
+  flex-direction: column; transform: translateX(-50%); cursor: pointer;
 }
 .mini-timeline .tick-label {
-  font-size: 9px; font-weight: 600; line-height: 1.2; white-space: nowrap;
+  font-size: 9px; font-weight: 600; line-height: 1.15; white-space: nowrap;
 }
 .mini-timeline .tick-label.confirmed { color: #2563eb; }
 .mini-timeline .tick-label.tentative { color: #93b4e8; }
@@ -53,7 +54,7 @@ body {
 .mini-timeline .tick-group .tip {
   display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
   background: #333; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 9px; white-space: nowrap;
-  margin-bottom: 4px;
+  margin-bottom: 4px; z-index: 10;
 }
 .mini-timeline .tick-group:hover .tip { display: block; }
 
@@ -222,17 +223,8 @@ function renderTimeline(companies) {
   const end = new Date(today); end.setDate(end.getDate() + 90);
   const totalDays = (end - today) / 86400000;
 
-  let html = `<div class="track" id="timeline-track">`;
-
-  // Month markers
-  let cursor = new Date(today.getFullYear(), today.getMonth() + 1, 1); // start at next month boundary
-  while (cursor <= end) {
-    const offset = (cursor - today) / 86400000;
-    const pct = (offset / totalDays * 100).toFixed(1);
-    const label = cursor.toLocaleDateString('en', { month: 'short' });
-    html += `<div class="month-marker" style="left:${pct}%"><span>${label}</span></div>`;
-    cursor.setMonth(cursor.getMonth() + 1);
-  }
+  // --- Tickers row ---
+  let tickersHtml = '';
 
   // Group tickers by date
   const byDate = {};
@@ -242,24 +234,53 @@ function renderTimeline(companies) {
     const offset = (d - today) / 86400000;
     if (offset < 0 || offset > totalDays) continue;
     const pct = parseFloat((offset / totalDays * 100).toFixed(1));
-    if (!byDate[c.earnings_date]) byDate[c.earnings_date] = { pct, tickers: [] };
+    if (!byDate[c.earnings_date]) byDate[c.earnings_date] = { pct, naturalPct: pct, tickers: [] };
     byDate[c.earnings_date].tickers.push({ ticker: c.ticker, confirmed: c.date_confirmed });
   }
 
-  // Render groups at true proportional positions
-  const groups = Object.entries(byDate).sort((a, b) => a[1].pct - b[1].pct);
-  for (const [dateStr, g] of groups) {
-    html += `<div class="tick-group" style="left:${g.pct}%">`;
-    for (const t of g.tickers) {
-      const cls = t.confirmed ? 'confirmed' : 'tentative';
-      html += `<span class="tick-label ${cls}">${t.ticker}</span>`;
+  // Sort groups, then nudge overlapping ones apart.
+  // Use a minimum gap in % that roughly corresponds to the widest ticker label.
+  const groups = Object.entries(byDate).sort((a, b) => a[1].naturalPct - b[1].naturalPct);
+  const minGapPct = 5; // ~5% of track width as minimum gap
+  for (let i = 1; i < groups.length; i++) {
+    const prev = groups[i - 1][1];
+    const curr = groups[i][1];
+    if (curr.pct - prev.pct < minGapPct) {
+      curr.pct = prev.pct + minGapPct;
     }
-    html += `<span class="tip">${g.tickers.map(t => t.ticker).join(', ')} ${dateStr}</span>`;
-    html += `</div>`;
+  }
+  // If last group pushed past 98%, compress everything back proportionally
+  if (groups.length > 0 && groups[groups.length - 1][1].pct > 98) {
+    const scale = 98 / groups[groups.length - 1][1].pct;
+    for (const [, g] of groups) { g.pct *= scale; }
   }
 
-  html += `</div>`;
-  container.innerHTML = html;
+  for (const [dateStr, g] of groups) {
+    tickersHtml += `<div class="tick-group" style="left:${g.pct.toFixed(1)}%">`;
+    for (const t of g.tickers) {
+      const cls = t.confirmed ? 'confirmed' : 'tentative';
+      tickersHtml += `<span class="tick-label ${cls}">${t.ticker}</span>`;
+    }
+    tickersHtml += `<span class="tip">${g.tickers.map(t => t.ticker).join(', ')} ${dateStr}</span>`;
+    tickersHtml += `</div>`;
+  }
+
+  // --- Months row ---
+  let monthsHtml = '';
+  let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
+  while (cursor <= end) {
+    const offset = (cursor - today) / 86400000;
+    const pct = Math.max(0, (offset / totalDays * 100)).toFixed(1);
+    const label = cursor.toLocaleDateString('en', { month: 'short' });
+    if (offset >= 0) {
+      monthsHtml += `<div class="month-marker" style="left:${pct}%">${label}</div>`;
+    }
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+
+  container.innerHTML =
+    `<div class="tickers-row">${tickersHtml}</div>` +
+    `<div class="months-row">${monthsHtml}</div>`;
 }
 
 // --- HELPERS ---
