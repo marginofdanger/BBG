@@ -29,14 +29,17 @@ body {
 
 /* Mini timeline */
 .mini-timeline {
-  display: flex; align-items: center; gap: 4px; margin-bottom: 20px;
-  padding: 8px 16px; background: #fff; border-radius: 8px; border: 1px solid #e2e5e9;
+  margin-bottom: 20px; padding: 8px 16px 4px; background: #fff; border-radius: 8px; border: 1px solid #e2e5e9;
 }
-.mini-timeline .month-label { font-size: 10px; color: #888; min-width: 30px; }
 .mini-timeline .track {
-  flex: 1; height: auto; min-height: 16px; background: transparent; border-bottom: 1px solid #ddd;
-  position: relative; display: flex; align-items: flex-end; gap: 0; padding-bottom: 2px;
+  width: 100%; height: auto; min-height: 16px; background: transparent;
+  position: relative; padding-bottom: 18px;
 }
+.mini-timeline .month-marker {
+  position: absolute; bottom: 0; transform: translateX(-50%);
+  font-size: 10px; color: #aaa; border-left: 1px solid #ddd; padding-left: 4px; height: 100%;
+}
+.mini-timeline .month-marker span { position: absolute; bottom: 2px; left: 4px; }
 .mini-timeline .tick-group {
   position: absolute; display: flex; flex-direction: column; align-items: center;
   transform: translateX(-50%); gap: 0; cursor: pointer;
@@ -154,6 +157,7 @@ body {
       <button data-days="7">1 Week</button>
       <button class="active" data-days="14">2 Weeks</button>
       <button data-days="30">1 Month</button>
+      <button data-days="90">3 Months</button>
     </div>
   </div>
 </div>
@@ -216,17 +220,21 @@ function renderTimeline(companies) {
   container.innerHTML = '';
   const today = new Date(DATA.snapshot_date + 'T00:00:00');
   const end = new Date(today); end.setDate(end.getDate() + 90);
-  const months = [];
-  let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
+  const totalDays = (end - today) / 86400000;
+
+  let html = `<div class="track" id="timeline-track">`;
+
+  // Month markers
+  let cursor = new Date(today.getFullYear(), today.getMonth() + 1, 1); // start at next month boundary
   while (cursor <= end) {
-    months.push(new Date(cursor));
+    const offset = (cursor - today) / 86400000;
+    const pct = (offset / totalDays * 100).toFixed(1);
+    const label = cursor.toLocaleDateString('en', { month: 'short' });
+    html += `<div class="month-marker" style="left:${pct}%"><span>${label}</span></div>`;
     cursor.setMonth(cursor.getMonth() + 1);
   }
-  const totalDays = (end - today) / 86400000;
-  let html = `<span class="month-label">${months[0].toLocaleDateString('en', {month:'short'})}</span>`;
-  html += `<div class="track" id="timeline-track">`;
 
-  // Build ticks and group by date
+  // Group tickers by date
   const byDate = {};
   for (const c of companies) {
     if (!c.earnings_date) continue;
@@ -238,16 +246,9 @@ function renderTimeline(companies) {
     byDate[c.earnings_date].tickers.push({ ticker: c.ticker, confirmed: c.date_confirmed });
   }
 
-  // Sort groups by position, nudge apart if too close (min 4% spacing)
-  const groups = Object.values(byDate).sort((a, b) => a.pct - b.pct);
-  for (let i = 1; i < groups.length; i++) {
-    if (groups[i].pct - groups[i - 1].pct < 4) {
-      groups[i].pct = Math.min(groups[i - 1].pct + 4, 98);
-    }
-  }
-
-  for (const g of groups) {
-    const dateStr = Object.keys(byDate).find(k => byDate[k] === g) || '';
+  // Render groups at true proportional positions
+  const groups = Object.entries(byDate).sort((a, b) => a[1].pct - b[1].pct);
+  for (const [dateStr, g] of groups) {
     html += `<div class="tick-group" style="left:${g.pct}%">`;
     for (const t of g.tickers) {
       const cls = t.confirmed ? 'confirmed' : 'tentative';
@@ -258,7 +259,6 @@ function renderTimeline(companies) {
   }
 
   html += `</div>`;
-  html += `<span class="month-label">${months[months.length - 1].toLocaleDateString('en', {month:'short'})}</span>`;
   container.innerHTML = html;
 }
 
