@@ -289,6 +289,102 @@ def main():
     for col in range(1, 7):
         fs.column_dimensions[get_column_letter(col)].width = 25
 
+    # --- Create BBG Live sheet (same layout as Data, but with BDP formulas) ---
+    print("Creating BBG Live sheet...")
+    live = wb.copy_worksheet(ws)
+    live.title = "BBG Live"
+
+    for info in tickers_info:
+        row = info['row']
+        bbg = info['bbg']
+
+        def bdp(field, override=None):
+            if override:
+                return f'=BDP("{bbg}","{field}","BEST_FPERIOD_OVERRIDE","{override}")'
+            return f'=BDP("{bbg}","{field}")'
+
+        # Col 4: Mkt cap (billions) = BDP / 1e9
+        live.cell(row, 4).value = f'={bdp("CUR_MKT_CAP")[1:]}/1000000000'
+
+        # Col 5: Price
+        live.cell(row, 5).value = bdp("PX_LAST")
+
+        # Col 6-8: PE 2026, 2027, 2028 = Price / EPS
+        pr = f'${get_column_letter(5)}${row}'  # price cell ref
+        live.cell(row, 6).value = f'=IF({bdp("BEST_EPS","26Y")[1:]}<>0,{pr}/{bdp("BEST_EPS","26Y")[1:]},"")'
+        live.cell(row, 7).value = f'=IF({bdp("BEST_EPS","27Y")[1:]}<>0,{pr}/{bdp("BEST_EPS","27Y")[1:]},"")'
+        live.cell(row, 8).value = f'=IF({bdp("BEST_EPS","28Y")[1:]}<>0,{pr}/{bdp("BEST_EPS","28Y")[1:]},"")'
+
+        # Col 9: Net leverage
+        live.cell(row, 9).value = bdp("NET_DEBT_TO_EBITDA")
+
+        # Col 10: 2026 Revenue (billions)
+        live.cell(row, 10).value = f'={bdp("BEST_SALES","26Y")[1:]}/1000'
+
+        # Col 11: 2026 Op margin = EBIT/Rev
+        live.cell(row, 11).value = f'=IF({bdp("BEST_SALES","26Y")[1:]}<>0,{bdp("BEST_EBIT","26Y")[1:]}/{bdp("BEST_SALES","26Y")[1:]},"")'
+
+        # Col 12: ROIC
+        live.cell(row, 12).value = f'={bdp("RETURN_ON_INV_CAPITAL")[1:]}/100'
+
+        # Col 13-15: Growth 2025-2028 CAGR (Rev, Op inc, EPS)
+        live.cell(row, 13).value = f'=IF(AND({bdp("BEST_SALES","25Y")[1:]}>0,{bdp("BEST_SALES","28Y")[1:]}>0),({bdp("BEST_SALES","28Y")[1:]}/{bdp("BEST_SALES","25Y")[1:]})^(1/3)-1,"")'
+        live.cell(row, 14).value = f'=IF(AND({bdp("BEST_EBIT","25Y")[1:]}>0,{bdp("BEST_EBIT","28Y")[1:]}>0),({bdp("BEST_EBIT","28Y")[1:]}/{bdp("BEST_EBIT","25Y")[1:]})^(1/3)-1,"")'
+        live.cell(row, 15).value = f'=IF(AND({bdp("BEST_EPS","25Y")[1:]}>0,{bdp("BEST_EPS","28Y")[1:]}>0),({bdp("BEST_EPS","28Y")[1:]}/{bdp("BEST_EPS","25Y")[1:]})^(1/3)-1,"")'
+
+        # Col 17: YTD px chg
+        live.cell(row, 17).value = f'={bdp("CHG_PCT_YTD")[1:]}/100'
+
+        # Col 20: PEG ratio (PE / EPS growth)
+        live.cell(row, 20).value = f'=IF(AND({get_column_letter(6)}{row}<>"",{get_column_letter(15)}{row}<>"",{get_column_letter(15)}{row}<>0),{get_column_letter(6)}{row}/({get_column_letter(15)}{row}*100),"")'
+
+        # Col 28: LTM Op inc
+        live.cell(row, 28).value = bdp("TRAIL_12M_OPER_INC")
+
+        # Col 29-32: Balance sheet
+        live.cell(row, 29).value = bdp("SHORT_AND_LONG_TERM_DEBT")
+        live.cell(row, 30).value = bdp("TOTAL_EQUITY")
+        live.cell(row, 31).value = bdp("BS_CASH_NEAR_CASH_ITEM")
+        live.cell(row, 32).value = bdp("BS_LT_INVEST")
+
+        # Col 33: Total capital = Debt + Equity
+        live.cell(row, 33).value = f'={get_column_letter(29)}{row}+{get_column_letter(30)}{row}'
+
+        # Col 34: ROIC
+        live.cell(row, 34).value = f'={bdp("RETURN_ON_INV_CAPITAL")[1:]}/100'
+
+        # Cols 36-40: EPS 2024-2028
+        for ci, yr in enumerate(['24', '25', '26', '27', '28']):
+            live.cell(row, 36 + ci).value = bdp("BEST_EPS", f"{yr}Y")
+
+        # Cols 42-46: Revenue 2024-2028
+        for ci, yr in enumerate(['24', '25', '26', '27', '28']):
+            live.cell(row, 42 + ci).value = bdp("BEST_SALES", f"{yr}Y")
+
+        # Cols 48-52: EBIT 2024-2028
+        for ci, yr in enumerate(['24', '25', '26', '27', '28']):
+            live.cell(row, 48 + ci).value = bdp("BEST_EBIT", f"{yr}Y")
+
+        # Col 54: EV = Mkt cap + Net debt
+        live.cell(row, 54).value = f'={get_column_letter(4)}{row}+{get_column_letter(55)}{row}'
+
+        # Col 55: Net Debt = Debt - Cash
+        live.cell(row, 55).value = f'={get_column_letter(29)}{row}-{get_column_letter(31)}{row}'
+
+        # Col 56: Mkt cap
+        live.cell(row, 56).value = f'={get_column_letter(4)}{row}'
+
+        # Col 57: LTM EBITDA
+        live.cell(row, 57).value = bdp("TRAIL_12M_EBITDA")
+
+    # Color all BDP formula cells blue
+    blue = Font(color="0000FF")
+    for row in range(1, live.max_row + 1):
+        for col in range(1, live.max_column + 1):
+            val = live.cell(row, col).value
+            if val and isinstance(val, str) and 'BDP(' in val:
+                live.cell(row, col).font = blue
+
     # Save
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     wb.save(OUT)
