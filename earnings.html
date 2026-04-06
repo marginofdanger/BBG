@@ -117,6 +117,20 @@ body {
   letter-spacing: 0.5px; padding: 6px 0 2px;
 }
 
+/* History section */
+.hist-section { margin-top: 10px; border-top: 1px solid #f0f0f0; padding-top: 8px; }
+.hist-label { font-size: 9px; color: #aaa; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.hist-table { width: 100%; font-size: 10px; border-collapse: collapse; }
+.hist-table th { text-align: center; color: #999; font-weight: 600; font-size: 9px; padding: 3px 4px; border-bottom: 1px solid #eee; }
+.hist-table th:first-child { text-align: left; }
+.hist-table td { text-align: center; padding: 3px 4px; border-bottom: 1px solid #f8f8f8; font-size: 10px; }
+.hist-table td:first-child { text-align: left; color: #888; font-size: 9px; }
+.beat { color: #16a34a; font-weight: 600; }
+.miss { color: #dc2626; font-weight: 600; }
+.rxn { font-weight: 700; }
+.rxn.up { color: #16a34a; }
+.rxn.down { color: #dc2626; }
+
 /* Collapsed card */
 .card.collapsed .card-body { display: none; }
 .card.collapsed { cursor: pointer; }
@@ -482,7 +496,51 @@ function buildCard(c, collapsed) {
       html += `</tr>`;
     }
   }
-  html += `</table></div></div>`;
+  html += `</table>`;
+
+  // Earnings history (last 4 quarters)
+  if (c.earnings_history && c.earnings_history.length) {
+    html += `<div class="hist-section">`;
+    html += `<div class="hist-label">Last ${c.earnings_history.length} Quarters</div>`;
+    html += `<table class="hist-table">`;
+    html += `<tr><th></th>`;
+    for (const h of c.earnings_history) {
+      html += `<th>${h.quarter}</th>`;
+    }
+    html += `</tr><tr><td>EPS</td>`;
+    for (const h of c.earnings_history) {
+      if (h.eps_beat_pct != null) {
+        const cls = h.eps_beat_pct >= 0 ? 'beat' : 'miss';
+        const sign = h.eps_beat_pct >= 0 ? '+' : '';
+        html += `<td class="${cls}">${sign}${h.eps_beat_pct.toFixed(1)}%</td>`;
+      } else {
+        html += `<td style="color:#ccc">&mdash;</td>`;
+      }
+    }
+    html += `</tr><tr><td>Rev</td>`;
+    for (const h of c.earnings_history) {
+      if (h.rev_beat_pct != null) {
+        const cls = h.rev_beat_pct >= 0 ? 'beat' : 'miss';
+        const sign = h.rev_beat_pct >= 0 ? '+' : '';
+        html += `<td class="${cls}">${sign}${h.rev_beat_pct.toFixed(1)}%</td>`;
+      } else {
+        html += `<td style="color:#ccc">&mdash;</td>`;
+      }
+    }
+    html += `</tr><tr><td>Stock</td>`;
+    for (const h of c.earnings_history) {
+      if (h.stock_rxn != null) {
+        const cls = h.stock_rxn >= 0 ? 'up' : 'down';
+        const sign = h.stock_rxn >= 0 ? '+' : '';
+        html += `<td class="rxn ${cls}">${sign}${h.stock_rxn.toFixed(1)}%</td>`;
+      } else {
+        html += `<td style="color:#ccc">&mdash;</td>`;
+      }
+    }
+    html += `</tr></table></div>`;
+  }
+
+  html += `</div></div>`;
   return html;
 }
 

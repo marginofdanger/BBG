@@ -317,6 +317,125 @@ def pull_eps_4wk_change(bbg_tickers):
     return result
 
 
+def pull_earnings_history(bbg_tickers):
+    """Pull last 4 quarters' EPS/Rev beats and stock reactions.
+
+    For each ticker:
+    1. Get past earnings dates via BDS ERN_ANN_DT_AND_PER
+    2. For each past quarter, get pre-earnings consensus (BDH 1FQ just before)
+       vs actual (BDP with past FQ offset)
+    3. Get stock price reaction (close before vs close on earnings day)
+
+    Returns {bbg_ticker: [{"quarter": "Q4'25", "eps_beat_pct": 8.2, "rev_beat_pct": 2.1, "stock_rxn": -0.6}, ...]}.
+    """
+    result = {}
+    for bt in bbg_tickers:
+        short = bt.split(" ")[0]
+        history = []
+
+        # Get earnings dates
+        try:
+            df = blp.bds(bt, "ERN_ANN_DT_AND_PER")
+            quarters = []
+            for row in df.rows():
+                period = str(row[3]) if len(row) > 3 else str(row[2])
+                if ":Q" in period:
+                    quarters.append({"date": str(row[2]), "period": period})
+            quarters = quarters[:4]  # last 4
+        except Exception:
+            result[bt] = []
+            continue
+
+        for idx, q in enumerate(quarters):
+            try:
+                earn_dt = date.fromisoformat(q["date"])
+            except (ValueError, TypeError):
+                continue
+
+            fq_offset = f"{-idx}FQ" if idx > 0 else "0FQ"
+            pre_start = (earn_dt - timedelta(days=10)).strftime("%Y-%m-%d")
+            pre_end = (earn_dt - timedelta(days=1)).strftime("%Y-%m-%d")
+            post_end = (earn_dt + timedelta(days=2)).strftime("%Y-%m-%d")
+
+            usd_ovr = [("EQY_FUND_CRNCY", "USD")] if short in USD_OVERRIDE_TICKERS else []
+
+            # Pre-earnings consensus estimate (BDH with 1FQ at date before earnings)
+            est_eps = est_rev = None
+            for field, target in [("BEST_EPS", "est_eps"), ("BEST_SALES", "est_rev")]:
+                try:
+                    ovr = [("BEST_FPERIOD_OVERRIDE", "1FQ")] + usd_ovr
+                    df2 = blp.bdh(bt, field, pre_start, pre_end,
+                                  periodicitySelection="DAILY", overrides=ovr)
+                    tbl = df2.to_native()
+                    vals = [float(v) for v in tbl.column("value").to_pylist()]
+                    if vals:
+                        if target == "est_eps":
+                            est_eps = vals[-1]
+                        else:
+                            est_rev = vals[-1]
+                except Exception:
+                    pass
+
+            # Actual (BDP with past FQ offset — returns actual for completed quarters)
+            act_eps = act_rev = None
+            for field, target in [("BEST_EPS", "act_eps"), ("BEST_SALES", "act_rev")]:
+                try:
+                    ovr = [("BEST_FPERIOD_OVERRIDE", fq_offset)] + usd_ovr
+                    df3 = blp.bdp(bt, field, overrides=ovr)
+                    for row in df3.rows():
+                        val = float(row[2])
+                        if target == "act_eps":
+                            act_eps = val
+                        else:
+                            act_rev = val
+                except Exception:
+                    pass
+
+            # Stock price reaction
+            stock_rxn = None
+            try:
+                pre_dt = (earn_dt - timedelta(days=3)).strftime("%Y-%m-%d")
+                df4 = blp.bdh(bt, "PX_LAST", pre_dt, post_end)
+                tbl = df4.to_native()
+                dates = [str(d) for d in tbl.column("date").to_pylist()]
+                vals = [float(v) for v in tbl.column("value").to_pylist()]
+                pre_price = post_price = None
+                earn_str = q["date"]
+                for d, v in zip(dates, vals):
+                    if d < earn_str:
+                        pre_price = v
+                    elif d >= earn_str and post_price is None:
+                        post_price = v
+                if pre_price and post_price:
+                    stock_rxn = round((post_price - pre_price) / pre_price * 100, 1)
+            except Exception:
+                pass
+
+            # Compute beat/miss percentages
+            eps_beat = None
+            if est_eps and act_eps and est_eps != 0:
+                eps_beat = round((act_eps - est_eps) / abs(est_eps) * 100, 1)
+            rev_beat = None
+            if est_rev and act_rev and est_rev != 0:
+                rev_beat = round((act_rev - est_rev) / abs(est_rev) * 100, 1)
+
+            # Quarter label: "2025:Q4" -> "Q4'25"
+            parts = q["period"].split(":")
+            yr = parts[0][2:] if len(parts[0]) == 4 else parts[0]
+            qlabel = f"{parts[1]}'{yr}" if len(parts) > 1 else q["period"]
+
+            history.append({
+                "quarter": qlabel,
+                "eps_beat_pct": eps_beat,
+                "rev_beat_pct": rev_beat,
+                "stock_rxn": stock_rxn,
+            })
+
+        result[bt] = history
+
+    return result
+
+
 def pull_prior_year_annual_eps(bbg_tickers):
     """Pull prior FY actual EPS using IS_EPS (reported) for annual y/y.
 
@@ -423,12 +542,16 @@ def main():
     revisions_data = pull_revisions(bbg_tickers)
 
     # Step 6: EPS 4-week % change
-    print("\n[6/7] EPS 4-week change...")
+    print("\n[6/8] EPS 4-week change...")
     eps_4wk_data = pull_eps_4wk_change(bbg_tickers)
 
     # Step 7: Prior FY actual EPS (for annual y/y)
-    print("\n[7/7] Prior FY actual EPS...")
+    print("\n[7/8] Prior FY actual EPS...")
     prior_fy_eps = pull_prior_year_annual_eps(bbg_tickers)
+
+    # Step 8: Earnings history (beats/misses + stock reactions)
+    print("\n[8/8] Earnings history (last 4 quarters)...")
+    history_data = pull_earnings_history(bbg_tickers)
 
     # Assemble JSON
     companies = []
@@ -444,6 +567,7 @@ def main():
         revisions = revisions_data.get(bt, {"up": 0, "down": 0})
         eps_4wk_pct = eps_4wk_data.get(bt)
         prior_fy_eps_val = prior_fy_eps.get(bt)
+        history = history_data.get(bt, [])
 
         # Merge guidance from Bloomberg API and Call-extraction overrides
         go = guidance_overrides.get(short, {})
@@ -517,6 +641,7 @@ def main():
             "date_confirmed": earnings.get("confirmed", False),
             "revisions_4wk": revisions,
             "eps_4wk_pct": eps_4wk_pct,
+            "earnings_history": history,
             "metrics": metrics,
             "annual_metrics": annual_metrics,
         })
