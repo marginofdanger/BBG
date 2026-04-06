@@ -47,19 +47,15 @@
     }
   },
   "AVGO": {
-    "source_file": "FQ4_2025_guidance.md",
+    "source_file": "FQ1_2026_guidance.md",
     "quarterly": {
       "Revenue": {
-        "low": 19100.0,
-        "high": 19100.0
-      },
-      "EBITDA": {
-        "low": 67.0,
-        "high": 67.0
+        "low": 22000.0,
+        "high": 22000.0
       },
       "Gross Margin": {
-        "low": 100.0,
-        "high": 100.0
+        "low": 77.0,
+        "high": 77.0
       }
     },
     "annual": {}

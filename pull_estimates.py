@@ -13,7 +13,11 @@ from bloomberg import estimate_history, USD_OVERRIDE_TICKERS
 # Ticker lists
 # ---------------------------------------------------------------------------
 PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV"]
-WATCHLIST_CORE = ["FICO", "GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V"]
+WATCHLIST_CORE = ["FICO", "GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V",
+                  "BX", "BKNG", "HLT", "IBKR", "NET", "COST", "TSLA", "TMO", "COF", "AON", "MC"]
+
+# Non-US tickers that need explicit Bloomberg identifiers
+BBG_OVERRIDES = {"MC": "MC FP Equity"}
 
 CALENDAR_YEARS = [2025, 2026, 2027, 2028]
 LOOKBACK_CORE = 24   # months for portfolio + core watchlist
@@ -142,7 +146,7 @@ def _build_ticker_list():
     # Core watchlist
     for t in WATCHLIST_CORE:
         entries.append({
-            'short': t, 'bbg': f'{t} US Equity',
+            'short': t, 'bbg': BBG_OVERRIDES.get(t, f'{t} US Equity'),
             'group': 'Watchlist', 'category': '', 'lookback': LOOKBACK_CORE,
         })
 

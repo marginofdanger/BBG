@@ -184,11 +184,11 @@ let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '14');
 
 async function loadData() {
   try {
-    const idxResp = await fetch('output/snapshots/index_earnings.json');
+    const idxResp = await fetch('output/snapshots/index_earnings.json?v=' + Date.now());
     if (!idxResp.ok) { showEmpty(); return; }
     const dates = await idxResp.json();
     if (!dates.length) { showEmpty(); return; }
-    const dataResp = await fetch(`output/snapshots/earnings_${dates[0]}.json`);
+    const dataResp = await fetch(`output/snapshots/earnings_${dates[0]}.json?v=${Date.now()}`);
     if (!dataResp.ok) { showEmpty(); return; }
     DATA = await dataResp.json();
     document.getElementById('updated').textContent = `Last updated: ${DATA.snapshot_date}`;
@@ -410,9 +410,8 @@ function renderLanes(companies) {
     const headerLabel = isThisWeek ? `This Week &middot; ${monLabel} – ${friLabel}` : `${monLabel} – ${friLabel}`;
     lane.innerHTML = `<div class="lane-header ${headerClass}">${headerLabel}<span class="count">(${week.companies.length})</span></div>`;
 
-    const autoCollapse = week.companies.length > 3;
     for (const c of week.companies) {
-      lane.innerHTML += buildCard(c, autoCollapse);
+      lane.innerHTML += buildCard(c, false);
     }
     container.appendChild(lane);
   }
