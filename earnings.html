@@ -27,33 +27,28 @@ body {
 .btn-group button + button { border-left: none; }
 .btn-group button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
 
-/* Mini timeline */
+/* Mini timeline — flex flow */
 .mini-timeline {
-  margin-bottom: 20px; padding: 10px 16px 0; background: #fff; border-radius: 8px; border: 1px solid #e2e5e9;
+  display: flex; align-items: center; margin-bottom: 20px; padding: 8px 12px;
+  background: #fff; border-radius: 8px; border: 1px solid #e2e5e9;
+}
+.mini-timeline .tl-month { font-size: 10px; color: #aaa; font-weight: 600; padding: 0 6px; flex-shrink: 0; }
+.mini-timeline .tl-month-line { width: 1px; height: 18px; background: #ddd; flex-shrink: 0; }
+.mini-timeline .tl-gap { border-bottom: 1px solid #e8e8e8; flex-shrink: 0; }
+.mini-timeline .tl-tick {
+  display: flex; flex-direction: column; align-items: center; flex-shrink: 0; padding: 0 3px; cursor: pointer;
   position: relative;
 }
-.mini-timeline-inner {
-  position: relative; width: 100%; border-bottom: 1px solid #ddd; padding-bottom: 16px;
-}
-.mini-timeline .tick-group {
-  position: absolute; bottom: 18px; display: flex; flex-direction: column; align-items: center;
-  transform: translateX(-50%); cursor: pointer; z-index: 2;
-}
-.mini-timeline .tick-label {
-  font-size: 9px; font-weight: 600; line-height: 1.2; white-space: nowrap;
-}
-.mini-timeline .tick-label.confirmed { color: #2563eb; }
-.mini-timeline .tick-label.tentative { color: #93b4e8; }
-.mini-timeline .tick-group:hover .tick-label { color: #1d4ed8; }
-.mini-timeline .tick-group .tip {
+.mini-timeline .tl-tick .tl-name { font-size: 9px; font-weight: 600; line-height: 1.15; white-space: nowrap; }
+.mini-timeline .tl-tick .tl-name.confirmed { color: #2563eb; }
+.mini-timeline .tl-tick .tl-name.tentative { color: #93b4e8; }
+.mini-timeline .tl-tick:hover .tl-name { color: #1d4ed8; }
+.mini-timeline .tl-tick .tl-tip {
   display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
   background: #333; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 9px; white-space: nowrap;
   margin-bottom: 2px; z-index: 10;
 }
-.mini-timeline .tick-group:hover .tip { display: block; }
-.mini-timeline .month-label {
-  position: absolute; bottom: 2px; font-size: 10px; color: #aaa; z-index: 1;
-}
+.mini-timeline .tl-tick:hover .tl-tip { display: block; }
 
 /* Swim lanes */
 .lanes { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 16px; }
@@ -220,70 +215,88 @@ function renderTimeline(companies) {
   const end = new Date(today); end.setDate(end.getDate() + 90);
   const totalDays = (end - today) / 86400000;
 
-  const inner = document.createElement('div');
-  inner.className = 'mini-timeline-inner';
-
-  // Group tickers by date
+  // Group tickers by date, compute day offsets
   const byDate = {};
   for (const c of companies) {
     if (!c.earnings_date) continue;
     const d = new Date(c.earnings_date + 'T00:00:00');
-    const offset = (d - today) / 86400000;
-    if (offset < 0 || offset > totalDays) continue;
-    const pct = (offset / totalDays * 100);
-    if (!byDate[c.earnings_date]) byDate[c.earnings_date] = { pct, tickers: [] };
+    const days = (d - today) / 86400000;
+    if (days < 0 || days > totalDays) continue;
+    if (!byDate[c.earnings_date]) byDate[c.earnings_date] = { days, tickers: [] };
     byDate[c.earnings_date].tickers.push({ ticker: c.ticker, confirmed: c.date_confirmed });
   }
+  const groups = Object.entries(byDate).sort((a, b) => a[1].days - b[1].days);
 
-  // Sort groups and nudge apart so labels don't overlap.
-  // After rendering we'll measure, but for now use a fixed min gap.
-  const groups = Object.entries(byDate).sort((a, b) => a[1].pct - b[1].pct);
-  const positions = groups.map(([, g]) => g.pct);
-
-  // Nudge: ensure minimum 4.5% gap between adjacent groups
-  const minGap = 4.5;
-  for (let i = 1; i < positions.length; i++) {
-    if (positions[i] - positions[i - 1] < minGap) {
-      positions[i] = positions[i - 1] + minGap;
-    }
-  }
-  // If overflowed past 100, scale all positions into [1, 99]
-  const maxPos = positions.length ? positions[positions.length - 1] : 0;
-  if (maxPos > 99) {
-    const firstNat = groups[0][1].pct;
-    const scale = (99 - 1) / (maxPos - firstNat || 1);
-    for (let i = 0; i < positions.length; i++) {
-      positions[i] = 1 + (positions[i] - firstNat) * scale;
-    }
-  }
-
-  // Render ticker groups
-  let html = '';
-  for (let i = 0; i < groups.length; i++) {
-    const [dateStr, g] = groups[i];
-    const left = positions[i].toFixed(1);
-    html += `<div class="tick-group" style="left:${left}%">`;
-    for (const t of g.tickers) {
-      const cls = t.confirmed ? 'confirmed' : 'tentative';
-      html += `<span class="tick-label ${cls}">${t.ticker}</span>`;
-    }
-    html += `<span class="tip">${g.tickers.map(t => t.ticker).join(', ')} &middot; ${dateStr}</span>`;
-    html += `</div>`;
-  }
-
-  // Month labels below the line
-  let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
+  // Collect month boundaries within the range
+  const monthBounds = [];
+  let cursor = new Date(today.getFullYear(), today.getMonth() + 1, 1);
   while (cursor <= end) {
-    const offset = (cursor - today) / 86400000;
-    if (offset >= 0) {
-      const pct = (offset / totalDays * 100).toFixed(1);
-      html += `<span class="month-label" style="left:${pct}%">${cursor.toLocaleDateString('en', {month:'short'})}</span>`;
-    }
+    const days = (cursor - today) / 86400000;
+    monthBounds.push({ days, label: cursor.toLocaleDateString('en', { month: 'short' }) });
     cursor.setMonth(cursor.getMonth() + 1);
   }
 
-  inner.innerHTML = html;
-  container.appendChild(inner);
+  // Build a sorted list of items: ticks and month boundaries
+  // Each gets a "weight" for the flex gap before it
+  const items = []; // {type:'tick'|'month', ...}
+  let gi = 0, mi = 0;
+  while (gi < groups.length || mi < monthBounds.length) {
+    const gDays = gi < groups.length ? groups[gi][1].days : Infinity;
+    const mDays = mi < monthBounds.length ? monthBounds[mi].days : Infinity;
+    if (gDays <= mDays) {
+      items.push({ type: 'tick', dateStr: groups[gi][0], data: groups[gi][1] });
+      gi++;
+    } else {
+      items.push({ type: 'month', ...monthBounds[mi] });
+      mi++;
+    }
+  }
+
+  // Render: leading spacer, then for each item a gap + the item
+  // Gap flex-grow is proportional to the day distance from previous item
+  let html = '';
+  let prevDays = 0; // start from today
+
+  // Leading spacer (from today to first item)
+  if (items.length > 0) {
+    const firstDays = items[0].type === 'tick' ? items[0].data.days : items[0].days;
+    html += `<div class="tl-gap" style="flex-grow:${Math.max(1, firstDays)}"></div>`;
+  }
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const itemDays = item.type === 'tick' ? item.data.days : item.days;
+
+    if (i > 0) {
+      const prevItemDays = items[i - 1].type === 'tick' ? items[i - 1].data.days : items[i - 1].days;
+      const gap = Math.max(1, itemDays - prevItemDays);
+      html += `<div class="tl-gap" style="flex-grow:${gap}"></div>`;
+    }
+
+    if (item.type === 'month') {
+      html += `<div class="tl-month-line"></div>`;
+      html += `<span class="tl-month">${item.label}</span>`;
+    } else {
+      const g = item.data;
+      html += `<div class="tl-tick">`;
+      for (const t of g.tickers) {
+        const cls = t.confirmed ? 'confirmed' : 'tentative';
+        html += `<span class="tl-name ${cls}">${t.ticker}</span>`;
+      }
+      html += `<span class="tl-tip">${g.tickers.map(t => t.ticker).join(', ')} &middot; ${item.dateStr}</span>`;
+      html += `</div>`;
+    }
+  }
+
+  // Trailing spacer
+  if (items.length > 0) {
+    const lastDays = items[items.length - 1].type === 'tick'
+      ? items[items.length - 1].data.days : items[items.length - 1].days;
+    const trailing = Math.max(1, totalDays - lastDays);
+    html += `<div class="tl-gap" style="flex-grow:${trailing}"></div>`;
+  }
+
+  container.innerHTML = html;
 }
 
 // --- HELPERS ---
