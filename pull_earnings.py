@@ -85,8 +85,8 @@ def pull_earnings_dates(bbg_tickers):
 def pull_consensus(bbg_tickers, metrics_config):
     """Pull consensus estimates for each ticker's configured metrics.
 
-    Uses 1BF (next quarter) period override for quarterly estimates,
-    and 1BA for annual estimates.
+    Uses 1BQ (next quarter) period override for quarterly estimates,
+    and 1BF for annual estimates.
 
     Returns {bbg_ticker: {metric_name: {"quarterly": value, "annual": value}}}.
     """
@@ -104,8 +104,8 @@ def pull_consensus(bbg_tickers, metrics_config):
                 continue
 
             bbg_field = field_map[metric_name]["field"]
-            overrides_q = [("BEST_FPERIOD_OVERRIDE", "1BF")]
-            overrides_a = [("BEST_FPERIOD_OVERRIDE", "1BA")]
+            overrides_q = [("BEST_FPERIOD_OVERRIDE", "1FQ")]
+            overrides_a = [("BEST_FPERIOD_OVERRIDE", "1BF")]
             if short in USD_OVERRIDE_TICKERS:
                 overrides_q.append(("EQY_FUND_CRNCY", "USD"))
                 overrides_a.append(("EQY_FUND_CRNCY", "USD"))
@@ -140,7 +140,7 @@ def pull_consensus(bbg_tickers, metrics_config):
 def pull_prior_year(bbg_tickers, metrics_config):
     """Pull prior-year actuals for y/y computation.
 
-    Uses 0BF (last reported quarter) and 0BA (last reported annual).
+    Uses -3BQ (same quarter last year) and 0BF (last reported annual).
 
     Returns {bbg_ticker: {metric_name: {"quarterly": value, "annual": value}}}.
     """
@@ -158,8 +158,8 @@ def pull_prior_year(bbg_tickers, metrics_config):
                 continue
 
             bbg_field = field_map[metric_name]["field"]
-            overrides_q = [("BEST_FPERIOD_OVERRIDE", "0BF")]
-            overrides_a = [("BEST_FPERIOD_OVERRIDE", "0BA")]
+            overrides_q = [("BEST_FPERIOD_OVERRIDE", "-3FQ")]
+            overrides_a = [("BEST_FPERIOD_OVERRIDE", "0BF")]
             if short in USD_OVERRIDE_TICKERS:
                 overrides_q.append(("EQY_FUND_CRNCY", "USD"))
                 overrides_a.append(("EQY_FUND_CRNCY", "USD"))
@@ -211,11 +211,11 @@ def pull_guidance(bbg_tickers, metrics_config):
 
             gf = guidance_fields[metric_name]
 
-            # Pull quarterly guidance (1BF)
+            # Pull quarterly guidance (1BQ)
             q_guidance = None
             try:
                 fields = [gf["high"], gf["low"]]
-                overrides = [("BEST_FPERIOD_OVERRIDE", "1BF")]
+                overrides = [("BEST_FPERIOD_OVERRIDE", "1FQ")]
                 if short in USD_OVERRIDE_TICKERS:
                     overrides.append(("EQY_FUND_CRNCY", "USD"))
                 df = blp.bdp(bt, fields, overrides=overrides)
@@ -230,11 +230,11 @@ def pull_guidance(bbg_tickers, metrics_config):
             except Exception:
                 pass
 
-            # Pull annual guidance (1BA)
+            # Pull annual guidance (1BF)
             a_guidance = None
             try:
                 fields = [gf["high"], gf["low"]]
-                overrides = [("BEST_FPERIOD_OVERRIDE", "1BA")]
+                overrides = [("BEST_FPERIOD_OVERRIDE", "1BF")]
                 if short in USD_OVERRIDE_TICKERS:
                     overrides.append(("EQY_FUND_CRNCY", "USD"))
                 df = blp.bdp(bt, fields, overrides=overrides)
@@ -260,7 +260,7 @@ def pull_revisions(bbg_tickers):
     Returns {bbg_ticker: {up: int, down: int}}.
     """
     fields = ["BEST_EPS_NUMUP", "BEST_EPS_NUMDN"]
-    overrides = [("BEST_FPERIOD_OVERRIDE", "1BF")]
+    overrides = [("BEST_FPERIOD_OVERRIDE", "1FQ")]
     result = {}
     for bt in bbg_tickers:
         short = bt.split(" ")[0]

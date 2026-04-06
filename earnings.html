@@ -26,9 +26,6 @@ body {
 .btn-group button:last-child { border-radius: 0 4px 4px 0; }
 .btn-group button + button { border-left: none; }
 .btn-group button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
-.zoom-wrap { display: flex; align-items: center; gap: 6px; }
-.zoom-wrap input[type=range] { width: 100px; }
-.zoom-label { font-size: 10px; color: #888; min-width: 50px; }
 
 /* Mini timeline */
 .mini-timeline {
@@ -73,16 +70,18 @@ body {
 .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; cursor: pointer; }
 .ticker { font-weight: 700; font-size: 15px; color: #111; }
 .date-badge { font-size: 10px; color: #666; background: #f1f3f5; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
-.date-tentative { font-style: italic; }
-.date-tentative::after { content: " (est)"; font-size: 9px; color: #999; }
-.confirmed-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #2563eb; margin-right: 4px; vertical-align: middle; }
-.tentative-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; border: 1.5px dashed #2563eb; margin-right: 4px; vertical-align: middle; }
+.card-badges { display: flex; align-items: center; gap: 6px; }
 .urgency {
   font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px;
 }
 .urgency.hot { background: #fef2f2; color: #dc2626; }
 .urgency.soon { background: #fffbeb; color: #d97706; }
 .urgency.normal { background: #f0fdf4; color: #16a34a; }
+.status-badge {
+  font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+}
+.status-badge.confirmed { background: #eff6ff; color: #2563eb; }
+.status-badge.est { background: #f1f3f5; color: #999; border: 1px dashed #ccc; }
 .revisions {
   font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 4px;
   display: inline-block; margin-bottom: 8px;
@@ -140,14 +139,15 @@ body {
   <div class="controls">
     <label>Show:</label>
     <div class="btn-group" id="filter-group">
-      <button class="active" data-filter="all">All</button>
-      <button data-filter="Portfolio">Portfolio</button>
+      <button data-filter="all">All</button>
+      <button class="active" data-filter="Portfolio">Portfolio</button>
       <button data-filter="Watchlist">Watchlist</button>
     </div>
-    <div class="zoom-wrap">
-      <label>Zoom:</label>
-      <input type="range" id="zoom" min="7" max="90" value="30">
-      <span class="zoom-label" id="zoom-label">30 days</span>
+    <label>Range:</label>
+    <div class="btn-group" id="range-group">
+      <button data-days="7">1 Week</button>
+      <button class="active" data-days="14">2 Weeks</button>
+      <button data-days="30">1 Month</button>
     </div>
   </div>
 </div>
@@ -162,8 +162,8 @@ body {
 
 <script>
 let DATA = null;
-let FILTER = localStorage.getItem('earnings_filter') || 'all';
-let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '30');
+let FILTER = localStorage.getItem('earnings_filter') || 'Portfolio';
+let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '14');
 
 async function loadData() {
   try {
@@ -362,17 +362,18 @@ function buildCard(c, collapsed) {
   const urg = urgencyClass(days);
   const rev = c.revisions_4wk;
   const revCls = revisionsClass(rev);
-  const dotCls = c.date_confirmed ? 'confirmed-dot' : 'tentative-dot';
-  const dateCls = c.date_confirmed ? '' : 'date-tentative';
   const dateObj = new Date(c.earnings_date + 'T00:00:00');
   const dateLabel = dateObj.toLocaleDateString('en', { weekday: 'short', month: 'short', day: 'numeric' });
   const timeLabel = c.earnings_time || '';
+  const statusCls = c.date_confirmed ? 'confirmed' : 'est';
+  const statusLabel = c.date_confirmed ? 'Confirmed' : 'Est';
 
   let html = `<div class="card${collapsed ? ' collapsed' : ''}">`;
   html += `<div class="card-head">`;
-  html += `<div><span class="${dotCls}"></span><span class="ticker">${c.ticker}</span>`;
-  html += `<span class="date-badge ${dateCls}">${dateLabel}${timeLabel ? ' &middot; ' + timeLabel : ''}</span></div>`;
-  html += `<span class="urgency ${urg}">${days} DAY${days !== 1 ? 'S' : ''}</span>`;
+  html += `<div><span class="ticker">${c.ticker}</span>`;
+  html += `<span class="date-badge">${dateLabel}${timeLabel ? ' &middot; ' + timeLabel : ''}</span></div>`;
+  html += `<div class="card-badges"><span class="status-badge ${statusCls}">${statusLabel}</span>`;
+  html += `<span class="urgency ${urg}">${days} DAY${days !== 1 ? 'S' : ''}</span></div>`;
   html += `</div>`;
 
   // Collapsed summary
@@ -449,18 +450,21 @@ document.getElementById('filter-group').addEventListener('click', e => {
   render();
 });
 
-document.getElementById('zoom').addEventListener('input', e => {
-  ZOOM_DAYS = parseInt(e.target.value);
-  document.getElementById('zoom-label').textContent = ZOOM_DAYS + ' days';
+document.getElementById('range-group').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#range-group button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  ZOOM_DAYS = parseInt(e.target.dataset.days);
   localStorage.setItem('earnings_zoom', ZOOM_DAYS);
   render();
 });
 
 // --- INIT ---
-document.getElementById('zoom').value = ZOOM_DAYS;
-document.getElementById('zoom-label').textContent = ZOOM_DAYS + ' days';
 document.querySelectorAll('#filter-group button').forEach(b => {
   b.classList.toggle('active', b.dataset.filter === FILTER);
+});
+document.querySelectorAll('#range-group button').forEach(b => {
+  b.classList.toggle('active', parseInt(b.dataset.days) === ZOOM_DAYS);
 });
 loadData();
 </script>
