@@ -202,15 +202,16 @@ td.spark-cell { padding: 4px 2px; }
   let currentEstData = null, currentPriceData = null;
 
   try {
+    const cb = '?_=' + Date.now();
     const [estResp, priceResp] = await Promise.all([
-      fetch('output/snapshots/index_estimates.json'),
-      fetch('output/snapshots/index_prices.json').catch(() => null),
+      fetch('output/snapshots/index_estimates.json' + cb),
+      fetch('output/snapshots/index_prices.json' + cb).catch(() => null),
     ]);
     if (estResp.ok) estDates = [...(await estResp.json())].sort();
     if (priceResp && priceResp.ok) priceDates = [...(await priceResp.json())].sort();
     // Fallback: try legacy index.json
     if (!estDates.length) {
-      const legacyResp = await fetch('output/snapshots/index.json');
+      const legacyResp = await fetch('output/snapshots/index.json' + cb);
       if (legacyResp.ok) estDates = [...(await legacyResp.json())].sort();
     }
   } catch (e) {}
