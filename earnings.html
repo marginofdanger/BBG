@@ -34,20 +34,25 @@ body {
 }
 .mini-timeline .month-label { font-size: 10px; color: #888; min-width: 30px; }
 .mini-timeline .track {
-  flex: 1; height: 28px; background: transparent; border-bottom: 1px solid #ddd; position: relative; cursor: pointer;
+  flex: 1; height: auto; min-height: 16px; background: transparent; border-bottom: 1px solid #ddd;
+  position: relative; display: flex; align-items: flex-end; gap: 0; padding-bottom: 2px;
 }
-.mini-timeline .tick {
-  position: absolute; cursor: pointer; transform: translateX(-50%);
-  font-size: 9px; font-weight: 600; white-space: nowrap; line-height: 1;
+.mini-timeline .tick-group {
+  position: absolute; display: flex; flex-direction: column; align-items: center;
+  transform: translateX(-50%); gap: 0; cursor: pointer;
 }
-.mini-timeline .tick.confirmed { color: #2563eb; }
-.mini-timeline .tick.tentative { color: #93b4e8; }
-.mini-timeline .tick:hover { color: #1d4ed8; }
-.mini-timeline .tick .tip {
-  display: none; position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+.mini-timeline .tick-label {
+  font-size: 9px; font-weight: 600; line-height: 1.2; white-space: nowrap;
+}
+.mini-timeline .tick-label.confirmed { color: #2563eb; }
+.mini-timeline .tick-label.tentative { color: #93b4e8; }
+.mini-timeline .tick-label:hover { color: #1d4ed8; }
+.mini-timeline .tick-group .tip {
+  display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
   background: #333; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 9px; white-space: nowrap;
+  margin-bottom: 4px;
 }
-.mini-timeline .tick:hover .tip { display: block; }
+.mini-timeline .tick-group:hover .tip { display: block; }
 
 /* Swim lanes */
 .lanes { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 16px; }
@@ -221,32 +226,35 @@ function renderTimeline(companies) {
   let html = `<span class="month-label">${months[0].toLocaleDateString('en', {month:'short'})}</span>`;
   html += `<div class="track" id="timeline-track">`;
 
-  // Build list of ticks with positions, then stagger overlapping ones
-  const ticks = [];
+  // Build ticks and group by date
+  const byDate = {};
   for (const c of companies) {
     if (!c.earnings_date) continue;
     const d = new Date(c.earnings_date + 'T00:00:00');
     const offset = (d - today) / 86400000;
     if (offset < 0 || offset > totalDays) continue;
     const pct = parseFloat((offset / totalDays * 100).toFixed(1));
-    ticks.push({ ticker: c.ticker, pct, confirmed: c.date_confirmed, date: c.earnings_date });
+    if (!byDate[c.earnings_date]) byDate[c.earnings_date] = { pct, tickers: [] };
+    byDate[c.earnings_date].tickers.push({ ticker: c.ticker, confirmed: c.date_confirmed });
   }
-  ticks.sort((a, b) => a.pct - b.pct);
 
-  // Stagger vertically when tickers are close (within 3% of track width)
-  const rows = [0, 14]; // two vertical positions (top, bottom)
-  let lastPctPerRow = [-999, -999];
-  for (const t of ticks) {
-    const cls = t.confirmed ? 'confirmed' : 'tentative';
-    // Pick the row where there's most space
-    let bestRow = 0;
-    if (t.pct - lastPctPerRow[0] < 3 && t.pct - lastPctPerRow[1] >= 3) bestRow = 1;
-    else if (t.pct - lastPctPerRow[0] >= 3) bestRow = 0;
-    else bestRow = lastPctPerRow[0] <= lastPctPerRow[1] ? 0 : 1;
-    lastPctPerRow[bestRow] = t.pct;
-    const top = rows[bestRow];
-    html += `<div class="tick ${cls}" style="left:${t.pct}%;top:${top}px" data-ticker="${t.ticker}">`;
-    html += `${t.ticker}<span class="tip">${t.ticker} ${t.date}</span></div>`;
+  // Sort groups by position, nudge apart if too close (min 4% spacing)
+  const groups = Object.values(byDate).sort((a, b) => a.pct - b.pct);
+  for (let i = 1; i < groups.length; i++) {
+    if (groups[i].pct - groups[i - 1].pct < 4) {
+      groups[i].pct = Math.min(groups[i - 1].pct + 4, 98);
+    }
+  }
+
+  for (const g of groups) {
+    const dateStr = Object.keys(byDate).find(k => byDate[k] === g) || '';
+    html += `<div class="tick-group" style="left:${g.pct}%">`;
+    for (const t of g.tickers) {
+      const cls = t.confirmed ? 'confirmed' : 'tentative';
+      html += `<span class="tick-label ${cls}">${t.ticker}</span>`;
+    }
+    html += `<span class="tip">${g.tickers.map(t => t.ticker).join(', ')} ${dateStr}</span>`;
+    html += `</div>`;
   }
 
   html += `</div>`;
