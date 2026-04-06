@@ -500,7 +500,7 @@ function buildCard(c, collapsed) {
   // Earnings history (last 4 quarters)
   if (c.earnings_history && c.earnings_history.length) {
     html += `<div class="hist-section">`;
-    html += `<div class="hist-label">Last ${c.earnings_history.length} Quarters</div>`;
+    html += `<div class="hist-label">Last ${c.earnings_history.length} Quarters Beat/Miss</div>`;
     html += `<table class="hist-table">`;
     html += `<tr><th></th>`;
     for (const h of c.earnings_history) {
