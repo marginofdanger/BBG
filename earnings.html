@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earnings Calendar</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f8f9fa; color: #1a1a1a; font-size: 13px; padding: 20px 24px;
+}
+
+/* Header */
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.header h1 { font-size: 20px; font-weight: 700; }
+.header .updated { font-size: 11px; color: #888; margin-top: 2px; }
+.controls { display: flex; align-items: center; gap: 12px; }
+.controls label { font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.btn-group { display: flex; gap: 0; }
+.btn-group button {
+  padding: 4px 12px; font-size: 11px; border: 1px solid #ccc; background: #fff;
+  cursor: pointer; color: #555;
+}
+.btn-group button:first-child { border-radius: 4px 0 0 4px; }
+.btn-group button:last-child { border-radius: 0 4px 4px 0; }
+.btn-group button + button { border-left: none; }
+.btn-group button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+.zoom-wrap { display: flex; align-items: center; gap: 6px; }
+.zoom-wrap input[type=range] { width: 100px; }
+.zoom-label { font-size: 10px; color: #888; min-width: 50px; }
+
+/* Mini timeline */
+.mini-timeline {
+  display: flex; align-items: center; gap: 4px; margin-bottom: 20px;
+  padding: 8px 16px; background: #fff; border-radius: 8px; border: 1px solid #e2e5e9;
+}
+.mini-timeline .month-label { font-size: 10px; color: #888; min-width: 30px; }
+.mini-timeline .track {
+  flex: 1; height: 4px; background: #e8e8e8; border-radius: 2px; position: relative; cursor: pointer;
+}
+.mini-timeline .tick {
+  position: absolute; width: 6px; height: 10px; border-radius: 1px; top: -3px; cursor: pointer;
+}
+.mini-timeline .tick.confirmed { background: #2563eb; }
+.mini-timeline .tick.tentative { background: transparent; border: 1.5px dashed #2563eb; }
+.mini-timeline .tick:hover { transform: scale(1.5); }
+.mini-timeline .tick .tip {
+  display: none; position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%);
+  background: #333; color: #fff; padding: 2px 6px; border-radius: 3px; font-size: 9px; white-space: nowrap;
+}
+.mini-timeline .tick:hover .tip { display: block; }
+
+/* Swim lanes */
+.lanes { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 16px; }
+.lane { min-width: 340px; flex: 1; max-width: 420px; }
+.lane-header {
+  font-size: 12px; font-weight: 700; padding: 8px 12px; margin-bottom: 10px;
+  border-bottom: 2px solid; border-radius: 4px 4px 0 0;
+}
+.lane-header.this-week { color: #d97706; border-color: #d97706; background: #fffbeb; }
+.lane-header.next-week { color: #2563eb; border-color: #2563eb; background: #eff6ff; }
+.lane-header.later { color: #6b7280; border-color: #d1d5db; background: #f9fafb; }
+.lane-header .count { font-weight: 400; color: #999; font-size: 11px; margin-left: 4px; }
+
+/* Cards */
+.card {
+  background: #fff; border-radius: 8px; padding: 14px; margin-bottom: 10px;
+  border: 1px solid #e2e5e9; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.card:hover { border-color: #93c5fd; box-shadow: 0 2px 8px rgba(37,99,235,0.08); }
+.card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; cursor: pointer; }
+.ticker { font-weight: 700; font-size: 15px; color: #111; }
+.date-badge { font-size: 10px; color: #666; background: #f1f3f5; padding: 2px 8px; border-radius: 4px; margin-left: 8px; }
+.date-tentative { font-style: italic; }
+.date-tentative::after { content: " (est)"; font-size: 9px; color: #999; }
+.confirmed-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #2563eb; margin-right: 4px; vertical-align: middle; }
+.tentative-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; border: 1.5px dashed #2563eb; margin-right: 4px; vertical-align: middle; }
+.urgency {
+  font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+}
+.urgency.hot { background: #fef2f2; color: #dc2626; }
+.urgency.soon { background: #fffbeb; color: #d97706; }
+.urgency.normal { background: #f0fdf4; color: #16a34a; }
+.revisions {
+  font-size: 10px; font-weight: 600; padding: 4px 8px; border-radius: 4px;
+  display: inline-block; margin-bottom: 8px;
+}
+.revisions.positive { background: #f0fdf4; color: #16a34a; }
+.revisions.mixed { background: #fffbeb; color: #d97706; }
+.revisions.negative { background: #fef2f2; color: #dc2626; }
+
+/* Metrics table */
+.metrics-table { width: 100%; font-size: 11px; border-collapse: collapse; }
+.metrics-table th {
+  text-align: left; color: #999; font-weight: 600; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.3px; padding: 4px 0; border-bottom: 1px solid #f0f0f0;
+}
+.metrics-table th:not(:first-child) { text-align: right; }
+.metrics-table td { padding: 5px 0; border-bottom: 1px solid #f8f8f8; }
+.metrics-table td:not(:first-child) { text-align: right; }
+.metric-name { color: #444; font-weight: 500; }
+.guidance { color: #999; font-size: 10px; }
+.consensus { color: #111; font-weight: 600; }
+.yoy { font-size: 10px; font-weight: 600; }
+.yoy.up { color: #16a34a; }
+.yoy.down { color: #dc2626; }
+.vs-guide { font-size: 10px; font-weight: 600; }
+.vs-guide.above { color: #16a34a; }
+.vs-guide.mid { color: #d97706; }
+.vs-guide.below { color: #dc2626; }
+.vs-guide.na { color: #999; }
+.section-label {
+  font-size: 9px; color: #aaa; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; padding: 6px 0 2px;
+}
+
+/* Collapsed card */
+.card.collapsed .card-body { display: none; }
+.card.collapsed { cursor: pointer; }
+.card-summary {
+  display: none; align-items: center; justify-content: space-between;
+  font-size: 11px; color: #666;
+}
+.card.collapsed .card-summary { display: flex; }
+.card-summary .expand-icon { color: #999; }
+
+/* Empty state */
+.empty { text-align: center; padding: 60px 20px; color: #999; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Earnings Calendar</h1>
+    <div class="updated" id="updated"></div>
+  </div>
+  <div class="controls">
+    <label>Show:</label>
+    <div class="btn-group" id="filter-group">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="Portfolio">Portfolio</button>
+      <button data-filter="Watchlist">Watchlist</button>
+    </div>
+    <div class="zoom-wrap">
+      <label>Zoom:</label>
+      <input type="range" id="zoom" min="7" max="90" value="30">
+      <span class="zoom-label" id="zoom-label">30 days</span>
+    </div>
+  </div>
+</div>
+
+<div class="mini-timeline" id="mini-timeline"></div>
+
+<div class="lanes" id="lanes"></div>
+
+<div class="empty" id="empty" style="display:none">
+  No earnings data found. Run <code>python pull_earnings.py</code> to generate a snapshot.
+</div>
+
+<script>
+let DATA = null;
+let FILTER = localStorage.getItem('earnings_filter') || 'all';
+let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '30');
+
+async function loadData() {
+  try {
+    const idxResp = await fetch('output/snapshots/index_earnings.json');
+    if (!idxResp.ok) { showEmpty(); return; }
+    const dates = await idxResp.json();
+    if (!dates.length) { showEmpty(); return; }
+    const dataResp = await fetch(`output/snapshots/earnings_${dates[0]}.json`);
+    if (!dataResp.ok) { showEmpty(); return; }
+    DATA = await dataResp.json();
+    document.getElementById('updated').textContent = `Last updated: ${DATA.snapshot_date}`;
+    render();
+  } catch (e) {
+    console.error(e);
+    showEmpty();
+  }
+}
+
+function showEmpty() {
+  document.getElementById('empty').style.display = 'block';
+  document.getElementById('lanes').style.display = 'none';
+  document.getElementById('mini-timeline').style.display = 'none';
+}
+
+function filteredCompanies() {
+  if (!DATA) return [];
+  if (FILTER === 'all') return DATA.companies;
+  return DATA.companies.filter(c => c.group === FILTER);
+}
+
+function render() {
+  const companies = filteredCompanies();
+  if (!companies.length) { showEmpty(); return; }
+  document.getElementById('empty').style.display = 'none';
+  document.getElementById('lanes').style.display = 'flex';
+  document.getElementById('mini-timeline').style.display = 'flex';
+  renderTimeline(companies);
+  renderLanes(companies);
+}
+
+// --- TIMELINE ---
+function renderTimeline(companies) {
+  const container = document.getElementById('mini-timeline');
+  container.innerHTML = '';
+  const today = new Date(DATA.snapshot_date + 'T00:00:00');
+  const end = new Date(today); end.setDate(end.getDate() + 90);
+  const months = [];
+  let cursor = new Date(today.getFullYear(), today.getMonth(), 1);
+  while (cursor <= end) {
+    months.push(new Date(cursor));
+    cursor.setMonth(cursor.getMonth() + 1);
+  }
+  const totalDays = (end - today) / 86400000;
+  let html = `<span class="month-label">${months[0].toLocaleDateString('en', {month:'short'})}</span>`;
+  html += `<div class="track" id="timeline-track">`;
+  for (const c of companies) {
+    if (!c.earnings_date) continue;
+    const d = new Date(c.earnings_date + 'T00:00:00');
+    const offset = (d - today) / 86400000;
+    if (offset < 0 || offset > totalDays) continue;
+    const pct = (offset / totalDays * 100).toFixed(1);
+    const cls = c.date_confirmed ? 'confirmed' : 'tentative';
+    html += `<div class="tick ${cls}" style="left:${pct}%" data-ticker="${c.ticker}">`;
+    html += `<span class="tip">${c.ticker} ${c.earnings_date}</span></div>`;
+  }
+  html += `</div>`;
+  html += `<span class="month-label">${months[months.length - 1].toLocaleDateString('en', {month:'short'})}</span>`;
+  container.innerHTML = html;
+}
+
+// --- HELPERS ---
+function daysUntil(dateStr, snapshotDate) {
+  const d = new Date(dateStr + 'T00:00:00');
+  const today = new Date(snapshotDate + 'T00:00:00');
+  return Math.ceil((d - today) / 86400000);
+}
+function urgencyClass(days) {
+  if (days < 5) return 'hot';
+  if (days < 14) return 'soon';
+  return 'normal';
+}
+function revisionsClass(rev) {
+  const net = rev.up - rev.down;
+  if (net > 0 && rev.down === 0) return 'positive';
+  if (net < 0 && rev.up === 0) return 'negative';
+  return 'mixed';
+}
+function formatGuidance(low, high) {
+  if (low == null && high == null) return '&mdash;';
+  if (low === high) return formatNum(low);
+  return `${formatNum(low)} &ndash; ${formatNum(high)}`;
+}
+function formatNum(v) {
+  if (v == null) return '&mdash;';
+  const abs = Math.abs(v);
+  if (abs >= 1000) return `$${(v / 1000).toFixed(1)}B`;
+  if (abs >= 100) return `$${v.toFixed(0)}M`;
+  if (abs >= 1) return v.toFixed(2);
+  return v.toFixed(2);
+}
+function vsGuideClass(vs) {
+  if (vs === 'above') return 'above';
+  if (vs === 'mid' || vs === 'at guide') return 'mid';
+  if (vs === 'below') return 'below';
+  return 'na';
+}
+function yoyClass(yoy) {
+  if (!yoy) return '';
+  return yoy.startsWith('-') ? 'down' : 'up';
+}
+
+// --- SWIM LANES ---
+function renderLanes(companies) {
+  const container = document.getElementById('lanes');
+  container.innerHTML = '';
+  const today = new Date(DATA.snapshot_date + 'T00:00:00');
+  const cutoff = new Date(today);
+  cutoff.setDate(cutoff.getDate() + ZOOM_DAYS);
+
+  // Split into dated and undated
+  const dated = companies.filter(c => {
+    if (!c.earnings_date) return false;
+    const d = new Date(c.earnings_date + 'T00:00:00');
+    return d >= today && d <= cutoff;
+  });
+  const noDate = companies.filter(c => !c.earnings_date);
+
+  if (!dated.length && !noDate.length) {
+    container.innerHTML = '<div class="empty">No earnings in this window. Try zooming out.</div>';
+    return;
+  }
+
+  // Group by ISO week (Mon-Sun)
+  const weeks = {};
+  for (const c of dated) {
+    const d = new Date(c.earnings_date + 'T00:00:00');
+    const day = d.getDay();
+    const mon = new Date(d);
+    mon.setDate(d.getDate() - ((day + 6) % 7));
+    const key = mon.toISOString().slice(0, 10);
+    if (!weeks[key]) weeks[key] = { monday: new Date(mon), companies: [] };
+    weeks[key].companies.push(c);
+  }
+
+  const sortedWeeks = Object.keys(weeks).sort();
+  const todayMon = new Date(today);
+  todayMon.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+  const todayMonKey = todayMon.toISOString().slice(0, 10);
+  const nextMonKey = new Date(todayMon.getTime() + 7 * 86400000).toISOString().slice(0, 10);
+
+  for (const key of sortedWeeks) {
+    const week = weeks[key];
+    const fri = new Date(week.monday);
+    fri.setDate(fri.getDate() + 4);
+    const monLabel = week.monday.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+    const friLabel = fri.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+
+    let headerClass = 'later';
+    if (key === todayMonKey) headerClass = 'this-week';
+    else if (key === nextMonKey) headerClass = 'next-week';
+
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    const isThisWeek = key === todayMonKey;
+    const headerLabel = isThisWeek ? `This Week &middot; ${monLabel} – ${friLabel}` : `${monLabel} – ${friLabel}`;
+    lane.innerHTML = `<div class="lane-header ${headerClass}">${headerLabel}<span class="count">(${week.companies.length})</span></div>`;
+
+    const autoCollapse = week.companies.length > 3;
+    for (const c of week.companies) {
+      lane.innerHTML += buildCard(c, autoCollapse);
+    }
+    container.appendChild(lane);
+  }
+
+  // No-date lane
+  if (noDate.length) {
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    lane.innerHTML = `<div class="lane-header later">No Date Set<span class="count">(${noDate.length})</span></div>`;
+    for (const c of noDate) {
+      lane.innerHTML += buildCardNoDate(c);
+    }
+    container.appendChild(lane);
+  }
+
+  // Attach expand/collapse handlers
+  container.querySelectorAll('.card').forEach(card => {
+    card.querySelector('.card-head').addEventListener('click', () => {
+      card.classList.toggle('collapsed');
+    });
+  });
+}
+
+function buildCard(c, collapsed) {
+  const days = daysUntil(c.earnings_date, DATA.snapshot_date);
+  const urg = urgencyClass(days);
+  const rev = c.revisions_4wk;
+  const revCls = revisionsClass(rev);
+  const dotCls = c.date_confirmed ? 'confirmed-dot' : 'tentative-dot';
+  const dateCls = c.date_confirmed ? '' : 'date-tentative';
+  const dateObj = new Date(c.earnings_date + 'T00:00:00');
+  const dateLabel = dateObj.toLocaleDateString('en', { weekday: 'short', month: 'short', day: 'numeric' });
+  const timeLabel = c.earnings_time || '';
+
+  let html = `<div class="card${collapsed ? ' collapsed' : ''}">`;
+  html += `<div class="card-head">`;
+  html += `<div><span class="${dotCls}"></span><span class="ticker">${c.ticker}</span>`;
+  html += `<span class="date-badge ${dateCls}">${dateLabel}${timeLabel ? ' &middot; ' + timeLabel : ''}</span></div>`;
+  html += `<span class="urgency ${urg}">${days} DAY${days !== 1 ? 'S' : ''}</span>`;
+  html += `</div>`;
+
+  // Collapsed summary
+  const epsMetric = c.metrics.find(m => m.name === 'EPS');
+  const epsStr = epsMetric && epsMetric.consensus != null ? `EPS: ${epsMetric.consensus.toFixed(2)}` : '';
+  html += `<div class="card-summary">`;
+  html += `<span>${epsStr}</span>`;
+  html += `<span class="revisions ${revCls}" style="margin:0">&#9650;${rev.up}/&#9660;${rev.down}</span>`;
+  html += `<span class="expand-icon">&#9656;</span>`;
+  html += `</div>`;
+
+  // Card body
+  html += `<div class="card-body">`;
+  html += `<div class="revisions ${revCls}">&#9650; ${rev.up} up / &#9660; ${rev.down} down (4wk)</div>`;
+  html += `<table class="metrics-table">`;
+  html += `<tr><th>Metric</th><th>Guidance</th><th>Cons.</th><th>Y/Y</th><th>vs Guide</th></tr>`;
+  for (const m of c.metrics) {
+    html += `<tr>`;
+    html += `<td class="metric-name">${m.name}</td>`;
+    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high)}</td>`;
+    html += `<td class="consensus">${m.consensus != null ? formatNum(m.consensus) : '&mdash;'}</td>`;
+    html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
+    html += `<td class="vs-guide ${vsGuideClass(m.vs_guide)}">${m.vs_guide}</td>`;
+    html += `</tr>`;
+  }
+  if (c.annual_metrics && c.annual_metrics.length) {
+    html += `<tr><td colspan="5" class="section-label">Full Year</td></tr>`;
+    for (const m of c.annual_metrics) {
+      html += `<tr>`;
+      html += `<td class="metric-name">${m.name} (FY)</td>`;
+      html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high)}</td>`;
+      html += `<td class="consensus">${m.consensus != null ? formatNum(m.consensus) : '&mdash;'}</td>`;
+      html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
+      html += `<td class="vs-guide ${vsGuideClass(m.vs_guide)}">${m.vs_guide}</td>`;
+      html += `</tr>`;
+    }
+  }
+  html += `</table></div></div>`;
+  return html;
+}
+
+function buildCardNoDate(c) {
+  const rev = c.revisions_4wk;
+  const revCls = revisionsClass(rev);
+  let html = `<div class="card">`;
+  html += `<div class="card-head">`;
+  html += `<div><span class="ticker">${c.ticker}</span>`;
+  html += `<span class="date-badge" style="color:#999">TBD</span></div>`;
+  html += `</div>`;
+  html += `<div class="card-body">`;
+  html += `<div class="revisions ${revCls}">&#9650; ${rev.up} up / &#9660; ${rev.down} down (4wk)</div>`;
+  html += `<table class="metrics-table">`;
+  html += `<tr><th>Metric</th><th>Guidance</th><th>Cons.</th><th>Y/Y</th><th>vs Guide</th></tr>`;
+  for (const m of c.metrics) {
+    html += `<tr>`;
+    html += `<td class="metric-name">${m.name}</td>`;
+    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high)}</td>`;
+    html += `<td class="consensus">${m.consensus != null ? formatNum(m.consensus) : '&mdash;'}</td>`;
+    html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
+    html += `<td class="vs-guide ${vsGuideClass(m.vs_guide)}">${m.vs_guide}</td>`;
+    html += `</tr>`;
+  }
+  html += `</table></div></div>`;
+  return html;
+}
+
+// --- EVENT LISTENERS ---
+document.getElementById('filter-group').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#filter-group button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  FILTER = e.target.dataset.filter;
+  localStorage.setItem('earnings_filter', FILTER);
+  render();
+});
+
+document.getElementById('zoom').addEventListener('input', e => {
+  ZOOM_DAYS = parseInt(e.target.value);
+  document.getElementById('zoom-label').textContent = ZOOM_DAYS + ' days';
+  localStorage.setItem('earnings_zoom', ZOOM_DAYS);
+  render();
+});
+
+// --- INIT ---
+document.getElementById('zoom').value = ZOOM_DAYS;
+document.getElementById('zoom-label').textContent = ZOOM_DAYS + ' days';
+document.querySelectorAll('#filter-group button').forEach(b => {
+  b.classList.toggle('active', b.dataset.filter === FILTER);
+});
+loadData();
+</script>
+</body>
+</html>
