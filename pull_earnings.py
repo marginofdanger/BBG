@@ -11,6 +11,7 @@ from bloomberg import USD_OVERRIDE_TICKERS
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SNAPSHOT_DIR = os.path.join(SCRIPT_DIR, "output", "snapshots")
 METRICS_PATH = os.path.join(SCRIPT_DIR, "earnings_metrics.json")
+GUIDANCE_PATH = os.path.join(SCRIPT_DIR, "guidance_overrides.json")
 
 PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV"]
 WATCHLIST = ["FICO", "GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V"]
@@ -320,6 +321,14 @@ def compute_vs_guide(consensus, guidance):
         return "mid"
 
 
+def load_guidance_overrides():
+    """Load guidance_overrides.json if it exists. Returns dict or empty dict."""
+    if os.path.exists(GUIDANCE_PATH):
+        with open(GUIDANCE_PATH) as f:
+            return json.load(f)
+    return {}
+
+
 def main():
     today = date.today()
     today_str = today.strftime("%Y-%m-%d")
@@ -327,6 +336,7 @@ def main():
 
     config = load_metrics_config()
     field_map = config["_field_map"]
+    guidance_overrides = load_guidance_overrides()
 
     # Build ticker list
     all_tickers = []
@@ -372,6 +382,11 @@ def main():
         guidance = guidance_data.get(bt, {})
         revisions = revisions_data.get(bt, {"up": 0, "down": 0})
 
+        # Merge guidance from Bloomberg API and Call-extraction overrides
+        go = guidance_overrides.get(short, {})
+        go_q = go.get("quarterly", {})
+        go_a = go.get("annual", {})
+
         # Build quarterly metrics
         metrics = []
         for metric_name in ticker_metrics:
@@ -379,7 +394,10 @@ def main():
             fmt = fmt_info.get("format", "number")
             cons_q = consensus.get(metric_name, {}).get("quarterly")
             prior_q = prior.get(metric_name, {}).get("quarterly")
+            # Bloomberg guidance first, then call-extraction override
             guide_q = guidance.get(metric_name, {}).get("quarterly")
+            if not guide_q and metric_name in go_q:
+                guide_q = go_q[metric_name]
 
             metrics.append({
                 "name": metric_name,
@@ -399,6 +417,8 @@ def main():
             cons_a = consensus.get(metric_name, {}).get("annual")
             prior_a = prior.get(metric_name, {}).get("annual")
             guide_a = guidance.get(metric_name, {}).get("annual")
+            if not guide_a and metric_name in go_a:
+                guide_a = go_a[metric_name]
 
             if cons_a is not None or guide_a is not None:
                 annual_metrics.append({
