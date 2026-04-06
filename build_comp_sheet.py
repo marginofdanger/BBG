@@ -18,18 +18,22 @@ USD_OVERRIDE = {"TSM US Equity", "TSM UN Equity"}
 # Korean tickers: price/EPS in KRW, mktcap/rev divide by 1e6 to get trillions KRW
 KRW_TICKERS = {"000660 KS Equity", "005930 KS Equity"}
 
-# Additional tickers to integrate (not in source file)
-EXTRA_TICKERS = [
-    (None, "Additional", None),  # Category header
-    ("CRM", "CRM US Equity", "Salesforce"),
-    ("ORCL", "ORCL US Equity", "Oracle"),
-    ("CME", "CME US Equity", "CME Group"),
-    ("ICE", "ICE US Equity", "ICE/NYSE"),
-    ("IR", "IR US Equity", "Ingersoll Rand"),
-    ("PANW", "PANW US Equity", "Palo Alto Networks"),
-    (None, "Memory (Korea)", None),  # Category header
-    ("000660", "000660 KS Equity", "SK Hynix"),
-    ("005930", "005930 KS Equity", "Samsung"),
+# Extra tickers to insert into specific sections.
+# Format: (insert_after_row, ticker, bbg, name)
+# Rows refer to ORIGINAL source file rows. Insert bottom-up to avoid shifting.
+EXTRA_INSERTS = [
+    # Memory: after MU (row 133)
+    (133, "000660", "000660 KS Equity", "SK Hynix"),
+    (133, "005930", "005930 KS Equity", "Samsung"),
+    # Technology: after SHOP (row 100)
+    (100, "CRM", "CRM US Equity", "Salesforce"),
+    (100, "ORCL", "ORCL US Equity", "Oracle"),
+    (100, "PANW", "PANW US Equity", "Palo Alto Networks"),
+    # Industrials: after CP (row 86)
+    (86, "IR", "IR US Equity", "Ingersoll Rand"),
+    # Financials: after PGR (row 60)
+    (60, "CME", "CME US Equity", "CME Group"),
+    (60, "ICE", "ICE US Equity", "ICE/NYSE"),
 ]
 
 
@@ -78,24 +82,38 @@ def main():
             src_map[row] = {"ticker": str(t), "bbg": str(b)}
             existing.add(str(t))
 
-    # Add extra tickers
-    insert_row = ws.max_row + 2
-    for ticker, bbg_or_cat, name in EXTRA_TICKERS:
-        if ticker is None:
-            # Category header
-            ws.cell(insert_row, 1).value = bbg_or_cat
-            ws.cell(insert_row, 1).font = Font(bold=True)
-            insert_row += 1
-            continue
-        if ticker in existing:
-            continue
-        ws.cell(insert_row, 1).value = ticker
-        ws.cell(insert_row, 2).value = bbg_or_cat
-        if name: ws.cell(insert_row, 3).value = name
-        src_map[insert_row] = {"ticker": ticker, "bbg": bbg_or_cat}
-        existing.add(ticker)
-        print(f"ADD {ticker} ({name})")
-        insert_row += 1
+    # Insert extra tickers into their correct sections.
+    # Group by insert_after_row and process bottom-up to avoid row shifting issues.
+    from collections import defaultdict
+    inserts_by_row = defaultdict(list)
+    for after_row, ticker, bbg, name in EXTRA_INSERTS:
+        if ticker not in existing:
+            inserts_by_row[after_row].append((ticker, bbg, name))
+
+    # Process from highest row to lowest so insertions don't shift earlier rows
+    for after_row in sorted(inserts_by_row.keys(), reverse=True):
+        items = inserts_by_row[after_row]
+        # Insert rows after the target row
+        ws.insert_rows(after_row + 1, len(items))
+        for i, (ticker, bbg, name) in enumerate(items):
+            new_row = after_row + 1 + i
+            ws.cell(new_row, 1).value = ticker
+            ws.cell(new_row, 2).value = bbg
+            if name: ws.cell(new_row, 3).value = name
+            existing.add(ticker)
+            print(f"INSERT {ticker} ({name}) at row {new_row}")
+
+    # Rebuild src_map after insertions (row numbers shifted)
+    src_map = {}
+    for row in range(1, ws.max_row + 1):
+        t = ws.cell(row, 1).value
+        b = ws.cell(row, 2).value
+        if not b:
+            # Check data_only version for formula-based BBG tickers
+            if row <= ws_src.max_row:
+                b = ws_src.cell(row, 2).value
+        if t and b and "Equity" in str(b):
+            src_map[row] = {"ticker": str(t), "bbg": str(b)}
 
     all_info = list(src_map.items())
     all_bbg = list(set(info["bbg"] for _, info in all_info))
