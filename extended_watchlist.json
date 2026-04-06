@@ -4222,5 +4222,11 @@
     "bbg": "IVZ US Equity",
     "category": "Financials and related",
     "raw": "IVZ"
+  },
+  {
+    "ticker": "IR",
+    "bbg": "IR US Equity",
+    "category": "Industrial / Cyclical",
+    "raw": "IR"
   }
 ]
