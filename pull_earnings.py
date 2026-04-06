@@ -256,37 +256,88 @@ def pull_guidance(bbg_tickers, metrics_config):
 
 
 def pull_revisions(bbg_tickers):
-    """Pull 4-week EPS revision counts.
+    """Pull 4-week EPS revision counts using BEST_EEPS_CUR_YR fields.
 
     Returns {bbg_ticker: {up: int, down: int}}.
     """
-    fields = ["BEST_EPS_NUMUP", "BEST_EPS_NUMDN"]
-    overrides = [("BEST_FPERIOD_OVERRIDE", "1FQ")]
+    fields = ["BEST_EEPS_CUR_YR_4WUP", "BEST_EEPS_CUR_YR_4WDN"]
     result = {}
-    for bt in bbg_tickers:
-        short = bt.split(" ")[0]
-        ovr = list(overrides)
-        if short in USD_OVERRIDE_TICKERS:
-            ovr.append(("EQY_FUND_CRNCY", "USD"))
+    for i in range(0, len(bbg_tickers), 50):
+        batch = bbg_tickers[i:i + 50]
         try:
-            df = blp.bdp(bt, fields, overrides=ovr)
-            vals = {}
+            df = blp.bdp(batch, fields)
             for row in df.rows():
+                ticker, field, value = row[0], row[1], row[2]
+                if ticker not in result:
+                    result[ticker] = {"up": 0, "down": 0}
                 try:
-                    vals[row[1]] = int(float(row[2]))
+                    val = int(float(value))
                 except (ValueError, TypeError):
-                    vals[row[1]] = 0
-            result[bt] = {
-                "up": vals.get("BEST_EPS_NUMUP", 0),
-                "down": vals.get("BEST_EPS_NUMDN", 0),
-            }
-        except Exception:
+                    val = 0
+                if field == "BEST_EEPS_CUR_YR_4WUP":
+                    result[ticker]["up"] = val
+                elif field == "BEST_EEPS_CUR_YR_4WDN":
+                    result[ticker]["down"] = val
+        except Exception as e:
+            print(f"  WARNING: revisions batch failed: {e}")
+    # Fill missing tickers
+    for bt in bbg_tickers:
+        if bt not in result:
             result[bt] = {"up": 0, "down": 0}
     return result
 
 
+def pull_eps_4wk_change(bbg_tickers):
+    """Pull 4-week EPS estimate % change using BDH.
+
+    Compares current FY EPS estimate to the estimate 4 weeks ago.
+    Returns {bbg_ticker: float_pct_change or None}.
+    """
+    today = date.today()
+    four_weeks_ago = today - timedelta(days=28)
+    result = {}
+    for bt in bbg_tickers:
+        short = bt.split(" ")[0]
+        overrides = [("BEST_FPERIOD_OVERRIDE", "1BF")]
+        if short in USD_OVERRIDE_TICKERS:
+            overrides.append(("EQY_FUND_CRNCY", "USD"))
+        try:
+            df = blp.bdh(bt, "BEST_EPS", four_weeks_ago.strftime("%Y-%m-%d"),
+                         today.strftime("%Y-%m-%d"),
+                         periodicitySelection="WEEKLY", overrides=overrides)
+            tbl = df.to_native()
+            vals = [float(v) for v in tbl.column("value").to_pylist()]
+            if len(vals) >= 2 and vals[0] != 0:
+                pct = (vals[-1] - vals[0]) / abs(vals[0]) * 100
+                result[bt] = round(pct, 2)
+            else:
+                result[bt] = None
+        except Exception:
+            result[bt] = None
+    return result
+
+
+def pull_prior_year_annual_eps(bbg_tickers):
+    """Pull prior FY actual EPS using IS_EPS (reported) for annual y/y.
+
+    Returns {bbg_ticker: float or None}.
+    """
+    data = _bdp_batch(bbg_tickers, "IS_EPS")
+    result = {}
+    for bt in bbg_tickers:
+        val = data.get(bt, {}).get("IS_EPS")
+        try:
+            result[bt] = float(val) if val is not None else None
+        except (ValueError, TypeError):
+            result[bt] = None
+    return result
+
+
 def compute_yoy(current, prior, fmt):
-    """Compute y/y change. Returns string like '+12.1%' or '+40bps' or None."""
+    """Compute y/y change. Returns string like '+12%' or '+40bps' or None.
+
+    No decimal places for double-digit changes.
+    """
     if current is None or prior is None:
         return None
     if fmt == "percent":
@@ -298,6 +349,8 @@ def compute_yoy(current, prior, fmt):
             return None
         pct = (current - prior) / abs(prior) * 100
         sign = "+" if pct >= 0 else ""
+        if abs(pct) >= 10:
+            return f"{sign}{pct:.0f}%"
         return f"{sign}{pct:.1f}%"
 
 
@@ -366,8 +419,16 @@ def main():
     guidance_data = pull_guidance(bbg_tickers, config)
 
     # Step 5: Revisions
-    print("\n[5/5] Revision counts...")
+    print("\n[5/7] Revision counts...")
     revisions_data = pull_revisions(bbg_tickers)
+
+    # Step 6: EPS 4-week % change
+    print("\n[6/7] EPS 4-week change...")
+    eps_4wk_data = pull_eps_4wk_change(bbg_tickers)
+
+    # Step 7: Prior FY actual EPS (for annual y/y)
+    print("\n[7/7] Prior FY actual EPS...")
+    prior_fy_eps = pull_prior_year_annual_eps(bbg_tickers)
 
     # Assemble JSON
     companies = []
@@ -381,6 +442,8 @@ def main():
         prior = prior_data.get(bt, {})
         guidance = guidance_data.get(bt, {})
         revisions = revisions_data.get(bt, {"up": 0, "down": 0})
+        eps_4wk_pct = eps_4wk_data.get(bt)
+        prior_fy_eps_val = prior_fy_eps.get(bt)
 
         # Merge guidance from Bloomberg API and Call-extraction overrides
         go = guidance_overrides.get(short, {})
@@ -394,6 +457,12 @@ def main():
             fmt = fmt_info.get("format", "number")
             cons_q = consensus.get(metric_name, {}).get("quarterly")
             prior_q = prior.get(metric_name, {}).get("quarterly")
+            # Capex: Bloomberg returns negative, show as positive
+            if metric_name == "Capex":
+                if cons_q is not None:
+                    cons_q = abs(cons_q)
+                if prior_q is not None:
+                    prior_q = abs(prior_q)
             # Bloomberg guidance first, then call-extraction override
             guide_q = guidance.get(metric_name, {}).get("quarterly")
             if not guide_q and metric_name in go_q:
@@ -416,6 +485,15 @@ def main():
             fmt = fmt_info.get("format", "number")
             cons_a = consensus.get(metric_name, {}).get("annual")
             prior_a = prior.get(metric_name, {}).get("annual")
+            # Capex: show as positive
+            if metric_name == "Capex":
+                if cons_a is not None:
+                    cons_a = abs(cons_a)
+                if prior_a is not None:
+                    prior_a = abs(prior_a)
+            # For annual EPS: use IS_EPS (actual reported) as prior if available
+            if metric_name == "EPS" and prior_a is None and prior_fy_eps_val is not None:
+                prior_a = prior_fy_eps_val
             guide_a = guidance.get(metric_name, {}).get("annual")
             if not guide_a and metric_name in go_a:
                 guide_a = go_a[metric_name]
@@ -438,6 +516,7 @@ def main():
             "earnings_time": earnings.get("time", ""),
             "date_confirmed": earnings.get("confirmed", False),
             "revisions_4wk": revisions,
+            "eps_4wk_pct": eps_4wk_pct,
             "metrics": metrics,
             "annual_metrics": annual_metrics,
         })

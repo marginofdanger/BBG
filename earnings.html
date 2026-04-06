@@ -387,7 +387,13 @@ function buildCard(c, collapsed) {
 
   // Card body
   html += `<div class="card-body">`;
-  html += `<div class="revisions ${revCls}">&#9650; ${rev.up} up / &#9660; ${rev.down} down (4wk)</div>`;
+  html += `<div class="revisions ${revCls}">&#9650; ${rev.up} up / &#9660; ${rev.down} down (4wk)`;
+  if (c.eps_4wk_pct != null) {
+    const epsCls = c.eps_4wk_pct >= 0 ? 'up' : 'down';
+    const sign = c.eps_4wk_pct >= 0 ? '+' : '';
+    html += `<span style="margin-left:8px" class="yoy ${epsCls}">EPS ${sign}${c.eps_4wk_pct.toFixed(1)}%</span>`;
+  }
+  html += `</div>`;
   html += `<table class="metrics-table">`;
   html += `<tr><th>Metric</th><th>Guidance</th><th>Cons.</th><th>Y/Y</th><th>vs Guide</th></tr>`;
   for (const m of c.metrics) {
