@@ -1,0 +1,1640 @@
+{
+  "HCA": [
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_2023_guidance.md",
+      "EPS": 4.93,
+      "EBITDA": 3170.0,
+      "EBITDA Margin": 20.3
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_2024_guidance.md",
+      "EPS": 5.36,
+      "EBITDA": 3350.0,
+      "EBITDA Margin": 19.3,
+      "Capex": 1100.0,
+      "Revenue": 500.0
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_2025_guidance.md",
+      "EPS": 6.45,
+      "Capex": 991.0
+    },
+    {
+      "quarter": "Q2'22",
+      "source_file": "Q2_2022_guidance.md",
+      "EPS": 4.21,
+      "EBITDA": 3040.0,
+      "EBITDA Margin": 20.5,
+      "Revenue": 14820.0
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_2023_guidance.md",
+      "Revenue": 15860.0
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_2024_guidance.md",
+      "EPS": 5.5,
+      "Revenue": 8.0,
+      "EBITDA": 3550.0,
+      "Capex": 1280.0
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_2025_guidance.md",
+      "EPS": 6.84,
+      "EBITDA": 8.4,
+      "Capex": 1200.0
+    },
+    {
+      "quarter": "Q3'22",
+      "source_file": "Q3_2022_guidance.md",
+      "Revenue": 14971.0,
+      "EBITDA": 2902.0,
+      "EBITDA Margin": 19.4,
+      "EPS": 3.93
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_2023_guidance.md",
+      "EPS": 3.91,
+      "Revenue": 16210.0
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_2024_guidance.md",
+      "EPS": 4.9
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_2025_guidance.md",
+      "EPS": 42.0,
+      "Capex": 1300.0
+    },
+    {
+      "quarter": "Q4'22",
+      "source_file": "Q4_2022_guidance.md",
+      "EBITDA Margin": 20.5
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_2023_guidance.md",
+      "EPS": 5.9
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_2024_guidance.md",
+      "Revenue": 200.0,
+      "Capex": 1290.0
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "Q4_2025_guidance.md",
+      "Capex": 1500.0
+    }
+  ],
+  "UNH": [
+    {
+      "quarter": "Q1'22",
+      "source_file": "Q1_2022_guidance.md",
+      "Revenue": 80100.0,
+      "Op. Margin": 8.7,
+      "EPS": 5.27
+    },
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_2023_guidance.md",
+      "Revenue": 91930.0,
+      "Op. Margin": 8.8,
+      "EPS": 5.95
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_2024_guidance.md",
+      "Revenue": 99800.0,
+      "Op. Margin": 7.9,
+      "EPS": 6.91
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_2025_guidance.md",
+      "Revenue": 109580.0,
+      "Op. Margin": 8.3,
+      "EPS": 6.85
+    },
+    {
+      "quarter": "Q2'22",
+      "source_file": "Q2_2022_guidance.md",
+      "Revenue": 80300.0,
+      "Op. Margin": 8.9,
+      "EPS": 5.34
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_2023_guidance.md",
+      "Revenue": 92900.0,
+      "Op. Margin": 8.7,
+      "EPS": 5.82
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_2024_guidance.md",
+      "Revenue": 98860.0,
+      "Op. Margin": 8.0,
+      "EPS": 4.54
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_2025_guidance.md",
+      "Revenue": 112000.0,
+      "EPS": 4.08
+    },
+    {
+      "quarter": "Q3'22",
+      "source_file": "Q3_2022_guidance.md",
+      "Revenue": 80900.0,
+      "Op. Margin": 9.2,
+      "EPS": 5.55
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_2023_guidance.md",
+      "Revenue": 92360.0,
+      "Op. Margin": 9.2,
+      "EPS": 6.24
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_2024_guidance.md",
+      "Revenue": 100820.0,
+      "Op. Margin": 8.6,
+      "EPS": 6.51
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_2025_guidance.md",
+      "EPS": 2.92
+    },
+    {
+      "quarter": "Q4'22",
+      "source_file": "Q4_2022_guidance.md",
+      "Revenue": 82800.0,
+      "Op. Margin": 8.3,
+      "EPS": 5.03
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_2023_guidance.md",
+      "Revenue": 94430.0,
+      "Op. Margin": 8.1,
+      "EPS": 5.83
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_2024_guidance.md",
+      "Revenue": 100810.0,
+      "Op. Margin": 7.7,
+      "EPS": 5.98
+    }
+  ],
+  "TSM": [
+    {
+      "quarter": "Q1'22",
+      "source_file": "Q1_2022_guidance.md",
+      "Gross Margin": 55.6,
+      "Op. Margin": 45.6
+    },
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_2023_guidance.md",
+      "Revenue": 6700.0,
+      "Gross Margin": 56.3,
+      "Op. Margin": 45.5
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_2024_guidance.md",
+      "Revenue": 18900.0,
+      "Gross Margin": 53.1,
+      "Op. Margin": 42.0
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_2025_guidance.md",
+      "Revenue": 25500.0,
+      "Gross Margin": 58.8,
+      "Op. Margin": 48.5
+    },
+    {
+      "quarter": "Q2'22",
+      "source_file": "Q2_2022_guidance.md",
+      "Gross Margin": 59.1,
+      "Op. Margin": 49.1
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_2023_guidance.md",
+      "Revenue": 15700.0,
+      "Gross Margin": 54.1,
+      "Op. Margin": 42.0
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_2024_guidance.md",
+      "Revenue": 20800.0,
+      "Gross Margin": 53.2,
+      "Op. Margin": 42.5
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_2025_guidance.md",
+      "Revenue": 30100.0,
+      "Gross Margin": 58.6,
+      "Op. Margin": 49.6
+    },
+    {
+      "quarter": "Q3'22",
+      "source_file": "Q3_2022_guidance.md",
+      "Gross Margin": 60.4,
+      "Op. Margin": 50.6
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_2023_guidance.md",
+      "Revenue": 17300.0,
+      "Gross Margin": 54.3,
+      "Op. Margin": 41.7
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_2024_guidance.md",
+      "Revenue": 23500.0,
+      "Gross Margin": 57.8,
+      "Op. Margin": 47.5
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_2025_guidance.md",
+      "Revenue": 33100.0,
+      "Gross Margin": 59.5,
+      "Op. Margin": 50.6
+    },
+    {
+      "quarter": "Q4'22",
+      "source_file": "Q4_2022_guidance.md",
+      "Gross Margin": 62.2,
+      "Op. Margin": 52.0
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_2023_guidance.md",
+      "Gross Margin": 53.0,
+      "Op. Margin": 41.6
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_2024_guidance.md",
+      "Gross Margin": 59.0,
+      "Op. Margin": 49.0
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "Q4_2025_guidance.md",
+      "Revenue": 33700.0,
+      "Gross Margin": 62.3,
+      "Op. Margin": 54.0
+    }
+  ],
+  "AVGO": [
+    {
+      "quarter": "Q1'22",
+      "source_file": "FQ1_2022_guidance.md",
+      "Revenue": 7700.0,
+      "Gross Margin": 76.0,
+      "Op. Income": 4700.0,
+      "Op. Margin": 60.0,
+      "EBITDA": 4800.0,
+      "EPS": 8.39,
+      "Capex": 101.0
+    },
+    {
+      "quarter": "Q1'23",
+      "source_file": "FQ1_2023_guidance.md",
+      "Revenue": 8900.0,
+      "Gross Margin": 74.0,
+      "Op. Income": 5400.0,
+      "Op. Margin": 61.0,
+      "EBITDA": 5700.0,
+      "EPS": 10.33,
+      "Capex": 103.0
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "FQ1_2024_guidance.md",
+      "Revenue": 12000.0,
+      "Gross Margin": 75.4,
+      "Op. Income": 6800.0,
+      "EBITDA": 7200.0,
+      "Capex": 122.0
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "FQ1_2025_guidance.md",
+      "Revenue": 14900.0,
+      "Gross Margin": 79.1,
+      "Op. Income": 9800.0,
+      "EBITDA": 10100.0,
+      "Capex": 100.0
+    },
+    {
+      "quarter": "Q1'26",
+      "source_file": "FQ1_2026_guidance.md",
+      "Revenue": 19300.0,
+      "Gross Margin": 77.0,
+      "Op. Income": 12800.0,
+      "EBITDA": 13100.0,
+      "EPS": 2.05,
+      "Capex": 250.0
+    },
+    {
+      "quarter": "Q2'22",
+      "source_file": "FQ2_2022_guidance.md",
+      "Revenue": 8100.0,
+      "Gross Margin": 76.3,
+      "Op. Income": 4900.0,
+      "Op. Margin": 60.9,
+      "EBITDA": 5100.0,
+      "EPS": 9.07,
+      "Capex": 85.0
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "FQ2_2023_guidance.md",
+      "Revenue": 8700.0,
+      "Gross Margin": 75.6,
+      "Op. Income": 5400.0,
+      "Op. Margin": 62.0,
+      "EBITDA": 5700.0,
+      "Capex": 122.0
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "FQ2_2024_guidance.md",
+      "Revenue": 12500.0,
+      "Gross Margin": 76.2,
+      "Op. Income": 7100.0,
+      "EBITDA": 7400.0,
+      "Capex": 132.0
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "FQ2_2025_guidance.md",
+      "Revenue": 15000.0,
+      "Gross Margin": 79.4,
+      "Op. Income": 9800.0,
+      "EBITDA": 10000.0,
+      "Capex": 144.0
+    },
+    {
+      "quarter": "Q3'22",
+      "source_file": "FQ3_2022_guidance.md",
+      "Revenue": 8500.0,
+      "Gross Margin": 76.0,
+      "Op. Income": 5200.0,
+      "Op. Margin": 61.0,
+      "EBITDA": 5400.0,
+      "EPS": 9.73,
+      "Capex": 116.0
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "FQ3_2023_guidance.md",
+      "Revenue": 8900.0,
+      "Gross Margin": 75.1,
+      "Op. Income": 5500.0,
+      "Op. Margin": 62.0,
+      "EBITDA": 5800.0,
+      "Capex": 122.0
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "FQ3_2024_guidance.md",
+      "Revenue": 13100.0,
+      "Gross Margin": 77.4,
+      "Op. Income": 7900.0,
+      "EBITDA": 8200.0,
+      "Capex": 172.0
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "FQ3_2025_guidance.md",
+      "Revenue": 16000.0,
+      "Gross Margin": 78.4,
+      "Op. Income": 10500.0,
+      "EBITDA": 10700.0,
+      "Capex": 142.0
+    },
+    {
+      "quarter": "Q4'22",
+      "source_file": "FQ4_2022_guidance.md",
+      "Revenue": 8900.0,
+      "Gross Margin": 75.0,
+      "Op. Income": 5500.0,
+      "Op. Margin": 62.0,
+      "EBITDA": 5700.0,
+      "EPS": 10.45,
+      "Capex": 122.0
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "FQ4_2023_guidance.md",
+      "Revenue": 9300.0,
+      "Gross Margin": 74.3,
+      "Op. Income": 5700.0,
+      "Op. Margin": 62.0,
+      "EBITDA": 6000.0,
+      "Capex": 105.0
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "FQ4_2024_guidance.md",
+      "Revenue": 14100.0,
+      "Gross Margin": 76.9,
+      "Op. Income": 8800.0,
+      "EBITDA": 9100.0,
+      "Capex": 122.0
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "FQ4_2025_guidance.md",
+      "Revenue": 18000.0,
+      "Gross Margin": 77.9,
+      "Op. Income": 11900.0,
+      "EBITDA": 12200.0,
+      "Capex": 237.0
+    }
+  ],
+  "NVDA": [
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_2023_guidance.md",
+      "Revenue": 8300.0,
+      "Gross Margin": 65.5,
+      "Op. Margin": 22.5,
+      "EPS": 1.36
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_2024_guidance.md",
+      "Revenue": 7190.0,
+      "Gross Margin": 64.6
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_2025_guidance.md",
+      "Revenue": 26000.0,
+      "Gross Margin": 78.4
+    },
+    {
+      "quarter": "Q1'26",
+      "source_file": "Q1_2026_guidance.md",
+      "Revenue": 44000.0,
+      "Gross Margin": 60.5
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_2023_guidance.md",
+      "Revenue": 6700.0,
+      "Gross Margin": 43.5,
+      "EPS": 0.51
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_2024_guidance.md",
+      "Revenue": 13510.0,
+      "Gross Margin": 70.1
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_2025_guidance.md",
+      "Revenue": 30000.0,
+      "Gross Margin": 75.1
+    },
+    {
+      "quarter": "Q2'26",
+      "source_file": "Q2_2026_guidance.md",
+      "Revenue": 46700.0,
+      "Gross Margin": 72.4
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_2023_guidance.md",
+      "Revenue": 5930.0,
+      "Gross Margin": 53.6,
+      "EPS": 0.58
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_2024_guidance.md",
+      "Revenue": 18120.0,
+      "Gross Margin": 74.0
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_2025_guidance.md",
+      "Revenue": 35100.0,
+      "Gross Margin": 74.6
+    },
+    {
+      "quarter": "Q3'26",
+      "source_file": "Q3_2026_guidance.md",
+      "Revenue": 57000.0,
+      "Gross Margin": 73.4
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_2023_guidance.md",
+      "Revenue": 6050.0,
+      "Gross Margin": 63.3,
+      "EPS": 0.88
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_2024_guidance.md",
+      "Revenue": 22100.0,
+      "Gross Margin": 76.0
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "Q4_2025_guidance.md",
+      "Revenue": 39300.0,
+      "Gross Margin": 73.0
+    },
+    {
+      "quarter": "Q4'26",
+      "source_file": "Q4_2026_guidance.md",
+      "Revenue": 68000.0,
+      "Gross Margin": 75.0
+    }
+  ],
+  "META": [
+    {
+      "quarter": "Q1'22",
+      "source_file": "Q1_2022_guidance.md",
+      "Revenue": 27900.0,
+      "Op. Income": 8500.0,
+      "Op. Margin": 31.0,
+      "EPS": 2.72,
+      "Capex": 5500.0
+    },
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_2023_guidance.md",
+      "Revenue": 28600.0,
+      "Op. Income": 7200.0,
+      "Op. Margin": 25.0,
+      "EPS": 2.2,
+      "Capex": 7100.0
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_2024_guidance.md",
+      "Revenue": 36500.0,
+      "Op. Income": 13800.0,
+      "Op. Margin": 38.0,
+      "EPS": 4.71,
+      "Capex": 6700.0
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_2025_guidance.md",
+      "Revenue": 42300.0,
+      "Op. Income": 17600.0,
+      "Op. Margin": 41.0,
+      "Capex": 13700.0
+    },
+    {
+      "quarter": "Q2'22",
+      "source_file": "Q2_2022_guidance.md",
+      "Revenue": 28800.0,
+      "Op. Income": 8400.0,
+      "Op. Margin": 29.0,
+      "EPS": 2.46,
+      "Capex": 7700.0
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_2023_guidance.md",
+      "Revenue": 32000.0,
+      "Op. Income": 9400.0,
+      "Op. Margin": 29.0,
+      "EPS": 2.98,
+      "Capex": 6400.0
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_2024_guidance.md",
+      "Revenue": 39100.0,
+      "Op. Income": 14800.0,
+      "Op. Margin": 38.0,
+      "EPS": 5.16,
+      "Capex": 8500.0
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_2025_guidance.md",
+      "Revenue": 47500.0,
+      "Op. Income": 20400.0,
+      "Op. Margin": 43.0,
+      "EPS": 7.14,
+      "Capex": 17000.0
+    },
+    {
+      "quarter": "Q3'22",
+      "source_file": "Q3_2022_guidance.md",
+      "Revenue": 27700.0,
+      "Op. Income": 5700.0,
+      "Op. Margin": 20.0,
+      "EPS": 1.64,
+      "Capex": 9500.0
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_2023_guidance.md",
+      "Revenue": 34100.0,
+      "Op. Income": 13700.0,
+      "Op. Margin": 40.0,
+      "EPS": 4.39,
+      "Capex": 6800.0
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_2024_guidance.md",
+      "Revenue": 40600.0,
+      "Op. Income": 17400.0,
+      "Op. Margin": 43.0,
+      "EPS": 6.03,
+      "Capex": 9200.0
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_2025_guidance.md",
+      "Revenue": 51200.0,
+      "Op. Income": 20500.0,
+      "Op. Margin": 40.0,
+      "EPS": 1.05,
+      "Capex": 19400.0
+    },
+    {
+      "quarter": "Q4'22",
+      "source_file": "Q4_2022_guidance.md",
+      "Revenue": 32200.000000000004,
+      "Op. Income": 6400.0,
+      "Op. Margin": 20.0,
+      "EPS": 1.76,
+      "Capex": 9200.0
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_2023_guidance.md",
+      "Revenue": 40100.0,
+      "Op. Income": 16400.0,
+      "Op. Margin": 41.0,
+      "EPS": 5.33,
+      "Capex": 7900.0
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_2024_guidance.md",
+      "Revenue": 48400.0,
+      "Op. Income": 23400.0,
+      "Op. Margin": 48.0,
+      "EPS": 8.02,
+      "Capex": 14800.0
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "Q4_2025_guidance.md",
+      "Revenue": 59900.0,
+      "Op. Income": 24700.0,
+      "Op. Margin": 41.0,
+      "EPS": 8.88,
+      "Capex": 22100.0
+    }
+  ],
+  "AMZN": [
+    {
+      "quarter": "Q1'22",
+      "source_file": "Q1_2022_guidance.md",
+      "Revenue": 116400.0,
+      "Op. Income": 3670.0,
+      "Op. Margin": 3.2,
+      "Capex": 15000.0
+    },
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_2023_guidance.md",
+      "Revenue": 127400.0,
+      "Op. Income": 4800.0,
+      "Op. Margin": 3.7,
+      "EPS": 0.31
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_2024_guidance.md",
+      "Revenue": 143300.0,
+      "Op. Income": 15300.0,
+      "Op. Margin": 10.7,
+      "Capex": 14000.0
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_2025_guidance.md",
+      "Revenue": 155700.0,
+      "Op. Income": 18400.0,
+      "Op. Margin": 6.3
+    },
+    {
+      "quarter": "Q2'22",
+      "source_file": "Q2_2022_guidance.md",
+      "Revenue": 121200.0,
+      "Op. Income": 3300.0,
+      "Op. Margin": 29.0,
+      "Capex": 60000.0
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_2023_guidance.md",
+      "Revenue": 134400.0,
+      "Op. Income": 7700.0,
+      "Op. Margin": 5.7,
+      "EPS": 0.66
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_2024_guidance.md",
+      "Revenue": 148000.0,
+      "Op. Income": 14700.0,
+      "Op. Margin": 9.9,
+      "EPS": 1.26,
+      "Capex": 17600.0
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_2025_guidance.md",
+      "Revenue": 167700.0,
+      "Op. Income": 19200.0,
+      "Op. Margin": 7.5
+    },
+    {
+      "quarter": "Q3'22",
+      "source_file": "Q3_2022_guidance.md",
+      "Revenue": 127100.0,
+      "Op. Income": 2530.0,
+      "Op. Margin": 2.0,
+      "EPS": 0.28
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_2023_guidance.md",
+      "Revenue": 143100.0,
+      "Op. Income": 11200.0,
+      "Op. Margin": 7.8,
+      "EPS": 0.96,
+      "Capex": 11300.0
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_2024_guidance.md",
+      "Revenue": 158900.0,
+      "Op. Income": 17400.0,
+      "Op. Margin": 11.0,
+      "EPS": 1.43,
+      "Capex": 22600.0
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_2025_guidance.md",
+      "Revenue": 180200.0,
+      "Op. Income": 17400.0,
+      "Op. Margin": 9.7,
+      "EPS": 1.95,
+      "Capex": 34200.0
+    },
+    {
+      "quarter": "Q4'22",
+      "source_file": "Q4_2022_guidance.md",
+      "Revenue": 149200.0,
+      "Op. Income": 2700.0,
+      "Op. Margin": 1.8,
+      "EPS": 0.03
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_2023_guidance.md",
+      "Revenue": 170000.0,
+      "Op. Income": 13200.0,
+      "Op. Margin": 7.8
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_2024_guidance.md",
+      "Revenue": 187800.0,
+      "Op. Income": 21200.0,
+      "Op. Margin": 8.0,
+      "Capex": 26300.0
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "Q4_2025_guidance.md",
+      "Revenue": 213400.0,
+      "Op. Income": 25000.0,
+      "Op. Margin": 9.0
+    }
+  ],
+  "APO": [
+    {
+      "quarter": "Q2'22",
+      "source_file": "Q2_2022_guidance.md",
+      "Revenue": 85.0
+    }
+  ],
+  "CVNA": [
+    {
+      "quarter": "Q1'22",
+      "source_file": "Q1_2022_guidance.md",
+      "Revenue": 3497.0
+    },
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_2023_guidance.md",
+      "Revenue": 2600.0
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_2024_guidance.md",
+      "Revenue": 3061.0,
+      "EBITDA": 235.0,
+      "EBITDA Margin": 7.7,
+      "Op. Income": 134.0,
+      "EPS": 0.24
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_2025_guidance.md",
+      "Revenue": 4232.0,
+      "EBITDA": 488.0,
+      "EBITDA Margin": 11.5,
+      "Op. Income": 394.0,
+      "Op. Margin": 9.3,
+      "EPS": 1.61
+    },
+    {
+      "quarter": "Q2'22",
+      "source_file": "Q2_2022_guidance.md",
+      "Revenue": 3884.0
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_2023_guidance.md",
+      "Revenue": 2968.0,
+      "EBITDA": 70.0
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_2024_guidance.md",
+      "Revenue": 3410.0,
+      "EBITDA": 355.0,
+      "EBITDA Margin": 10.4,
+      "Op. Income": 259.0,
+      "Op. Margin": 7.6,
+      "EPS": 0.15
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_2025_guidance.md",
+      "Revenue": 4840.0,
+      "EBITDA": 601.0,
+      "EBITDA Margin": 12.4,
+      "Op. Income": 511.0,
+      "Op. Margin": 10.6
+    },
+    {
+      "quarter": "Q3'22",
+      "source_file": "Q3_2022_guidance.md",
+      "Revenue": 3386.0,
+      "Capex": 90.0
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_2023_guidance.md",
+      "Revenue": 2773.0,
+      "EBITDA": 40.0
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_2024_guidance.md",
+      "Revenue": 3655.0,
+      "EBITDA": 429.0,
+      "EBITDA Margin": 11.7,
+      "Op. Income": 337.0,
+      "Op. Margin": 9.2
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_2025_guidance.md",
+      "Revenue": 5647.0,
+      "Op. Income": 552.0,
+      "Op. Margin": 9.8,
+      "EBITDA": 637.0,
+      "EBITDA Margin": 11.3
+    },
+    {
+      "quarter": "Q4'22",
+      "source_file": "Q4_2022_guidance.md",
+      "Revenue": 2800.0,
+      "EBITDA": 103.0,
+      "Capex": 100.0
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_2023_guidance.md",
+      "Revenue": 2424.0,
+      "EBITDA": 60.0,
+      "EBITDA Margin": 2.5
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_2024_guidance.md",
+      "Revenue": 3547.0,
+      "EBITDA": 359.0,
+      "EBITDA Margin": 10.1,
+      "Op. Income": 260.0,
+      "Op. Margin": 7.3,
+      "EPS": 0.61
+    }
+  ],
+  "APP": [
+    {
+      "quarter": "Q1'22",
+      "source_file": "Q1_2022_guidance.md",
+      "Revenue": 625.0,
+      "EBITDA": 276.0
+    },
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_2023_guidance.md",
+      "Revenue": 715.4,
+      "EBITDA": 273.7,
+      "EBITDA Margin": 38.3,
+      "Op. Income": 61.0
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_2024_guidance.md",
+      "Revenue": 1060.0,
+      "EBITDA": 549.0,
+      "EBITDA Margin": 52.0
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_2025_guidance.md",
+      "Revenue": 1500.0,
+      "EBITDA": 1000.0,
+      "EBITDA Margin": 68.0
+    },
+    {
+      "quarter": "Q2'22",
+      "source_file": "Q2_2022_guidance.md",
+      "Revenue": 776.0,
+      "EBITDA": 270.0,
+      "EBITDA Margin": 35.0
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_2023_guidance.md",
+      "Revenue": 750.2,
+      "EBITDA": 333.5,
+      "EBITDA Margin": 44.0,
+      "EPS": 0.22,
+      "Op. Income": 131.3
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_2024_guidance.md",
+      "Revenue": 1080.0,
+      "EBITDA": 601.0,
+      "EBITDA Margin": 56.0
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_2025_guidance.md",
+      "Revenue": 1260.0,
+      "EBITDA": 1020.0,
+      "EBITDA Margin": 81.0
+    },
+    {
+      "quarter": "Q3'22",
+      "source_file": "Q3_2022_guidance.md",
+      "Revenue": 717.0,
+      "EBITDA": 258.0,
+      "EBITDA Margin": 36.0
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_2023_guidance.md",
+      "Revenue": 864.0,
+      "EBITDA": 490.0,
+      "EBITDA Margin": 48.5
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_2024_guidance.md",
+      "Revenue": 1200.0,
+      "EBITDA": 722.0,
+      "EBITDA Margin": 60.0
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_2025_guidance.md",
+      "Revenue": 1405.0,
+      "EBITDA": 1158.0,
+      "EBITDA Margin": 82.0
+    },
+    {
+      "quarter": "Q4'22",
+      "source_file": "Q4_2022_guidance.md",
+      "Revenue": 702.3,
+      "EBITDA": 259.6,
+      "EBITDA Margin": 37.0,
+      "Capex": 41.0
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_2023_guidance.md",
+      "Revenue": 953.0,
+      "EBITDA": 476.0,
+      "EBITDA Margin": 50.0
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_2024_guidance.md",
+      "Revenue": 1373.0,
+      "EBITDA": 848.0,
+      "EBITDA Margin": 62.0,
+      "EPS": 1.77
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "Q4_2025_guidance.md",
+      "Revenue": 1660.0,
+      "EBITDA": 1400.0,
+      "EBITDA Margin": 84.0
+    }
+  ],
+  "VEEV": [
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_FY2023_guidance.md",
+      "Revenue": 505.1,
+      "Op. Income": 127.7,
+      "Op. Margin": 25.3,
+      "EPS": 0.62,
+      "Gross Margin": 85.4
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_FY2024_guidance.md",
+      "Revenue": 526.3,
+      "Op. Income": 61.5,
+      "EPS": 0.81
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_FY2025_guidance.md",
+      "Revenue": 650.3,
+      "Gross Margin": 73.3,
+      "Op. Income": 155.2,
+      "Op. Margin": 23.9,
+      "EPS": 0.98
+    },
+    {
+      "quarter": "Q1'26",
+      "source_file": "Q1_FY2026_guidance.md",
+      "Revenue": 759.0,
+      "Op. Income": 233.7,
+      "EPS": 1.37
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_FY2023_guidance.md",
+      "Op. Income": 202.0
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_FY2024_guidance.md",
+      "Revenue": 590.2,
+      "Op. Income": 104.0,
+      "Op. Margin": 17.6,
+      "EPS": 0.68,
+      "Gross Margin": 71.4
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_FY2025_guidance.md",
+      "Revenue": 676.2,
+      "Gross Margin": 74.8,
+      "Op. Income": 166.5,
+      "Op. Margin": 24.6,
+      "EPS": 1.04
+    },
+    {
+      "quarter": "Q2'26",
+      "source_file": "Q2_FY2026_guidance.md",
+      "Op. Income": 352.6,
+      "EPS": 1.99
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_FY2023_guidance.md",
+      "Revenue": 552.4,
+      "Op. Income": 121.4,
+      "EPS": 0.67,
+      "Gross Margin": 72.1
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_FY2024_guidance.md",
+      "Revenue": 616.5,
+      "Gross Margin": 72.8,
+      "Op. Income": 128.5,
+      "Op. Margin": 20.8,
+      "EPS": 0.84
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_FY2025_guidance.md",
+      "Revenue": 699.2,
+      "Gross Margin": 75.1,
+      "Op. Income": 181.4,
+      "Op. Margin": 25.9,
+      "EPS": 1.13
+    },
+    {
+      "quarter": "Q3'26",
+      "source_file": "Q3_FY2026_guidance.md",
+      "Revenue": 811.2,
+      "Op. Income": 240.9,
+      "Op. Margin": 29.7,
+      "EPS": 1.4,
+      "Gross Margin": 86.2
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_FY2023_guidance.md",
+      "Revenue": 563.4,
+      "Op. Income": 108.9,
+      "Op. Margin": 19.3,
+      "Gross Margin": 70.8,
+      "EPS": 1.16
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_FY2024_guidance.md",
+      "Revenue": 630.6,
+      "Op. Income": 135.3,
+      "EPS": 0.9
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "Q4_FY2025_guidance.md",
+      "Revenue": 720.9,
+      "Op. Income": 188.4,
+      "EPS": 1.18
+    },
+    {
+      "quarter": "Q4'26",
+      "source_file": "Q4_FY2026_guidance.md",
+      "Revenue": 836.0,
+      "Op. Income": 245.9,
+      "Op. Margin": 29.4,
+      "EPS": 1.45,
+      "Gross Margin": 86.4
+    }
+  ],
+  "FICO": [
+    {
+      "quarter": "Q1'19",
+      "source_file": "Q1_FY2019_guidance.md",
+      "Revenue": 262.0,
+      "EPS": 1.32,
+      "Op. Margin": 28.0,
+      "EBITDA": 2.7
+    },
+    {
+      "quarter": "Q1'20",
+      "source_file": "Q1_FY2020_guidance.md",
+      "Revenue": 299.0,
+      "EPS": 1.82,
+      "Op. Margin": 27.0
+    },
+    {
+      "quarter": "Q1'21",
+      "source_file": "Q1_FY2021_guidance.md",
+      "Revenue": 312.0,
+      "EPS": 2.9,
+      "Op. Margin": 36.0
+    },
+    {
+      "quarter": "Q1'22",
+      "source_file": "Q1_FY2022_guidance.md",
+      "Revenue": 322.0,
+      "EPS": 3.13,
+      "Op. Margin": 45.0
+    },
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_FY2023_guidance.md",
+      "Revenue": 345.0,
+      "EPS": 3.84,
+      "Op. Margin": 49.0
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_FY2024_guidance.md",
+      "Revenue": 382.0,
+      "EPS": 4.8,
+      "Op. Margin": 48.0
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_FY2025_guidance.md",
+      "Revenue": 440.0,
+      "EPS": 6.14,
+      "Op. Margin": 50.0
+    },
+    {
+      "quarter": "Q2'19",
+      "source_file": "Q2_FY2019_guidance.md",
+      "Revenue": 278.0,
+      "EPS": 1.1,
+      "Op. Margin": 25.0,
+      "EBITDA": 2.6
+    },
+    {
+      "quarter": "Q2'20",
+      "source_file": "Q2_FY2020_guidance.md",
+      "Revenue": 308.0,
+      "EPS": 1.94,
+      "Op. Margin": 25.0
+    },
+    {
+      "quarter": "Q2'21",
+      "source_file": "Q2_FY2021_guidance.md",
+      "Revenue": 331.0,
+      "EPS": 2.33,
+      "Op. Margin": 39.0
+    },
+    {
+      "quarter": "Q2'22",
+      "source_file": "Q2_FY2022_guidance.md",
+      "Revenue": 357.0,
+      "EPS": 3.95,
+      "Op. Margin": 51.0
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_FY2023_guidance.md",
+      "Revenue": 380.0,
+      "EPS": 4.0,
+      "Op. Margin": 49.0
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_FY2024_guidance.md",
+      "Revenue": 434.0,
+      "EPS": 5.16,
+      "Op. Margin": 53.0
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_FY2025_guidance.md",
+      "Revenue": 499.0,
+      "EPS": 6.59,
+      "Op. Margin": 58.0
+    },
+    {
+      "quarter": "Q3'19",
+      "source_file": "Q3_FY2019_guidance.md",
+      "Revenue": 314.0,
+      "EPS": 2.12,
+      "Op. Margin": 34.0,
+      "EBITDA": 2.3
+    },
+    {
+      "quarter": "Q3'20",
+      "source_file": "Q3_FY2020_guidance.md",
+      "Revenue": 314.0,
+      "EPS": 2.15,
+      "Op. Margin": 34.0
+    },
+    {
+      "quarter": "Q3'21",
+      "source_file": "Q3_FY2021_guidance.md",
+      "Revenue": 338.0,
+      "EPS": 5.18,
+      "Op. Margin": 39.0
+    },
+    {
+      "quarter": "Q3'22",
+      "source_file": "Q3_FY2022_guidance.md",
+      "Revenue": 349.0,
+      "EPS": 3.61,
+      "Op. Margin": 49.0
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_FY2023_guidance.md",
+      "Revenue": 399.0,
+      "EPS": 5.08,
+      "Op. Margin": 53.0
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_FY2024_guidance.md",
+      "Revenue": 448.0,
+      "EPS": 5.05,
+      "Op. Margin": 52.0
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_FY2025_guidance.md",
+      "Revenue": 536.0,
+      "EPS": 7.4,
+      "Op. Margin": 57.0
+    },
+    {
+      "quarter": "Q4'19",
+      "source_file": "Q4_FY2019_guidance.md",
+      "Revenue": 305.0,
+      "EPS": 1.8,
+      "Op. Margin": 30.0
+    },
+    {
+      "quarter": "Q4'20",
+      "source_file": "Q4_FY2020_guidance.md",
+      "Revenue": 374.0,
+      "EPS": 1.98,
+      "Op. Margin": 41.0
+    },
+    {
+      "quarter": "Q4'21",
+      "source_file": "Q4_FY2021_guidance.md",
+      "Revenue": 335.0,
+      "EPS": 3.0,
+      "Op. Margin": 45.0
+    },
+    {
+      "quarter": "Q4'22",
+      "source_file": "Q4_FY2022_guidance.md",
+      "Revenue": 349.0,
+      "EPS": 3.55,
+      "Op. Margin": 47.0
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_FY2023_guidance.md",
+      "Revenue": 390.0,
+      "EPS": 4.01,
+      "Op. Margin": 51.0
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_FY2024_guidance.md",
+      "Revenue": 454.0,
+      "EPS": 5.44,
+      "Op. Margin": 52.0
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "Q4_FY2025_guidance.md",
+      "Revenue": 516.0,
+      "EPS": 6.42,
+      "Op. Margin": 54.0
+    }
+  ],
+  "TDG": [
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_FY2023_guidance.md",
+      "Revenue": 1397.0,
+      "Gross Margin": 56.8,
+      "Op. Margin": 42.2,
+      "EPS": 3.33,
+      "EBITDA": 650.0,
+      "EBITDA Margin": 50.0
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_FY2024_guidance.md",
+      "Revenue": 1789.0,
+      "EPS": 4.87
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_FY2025_guidance.md",
+      "Revenue": 2006.0,
+      "EPS": 7.62
+    },
+    {
+      "quarter": "Q2'23",
+      "source_file": "Q2_FY2023_guidance.md",
+      "Revenue": 1592.0,
+      "EPS": 5.32,
+      "EBITDA": 757.0,
+      "EBITDA Margin": 51.3,
+      "Capex": 350.0
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_FY2024_guidance.md",
+      "Revenue": 1919.0,
+      "EPS": 6.97,
+      "EBITDA": 919.0,
+      "EBITDA Margin": 53.2,
+      "Capex": 290.0
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_FY2025_guidance.md",
+      "Revenue": 2150.0,
+      "EPS": 8.24,
+      "EBITDA": 1089.0,
+      "EBITDA Margin": 54.0
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_FY2023_guidance.md",
+      "Revenue": 1744.0,
+      "EPS": 6.14,
+      "EBITDA": 830.0,
+      "EBITDA Margin": 52.5
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_FY2024_guidance.md",
+      "Revenue": 2046.0,
+      "EPS": 7.96,
+      "EBITDA": 995.0,
+      "EBITDA Margin": 53.3,
+      "Capex": 700.0
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_FY2025_guidance.md",
+      "Revenue": 2237.0,
+      "EPS": 8.47,
+      "EBITDA": 1123.0,
+      "EBITDA Margin": 54.4
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_FY2024_guidance.md",
+      "Revenue": 2185.0
+    }
+  ],
+  "MSFT": [
+    {
+      "quarter": "Q1'23",
+      "source_file": "Q1_FY2023_guidance.md",
+      "Revenue": 50100.0,
+      "Op. Income": 21500.0,
+      "EPS": 2.35,
+      "Capex": 6600.0
+    },
+    {
+      "quarter": "Q1'24",
+      "source_file": "Q1_FY2024_guidance.md",
+      "Revenue": 56500.0,
+      "Gross Margin": 71.0,
+      "Op. Income": 26900.0,
+      "Op. Margin": 48.0,
+      "EPS": 2.99,
+      "Capex": 11200.0
+    },
+    {
+      "quarter": "Q1'25",
+      "source_file": "Q1_FY2025_guidance.md",
+      "Revenue": 65600.0,
+      "EPS": 3.3,
+      "Op. Income": 30600.0,
+      "Op. Margin": 47.0,
+      "Gross Margin": 69.0,
+      "Capex": 20000.0
+    },
+    {
+      "quarter": "Q1'26",
+      "source_file": "Q1_FY2026_guidance.md",
+      "Revenue": 77700.0,
+      "Gross Margin": 69.0,
+      "Op. Income": 38000.0,
+      "Op. Margin": 49.0,
+      "EPS": 3.72,
+      "Capex": 34900.0
+    },
+    {
+      "quarter": "Q2'24",
+      "source_file": "Q2_FY2024_guidance.md",
+      "Revenue": 62020.0,
+      "Op. Income": 27030.0,
+      "EPS": 2.93,
+      "Gross Margin": 68.0,
+      "Op. Margin": 44.0,
+      "Capex": 11500.0
+    },
+    {
+      "quarter": "Q2'25",
+      "source_file": "Q2_FY2025_guidance.md",
+      "Revenue": 69600.0,
+      "Gross Margin": 69.0,
+      "Op. Income": 31700.0,
+      "Op. Margin": 45.0,
+      "EPS": 3.23,
+      "Capex": 22600.0
+    },
+    {
+      "quarter": "Q2'26",
+      "source_file": "Q2_FY2026_guidance.md",
+      "Revenue": 81300.0,
+      "Gross Margin": 68.0,
+      "Op. Income": 38300.0,
+      "Op. Margin": 47.0,
+      "EPS": 5.16,
+      "Capex": 37500.0
+    },
+    {
+      "quarter": "Q3'23",
+      "source_file": "Q3_FY2023_guidance.md",
+      "Revenue": 52900.0,
+      "EPS": 2.45,
+      "Gross Margin": 69.0,
+      "Op. Income": 22400.0,
+      "Op. Margin": 42.0,
+      "Capex": 7800.0
+    },
+    {
+      "quarter": "Q3'24",
+      "source_file": "Q3_FY2024_guidance.md",
+      "Revenue": 61900.0,
+      "Op. Income": 27600.0,
+      "EPS": 2.94,
+      "Gross Margin": 70.0,
+      "Op. Margin": 45.0,
+      "Capex": 14000.0
+    },
+    {
+      "quarter": "Q3'25",
+      "source_file": "Q3_FY2025_guidance.md",
+      "Revenue": 70100.0,
+      "Gross Margin": 69.0,
+      "Op. Income": 32000.0,
+      "Op. Margin": 46.0,
+      "EPS": 3.46,
+      "Capex": 21400.0
+    },
+    {
+      "quarter": "Q4'23",
+      "source_file": "Q4_FY2023_guidance.md",
+      "Revenue": 56200.0,
+      "Gross Margin": 70.0,
+      "Op. Income": 24300.0,
+      "Op. Margin": 43.0,
+      "EPS": 2.69,
+      "Capex": 10700.0
+    },
+    {
+      "quarter": "Q4'24",
+      "source_file": "Q4_FY2024_guidance.md",
+      "Revenue": 64700.0,
+      "Gross Margin": 70.0,
+      "Op. Income": 27900.0,
+      "Op. Margin": 43.0,
+      "EPS": 2.95,
+      "Capex": 19000.0
+    },
+    {
+      "quarter": "Q4'25",
+      "source_file": "Q4_FY2025_guidance.md",
+      "Revenue": 76400.0,
+      "Gross Margin": 69.0,
+      "Op. Income": 34300.0,
+      "Op. Margin": 45.0,
+      "EPS": 3.65,
+      "Capex": 24200.0
+    }
+  ]
+}

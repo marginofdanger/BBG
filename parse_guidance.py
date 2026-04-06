@@ -13,6 +13,7 @@ from pathlib import Path
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CALL_EXTRACTION_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "Call-extraction", "companies")
 OUTPUT_PATH = os.path.join(SCRIPT_DIR, "guidance_overrides.json")
+ACTUALS_PATH = os.path.join(SCRIPT_DIR, "actuals_overrides.json")
 
 # Tickers to extract guidance for (portfolio + watchlist)
 TICKERS = [
@@ -219,6 +220,127 @@ def _extract_metrics_from_lines(lines):
     return result
 
 
+def _find_actuals_section(content):
+    """Find the 'Actuals (Reported)' section and return its lines.
+
+    Matches patterns like:
+    - ## Q4 2025 Actuals (Reported)
+    - ## Q4 FY2026 Actuals (Reported)
+    """
+    lines = content.split("\n")
+    in_section = False
+    section_lines = []
+    for line in lines:
+        if re.match(r'^##\s+(?:F?Q\d)\s+(?:FY)?\d{4}\s+Actuals', line, re.IGNORECASE):
+            in_section = True
+            continue
+        elif re.match(r'^##\s+', line) and in_section:
+            break
+        elif in_section:
+            section_lines.append(line)
+    return section_lines
+
+
+def _extract_single_values_from_lines(lines):
+    """Extract single metric values (not ranges) from markdown lines.
+
+    For actuals, we want the first number in the value text.
+    Returns {metric_name: float_value}.
+    """
+    result = {}
+    for line in lines:
+        m = re.match(r'^-\s+\*\*([^*]+)\*\*:?\s*(.*)', line)
+        if not m:
+            continue
+        label = m.group(1).strip().rstrip(":")
+        value_text = m.group(2).strip()
+
+        classified = _classify_metric(label)
+        if not classified:
+            continue
+        metric_name, parse_fn = classified
+
+        if metric_name in result:
+            continue
+
+        # Extract the first number from the value text
+        val = parse_fn(value_text)
+        if val is not None:
+            result[metric_name] = val
+
+    return result
+
+
+def _extract_quarter_id(content):
+    """Extract the reporting quarter ID from the header.
+
+    Looks for: **Reporting Quarter:** Q4 2025
+    Or the actuals section header: ## Q4 2025 Actuals
+    Returns string like 'Q4 2025' or None.
+    """
+    # Try header first
+    m = re.search(r'\*\*Reporting Quarter:\*\*\s*(?:Fiscal\s+)?([FQ]\d\s+(?:FY)?\d{4})', content)
+    if m:
+        return m.group(1).strip()
+    # Try actuals section header
+    m = re.search(r'^##\s+(F?Q\d\s+(?:FY)?\d{4})\s+Actuals', content, re.MULTILINE)
+    if m:
+        return m.group(1).strip()
+    return None
+
+
+def extract_actuals(ticker):
+    """Extract reported actuals from ALL Call-extraction guidance files for a ticker.
+
+    Returns list of {"quarter": "Q4'25", "eps": float, "revenue": float, ...}.
+    """
+    ticker_dir = os.path.join(CALL_EXTRACTION_DIR, ticker, "guidance")
+    if not os.path.isdir(ticker_dir):
+        return []
+
+    files = sorted(Path(ticker_dir).glob("*guidance.md"))
+    results = []
+
+    for f in files:
+        content = f.read_text(encoding="utf-8")
+        actuals_lines = _find_actuals_section(content)
+        if not actuals_lines:
+            continue
+
+        values = _extract_single_values_from_lines(actuals_lines)
+        if not values:
+            continue
+
+        # Get quarter ID
+        quarter_id = _extract_quarter_id(content)
+        if not quarter_id:
+            # Try to derive from filename: Q4_2025_guidance.md -> Q4 2025
+            stem = f.stem.replace("_guidance", "")
+            parts = stem.split("_")
+            if len(parts) >= 2:
+                quarter_id = f"{parts[0]} {parts[1]}"
+
+        if quarter_id:
+            # Normalize: "Q4 2025" -> "Q4'25", "FQ4 2025" -> "FQ4'25"
+            m2 = re.match(r'(F?Q\d)\s+(?:FY)?(\d{4})', quarter_id)
+            if m2:
+                q = m2.group(1)
+                yr = m2.group(2)[2:]  # "2025" -> "25"
+                quarter_label = f"{q}'{yr}"
+            else:
+                quarter_label = quarter_id
+        else:
+            quarter_label = f.stem
+
+        results.append({
+            "quarter": quarter_label,
+            "source_file": f.name,
+            **{k: v for k, v in values.items()},
+        })
+
+    return results
+
+
 def extract_guidance(ticker):
     """Extract guidance from the most recent Call-extraction file for a ticker.
 
@@ -255,8 +377,10 @@ def extract_guidance(ticker):
 def main():
     print("Parsing guidance from Call-extraction project...\n")
     overrides = {}
+    all_actuals = {}
 
     for ticker in TICKERS:
+        # Guidance
         result = extract_guidance(ticker)
         if result:
             overrides[ticker] = result
@@ -266,9 +390,21 @@ def main():
         else:
             print(f"  {ticker}: (no guidance found)")
 
+        # Actuals
+        actuals = extract_actuals(ticker)
+        if actuals:
+            all_actuals[ticker] = actuals
+            for a in actuals:
+                metrics = [k for k in a if k not in ("quarter", "source_file")]
+                print(f"    actuals {a['quarter']}: {metrics}")
+
     with open(OUTPUT_PATH, "w") as f:
         json.dump(overrides, f, indent=2)
     print(f"\nSaved: {OUTPUT_PATH} ({len(overrides)} companies)")
+
+    with open(ACTUALS_PATH, "w") as f:
+        json.dump(all_actuals, f, indent=2)
+    print(f"Saved: {ACTUALS_PATH} ({len(all_actuals)} companies)")
 
 
 if __name__ == "__main__":
