@@ -27,10 +27,11 @@ body {
 .btn-group button + button { border-left: none; }
 .btn-group button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
 
-/* Mini timeline — flex flow */
+/* Mini timeline — flex flow, sticky navbar */
 .mini-timeline {
   display: flex; align-items: center; margin-bottom: 20px; padding: 8px 12px;
   background: #fff; border-radius: 8px; border: 1px solid #e2e5e9;
+  position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .mini-timeline .tl-month { font-size: 10px; color: #aaa; font-weight: 600; padding: 0 6px; flex-shrink: 0; }
 .mini-timeline .tl-month-line { width: 1px; height: 18px; background: #ddd; flex-shrink: 0; }
@@ -39,9 +40,10 @@ body {
   display: flex; flex-direction: column; align-items: center; flex-shrink: 0; padding: 0 3px; cursor: pointer;
   position: relative;
 }
-.mini-timeline .tl-tick .tl-name { font-size: 9px; font-weight: 600; line-height: 1.15; white-space: nowrap; }
+.mini-timeline .tl-tick .tl-name { font-size: 9px; font-weight: 600; line-height: 1.15; white-space: nowrap; text-decoration: none; cursor: pointer; }
 .mini-timeline .tl-tick .tl-name.confirmed { color: #2563eb; }
 .mini-timeline .tl-tick .tl-name.tentative { color: #93b4e8; }
+.mini-timeline .tl-tick .tl-name:hover { text-decoration: underline; }
 .mini-timeline .tl-tick:hover .tl-name { color: #1d4ed8; }
 .mini-timeline .tl-tick .tl-tip {
   display: none; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%);
@@ -63,6 +65,7 @@ body {
 .lane-header .count { font-weight: 400; color: #999; font-size: 11px; margin-left: 4px; }
 
 /* Cards */
+.card { scroll-margin-top: 56px; }
 .card {
   background: #fff; border-radius: 8px; padding: 14px; margin-bottom: 10px;
   border: 1px solid #e2e5e9; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
@@ -295,7 +298,7 @@ function renderTimeline(companies) {
       html += `<div class="tl-tick">`;
       for (const t of g.tickers) {
         const cls = t.confirmed ? 'confirmed' : 'tentative';
-        html += `<span class="tl-name ${cls}">${t.ticker}</span>`;
+        html += `<a href="#card-${t.ticker}" class="tl-name ${cls}">${t.ticker}</a>`;
       }
       html += `<span class="tl-tip">${g.tickers.map(t => t.ticker).join(', ')} &middot; ${item.dateStr}</span>`;
       html += `</div>`;
@@ -446,7 +449,7 @@ function buildCard(c, collapsed) {
   const statusCls = c.date_confirmed ? 'confirmed' : 'est';
   const statusLabel = c.date_confirmed ? 'Confirmed' : 'Est';
 
-  let html = `<div class="card${collapsed ? ' collapsed' : ''}">`;
+  let html = `<div class="card${collapsed ? ' collapsed' : ''}" id="card-${c.ticker}">`;
   html += `<div class="card-head">`;
   html += `<div><span class="ticker">${c.ticker}</span>`;
   html += `<span class="date-badge">${dateLabel}${timeLabel ? ' &middot; ' + timeLabel : ''}</span></div>`;
