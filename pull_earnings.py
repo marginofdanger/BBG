@@ -29,9 +29,15 @@ BBG_OVERRIDES = {"MC": "MC FP Equity"}
 # est_field: override the default BEST_EPS_GAAP estimate field
 # prior_fy_field: override IS_EPS for prior FY actual
 EPS_OVERRIDES = {
-    "GOOG US Equity": {"eps_ticker": "GOOGL US Equity"},
+    # Megacaps: sell-side adds back SBC but companies don't → use GAAP-to-GAAP
+    "AMZN US Equity": {"eps_field": "IS_DILUTED_EPS", "est_field": "BEST_EPS_GAAP"},
+    "GOOG US Equity": {"eps_ticker": "GOOGL US Equity", "eps_field": "IS_DILUTED_EPS",
+                       "est_field": "BEST_EPS_GAAP"},
+    "META US Equity": {"eps_field": "IS_DILUTED_EPS", "est_field": "BEST_EPS_GAAP"},
+    # ADR: convert from Taiwan-listed shares
     "TSM US Equity":  {"eps_ticker": "2330 TT Equity", "eps_mult": 5, "skip_usd_est": True},
-    "APO US Equity":  {"eps_field": "IS_DISTRIBUTABLE_INCOME_PER_UNIT", "est_field": "BEST_EPS",
+    # Alt manager: use distributable earnings
+    "APO US Equity":  {"eps_field": "IS_DISTRIBUTABLE_INCOME_PER_UNIT",
                        "prior_fy_field": "IS_DISTRIBUTABLE_INCOME_PER_UNIT"},
 }
 
@@ -339,8 +345,8 @@ def pull_earnings_history(bbg_tickers, actuals_data):
 
     Uses:
     1. Earnings dates from BDS ERN_ANN_DT_AND_PER
-    2. Pre-earnings consensus from BDH BEST_EPS_GAAP/BEST_SALES with absolute period override
-    3. Actuals from BDH IS_DILUTED_EPS/SALES_REV_TURN quarterly (fallback: actuals_overrides.json)
+    2. Pre-earnings consensus from BDH BEST_EPS/BEST_SALES with absolute period override
+    3. Actuals from BDH IS_COMP_EPS_ADJUSTED/IS_COMP_SALES quarterly (fallback: actuals_overrides.json)
     4. Stock price reaction from BDH PX_LAST
 
     Returns {bbg_ticker: [{"quarter": "Q4'25", "eps_beat_pct": 8.2, ...}, ...]}.
@@ -380,10 +386,10 @@ def pull_earnings_history(bbg_tickers, actuals_data):
         lookback_end = date.today().strftime("%Y-%m-%d")
         eps_ovr = EPS_OVERRIDES.get(bt, {})
         eps_ticker = eps_ovr.get("eps_ticker", bt)
-        eps_field = eps_ovr.get("eps_field", "IS_DILUTED_EPS")
+        eps_field = eps_ovr.get("eps_field", "IS_COMP_EPS_ADJUSTED")
         eps_mult = eps_ovr.get("eps_mult", 1)
         skip_usd_est = eps_ovr.get("skip_usd_est", False)
-        eps_est_field = eps_ovr.get("est_field", "BEST_EPS_GAAP")
+        eps_est_field = eps_ovr.get("est_field", "BEST_EPS")
         # Don't pass USD override when pulling from a different ticker (e.g., 2330 TT)
         eps_act_ovr = [] if eps_ticker != bt else usd_ovr
         for field in [eps_field]:
@@ -434,28 +440,65 @@ def pull_earnings_history(bbg_tickers, actuals_data):
             # Absolute period override: "2025:Q4" -> "25Q4"
             abs_period = f"{yr}{parts[1]}" if len(parts) > 1 else None
 
-            # Pre-earnings consensus estimate via BDH with absolute period
+            # Pre-earnings consensus estimates via BDH with absolute period
             pre_start = (earn_dt - timedelta(days=10)).strftime("%Y-%m-%d")
             pre_end = (earn_dt - timedelta(days=1)).strftime("%Y-%m-%d")
             earn_str = q["date"]
             est_eps = est_rev = None
+            est_usd = usd_ovr if not skip_usd_est else []
             if abs_period:
-                for field, target in [(eps_est_field, "est_eps"), ("BEST_SALES", "est_rev")]:
+                if eps_est_field != "BEST_EPS":
+                    # Custom estimate field (e.g., APO) — use directly
                     try:
-                        # Skip USD override on EPS estimates when comparing in native ccy (e.g., TSM in TWD)
-                        est_usd = usd_ovr if not (skip_usd_est and target == "est_eps") else []
                         ovr = [("BEST_FPERIOD_OVERRIDE", abs_period)] + est_usd
-                        df2 = blp.bdh(bt, field, pre_start, pre_end,
+                        df2 = blp.bdh(bt, eps_est_field, pre_start, pre_end,
                                       periodicitySelection="DAILY", overrides=ovr)
                         tbl = df2.to_native()
                         vals = [float(v) for v in tbl.column("value").to_pylist()]
                         if vals:
-                            if target == "est_eps":
-                                est_eps = vals[-1]
-                            else:
-                                est_rev = vals[-1]
+                            est_eps = vals[-1]
                     except Exception:
                         pass
+                else:
+                    # Auto-select: pull both BEST_EPS and BEST_EPS_GAAP,
+                    # pick whichever is closer to the comparable actual
+                    est_adj = est_gaap = None
+                    for fld in ["BEST_EPS", "BEST_EPS_GAAP"]:
+                        try:
+                            ovr = [("BEST_FPERIOD_OVERRIDE", abs_period)] + est_usd
+                            df2 = blp.bdh(bt, fld, pre_start, pre_end,
+                                          periodicitySelection="DAILY", overrides=ovr)
+                            tbl = df2.to_native()
+                            vals = [float(v) for v in tbl.column("value").to_pylist()]
+                            if vals:
+                                if fld == "BEST_EPS":
+                                    est_adj = vals[-1]
+                                else:
+                                    est_gaap = vals[-1]
+                        except Exception:
+                            pass
+                    # Match actuals first to inform estimate selection
+                    _act = None
+                    for d in reversed(eps_dates_sorted):
+                        if d < earn_str:
+                            _act = eps_actuals_by_date[d]
+                            break
+                    if _act is not None and est_adj is not None and est_gaap is not None:
+                        est_eps = est_gaap if abs(_act - est_gaap) <= abs(_act - est_adj) else est_adj
+                    else:
+                        est_eps = est_adj if est_adj is not None else est_gaap
+
+                # Revenue estimate
+                try:
+                    ovr = [("BEST_FPERIOD_OVERRIDE", abs_period)] + usd_ovr
+                    df2 = blp.bdh(bt, "BEST_SALES", pre_start, pre_end,
+                                  periodicitySelection="DAILY", overrides=ovr)
+                    tbl = df2.to_native()
+                    vals = [float(v) for v in tbl.column("value").to_pylist()]
+                    if vals:
+                        est_rev = vals[-1]
+                except Exception:
+                    pass
 
             # Actuals: Bloomberg IS_DILUTED_EPS (primary), Call-extraction (fallback)
             act_eps = act_rev = None
@@ -523,9 +566,9 @@ def pull_prior_year_annual_eps(bbg_tickers):
     Respects EPS_OVERRIDES for tickers with non-standard EPS fields.
     Returns {bbg_ticker: float or None}.
     """
-    # Batch pull IS_EPS for tickers without overrides
+    # Batch pull IS_COMP_EPS_ADJUSTED for tickers without overrides
     standard = [bt for bt in bbg_tickers if "prior_fy_field" not in EPS_OVERRIDES.get(bt, {})]
-    data = _bdp_batch(standard, "IS_EPS") if standard else {}
+    data = _bdp_batch(standard, "IS_COMP_EPS_ADJUSTED") if standard else {}
     result = {}
     for bt in bbg_tickers:
         ovr = EPS_OVERRIDES.get(bt, {})
@@ -538,7 +581,7 @@ def pull_prior_year_annual_eps(bbg_tickers):
             except Exception:
                 result[bt] = None
         else:
-            val = data.get(bt, {}).get("IS_EPS")
+            val = data.get(bt, {}).get("IS_COMP_EPS_ADJUSTED")
             try:
                 result[bt] = float(val) if val is not None else None
             except (ValueError, TypeError):

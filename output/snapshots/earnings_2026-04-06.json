@@ -8,26 +8,26 @@
       "earnings_time": "06:45",
       "date_confirmed": false,
       "revisions_4wk": {
-        "up": 11,
+        "up": 12,
         "down": 4
       },
       "eps_4wk_pct": 0.68,
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 5.4,
+          "eps_beat_pct": 4.5,
           "rev_beat_pct": 0.9,
           "stock_rxn": -4.2
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 5.1,
+          "eps_beat_pct": 4.9,
           "rev_beat_pct": 3.6,
           "stock_rxn": -1.9
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 17.1,
+          "eps_beat_pct": 10.9,
           "rev_beat_pct": 3.7,
           "stock_rxn": -0.7
         },
@@ -70,19 +70,19 @@
       "annual_metrics": [
         {
           "name": "EPS",
-          "consensus": 22.000835249042144,
+          "consensus": 22.014969348659005,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 20.05,
-          "yoy": "+9.7%",
+          "prior_year": 20.33,
+          "yoy": "+8.3%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 198510.68451001053,
+          "consensus": 198535.30061468214,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 187305.1945337197,
+          "prior_year": 187338.0657007376,
           "yoy": "+6.0%",
           "vs_guide": "n/a"
         }
@@ -108,19 +108,19 @@
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -14.5,
+          "eps_beat_pct": -20.1,
           "rev_beat_pct": 0.4,
           "stock_rxn": -5.8
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 16.7,
+          "eps_beat_pct": 5.5,
           "rev_beat_pct": 1.9,
           "stock_rxn": 1.8
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -10.8,
+          "eps_beat_pct": -4.7,
           "rev_beat_pct": -1.9,
           "stock_rxn": -0.4
         }
@@ -160,8 +160,8 @@
           "consensus": 16.235528735632183,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 19.29,
-          "yoy": "-16%",
+          "prior_year": 18.251437,
+          "yoy": "-11%",
           "vs_guide": "n/a"
         }
       ]
@@ -186,19 +186,19 @@
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 10.6,
+          "eps_beat_pct": 10.4,
           "rev_beat_pct": 5.1,
           "stock_rxn": -1.6
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 5.6,
+          "eps_beat_pct": 5.5,
           "rev_beat_pct": -4.4,
           "stock_rxn": 3.4
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": 2.8,
+          "eps_beat_pct": 2.7,
           "rev_beat_pct": -0.6,
           "stock_rxn": 0.0
         }
@@ -262,10 +262,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 167388.92111815306,
+          "consensus": 167493.29779110255,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 129786.75377800064,
+          "prior_year": 129889.28911903036,
           "yoy": "+29%",
           "vs_guide": "n/a"
         },
@@ -303,25 +303,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": -99.4,
+          "eps_beat_pct": 0.4,
           "rev_beat_pct": -0.6,
           "stock_rxn": -19.6
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 6.0,
+          "eps_beat_pct": 3.3,
           "rev_beat_pct": 0.1,
           "stock_rxn": 0.5
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": -13.7,
+          "eps_beat_pct": -5.8,
           "rev_beat_pct": 0.0,
           "stock_rxn": -7.5
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -2.4,
+          "eps_beat_pct": -1.0,
           "rev_beat_pct": -1.8,
           "stock_rxn": -22.4
         }
@@ -329,16 +329,16 @@
       "metrics": [
         {
           "name": "EPS",
-          "consensus": 6.598,
+          "consensus": 6.5840000000000005,
           "guidance_low": null,
           "guidance_high": null,
           "prior_year": 7.274,
-          "yoy": "-9.3%",
+          "yoy": "-9.5%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 109362.95238095238,
+          "consensus": 109348.04761904762,
           "guidance_low": null,
           "guidance_high": null,
           "prior_year": 111559.0,
@@ -349,20 +349,20 @@
       "annual_metrics": [
         {
           "name": "EPS",
-          "consensus": 18.380206896551726,
+          "consensus": 18.388283524904217,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 13.28,
-          "yoy": "+38%",
+          "prior_year": 16.35,
+          "yoy": "+12%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 444484.6065515187,
+          "consensus": 444497.1527099464,
           "guidance_low": 440000.0,
           "guidance_high": 440000.0,
-          "prior_year": 446063.9492356561,
-          "yoy": "-0.4%",
+          "prior_year": 446035.9809013301,
+          "yoy": "-0.3%",
           "vs_guide": "above"
         }
       ]
@@ -381,25 +381,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 59.0,
+          "eps_beat_pct": 4.0,
           "rev_beat_pct": 5.6,
           "stock_rxn": -7.4
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 36.4,
+          "eps_beat_pct": 12.1,
           "rev_beat_pct": 8.6,
           "stock_rxn": 1.3
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 29.4,
+          "eps_beat_pct": 13.6,
           "rev_beat_pct": 5.8,
           "stock_rxn": -2.2
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": 40.4,
+          "eps_beat_pct": 14.4,
           "rev_beat_pct": -0.5,
           "stock_rxn": 6.1
         }
@@ -439,17 +439,17 @@
           "consensus": 7.749750957854406,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 8.2,
-          "yoy": "-5.5%",
+          "prior_year": 6.37,
+          "yoy": "+22%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 49485.11872146118,
+          "consensus": 49499.00884703196,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 43598.33718199609,
-          "yoy": "+14%",
+          "prior_year": 43615.26405740378,
+          "yoy": "+13%",
           "vs_guide": "n/a"
         }
       ]
@@ -468,13 +468,13 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 7.7,
+          "eps_beat_pct": 9.6,
           "rev_beat_pct": 1.8,
           "stock_rxn": null
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 7.3,
+          "eps_beat_pct": 3.6,
           "rev_beat_pct": 4.7,
           "stock_rxn": -1.8
         },
@@ -486,7 +486,7 @@
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": null,
+          "eps_beat_pct": -1.9,
           "rev_beat_pct": 0.0,
           "stock_rxn": 0.3
         }
@@ -517,16 +517,16 @@
           "consensus": 2.541295019157088,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2.23,
-          "yoy": "+14%",
+          "prior_year": 2.19,
+          "yoy": "+16%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 7050.955381604696,
+          "consensus": 7052.928131115459,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 6316.793786692759,
+          "prior_year": 6318.818982387476,
           "yoy": "+12%",
           "vs_guide": "n/a"
         }
@@ -546,25 +546,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 2.3,
+          "eps_beat_pct": -7.0,
           "rev_beat_pct": 0.5,
           "stock_rxn": 1.8
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 38.9,
+          "eps_beat_pct": 35.5,
           "rev_beat_pct": 2.9,
           "stock_rxn": 1.0
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": -502.1,
+          "eps_beat_pct": 41.1,
           "rev_beat_pct": 5.5,
           "stock_rxn": 0.7
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -3.8,
+          "eps_beat_pct": 11.8,
           "rev_beat_pct": -0.5,
           "stock_rxn": 3.1
         }
@@ -595,16 +595,16 @@
           "consensus": 21.07197318007663,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 4.03,
-          "yoy": "+423%",
+          "prior_year": 19.61,
+          "yoy": "+7.5%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 64403.3159336698,
+          "consensus": 64411.7868781543,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 56101.1782335977,
+          "prior_year": 56129.018111031,
           "yoy": "+15%",
           "vs_guide": "n/a"
         }
@@ -624,25 +624,25 @@
       "earnings_history": [
         {
           "quarter": "Q2'26",
-          "eps_beat_pct": 8.7,
+          "eps_beat_pct": 8.1,
           "rev_beat_pct": 2.0,
           "stock_rxn": 0.5
         },
         {
           "quarter": "Q1'26",
-          "eps_beat_pct": 2.1,
+          "eps_beat_pct": 3.4,
           "rev_beat_pct": 1.8,
           "stock_rxn": -2.6
         },
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 12.5,
+          "eps_beat_pct": 10.1,
           "rev_beat_pct": 3.4,
           "stock_rxn": 0.2
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 3.5,
+          "eps_beat_pct": 4.1,
           "rev_beat_pct": 1.6,
           "stock_rxn": 5.1
         }
@@ -688,10 +688,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 26675.35287671233,
+          "consensus": 26690.515342465755,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 21470.563629627115,
+          "prior_year": 21481.803348322028,
           "yoy": "+24%",
           "vs_guide": "n/a"
         },
@@ -720,25 +720,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": -29.4,
+          "eps_beat_pct": 11.9,
           "rev_beat_pct": -0.8,
           "stock_rxn": 0.1
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -7.6,
+          "eps_beat_pct": -6.9,
           "rev_beat_pct": 6.6,
           "stock_rxn": -0.8
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 1.9,
+          "eps_beat_pct": -5.7,
           "rev_beat_pct": -0.6,
           "stock_rxn": 0.1
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -63.7,
+          "eps_beat_pct": -18.4,
           "rev_beat_pct": -9.8,
           "stock_rxn": 4.6
         }
@@ -769,16 +769,16 @@
           "consensus": 2.1274176245210725,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 1.18,
-          "yoy": "+80%",
+          "prior_year": 1.660431,
+          "yoy": "+28%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 107941.19319307315,
+          "consensus": 107988.98667562677,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 97140.67286475199,
+          "prior_year": 97163.76708781213,
           "yoy": "+11%",
           "vs_guide": "n/a"
         }
@@ -798,25 +798,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": null,
+          "eps_beat_pct": 13.5,
           "rev_beat_pct": 6.7,
           "stock_rxn": -2.6
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -36.0,
+          "eps_beat_pct": 21.6,
           "rev_beat_pct": 6.6,
           "stock_rxn": -4.2
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": -15.2,
+          "eps_beat_pct": 4.7,
           "rev_beat_pct": 8.7,
           "stock_rxn": 3.6
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -33.2,
+          "eps_beat_pct": 3.7,
           "rev_beat_pct": 5.0,
           "stock_rxn": 0.8
         }
@@ -847,16 +847,16 @@
           "consensus": 6.6530153256704985,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 3.87,
-          "yoy": "+72%",
+          "prior_year": 5.57,
+          "yoy": "+19%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 16414.7573937478,
+          "consensus": 16424.315630488232,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 13452.576836861768,
+          "prior_year": 13460.177542548774,
           "yoy": "+22%",
           "vs_guide": "n/a"
         }
@@ -876,25 +876,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": -5.0,
+          "eps_beat_pct": 1.9,
           "rev_beat_pct": 2.2,
           "stock_rxn": -2.6
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -2.2,
+          "eps_beat_pct": 5.3,
           "rev_beat_pct": 1.8,
           "stock_rxn": 1.7
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 7.3,
+          "eps_beat_pct": 2.4,
           "rev_beat_pct": 1.6,
           "stock_rxn": 9.1
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": 1.3,
+          "eps_beat_pct": 0.8,
           "rev_beat_pct": 1.3,
           "stock_rxn": -0.7
         }
@@ -925,16 +925,16 @@
           "consensus": 25.176210727969348,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 17.77,
-          "yoy": "+42%",
+          "prior_year": 22.87,
+          "yoy": "+10%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 47504.016438356164,
+          "consensus": 47510.66564805058,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 44974.748137627714,
+          "prior_year": 44981.777669858435,
           "yoy": "+5.6%",
           "vs_guide": "n/a"
         }
@@ -954,7 +954,7 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 9.3,
+          "eps_beat_pct": 7.6,
           "rev_beat_pct": -0.8,
           "stock_rxn": 7.1
         },
@@ -966,7 +966,7 @@
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 8.7,
+          "eps_beat_pct": 8.8,
           "rev_beat_pct": 0.5,
           "stock_rxn": -2.1
         },
@@ -1003,16 +1003,16 @@
           "consensus": 31.13849042145594,
           "guidance_low": 29.1,
           "guidance_high": 31.5,
-          "prior_year": 28.7,
-          "yoy": "+8.5%",
+          "prior_year": 28.21,
+          "yoy": "+10%",
           "vs_guide": "mid"
         },
         {
           "name": "Revenue",
-          "consensus": 79657.68414234664,
+          "consensus": 79668.04413341275,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 76527.84956413449,
+          "prior_year": 76535.78739103362,
           "yoy": "+4.1%",
           "vs_guide": "n/a"
         }
@@ -1105,10 +1105,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 422392.1928869863,
+          "consensus": 422570.3905342466,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 357800.9184723952,
+          "prior_year": 357977.4400347655,
           "yoy": "+18%",
           "vs_guide": "n/a"
         },
@@ -1131,31 +1131,31 @@
       "date_confirmed": false,
       "revisions_4wk": {
         "up": 1,
-        "down": 7
+        "down": 8
       },
-      "eps_4wk_pct": 0.38,
+      "eps_4wk_pct": 0.3,
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 104.4,
+          "eps_beat_pct": 2.3,
           "rev_beat_pct": -1.8,
           "stock_rxn": 2.0
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 8.9,
+          "eps_beat_pct": 5.0,
           "rev_beat_pct": 1.1,
           "stock_rxn": 3.8
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 9.7,
+          "eps_beat_pct": 2.6,
           "rev_beat_pct": -0.1,
           "stock_rxn": 4.6
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -11.1,
+          "eps_beat_pct": -5.4,
           "rev_beat_pct": null,
           "stock_rxn": -8.0
         }
@@ -1163,39 +1163,39 @@
       "metrics": [
         {
           "name": "EPS",
-          "consensus": 6.3870000000000005,
+          "consensus": 6.377,
           "guidance_low": null,
           "guidance_high": null,
           "prior_year": 5.994,
-          "yoy": "+6.6%",
+          "yoy": "+6.4%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 4991.2,
+          "consensus": 4988.4,
           "guidance_low": null,
           "guidance_high": null,
           "prior_year": 4841.11111111111,
-          "yoy": "+3.1%",
+          "yoy": "+3.0%",
           "vs_guide": "n/a"
         }
       ],
       "annual_metrics": [
         {
           "name": "EPS",
-          "consensus": 19.670808429118775,
+          "consensus": 19.654850574712643,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 17.11,
+          "prior_year": 17.07,
           "yoy": "+15%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 18321.492403486922,
+          "consensus": 18316.728891656287,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 17462.315940224158,
+          "prior_year": 17462.41083437111,
           "yoy": "+4.9%",
           "vs_guide": "n/a"
         }
@@ -1215,7 +1215,7 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 5.1,
+          "eps_beat_pct": 3.0,
           "rev_beat_pct": -5.0,
           "stock_rxn": -1.1
         },
@@ -1227,13 +1227,13 @@
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 37.3,
+          "eps_beat_pct": 33.8,
           "rev_beat_pct": 7.3,
           "stock_rxn": 2.7
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": 18.6,
+          "eps_beat_pct": 10.1,
           "rev_beat_pct": 0.6,
           "stock_rxn": -0.5
         }
@@ -1264,16 +1264,16 @@
           "consensus": 2.4179080459770117,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2.12,
-          "yoy": "+14%",
+          "prior_year": 2.05,
+          "yoy": "+18%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 5632.646006322445,
+          "consensus": 5635.448809272919,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 4745.291903055848,
+          "prior_year": 4747.590360379347,
           "yoy": "+19%",
           "vs_guide": "n/a"
         }
@@ -1293,25 +1293,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": -4.4,
+          "eps_beat_pct": -0.1,
           "rev_beat_pct": 3.6,
           "stock_rxn": 3.1
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -8.8,
+          "eps_beat_pct": 4.0,
           "rev_beat_pct": 3.2,
           "stock_rxn": -2.5
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": -43.5,
+          "eps_beat_pct": 9.9,
           "rev_beat_pct": 3.7,
           "stock_rxn": -1.5
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -36.3,
+          "eps_beat_pct": 42.2,
           "rev_beat_pct": 3.8,
           "stock_rxn": 0.4
         }
@@ -1342,16 +1342,16 @@
           "consensus": 11.195873563218392,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 6.660799999999999,
-          "yoy": "+68%",
+          "prior_year": 9.122399999999999,
+          "yoy": "+23%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 30612.41466123658,
+          "consensus": 30619.42798963347,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 27554.577779834628,
+          "prior_year": 27563.442305319015,
           "yoy": "+11%",
           "vs_guide": "n/a"
         }
@@ -1371,25 +1371,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": -32.8,
+          "eps_beat_pct": 3.1,
           "rev_beat_pct": 3.3,
           "stock_rxn": 0.4
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -8.0,
+          "eps_beat_pct": 2.5,
           "rev_beat_pct": 3.8,
           "stock_rxn": 3.4
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": -6.5,
+          "eps_beat_pct": 7.8,
           "rev_beat_pct": 1.2,
           "stock_rxn": -2.6
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -19.8,
+          "eps_beat_pct": 6.9,
           "rev_beat_pct": -0.8,
           "stock_rxn": 2.2
         }
@@ -1420,16 +1420,16 @@
           "consensus": 9.39232950191571,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 6.18,
-          "yoy": "+52%",
+          "prior_year": 8.11,
+          "yoy": "+16%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 13226.567808219177,
+          "consensus": 13228.154452054794,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 12235.252511415525,
+          "prior_year": 12238.371461187216,
           "yoy": "+8.1%",
           "vs_guide": "n/a"
         }
@@ -1449,25 +1449,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 292.6,
+          "eps_beat_pct": 264.1,
           "rev_beat_pct": 6.4,
           "stock_rxn": 3.0
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -22.4,
+          "eps_beat_pct": -22.0,
           "rev_beat_pct": 10.6,
           "stock_rxn": -2.3
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 12.8,
+          "eps_beat_pct": 11.7,
           "rev_beat_pct": 6.0,
           "stock_rxn": -0.9
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": 123.0,
+          "eps_beat_pct": 109.1,
           "rev_beat_pct": 6.6,
           "stock_rxn": 0.1
         }
@@ -1507,25 +1507,25 @@
           "consensus": 7.885226053639846,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 10.22,
-          "yoy": "-23%",
+          "prior_year": 8.45,
+          "yoy": "-6.7%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 28464.568285884452,
+          "consensus": 28481.621288862418,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 21784.099060063225,
+          "prior_year": 21802.847688092726,
           "yoy": "+31%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 3181.7361857320757,
+          "consensus": 3184.168570242542,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2437.1039688126048,
+          "prior_year": 2439.0040554442576,
           "yoy": "+31%",
           "vs_guide": "n/a"
         }
@@ -1551,19 +1551,19 @@
         },
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 6.3,
+          "eps_beat_pct": 5.2,
           "rev_beat_pct": 0.3,
           "stock_rxn": 1.4
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": null,
+          "eps_beat_pct": 11.8,
           "rev_beat_pct": 4.3,
           "stock_rxn": 1.5
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 2.3,
+          "eps_beat_pct": 5.6,
           "rev_beat_pct": 0.1,
           "stock_rxn": 0.9
         }
@@ -1594,16 +1594,16 @@
           "consensus": 47.68165900383142,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 26.9,
-          "yoy": "+77%",
+          "prior_year": 29.88,
+          "yoy": "+60%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 2710.6841487279844,
+          "consensus": 2711.821526418787,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2250.8352250489233,
+          "prior_year": 2252.225179386823,
           "yoy": "+20%",
           "vs_guide": "n/a"
         }
@@ -1623,25 +1623,25 @@
       "earnings_history": [
         {
           "quarter": "Q1'26",
-          "eps_beat_pct": -8.7,
+          "eps_beat_pct": 1.1,
           "rev_beat_pct": 2.0,
           "stock_rxn": 1.5
         },
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": -16.6,
+          "eps_beat_pct": 0.4,
           "rev_beat_pct": 1.0,
           "stock_rxn": -0.3
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -10.2,
+          "eps_beat_pct": 4.7,
           "rev_beat_pct": 3.1,
           "stock_rxn": -1.2
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": -18.2,
+          "eps_beat_pct": 2.9,
           "rev_beat_pct": 0.4,
           "stock_rxn": 1.2
         }
@@ -1672,16 +1672,16 @@
           "consensus": 13.725122605363985,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 10.853896,
-          "yoy": "+26%",
+          "prior_year": 11.47,
+          "yoy": "+20%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 47039.02853003162,
+          "consensus": 47051.77934668073,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 42344.05658587987,
+          "prior_year": 42357.0386108184,
           "yoy": "+11%",
           "vs_guide": "n/a"
         }
@@ -1768,25 +1768,25 @@
           "consensus": 34.10957854406131,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 23.98,
-          "yoy": "+42%",
+          "prior_year": 31.42,
+          "yoy": "+8.6%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 262583.31545404095,
+          "consensus": 262710.4824527071,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 212837.80950755454,
+          "prior_year": 212977.3540208428,
           "yoy": "+23%",
           "vs_guide": "n/a"
         },
         {
           "name": "Op. Income",
-          "consensus": 91340.74397796388,
+          "consensus": 91383.42351136006,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 83681.10793336079,
+          "prior_year": 83694.35105915472,
           "yoy": "+9.2%",
           "vs_guide": "n/a"
         },
@@ -1815,25 +1815,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 8.9,
+          "eps_beat_pct": 11.1,
           "rev_beat_pct": 7.1,
           "stock_rxn": 10.3
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 7.8,
+          "eps_beat_pct": 21.9,
           "rev_beat_pct": 9.5,
           "stock_rxn": 3.8
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 13.8,
+          "eps_beat_pct": 13.4,
           "rev_beat_pct": 5.8,
           "stock_rxn": -14.1
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -6.3,
+          "eps_beat_pct": 2.3,
           "rev_beat_pct": 0.5,
           "stock_rxn": -11.7
         }
@@ -1864,17 +1864,17 @@
           "consensus": 36.510160919540226,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 23.0,
-          "yoy": "+59%",
+          "prior_year": 24.21,
+          "yoy": "+51%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 85416.10730593606,
+          "consensus": 85452.20182648402,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 68598.26463796478,
-          "yoy": "+25%",
+          "prior_year": 68647.90318330072,
+          "yoy": "+24%",
           "vs_guide": "n/a"
         }
       ]
@@ -1893,13 +1893,13 @@
       "earnings_history": [
         {
           "quarter": "Q2'26",
-          "eps_beat_pct": 31.7,
+          "eps_beat_pct": 5.6,
           "rev_beat_pct": 1.2,
           "stock_rxn": 0.2
         },
         {
           "quarter": "Q1'26",
-          "eps_beat_pct": 1.2,
+          "eps_beat_pct": 12.3,
           "rev_beat_pct": 2.8,
           "stock_rxn": -0.1
         },
@@ -1960,25 +1960,25 @@
           "consensus": 18.48619540229885,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 13.7,
-          "yoy": "+35%",
+          "prior_year": 13.64,
+          "yoy": "+36%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 366627.6369863014,
+          "consensus": 366766.88033268106,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 316313.6252897787,
+          "prior_year": 316446.87087460485,
           "yoy": "+16%",
           "vs_guide": "n/a"
         },
         {
           "name": "Op. Income",
-          "consensus": 169728.1111098686,
+          "consensus": 169791.02462622308,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 145977.49754523294,
+          "prior_year": 146049.67200388448,
           "yoy": "+16%",
           "vs_guide": "n/a"
         },
@@ -2074,25 +2074,25 @@
           "consensus": 9.590045977011494,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 7.29,
-          "yoy": "+32%",
+          "prior_year": 7.17,
+          "yoy": "+34%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 831433.9587796679,
+          "consensus": 831695.0469720842,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 738879.8118739787,
+          "prior_year": 739130.7028793086,
           "yoy": "+13%",
           "vs_guide": "n/a"
         },
         {
           "name": "Op. Income",
-          "consensus": 104754.87764844098,
+          "consensus": 104817.63148758194,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 84997.57818263478,
+          "prior_year": 85048.62997039789,
           "yoy": "+23%",
           "vs_guide": "n/a"
         },
@@ -2181,7 +2181,7 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 10.5,
+          "eps_beat_pct": 9.8,
           "rev_beat_pct": 3.2,
           "stock_rxn": -3.4
         },
@@ -2239,25 +2239,25 @@
           "consensus": 16.775107279693486,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 9.84,
-          "yoy": "+70%",
+          "prior_year": 9.75,
+          "yoy": "+72%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 8643.235887668185,
+          "consensus": 8649.705078702362,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 6294.063691265282,
+          "prior_year": 6300.487965827073,
           "yoy": "+37%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 7259.925603392042,
+          "consensus": 7265.394694498804,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 5081.4939204174825,
+          "prior_year": 5087.640384866275,
           "yoy": "+43%",
           "vs_guide": "n/a"
         }
@@ -2283,13 +2283,13 @@
         },
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": -3.0,
+          "eps_beat_pct": 7.7,
           "rev_beat_pct": 1.8,
           "stock_rxn": 1.1
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": null,
+          "eps_beat_pct": -2.9,
           "rev_beat_pct": -2.6,
           "stock_rxn": -11.9
         },
@@ -2335,25 +2335,25 @@
           "consensus": 42.51449042145594,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 32.08,
-          "yoy": "+33%",
+          "prior_year": 37.33,
+          "yoy": "+14%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 10432.708918934948,
+          "consensus": 10434.972602739726,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 9410.802864259029,
+          "prior_year": 9414.171980074718,
           "yoy": "+11%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 5539.471360108572,
+          "consensus": 5540.863844946775,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 5011.343237202595,
+          "prior_year": 5012.847988464312,
           "yoy": "+11%",
           "vs_guide": "n/a"
         }
@@ -2373,25 +2373,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": -13.2,
+          "eps_beat_pct": 59.3,
           "rev_beat_pct": -1.1,
           "stock_rxn": 6.8
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -19.2,
+          "eps_beat_pct": -1.4,
           "rev_beat_pct": 2.7,
           "stock_rxn": -0.8
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 45.1,
+          "eps_beat_pct": 31.2,
           "rev_beat_pct": 3.7,
           "stock_rxn": 1.1
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": 10.8,
+          "eps_beat_pct": -5.5,
           "rev_beat_pct": -2.1,
           "stock_rxn": -7.4
         }
@@ -2431,25 +2431,25 @@
           "consensus": 5.963352490421457,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2.19,
-          "yoy": "+172%",
+          "prior_year": 4.628303,
+          "yoy": "+29%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 18746.157525944374,
+          "consensus": 18755.77513906185,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 14817.731324200915,
-          "yoy": "+27%",
+          "prior_year": 14828.902831050229,
+          "yoy": "+26%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 3920.702767997122,
+          "consensus": 3923.884885245059,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2991.3216616549726,
+          "prior_year": 2993.640984519434,
           "yoy": "+31%",
           "vs_guide": "n/a"
         }
@@ -2469,25 +2469,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": -82.3,
+          "eps_beat_pct": -1.8,
           "rev_beat_pct": 0.5,
           "stock_rxn": -5.1
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 346.8,
+          "eps_beat_pct": -1.9,
           "rev_beat_pct": 1.5,
           "stock_rxn": -5.1
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": -0.2,
+          "eps_beat_pct": 1.0,
           "rev_beat_pct": 1.4,
           "stock_rxn": -0.2
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": 62.4,
+          "eps_beat_pct": -2.2,
           "rev_beat_pct": -0.7,
           "stock_rxn": -2.5
         }
@@ -2527,25 +2527,25 @@
           "consensus": 3.658494252873563,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 4.82,
-          "yoy": "-24%",
+          "prior_year": 2.45,
+          "yoy": "+49%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 60455.493909378296,
+          "consensus": 60478.88655426766,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 53600.876784698885,
+          "prior_year": 53618.010328250195,
           "yoy": "+13%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 11283.020870265915,
+          "consensus": 11289.526295997852,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 9228.553555120678,
+          "prior_year": 9233.869341161122,
           "yoy": "+22%",
           "vs_guide": "n/a"
         }
@@ -2565,25 +2565,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 0.0,
+          "eps_beat_pct": 2.9,
           "rev_beat_pct": 3.9,
           "stock_rxn": 3.6
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 100.0,
+          "eps_beat_pct": 14.4,
           "rev_beat_pct": 3.2,
           "stock_rxn": -2.1
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": -63.0,
+          "eps_beat_pct": 12.9,
           "rev_beat_pct": 2.1,
           "stock_rxn": 3.4
         },
         {
           "quarter": "Q1'25",
-          "eps_beat_pct": -52.8,
+          "eps_beat_pct": -5.3,
           "rev_beat_pct": 1.9,
           "stock_rxn": 2.1
         }
@@ -2614,16 +2614,16 @@
           "consensus": 1.2271455938697318,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": -0.29,
-          "yoy": "+523%",
+          "prior_year": 0.93,
+          "yoy": "+32%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 2993.6516013226264,
+          "consensus": 2995.7481876869783,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2315.403624339761,
+          "prior_year": 2317.176768153906,
           "yoy": "+29%",
           "vs_guide": "n/a"
         }
@@ -2643,25 +2643,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'26",
-          "eps_beat_pct": 19.0,
+          "eps_beat_pct": 5.7,
           "rev_beat_pct": 3.4,
           "stock_rxn": 1.4
         },
         {
           "quarter": "Q3'26",
-          "eps_beat_pct": 7.9,
+          "eps_beat_pct": 3.3,
           "rev_beat_pct": 3.3,
           "stock_rxn": 2.8
         },
         {
           "quarter": "Q2'26",
-          "eps_beat_pct": 13.2,
+          "eps_beat_pct": 3.6,
           "rev_beat_pct": 1.1,
           "stock_rxn": -0.1
         },
         {
           "quarter": "Q1'26",
-          "eps_beat_pct": 0.5,
+          "eps_beat_pct": 7.1,
           "rev_beat_pct": 1.8,
           "stock_rxn": -0.5
         }
@@ -2701,16 +2701,16 @@
           "consensus": 8.864191570881228,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 4.93,
-          "yoy": "+80%",
+          "prior_year": 4.77,
+          "yoy": "+86%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 388161.07687089173,
+          "consensus": 388471.7570435045,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 243868.87132849975,
+          "prior_year": 244284.6329383191,
           "yoy": "+59%",
           "vs_guide": "n/a"
         },
@@ -2739,25 +2739,25 @@
       "earnings_history": [
         {
           "quarter": "Q4'26",
-          "eps_beat_pct": 8.5,
+          "eps_beat_pct": 7.2,
           "rev_beat_pct": 3.1,
           "stock_rxn": 1.4
         },
         {
           "quarter": "Q3'26",
-          "eps_beat_pct": null,
+          "eps_beat_pct": 4.5,
           "rev_beat_pct": 2.3,
           "stock_rxn": -0.9
         },
         {
           "quarter": "Q2'26",
-          "eps_beat_pct": -12.4,
+          "eps_beat_pct": 4.8,
           "rev_beat_pct": 2.7,
           "stock_rxn": 2.5
         },
         {
           "quarter": "Q1'26",
-          "eps_beat_pct": 14.7,
+          "eps_beat_pct": 12.6,
           "rev_beat_pct": 4.3,
           "stock_rxn": -1.5
         }
@@ -2788,16 +2788,16 @@
           "consensus": 9.048398467432952,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 5.55,
-          "yoy": "+63%",
+          "prior_year": 8.1,
+          "yoy": "+12%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 3674.1958396752916,
+          "consensus": 3675.4028411973613,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 3245.4939479597015,
+          "prior_year": 3246.6614372689714,
           "yoy": "+13%",
           "vs_guide": "n/a"
         }
@@ -2835,7 +2835,7 @@
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 1.1,
+          "eps_beat_pct": 1.0,
           "rev_beat_pct": -0.1,
           "stock_rxn": -0.4
         }
@@ -2866,16 +2866,16 @@
           "consensus": 21.8262183908046,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 18.24,
+          "prior_year": 18.21,
           "yoy": "+20%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 312214.77485322894,
+          "consensus": 312277.1357142857,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 289443.3969577939,
+          "prior_year": 289505.8235576923,
           "yoy": "+7.9%",
           "vs_guide": "n/a"
         }
@@ -2895,25 +2895,25 @@
       "earnings_history": [
         {
           "quarter": "Q1'26",
-          "eps_beat_pct": 4.4,
+          "eps_beat_pct": 1.0,
           "rev_beat_pct": 0.3,
           "stock_rxn": 1.2
         },
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 50.5,
+          "eps_beat_pct": 4.4,
           "rev_beat_pct": 3.1,
           "stock_rxn": -1.6
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": -22.1,
+          "eps_beat_pct": 1.4,
           "rev_beat_pct": 0.7,
           "stock_rxn": 1.2
         },
         {
           "quarter": "Q2'25",
-          "eps_beat_pct": 1.4,
+          "eps_beat_pct": 1.3,
           "rev_beat_pct": 0.3,
           "stock_rxn": -0.4
         }
@@ -2953,16 +2953,16 @@
           "consensus": 13.858540229885058,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 4.91,
-          "yoy": "+182%",
+          "prior_year": 6.82,
+          "yoy": "+103%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 126474.53942161339,
+          "consensus": 126620.95738203957,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 80635.06232028463,
+          "prior_year": 80745.2751452145,
           "yoy": "+57%",
           "vs_guide": "n/a"
         },
@@ -2991,25 +2991,25 @@
       "earnings_history": [
         {
           "quarter": "Q2'26",
-          "eps_beat_pct": 32.2,
+          "eps_beat_pct": 33.7,
           "rev_beat_pct": 20.2,
           "stock_rxn": 0.0
         },
         {
           "quarter": "Q1'26",
-          "eps_beat_pct": 18.6,
+          "eps_beat_pct": 21.0,
           "rev_beat_pct": 5.3,
           "stock_rxn": -3.0
         },
         {
           "quarter": "Q4'25",
-          "eps_beat_pct": 6.9,
+          "eps_beat_pct": 6.6,
           "rev_beat_pct": 1.4,
           "stock_rxn": 1.1
         },
         {
           "quarter": "Q3'25",
-          "eps_beat_pct": 16.2,
+          "eps_beat_pct": 19.4,
           "rev_beat_pct": 5.1,
           "stock_rxn": -0.5
         }
@@ -3049,16 +3049,16 @@
           "consensus": 79.13705747126437,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 7.65,
-          "yoy": "+934%",
+          "prior_year": 8.29,
+          "yoy": "+855%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 140491.24655043584,
+          "consensus": 140648.17255292655,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 78773.58958718835,
+          "prior_year": 78961.34660394401,
           "yoy": "+78%",
           "vs_guide": "n/a"
         },
@@ -3136,16 +3136,16 @@
           "consensus": 23.737118773946364,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 21.86,
+          "prior_year": 21.85,
           "yoy": "+8.6%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 83052.10971548999,
+          "consensus": 83065.57127502633,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 81062.65670288145,
+          "prior_year": 81065.24831365139,
           "yoy": "+2.5%",
           "vs_guide": "n/a"
         }

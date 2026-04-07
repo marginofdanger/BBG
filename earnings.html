@@ -333,10 +333,10 @@ function revisionsClass(rev) {
   if (net < 0 && rev.up === 0) return 'negative';
   return 'mixed';
 }
-function formatGuidance(low, high) {
+function formatGuidance(low, high, name) {
   if (low == null && high == null) return '&mdash;';
-  if (low === high) return formatNum(low);
-  return `${formatNum(low)} &ndash; ${formatNum(high)}`;
+  if (low === high) return formatMetric(name, low);
+  return `${formatMetric(name, low)} &ndash; ${formatMetric(name, high)}`;
 }
 function formatNum(v) {
   if (v == null) return '&mdash;';
@@ -345,6 +345,12 @@ function formatNum(v) {
   if (abs >= 100) return `$${v.toFixed(0)}M`;
   if (abs >= 1) return v.toFixed(2);
   return v.toFixed(2);
+}
+function isMargin(name) { return /margin|ratio/i.test(name); }
+function formatMetric(name, v) {
+  if (v == null) return '&mdash;';
+  if (isMargin(name)) return v.toFixed(1);
+  return formatNum(v);
 }
 function vsGuideClass(vs) {
   if (vs === 'above') return 'above';
@@ -480,8 +486,8 @@ function buildCard(c, collapsed) {
   for (const m of c.metrics) {
     html += `<tr>`;
     html += `<td class="metric-name">${m.name}</td>`;
-    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high)}</td>`;
-    html += `<td class="consensus">${m.consensus != null ? formatNum(m.consensus) : '&mdash;'}</td>`;
+    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high, m.name)}</td>`;
+    html += `<td class="consensus">${m.consensus != null ? formatMetric(m.name, m.consensus) : '&mdash;'}</td>`;
     html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
     html += `<td class="vs-guide ${vsGuideClass(m.vs_guide)}">${m.vs_guide}</td>`;
     html += `</tr>`;
@@ -491,8 +497,8 @@ function buildCard(c, collapsed) {
     for (const m of c.annual_metrics) {
       html += `<tr>`;
       html += `<td class="metric-name">${m.name} (FY)</td>`;
-      html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high)}</td>`;
-      html += `<td class="consensus">${m.consensus != null ? formatNum(m.consensus) : '&mdash;'}</td>`;
+      html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high, m.name)}</td>`;
+      html += `<td class="consensus">${m.consensus != null ? formatMetric(m.name, m.consensus) : '&mdash;'}</td>`;
       html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
       html += `<td class="vs-guide ${vsGuideClass(m.vs_guide)}">${m.vs_guide}</td>`;
       html += `</tr>`;
@@ -561,8 +567,8 @@ function buildCardNoDate(c) {
   for (const m of c.metrics) {
     html += `<tr>`;
     html += `<td class="metric-name">${m.name}</td>`;
-    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high)}</td>`;
-    html += `<td class="consensus">${m.consensus != null ? formatNum(m.consensus) : '&mdash;'}</td>`;
+    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high, m.name)}</td>`;
+    html += `<td class="consensus">${m.consensus != null ? formatMetric(m.name, m.consensus) : '&mdash;'}</td>`;
     html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
     html += `<td class="vs-guide ${vsGuideClass(m.vs_guide)}">${m.vs_guide}</td>`;
     html += `</tr>`;
@@ -599,5 +605,10 @@ document.querySelectorAll('#range-group button').forEach(b => {
 });
 loadData();
 </script>
+
+<div style="text-align:center; padding:24px 0 12px; font-size:10px; color:#aaa;">
+  Dates and estimates from BBG consensus. Beats/misses use BBG comparable results vs. consensus estimates.
+</div>
+
 </body>
 </html>
