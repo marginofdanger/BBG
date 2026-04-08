@@ -187,11 +187,11 @@ let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '30');
 
 async function loadData() {
   try {
-    const idxResp = await fetch('output/snapshots/index_earnings.json?v=' + Date.now());
+    const idxResp = await fetch('../snapshots/index_earnings.json?v=' + Date.now());
     if (!idxResp.ok) { showEmpty(); return; }
     const dates = await idxResp.json();
     if (!dates.length) { showEmpty(); return; }
-    const dataResp = await fetch(`output/snapshots/earnings_${dates[0]}.json?v=${Date.now()}`);
+    const dataResp = await fetch(`../snapshots/earnings_${dates[0]}.json?v=${Date.now()}`);
     if (!dataResp.ok) { showEmpty(); return; }
     DATA = await dataResp.json();
     document.getElementById('updated').textContent = `Last updated: ${DATA.snapshot_date}`;

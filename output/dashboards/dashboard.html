@@ -204,14 +204,14 @@ td.spark-cell { padding: 4px 2px; }
   try {
     const cb = '?_=' + Date.now();
     const [estResp, priceResp] = await Promise.all([
-      fetch('output/snapshots/index_estimates.json' + cb),
-      fetch('output/snapshots/index_prices.json' + cb).catch(() => null),
+      fetch('../snapshots/index_estimates.json' + cb),
+      fetch('../snapshots/index_prices.json' + cb).catch(() => null),
     ]);
     if (estResp.ok) estDates = [...(await estResp.json())].sort();
     if (priceResp && priceResp.ok) priceDates = [...(await priceResp.json())].sort();
     // Fallback: try legacy index.json
     if (!estDates.length) {
-      const legacyResp = await fetch('output/snapshots/index.json' + cb);
+      const legacyResp = await fetch('../snapshots/index.json' + cb);
       if (legacyResp.ok) estDates = [...(await legacyResp.json())].sort();
     }
   } catch (e) {}
@@ -260,8 +260,8 @@ td.spark-cell { padding: 4px 2px; }
     document.getElementById('estDateLabel').textContent = date;
     try {
       // Try new naming first, fall back to legacy
-      let resp = await fetch('output/snapshots/estimates_' + date + '.csv');
-      if (!resp.ok) resp = await fetch('output/snapshots/' + date + '.csv');
+      let resp = await fetch('../snapshots/estimates_' + date + '.csv');
+      if (!resp.ok) resp = await fetch('../snapshots/' + date + '.csv');
       if (!resp.ok) throw new Error('CSV not found');
       const text = await resp.text();
       currentEstData = parseCSV(text);
@@ -274,7 +274,7 @@ td.spark-cell { padding: 4px 2px; }
   async function loadPrices(date) {
     document.getElementById('priceDateLabel').textContent = date;
     try {
-      const resp = await fetch('output/snapshots/prices_' + date + '.csv');
+      const resp = await fetch('../snapshots/prices_' + date + '.csv');
       if (!resp.ok) throw new Error('Prices CSV not found');
       const text = await resp.text();
       currentPriceData = parseCSV(text);
