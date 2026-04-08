@@ -7,6 +7,9 @@ from datetime import date
 
 from xbbg import blp
 
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 # Reuse ticker list and helpers from pull_estimates
 from pull_estimates import (
     _build_ticker_list, _bdp_batch, _pull_returns, _pull_fye,

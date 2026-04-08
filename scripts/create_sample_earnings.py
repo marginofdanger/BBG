@@ -96,9 +96,11 @@ sample = {
     }
   ]
 }
-os.makedirs("output/snapshots", exist_ok=True)
-with open("output/snapshots/earnings_2026-04-06.json", "w") as f:
+REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+SNAPSHOT_DIR = os.path.join(REPO_ROOT, "output", "snapshots")
+os.makedirs(SNAPSHOT_DIR, exist_ok=True)
+with open(os.path.join(SNAPSHOT_DIR, "earnings_2026-04-06.json"), "w") as f:
     json.dump(sample, f, indent=2)
-with open("output/snapshots/index_earnings.json", "w") as f:
+with open(os.path.join(SNAPSHOT_DIR, "index_earnings.json"), "w") as f:
     json.dump(["2026-04-06"], f)
 print("Sample data written.")

@@ -10,10 +10,10 @@ import os
 import re
 from pathlib import Path
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-CALL_EXTRACTION_DIR = os.path.join(os.path.dirname(SCRIPT_DIR), "Call-extraction", "companies")
-OUTPUT_PATH = os.path.join(SCRIPT_DIR, "guidance_overrides.json")
-ACTUALS_PATH = os.path.join(SCRIPT_DIR, "actuals_overrides.json")
+REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+CALL_EXTRACTION_DIR = os.path.join(REPO_ROOT, "..", "Call-extraction", "companies")
+OUTPUT_PATH = os.path.join(REPO_ROOT, "config", "guidance_overrides.json")
+ACTUALS_PATH = os.path.join(REPO_ROOT, "config", "actuals_overrides.json")
 
 # Tickers to extract guidance for (portfolio + watchlist)
 TICKERS = [

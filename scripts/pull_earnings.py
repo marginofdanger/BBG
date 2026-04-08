@@ -8,11 +8,11 @@ from xbbg import blp
 
 from bloomberg import USD_OVERRIDE_TICKERS
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-SNAPSHOT_DIR = os.path.join(SCRIPT_DIR, "output", "snapshots")
-METRICS_PATH = os.path.join(SCRIPT_DIR, "earnings_metrics.json")
-GUIDANCE_PATH = os.path.join(SCRIPT_DIR, "guidance_overrides.json")
-ACTUALS_PATH = os.path.join(SCRIPT_DIR, "actuals_overrides.json")
+REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+SNAPSHOT_DIR = os.path.join(REPO_ROOT, "output", "snapshots")
+METRICS_PATH = os.path.join(REPO_ROOT, "config", "earnings_metrics.json")
+GUIDANCE_PATH = os.path.join(REPO_ROOT, "config", "guidance_overrides.json")
+ACTUALS_PATH = os.path.join(REPO_ROOT, "config", "actuals_overrides.json")
 
 PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV"]
 WATCHLIST = ["FICO", "GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V",

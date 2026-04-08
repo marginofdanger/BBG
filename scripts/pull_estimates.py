@@ -25,9 +25,9 @@ LOOKBACK_EXT = 12    # months for extended watchlist
 MKTCAP_GAAP_THRESHOLD = 200_000_000_000
 Q1_FYE_SHIFT = 1
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-EXTENDED_WATCHLIST_PATH = os.path.join(SCRIPT_DIR, "extended_watchlist.json")
-SNAPSHOT_DIR = os.path.join(SCRIPT_DIR, "output", "snapshots")
+REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+EXTENDED_WATCHLIST_PATH = os.path.join(REPO_ROOT, "config", "extended_watchlist.json")
+SNAPSHOT_DIR = os.path.join(REPO_ROOT, "output", "snapshots")
 
 
 def _bdp_to_dict(df):
@@ -429,7 +429,7 @@ def main():
     # Also generate a prices snapshot
     print("\nGenerating prices snapshot...")
     import subprocess
-    subprocess.run(["python", os.path.join(SCRIPT_DIR, "pull_prices.py")])
+    subprocess.run(["python", os.path.join(os.path.dirname(os.path.abspath(__file__)), "pull_prices.py")])
 
     print("Done.")
 
