@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earnings Changes</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f8f9fa; color: #1a1a1a; font-size: 13px; padding: 16px 20px;
+}
+.wrap { max-width: 480px; margin: 0 auto; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+.header h1 { font-size: 20px; font-weight: 700; }
+.header .updated { font-size: 11px; color: #888; margin-top: 2px; }
+.header a.back { font-size: 11px; color: #2563eb; text-decoration: none; }
+.header a.back:hover { text-decoration: underline; }
+.controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.controls label { font-size: 11px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.controls select {
+  padding: 4px 8px; font-size: 11px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #333;
+}
+.btn-group { display: flex; gap: 0; }
+.btn-group button {
+  padding: 4px 12px; font-size: 11px; border: 1px solid #ccc; background: #fff; cursor: pointer; color: #555;
+}
+.btn-group button:first-child { border-radius: 4px 0 0 4px; }
+.btn-group button:last-child { border-radius: 0 4px 4px 0; }
+.btn-group button + button { border-left: none; }
+.btn-group button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+
+.summary {
+  background: #fff; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+  border: 1px solid #e2e5e9; font-size: 12px; color: #555;
+  display: flex; gap: 24px; align-items: center; flex-wrap: wrap;
+}
+.summary b { color: #111; font-size: 14px; }
+.summary .pill { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; margin-left: 6px; }
+.pill.added { background: #f0fdf4; color: #16a34a; }
+.pill.removed { background: #fef2f2; color: #dc2626; }
+.pill.changed { background: #eff6ff; color: #2563eb; }
+
+.card {
+  background: #fff; border-radius: 6px; padding: 10px 12px; margin-bottom: 8px;
+  border: 1px solid #e2e5e9; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.card-head {
+  display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;
+  padding-bottom: 4px; border-bottom: 1px solid #f0f0f0;
+}
+.ticker { font-weight: 700; font-size: 15px; color: #111; }
+.ticker .group { font-size: 10px; color: #999; font-weight: 500; margin-left: 6px; }
+.change-count { font-size: 10px; color: #666; }
+
+/* Unified table layout — all cards line up vertically */
+table.diff {
+  width: 100%; border-collapse: collapse; font-size: 11px; table-layout: fixed;
+}
+table.diff th {
+  text-align: left; color: #999; font-weight: 600; font-size: 9px;
+  text-transform: uppercase; letter-spacing: 0.3px; padding: 3px 4px;
+  border-bottom: 1px solid #f0f0f0; background: #fafbfc;
+}
+table.diff td {
+  padding: 3px 4px; border-bottom: 1px solid #f6f6f6; vertical-align: middle;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* Fixed column widths so every card aligns */
+table.diff col.c-section { width: 78px; }
+table.diff col.c-field { width: auto; }
+table.diff col.c-before { width: 72px; }
+table.diff col.c-after { width: 72px; }
+table.diff col.c-delta { width: 48px; }
+table.diff th.num, table.diff td.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.diff tr.section-start td { border-top: 2px solid #eef0f3; }
+table.diff td.section { color: #6b7280; font-weight: 700; font-size: 9px; text-transform: uppercase; letter-spacing: 0.4px; }
+table.diff td.field { color: #444; }
+table.diff td.before { color: #999; }
+table.diff td.after { color: #111; font-weight: 600; }
+table.diff td.delta { font-weight: 700; font-size: 10px; }
+table.diff td.delta.up { color: #16a34a; }
+table.diff td.delta.down { color: #dc2626; }
+table.diff td.delta.neutral { color: #9ca3af; }
+
+.empty { text-align: center; padding: 60px 20px; color: #999; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="header">
+  <div>
+    <h1>Earnings Changes</h1>
+    <div class="updated" id="updated"></div>
+    <a class="back" href="earnings.html">← Back to calendar</a>
+  </div>
+  <div class="controls">
+    <label>Baseline:</label>
+    <select id="baseline-sel"></select>
+    <label>Compare:</label>
+    <select id="compare-sel"></select>
+    <label>Show:</label>
+    <div class="btn-group" id="filter-group">
+      <button data-filter="all">All</button>
+      <button class="active" data-filter="Portfolio">Portfolio</button>
+      <button data-filter="Watchlist">Watchlist</button>
+    </div>
+  </div>
+</div>
+
+<div class="summary" id="summary"></div>
+<div id="cards"></div>
+<div class="empty" id="empty" style="display:none">
+  Need at least two snapshots to compute diffs.
+</div>
+</div>
+
+<script>
+let DATES = [];
+let CURR = null, PREV = null;
+let FILTER = localStorage.getItem('changes_filter') || 'Portfolio';
+let BASELINE_DATE = null;
+let COMPARE_DATE = null;
+
+async function init() {
+  try {
+    const idxResp = await fetch('../snapshots/index_earnings.json?v=' + Date.now());
+    if (!idxResp.ok) return showEmpty();
+    DATES = await idxResp.json();
+    if (DATES.length < 2) return showEmpty();
+
+    // Default: baseline = prior, compare = most recent
+    BASELINE_DATE = DATES[1];
+    COMPARE_DATE = DATES[0];
+
+    populateSelects();
+    await loadSnapshots();
+    render();
+  } catch (e) {
+    console.error(e);
+    showEmpty();
+  }
+}
+
+function populateSelects() {
+  const b = document.getElementById('baseline-sel');
+  const c = document.getElementById('compare-sel');
+  b.innerHTML = DATES.map(d => `<option value="${d}">${d}</option>`).join('');
+  c.innerHTML = DATES.map(d => `<option value="${d}">${d}</option>`).join('');
+  b.value = BASELINE_DATE;
+  c.value = COMPARE_DATE;
+  b.addEventListener('change', async () => {
+    BASELINE_DATE = b.value;
+    await loadSnapshots();
+    render();
+  });
+  c.addEventListener('change', async () => {
+    COMPARE_DATE = c.value;
+    await loadSnapshots();
+    render();
+  });
+}
+
+async function loadSnapshots() {
+  const [cResp, pResp] = await Promise.all([
+    fetch(`../snapshots/earnings_${COMPARE_DATE}.json?v=${Date.now()}`),
+    fetch(`../snapshots/earnings_${BASELINE_DATE}.json?v=${Date.now()}`),
+  ]);
+  CURR = await cResp.json();
+  PREV = await pResp.json();
+  document.getElementById('updated').textContent =
+    `Comparing ${BASELINE_DATE} → ${COMPARE_DATE}`;
+}
+
+function showEmpty() { document.getElementById('empty').style.display = 'block'; }
+
+function fmt(v) {
+  if (v === null || v === undefined || v === '') return '—';
+  if (typeof v === 'number') {
+    if (Math.abs(v) >= 1000) return v.toLocaleString(undefined, { maximumFractionDigits: 0 });
+    if (Math.abs(v) >= 10) return v.toFixed(1);
+    return v.toFixed(2);
+  }
+  return String(v);
+}
+
+function pctDelta(prev, curr) {
+  if (prev === null || curr === null || prev === undefined || curr === undefined) return null;
+  if (typeof prev !== 'number' || typeof curr !== 'number') return null;
+  if (prev === 0) return null;
+  return (curr - prev) / Math.abs(prev) * 100;
+}
+
+function deltaCell(prev, curr) {
+  const d = pctDelta(prev, curr);
+  if (d === null) return `<td class="num delta neutral">—</td>`;
+  if (Math.abs(d) < 0.05) return `<td class="num delta neutral">~0%</td>`;
+  const cls = d > 0 ? 'up' : 'down';
+  const sign = d > 0 ? '+' : '';
+  return `<td class="num delta ${cls}">${sign}${d.toFixed(1)}%</td>`;
+}
+
+function nearlyEqual(a, b) {
+  if (a === null || b === null || a === undefined || b === undefined) return a === b;
+  if (typeof a !== 'number' || typeof b !== 'number') return a === b;
+  if (a === 0 && b === 0) return true;
+  return Math.abs(a - b) / Math.max(Math.abs(a), Math.abs(b), 1e-9) < 0.0005;
+}
+
+function buildRows(prevC, currC) {
+  // Returns [{section, field, before, after, hasDelta, beforeNum, afterNum}]
+  const rows = [];
+
+  // --- Date section ---
+  if ((prevC?.earnings_date || '') !== (currC?.earnings_date || '')) {
+    rows.push({ section: 'Date', field: 'Earnings date', before: prevC?.earnings_date || '—', after: currC?.earnings_date || '—' });
+  }
+  if ((prevC?.earnings_time || '') !== (currC?.earnings_time || '')) {
+    rows.push({ section: 'Date', field: 'Time', before: prevC?.earnings_time || '—', after: currC?.earnings_time || '—' });
+  }
+  if (!!prevC?.date_confirmed !== !!currC?.date_confirmed) {
+    rows.push({
+      section: 'Date', field: 'Status',
+      before: prevC?.date_confirmed ? 'Confirmed' : 'Estimated',
+      after: currC?.date_confirmed ? 'Confirmed' : 'Estimated',
+    });
+  }
+
+  // --- Revisions section ---
+  const pr = prevC?.revisions_4wk || { up: 0, down: 0 };
+  const cr = currC?.revisions_4wk || { up: 0, down: 0 };
+  if (pr.up !== cr.up || pr.down !== cr.down) {
+    rows.push({
+      section: 'Revisions', field: '4wk up/down',
+      before: `${pr.up}↑ / ${pr.down}↓`,
+      after: `${cr.up}↑ / ${cr.down}↓`,
+    });
+  }
+  if (!nearlyEqual(prevC?.eps_4wk_pct ?? null, currC?.eps_4wk_pct ?? null)) {
+    const pv = prevC?.eps_4wk_pct ?? null;
+    const cv = currC?.eps_4wk_pct ?? null;
+    rows.push({
+      section: 'Revisions', field: 'EPS 4wk Δ',
+      before: pv !== null ? `${pv}%` : '—',
+      after: cv !== null ? `${cv}%` : '—',
+    });
+  }
+
+  // --- Metric sections ---
+  pushMetricRows(rows, 'Q Est', prevC?.metrics || [], currC?.metrics || []);
+  pushMetricRows(rows, 'FY Est', prevC?.annual_metrics || [], currC?.annual_metrics || []);
+
+  // --- New reports ---
+  const prevHist = new Set((prevC?.earnings_history || []).map(h => h.quarter));
+  for (const h of currC?.earnings_history || []) {
+    if (!prevHist.has(h.quarter)) {
+      rows.push({
+        section: 'New Report', field: `${h.quarter} result`,
+        before: '—',
+        after: `EPS ${h.eps_beat_pct ?? '–'}% · Rev ${h.rev_beat_pct ?? '–'}% · Rxn ${h.stock_rxn ?? '–'}%`,
+      });
+    }
+  }
+
+  return rows;
+}
+
+function pushMetricRows(rows, sectionLabel, prevList, currList) {
+  const prevByName = Object.fromEntries(prevList.map(m => [m.name, m]));
+  const currByName = Object.fromEntries(currList.map(m => [m.name, m]));
+  const names = new Set([...Object.keys(prevByName), ...Object.keys(currByName)]);
+  for (const name of names) {
+    const p = prevByName[name];
+    const c = currByName[name];
+    if (!p && c) {
+      rows.push({
+        section: sectionLabel, field: `${name} (new)`,
+        before: '—', after: fmt(c.consensus),
+      });
+      continue;
+    }
+    if (p && !c) {
+      rows.push({
+        section: sectionLabel, field: `${name} (removed)`,
+        before: fmt(p.consensus), after: '—',
+      });
+      continue;
+    }
+    const fields = [
+      ['consensus', `${name} cons.`],
+      ['guidance_low', `${name} guide low`],
+      ['guidance_high', `${name} guide high`],
+    ];
+    for (const [f, label] of fields) {
+      if (!nearlyEqual(p?.[f] ?? null, c?.[f] ?? null)) {
+        rows.push({
+          section: sectionLabel, field: label,
+          before: fmt(p?.[f]), after: fmt(c?.[f]),
+          beforeNum: p?.[f] ?? null, afterNum: c?.[f] ?? null, hasDelta: true,
+        });
+      }
+    }
+  }
+}
+
+function render() {
+  const cards = document.getElementById('cards');
+  cards.innerHTML = '';
+
+  const prevByT = Object.fromEntries((PREV.companies || []).map(c => [c.ticker, c]));
+  const currByT = Object.fromEntries((CURR.companies || []).map(c => [c.ticker, c]));
+  const tickers = new Set([...Object.keys(prevByT), ...Object.keys(currByT)]);
+
+  let totalChanged = 0, totalAdded = 0, totalRemoved = 0;
+  const cardsHtml = [];
+
+  const sorted = [...tickers].sort((a, b) => {
+    const da = (currByT[a] || prevByT[a])?.earnings_date || '9999-12-31';
+    const db = (currByT[b] || prevByT[b])?.earnings_date || '9999-12-31';
+    if (da !== db) return da.localeCompare(db);
+    return a.localeCompare(b);
+  });
+
+  for (const t of sorted) {
+    const p = prevByT[t];
+    const c = currByT[t];
+    const ref = c || p;
+    if (FILTER !== 'all' && ref.group !== FILTER) continue;
+
+    let rows = [];
+    if (!p && c) {
+      totalAdded++;
+      rows = [{ section: 'Added', field: 'New coverage', before: '—', after: c.earnings_date || '—' }];
+    } else if (p && !c) {
+      totalRemoved++;
+      rows = [{ section: 'Removed', field: 'Dropped coverage', before: p.earnings_date || '—', after: '—' }];
+    } else {
+      rows = buildRows(p, c);
+      if (rows.length === 0) continue;
+      totalChanged++;
+    }
+    cardsHtml.push(renderCard(t, ref, rows));
+  }
+
+  const total = totalChanged + totalAdded + totalRemoved;
+  document.getElementById('summary').innerHTML = total === 0
+    ? `<span>No changes between ${BASELINE_DATE} and ${COMPARE_DATE}.</span>`
+    : `<span><b>${total}</b> tickers with changes</span>
+       <span>Modified <span class="pill changed">${totalChanged}</span></span>
+       <span>Added <span class="pill added">${totalAdded}</span></span>
+       <span>Removed <span class="pill removed">${totalRemoved}</span></span>`;
+
+  if (cardsHtml.length === 0) {
+    cards.innerHTML = `<div class="empty">No changes for this filter.</div>`;
+  } else {
+    cards.innerHTML = cardsHtml.join('');
+  }
+}
+
+function renderCard(ticker, ref, rows) {
+  // Mark first row of each section with section-start class for visual separators.
+  let lastSection = null;
+  const rowsHtml = rows.map(r => {
+    const isStart = r.section !== lastSection;
+    lastSection = r.section;
+    const sectionCell = isStart ? `<td class="section">${r.section}</td>` : `<td></td>`;
+    const deltaCellHtml = r.hasDelta
+      ? deltaCell(r.beforeNum, r.afterNum)
+      : `<td class="num delta neutral">—</td>`;
+    return `<tr class="${isStart ? 'section-start' : ''}">
+      ${sectionCell}
+      <td class="field">${r.field}</td>
+      <td class="before num">${r.before}</td>
+      <td class="after num">${r.after}</td>
+      ${deltaCellHtml}
+    </tr>`;
+  }).join('');
+
+  return `<div class="card">
+    <div class="card-head">
+      <div class="ticker">${ticker}<span class="group">${ref.group || ''}</span></div>
+      <div class="change-count">${rows.length} change${rows.length === 1 ? '' : 's'}</div>
+    </div>
+    <table class="diff">
+      <colgroup>
+        <col class="c-section"><col class="c-field"><col class="c-before"><col class="c-after"><col class="c-delta">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Section</th>
+          <th>Field</th>
+          <th class="num">${BASELINE_DATE}</th>
+          <th class="num">${COMPARE_DATE}</th>
+          <th class="num">Δ</th>
+        </tr>
+      </thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+  </div>`;
+}
+
+document.querySelectorAll('#filter-group button').forEach(btn => {
+  if (btn.dataset.filter === FILTER) btn.classList.add('active');
+  else btn.classList.remove('active');
+  btn.addEventListener('click', () => {
+    FILTER = btn.dataset.filter;
+    localStorage.setItem('changes_filter', FILTER);
+    document.querySelectorAll('#filter-group button').forEach(b => b.classList.toggle('active', b.dataset.filter === FILTER));
+    render();
+  });
+});
+
+init();
+</script>
+</body>
+</html>
