@@ -6,7 +6,7 @@
       "group": "Portfolio",
       "earnings_date": "2026-04-14",
       "earnings_time": "06:45",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 14,
         "down": 4
@@ -93,7 +93,7 @@
       "group": "Portfolio",
       "earnings_date": "2026-04-15",
       "earnings_time": "Bef-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 14,
         "down": 5
@@ -294,7 +294,7 @@
       "group": "Portfolio",
       "earnings_date": "2026-04-21",
       "earnings_time": "Bef-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 1,
         "down": 2
@@ -372,7 +372,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-21",
       "earnings_time": "Bef-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 6,
         "down": 2
@@ -459,7 +459,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-21",
       "earnings_time": "16:00",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 4,
         "down": 1
@@ -537,7 +537,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-21",
       "earnings_time": "16:05",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 4,
         "down": 7
@@ -711,7 +711,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-22",
       "earnings_time": "Aft-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 2,
         "down": 8
@@ -867,7 +867,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-23",
       "earnings_time": "Bef-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 5,
         "down": 0
@@ -1023,7 +1023,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-28",
       "earnings_time": "Aft-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 1,
         "down": 11
@@ -1101,7 +1101,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-28",
       "earnings_time": "Aft-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 3,
         "down": 0
@@ -1179,7 +1179,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-28",
       "earnings_time": "16:00",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 2,
         "down": 3
@@ -1257,7 +1257,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-28",
       "earnings_time": "Bef-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 2,
         "down": 2
@@ -1335,7 +1335,7 @@
       "group": "Portfolio",
       "earnings_date": "2026-04-29",
       "earnings_time": "Aft-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 2,
         "down": 3
@@ -1509,7 +1509,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-29",
       "earnings_time": "Aft-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 1,
         "down": 1
@@ -1614,7 +1614,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-04-29",
       "earnings_time": "Aft-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 0,
         "down": 3
@@ -2034,7 +2034,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-05-01",
       "earnings_time": "06:30",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 2,
         "down": 12
@@ -2112,7 +2112,7 @@
       "group": "Portfolio",
       "earnings_date": "2026-05-06",
       "earnings_time": "Bef-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 0,
         "down": 11
@@ -2172,7 +2172,7 @@
       "group": "Portfolio",
       "earnings_date": "2026-05-06",
       "earnings_time": "Aft-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 2,
         "down": 0
@@ -2364,7 +2364,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-05-06",
       "earnings_time": "Aft-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 0,
         "down": 1
@@ -2634,7 +2634,7 @@
       "group": "Portfolio",
       "earnings_date": "2026-05-20",
       "earnings_time": "Aft-mkt",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 4,
         "down": 0
@@ -2808,7 +2808,7 @@
       "group": "Watchlist",
       "earnings_date": "2026-05-28",
       "earnings_time": "None",
-      "date_confirmed": false,
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 7,
         "down": 0

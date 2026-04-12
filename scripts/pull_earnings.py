@@ -80,7 +80,7 @@ def pull_earnings_dates(bbg_tickers):
 
     Returns {bbg_ticker: {date, time, confirmed}}.
     """
-    fields = ["EXPECTED_REPORT_DT", "EXPECTED_REPORT_TIME", "EARN_ANN_DT_STATUS"]
+    fields = ["EXPECTED_REPORT_DT", "EXPECTED_REPORT_TIME", "EXPECTED_REPORT_TYP"]
     data = _bdp_batch(bbg_tickers, fields)
     result = {}
     for bt in bbg_tickers:
@@ -97,7 +97,7 @@ def pull_earnings_dates(bbg_tickers):
                 parts = raw_str.split("/")
                 if len(parts) == 3:
                     earnings_date = f"{parts[2]}-{parts[0].zfill(2)}-{parts[1].zfill(2)}"
-        status = str(info.get("EARN_ANN_DT_STATUS", "")).strip()
+        status = str(info.get("EXPECTED_REPORT_TYP", "")).strip()
         result[bt] = {
             "date": earnings_date,
             "time": str(info.get("EXPECTED_REPORT_TIME", "")).strip(),
