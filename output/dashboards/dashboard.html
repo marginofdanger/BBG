@@ -115,7 +115,6 @@ td.spark-cell { padding: 4px 2px; }
 <div class="header">
   <div class="header-left">
     <h1>Portfolio Estimate Tracker</h1>
-    <a href="dashboard_changes.html" target="_blank" rel="noopener" style="font-size:11px;color:#2563eb;text-decoration:none;">Changes →</a>
   </div>
   <div class="header-center" id="sliderWrap">
     <div style="display:flex;align-items:center;gap:6px;">
@@ -145,6 +144,7 @@ td.spark-cell { padding: 4px 2px; }
   <div class="tab" data-tab="analysis">Analysis</div>
   <div class="tab" data-tab="peers">Peers</div>
   <div class="tab" data-tab="other">Other</div>
+  <div class="tab" data-tab="changes">Changes</div>
 </div>
 <div class="tab-content active" id="tab-companies">
   <div class="table-wrap" id="tableWrap"></div>
@@ -167,6 +167,9 @@ td.spark-cell { padding: 4px 2px; }
 </div>
 <div class="tab-content" id="tab-other">
   <div class="analysis-wrap" id="otherWrap"></div>
+</div>
+<div class="tab-content" id="tab-changes">
+  <iframe id="changesFrame" src="about:blank" style="width:100%;height:calc(100vh - 90px);border:none;"></iframe>
 </div>
 
 <script>
@@ -902,6 +905,12 @@ td.spark-cell { padding: 4px 2px; }
       tab.classList.add('active');
       document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
       document.querySelector('.header-right').style.visibility = tab.dataset.tab === 'companies' ? '' : 'hidden';
+      if (tab.dataset.tab === 'changes') {
+        const frame = document.getElementById('changesFrame');
+        if (frame.src === 'about:blank' || !frame.src.includes('dashboard_changes.html')) {
+          frame.src = 'dashboard_changes.html';
+        }
+      }
       renderActiveTab();
     });
   });
