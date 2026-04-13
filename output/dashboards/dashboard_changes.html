@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Portfolio Estimate Tracker — Changes</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  background: #f8f9fa; color: #1a1a1a; font-size: 13px; padding: 16px 20px;
+}
+.wrap { max-width: 1200px; margin: 0 auto; }
+.header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+.header h1 { font-size: 20px; }
+.header .sub { font-size: 11px; color: #888; margin-top: 2px; }
+.header a.back { font-size: 11px; color: #2563eb; text-decoration: none; }
+.header a.back:hover { text-decoration: underline; }
+.controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.controls label { font-size: 10px; color: #666; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+.controls select {
+  padding: 4px 8px; font-size: 11px; border: 1px solid #ccc; border-radius: 4px; background: #fff; color: #333;
+}
+.btn-group { display: flex; }
+.btn-group button {
+  padding: 4px 12px; font-size: 11px; border: 1px solid #ccc; background: #fff; cursor: pointer; color: #555;
+}
+.btn-group button:first-child { border-radius: 4px 0 0 4px; }
+.btn-group button:last-child { border-radius: 0 4px 4px 0; }
+.btn-group button + button { border-left: none; }
+.btn-group button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+
+.tabs { display: flex; gap: 0; margin-bottom: 14px; border-bottom: 1px solid #ddd; }
+.tabs button {
+  padding: 8px 18px; font-size: 12px; border: none; background: none; cursor: pointer;
+  color: #666; border-bottom: 2px solid transparent; font-weight: 600;
+}
+.tabs button.active { color: #2563eb; border-bottom-color: #2563eb; }
+
+.up { color: #16a34a; font-weight: 600; }
+.down { color: #dc2626; font-weight: 600; }
+.flat { color: #888; }
+
+/* Leaderboard */
+.lb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.lb-card { background: #fff; border: 1px solid #e2e5e9; border-radius: 6px; padding: 10px 12px; }
+.lb-card h3 { font-size: 10px; color: #444; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 6px; }
+.lb-card table { width: 100%; border-collapse: collapse; font-size: 11px; font-variant-numeric: tabular-nums; }
+.lb-card th {
+  font-size: 9px; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+  padding: 4px 6px; text-align: right; border-bottom: 1px solid #f0f0f0; cursor: pointer; user-select: none;
+}
+.lb-card th:first-child { text-align: left; }
+.lb-card th:hover { color: #2563eb; }
+.lb-card th.sorted { color: #2563eb; }
+.lb-card th.sorted::after { content: ' ▾'; font-size: 8px; }
+.lb-card th.sorted.asc::after { content: ' ▴'; }
+.lb-card td { padding: 3px 6px; border-bottom: 1px solid #f8f8f8; text-align: right; }
+.lb-card td:first-child { text-align: left; font-weight: 700; }
+.lb-card tr:hover { background: #fafbfc; }
+
+/* Heatmap */
+.heat { background: #fff; border: 1px solid #e2e5e9; border-radius: 6px; overflow: hidden; }
+.heat table { width: 100%; border-collapse: collapse; font-size: 11px; font-variant-numeric: tabular-nums; }
+.heat th {
+  font-size: 9px; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+  padding: 6px 8px; text-align: right; border-bottom: 1px solid #e5e7eb; background: #fafbfc;
+  cursor: pointer; user-select: none;
+}
+.heat th:first-child, .heat th:nth-child(2) { text-align: left; }
+.heat th:hover { color: #2563eb; }
+.heat th.sorted { color: #2563eb; }
+.heat th.sorted::after { content: ' ▾'; font-size: 8px; }
+.heat th.sorted.asc::after { content: ' ▴'; }
+.heat td { padding: 5px 8px; text-align: right; border-bottom: 1px solid #f6f6f6; }
+.heat td:first-child { text-align: left; font-weight: 700; }
+.heat td.grp { text-align: left; color: #888; font-size: 9px; font-weight: 500; padding-left: 4px; }
+.heat tbody tr:hover { background: #fafbfc; }
+
+.page { display: none; }
+.page.active { display: block; }
+.empty { text-align: center; padding: 40px; color: #888; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+  <div>
+    <h1>Portfolio Estimate Tracker — Changes</h1>
+    <div class="sub" id="sub"></div>
+    <a class="back" href="dashboard.html">← Back to tracker</a>
+  </div>
+  <div class="controls">
+    <label>Baseline:</label>
+    <select id="baseline-sel"></select>
+    <label>Compare:</label>
+    <select id="compare-sel"></select>
+    <label>Show:</label>
+    <div class="btn-group" id="filter-group">
+      <button data-filter="all">All</button>
+      <button class="active" data-filter="Portfolio">Portfolio</button>
+      <button data-filter="Watchlist">Watchlist</button>
+    </div>
+  </div>
+</div>
+
+<div class="tabs">
+  <button data-tab="b" class="active">Leaderboards</button>
+  <button data-tab="c">Heatmap</button>
+</div>
+
+<div id="page-b" class="page active"></div>
+<div id="page-c" class="page"></div>
+
+<div class="empty" id="empty" style="display:none">Need at least two estimate snapshots.</div>
+
+</div>
+
+<script>
+let DATES = [];
+let RECORDS = [];
+let FILTER = localStorage.getItem('dash_changes_filter') || 'Portfolio';
+let BASELINE_DATE = null, COMPARE_DATE = null;
+
+function parseCSV(text) {
+  const lines = text.trim().split(/\r?\n/);
+  const headers = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    const cells = [];
+    let cur = '', inQ = false;
+    for (const ch of line) {
+      if (ch === '"') inQ = !inQ;
+      else if (ch === ',' && !inQ) { cells.push(cur); cur = ''; }
+      else cur += ch;
+    }
+    cells.push(cur);
+    const row = {};
+    headers.forEach((h, i) => row[h] = cells[i] || '');
+    return row;
+  });
+}
+
+function parseNum(s) {
+  if (s === null || s === undefined || s === '') return null;
+  const n = parseFloat(String(s).replace(/[%+,]/g, ''));
+  return Number.isFinite(n) ? n : null;
+}
+
+function fmtPct(v, digits=1) {
+  if (v === null || v === undefined) return '—';
+  const sign = v > 0 ? '+' : '';
+  return `${sign}${v.toFixed(digits)}%`;
+}
+function fmtPctCls(v) {
+  if (v === null || v === undefined) return 'flat';
+  if (Math.abs(v) < 0.05) return 'flat';
+  return v > 0 ? 'up' : 'down';
+}
+function fmtPp(v, digits=1) {
+  if (v === null || v === undefined) return '—';
+  const sign = v > 0 ? '+' : '';
+  return `${sign}${v.toFixed(digits)}pp`;
+}
+
+async function init() {
+  try {
+    const idx = await fetch('../snapshots/index_estimates.json?v=' + Date.now()).then(r => r.json());
+    DATES = idx;
+    if (DATES.length < 2) { document.getElementById('empty').style.display = 'block'; return; }
+    BASELINE_DATE = DATES[1];
+    COMPARE_DATE = DATES[0];
+    populateSelects();
+    await loadAndRender();
+  } catch (e) {
+    console.error(e);
+    document.getElementById('empty').style.display = 'block';
+  }
+}
+
+function populateSelects() {
+  const b = document.getElementById('baseline-sel');
+  const c = document.getElementById('compare-sel');
+  const opts = DATES.map(d => `<option value="${d}">${d}</option>`).join('');
+  b.innerHTML = opts; c.innerHTML = opts;
+  b.value = BASELINE_DATE; c.value = COMPARE_DATE;
+  b.addEventListener('change', async () => { BASELINE_DATE = b.value; await loadAndRender(); });
+  c.addEventListener('change', async () => { COMPARE_DATE = c.value; await loadAndRender(); });
+}
+
+async function loadAndRender() {
+  const [cur, prev] = await Promise.all([
+    fetch(`../snapshots/estimates_${COMPARE_DATE}.csv?v=${Date.now()}`).then(r => r.text()).then(parseCSV),
+    fetch(`../snapshots/estimates_${BASELINE_DATE}.csv?v=${Date.now()}`).then(r => r.text()).then(parseCSV),
+  ]);
+  document.getElementById('sub').textContent = `Comparing ${BASELINE_DATE} → ${COMPARE_DATE}`;
+
+  function pivot(rows) {
+    const out = {};
+    for (const r of rows) {
+      if (r.Metric !== 'EPS') continue;
+      const t = r.Ticker;
+      if (!out[t]) out[t] = {
+        ticker: t, group: r.Group || '', sector: r['GICS Sector'] || '', years: {},
+        price: parseNum(r.Price),
+        retYtd: parseNum(r.Return_YTD), ret3m: parseNum(r.Return_3m), ret12m: parseNum(r.Return_12m),
+      };
+      const quarterCols = Object.keys(r).filter(k => /^Q\d \d{4}$/.test(k));
+      const lastCol = quarterCols[quarterCols.length - 1];
+      out[t].years[r.Year] = { eps: parseNum(r[lastCol]), pe: parseNum(r.PE) };
+    }
+    return out;
+  }
+  const P = pivot(prev), C = pivot(cur);
+
+  RECORDS = [];
+  const tickers = new Set([...Object.keys(P), ...Object.keys(C)]);
+  for (const t of tickers) {
+    const p = P[t], c = C[t];
+    if (!p || !c) continue;
+    const rec = {
+      ticker: t, group: c.group, sector: c.sector,
+      priceDelta: p.price && c.price ? (c.price - p.price) / p.price * 100 : null,
+      retYtdDelta: p.retYtd !== null && c.retYtd !== null ? c.retYtd - p.retYtd : null,
+      ret3mDelta: p.ret3m !== null && c.ret3m !== null ? c.ret3m - p.ret3m : null,
+      ret12mDelta: p.ret12m !== null && c.ret12m !== null ? c.ret12m - p.ret12m : null,
+      epsCY26: null, epsCY27: null, epsCY28: null,
+    };
+    for (const [y, k] of [['CY2026','epsCY26'],['CY2027','epsCY27'],['CY2028','epsCY28']]) {
+      const pe = p.years[y], ce = c.years[y];
+      if (pe && ce && pe.eps && ce.eps) rec[k] = (ce.eps - pe.eps) / Math.abs(pe.eps) * 100;
+    }
+    rec.multDelta = (rec.priceDelta !== null && rec.epsCY26 !== null) ? rec.priceDelta - rec.epsCY26 : null;
+    RECORDS.push(rec);
+  }
+  renderAll();
+}
+
+function filtered() {
+  return FILTER === 'all' ? RECORDS : RECORDS.filter(r => r.group === FILTER);
+}
+
+function renderAll() { renderB(); renderC(); }
+
+/* ===================== LEADERBOARDS ===================== */
+const LB_SORT = {};
+
+const COL_META = {
+  ticker:     { label: 'Ticker',  fmt: v => v },
+  epsCY26:    { label: 'ΔEPS 26', fmt: v => fmtPct(v, 1) },
+  epsCY27:    { label: 'ΔEPS 27', fmt: v => fmtPct(v, 1) },
+  epsCY28:    { label: 'ΔEPS 28', fmt: v => fmtPct(v, 1) },
+  priceDelta: { label: 'ΔPrice',  fmt: v => fmtPct(v, 1) },
+  multDelta:  { label: 'ΔMult',   fmt: v => fmtPct(v, 1) },
+  retYtdDelta:{ label: 'ΔYTD',    fmt: v => fmtPp(v) },
+  ret3mDelta: { label: 'Δ3M',     fmt: v => fmtPp(v) },
+  ret12mDelta:{ label: 'Δ12M',    fmt: v => fmtPp(v) },
+};
+
+const BOARDS = [
+  { id: 'eps26up', title: 'Top EPS Revisions ↑ (CY26)', filter: r => r.epsCY26 !== null, sortKey: 'epsCY26', dir: 'desc', cols: ['epsCY26','epsCY27','epsCY28','priceDelta','multDelta'] },
+  { id: 'eps26dn', title: 'Top EPS Revisions ↓ (CY26)', filter: r => r.epsCY26 !== null, sortKey: 'epsCY26', dir: 'asc', cols: ['epsCY26','epsCY27','epsCY28','priceDelta','multDelta'] },
+  { id: 'priceup', title: 'Top Price Movers ↑', filter: r => r.priceDelta !== null, sortKey: 'priceDelta', dir: 'desc', cols: ['priceDelta','epsCY26','multDelta'] },
+  { id: 'pricedn', title: 'Top Price Movers ↓', filter: r => r.priceDelta !== null, sortKey: 'priceDelta', dir: 'asc', cols: ['priceDelta','epsCY26','multDelta'] },
+  { id: 'ytdup', title: 'Best YTD Return Δ', filter: r => r.retYtdDelta !== null, sortKey: 'retYtdDelta', dir: 'desc', cols: ['retYtdDelta','priceDelta','epsCY26'] },
+  { id: 'ytddn', title: 'Worst YTD Return Δ', filter: r => r.retYtdDelta !== null, sortKey: 'retYtdDelta', dir: 'asc', cols: ['retYtdDelta','priceDelta','epsCY26'] },
+  { id: 'rerateup', title: 'Top Re-raters (Δ Multiple ↑)', filter: r => r.multDelta !== null, sortKey: 'multDelta', dir: 'desc', cols: ['multDelta','priceDelta','epsCY26'] },
+  { id: 'reratedn', title: 'Top De-raters (Δ Multiple ↓)', filter: r => r.multDelta !== null, sortKey: 'multDelta', dir: 'asc', cols: ['multDelta','priceDelta','epsCY26'] },
+];
+
+function renderB() {
+  const container = document.getElementById('page-b');
+  let html = '<div class="lb-grid">';
+  for (const b of BOARDS) {
+    if (!LB_SORT[b.id]) LB_SORT[b.id] = { col: b.sortKey, dir: b.dir };
+    html += `<div class="lb-card" id="lb-${b.id}"><h3>${b.title}</h3>${renderBoardTable(b)}</div>`;
+  }
+  html += '</div>';
+  container.innerHTML = html;
+
+  for (const b of BOARDS) {
+    document.querySelectorAll(`#lb-${b.id} th[data-col]`).forEach(th => {
+      th.addEventListener('click', () => {
+        const col = th.dataset.col;
+        const cur = LB_SORT[b.id];
+        if (cur.col === col) cur.dir = cur.dir === 'desc' ? 'asc' : 'desc';
+        else { cur.col = col; cur.dir = 'desc'; }
+        renderB();
+      });
+    });
+  }
+}
+
+function renderBoardTable(board) {
+  const data = filtered().filter(board.filter);
+  const sort = LB_SORT[board.id];
+  data.sort((a, b) => {
+    const av = a[sort.col], bv = b[sort.col];
+    if (sort.col === 'ticker') {
+      return sort.dir === 'desc' ? String(bv).localeCompare(String(av)) : String(av).localeCompare(String(bv));
+    }
+    if (av === null && bv === null) return 0;
+    if (av === null) return 1;
+    if (bv === null) return -1;
+    return sort.dir === 'desc' ? bv - av : av - bv;
+  });
+  const top = data.slice(0, 30);
+
+  let html = `<table><thead><tr><th data-col="ticker" class="${sort.col==='ticker'?'sorted '+sort.dir:''}">Ticker</th>`;
+  for (const c of board.cols) {
+    const isSort = sort.col === c;
+    const cls = isSort ? `sorted ${sort.dir}` : '';
+    html += `<th data-col="${c}" class="${cls}">${COL_META[c].label}</th>`;
+  }
+  html += '</tr></thead><tbody>';
+  for (const r of top) {
+    html += `<tr><td>${r.ticker}</td>`;
+    for (const c of board.cols) {
+      const v = r[c];
+      html += `<td class="${fmtPctCls(v)}">${COL_META[c].fmt(v)}</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table>';
+  return html;
+}
+
+/* ===================== HEATMAP ===================== */
+let HEAT_SORT = { col: 'priceDelta', dir: 'desc' };
+
+function renderC() {
+  const container = document.getElementById('page-c');
+  const cols = ['epsCY26','epsCY27','epsCY28','priceDelta','multDelta','retYtdDelta','ret3mDelta','ret12mDelta'];
+  const ranges = { epsCY26: 3, epsCY27: 3, epsCY28: 3, priceDelta: 6, multDelta: 6, retYtdDelta: 5, ret3mDelta: 5, ret12mDelta: 5 };
+
+  function bg(v, max) {
+    if (v === null || Math.abs(v) < 0.05) return '';
+    const intensity = Math.min(1, Math.abs(v) / max);
+    const alpha = 0.08 + intensity * 0.35;
+    const rgb = v > 0 ? '22,163,74' : '220,38,38';
+    return `background: rgba(${rgb}, ${alpha.toFixed(2)});`;
+  }
+
+  const data = [...filtered()].sort((a, b) => {
+    if (HEAT_SORT.col === 'ticker') {
+      return HEAT_SORT.dir === 'desc' ? b.ticker.localeCompare(a.ticker) : a.ticker.localeCompare(b.ticker);
+    }
+    if (HEAT_SORT.col === 'group') {
+      return HEAT_SORT.dir === 'desc' ? (b.group || '').localeCompare(a.group || '') : (a.group || '').localeCompare(b.group || '');
+    }
+    const av = a[HEAT_SORT.col], bv = b[HEAT_SORT.col];
+    if (av === null && bv === null) return 0;
+    if (av === null) return 1;
+    if (bv === null) return -1;
+    return HEAT_SORT.dir === 'desc' ? bv - av : av - bv;
+  });
+
+  const sortCls = c => HEAT_SORT.col === c ? `sorted ${HEAT_SORT.dir}` : '';
+
+  let html = `<div class="heat"><table>
+    <thead><tr>
+      <th data-col="ticker" class="${sortCls('ticker')}">Ticker</th>
+      <th data-col="group" class="${sortCls('group')}">Group</th>`;
+  for (const c of cols) html += `<th data-col="${c}" class="${sortCls(c)}">${COL_META[c].label}</th>`;
+  html += `</tr></thead><tbody>`;
+
+  for (const r of data) {
+    html += `<tr><td>${r.ticker}</td><td class="grp">${r.group || ''}</td>`;
+    for (const c of cols) {
+      const v = r[c];
+      if (v === null) { html += `<td class="flat">—</td>`; continue; }
+      html += `<td class="${fmtPctCls(v)}" style="${bg(v, ranges[c])}">${COL_META[c].fmt(v)}</td>`;
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+
+  container.querySelectorAll('th[data-col]').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (HEAT_SORT.col === col) HEAT_SORT.dir = HEAT_SORT.dir === 'desc' ? 'asc' : 'desc';
+      else { HEAT_SORT.col = col; HEAT_SORT.dir = 'desc'; }
+      renderC();
+    });
+  });
+}
+
+document.querySelectorAll('.tabs button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.tabs button').forEach(x => x.classList.toggle('active', x === b));
+    document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === 'page-' + b.dataset.tab));
+  });
+});
+
+document.querySelectorAll('#filter-group button').forEach(btn => {
+  btn.classList.toggle('active', btn.dataset.filter === FILTER);
+  btn.addEventListener('click', () => {
+    FILTER = btn.dataset.filter;
+    localStorage.setItem('dash_changes_filter', FILTER);
+    document.querySelectorAll('#filter-group button').forEach(b => b.classList.toggle('active', b.dataset.filter === FILTER));
+    renderAll();
+  });
+});
+
+init();
+</script>
+</body>
+</html>
