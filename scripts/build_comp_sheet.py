@@ -373,4 +373,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    from _hub_reporting import reporting
+    with reporting("build_comp_sheet.py", changes=["comp sheet rebuilt"]):
+        main()

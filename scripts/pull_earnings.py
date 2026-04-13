@@ -814,4 +814,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    from _hub_reporting import reporting
+    with reporting("pull_earnings.py", changes=["earnings refreshed"]):
+        main()

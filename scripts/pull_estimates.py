@@ -435,4 +435,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    from _hub_reporting import reporting
+    with reporting("pull_estimates.py", changes=["estimates refreshed"]):
+        main()
