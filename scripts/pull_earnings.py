@@ -831,6 +831,36 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
         except Exception:
             pass
 
+        # --- NTM EPS consensus delta (day-before -> 7 days after) ---
+        try:
+            ntm_ovr = [("BEST_FPERIOD_OVERRIDE", "NTM")]
+            if short in USD_OVERRIDE_TICKERS and not skip_usd_est:
+                ntm_ovr.append(("EQY_FUND_CRNCY", "USD"))
+            ntm_start = (last["date"] - timedelta(days=4)).strftime("%Y-%m-%d")
+            ntm_end = (last["date"] + timedelta(days=14)).strftime("%Y-%m-%d")
+            df_ntm = blp.bdh(bt, "BEST_EPS", ntm_start, ntm_end,
+                             periodicitySelection="DAILY", overrides=ntm_ovr)
+            tbl = df_ntm.to_native()
+            ntm_by_date = {}
+            for d, v in zip(tbl.column("date").to_pylist(),
+                            tbl.column("value").to_pylist()):
+                try:
+                    ntm_by_date[str(d)] = float(v)
+                except (ValueError, TypeError):
+                    pass
+            ntm_dates = sorted(ntm_by_date.keys())
+
+            # Pre: latest trading day <= earnings_date - 1 day
+            _, ntm_pre = _price_on_or_before(
+                ntm_by_date, ntm_dates, last["date"] - timedelta(days=1))
+            # Post: earliest trading day >= earnings_date + 7 days
+            _, ntm_post = _price_on_or_after(
+                ntm_by_date, ntm_dates, last["date"] + timedelta(days=7))
+            if ntm_pre and ntm_post and ntm_pre != 0:
+                record["ntm_eps_chg"] = round((ntm_post - ntm_pre) / ntm_pre, 4)
+        except Exception:
+            pass
+
         reported.append(record)
 
     return reported
