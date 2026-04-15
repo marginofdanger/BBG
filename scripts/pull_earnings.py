@@ -560,6 +560,77 @@ def pull_earnings_history(bbg_tickers, actuals_data):
     return result
 
 
+def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
+    """Pull actuals vs. consensus, stock reaction, and NTM EPS delta for
+    tickers that reported in the last 45 days.
+
+    group_lookup: {bbg_ticker: "Portfolio"|"Watchlist"} used to tag records.
+
+    Returns a list of dicts:
+        {
+          "ticker", "group", "earnings_date", "earnings_time",
+          "metrics": [{"name", "actual", "consensus", "surprise", "yoy"}, ...],
+          "stock":   {"d1", "w1", "w1_vs_spx"},
+          "ntm_eps_chg": float or None,
+        }
+    """
+    field_map = metrics_config["_field_map"]
+    today = date.today()
+    window_start = today - timedelta(days=45)
+    reported = []
+
+    for bt in bbg_tickers:
+        short = bt.split(" ")[0]
+
+        # Find the most recent earnings date via ERN_ANN_DT_AND_PER (same source
+        # the earnings_history phase uses). Take the newest row whose date is
+        # <= today; skip the ticker if nothing falls in the 45-day window.
+        try:
+            df = blp.bds(bt, "ERN_ANN_DT_AND_PER")
+            quarters = []
+            for row in df.rows():
+                period = str(row[3]) if len(row) > 3 else str(row[2])
+                if ":Q" not in period:
+                    continue
+                try:
+                    dt = date.fromisoformat(str(row[2]))
+                except (ValueError, TypeError):
+                    continue
+                quarters.append({"date": dt, "period": period})
+        except Exception:
+            continue
+
+        past = [q for q in quarters if q["date"] <= today]
+        if not past:
+            continue
+        past.sort(key=lambda q: q["date"], reverse=True)
+        last = past[0]
+        if last["date"] < window_start:
+            continue
+
+        # Absolute period override: "2025:Q4" -> "25Q4"
+        parts = last["period"].split(":")
+        yr = parts[0][2:] if len(parts[0]) == 4 else parts[0]
+        abs_period = f"{yr}{parts[1]}" if len(parts) > 1 else None
+        if not abs_period:
+            continue
+
+        ticker_metrics = metrics_config.get(short, metrics_config["_default"])
+
+        record = {
+            "ticker": short,
+            "group": group_lookup.get(bt, ""),
+            "earnings_date": last["date"].isoformat(),
+            "earnings_time": "",
+            "metrics": [],
+            "stock": {"d1": None, "w1": None, "w1_vs_spx": None},
+            "ntm_eps_chg": None,
+        }
+        reported.append(record)
+
+    return reported
+
+
 def pull_prior_year_annual_eps(bbg_tickers):
     """Pull prior FY actual EPS using IS_EPS (reported) for annual y/y.
 
@@ -659,40 +730,45 @@ def main():
     print(f"Pulling earnings data for {len(all_tickers)} tickers...")
 
     # Step 1: Earnings dates
-    print("\n[1/5] Earnings dates...")
+    print("\n[1/9] Earnings dates...")
     dates_data = pull_earnings_dates(bbg_tickers)
 
     # Step 2: Consensus estimates
-    print("\n[2/5] Consensus estimates...")
+    print("\n[2/9] Consensus estimates...")
     consensus_data = pull_consensus(bbg_tickers, config)
 
     # Step 3: Prior-year actuals
-    print("\n[3/5] Prior-year actuals...")
+    print("\n[3/9] Prior-year actuals...")
     prior_data = pull_prior_year(bbg_tickers, config)
 
     # Step 4: Guidance
-    print("\n[4/5] Guidance ranges...")
+    print("\n[4/9] Guidance ranges...")
     guidance_data = pull_guidance(bbg_tickers, config)
 
     # Step 5: Revisions
-    print("\n[5/7] Revision counts...")
+    print("\n[5/9] Revision counts...")
     revisions_data = pull_revisions(bbg_tickers)
 
     # Step 6: EPS 4-week % change
-    print("\n[6/8] EPS 4-week change...")
+    print("\n[6/9] EPS 4-week change...")
     eps_4wk_data = pull_eps_4wk_change(bbg_tickers)
 
     # Step 7: Prior FY actual EPS (for annual y/y)
-    print("\n[7/8] Prior FY actual EPS...")
+    print("\n[7/9] Prior FY actual EPS...")
     prior_fy_eps = pull_prior_year_annual_eps(bbg_tickers)
 
     # Step 8: Earnings history (beats/misses + stock reactions)
-    print("\n[8/8] Earnings history (last 4 quarters)...")
+    print("\n[8/9] Earnings history (last 4 quarters)...")
     actuals_data = {}
     if os.path.exists(ACTUALS_PATH):
         with open(ACTUALS_PATH) as f:
             actuals_data = json.load(f)
     history_data = pull_earnings_history(bbg_tickers, actuals_data)
+
+    # Step 9: Reported details (last 45 days)
+    print("\n[9/9] Reported actuals & post-earnings moves...")
+    group_lookup = {e["bbg"]: e["group"] for e in all_tickers}
+    reported_data = pull_reported_details(bbg_tickers, config, group_lookup)
 
     # Assemble JSON
     companies = []
@@ -793,6 +869,7 @@ def main():
     output = {
         "snapshot_date": today_str,
         "companies": companies,
+        "reported": reported_data,
     }
 
     path = os.path.join(SNAPSHOT_DIR, f"earnings_{today_str}.json")
