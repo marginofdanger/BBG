@@ -146,6 +146,53 @@ body {
 
 /* Empty state */
 .empty { text-align: center; padding: 60px 20px; color: #999; font-size: 14px; }
+
+/* Tab switcher */
+.tab-switcher { display: flex; gap: 0; margin-right: 12px; }
+.tab-switcher button {
+  padding: 4px 14px; font-size: 11px; font-weight: 700; border: 1px solid #ccc;
+  background: #fff; cursor: pointer; color: #555; text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tab-switcher button:first-child { border-radius: 4px 0 0 4px; }
+.tab-switcher button:last-child { border-radius: 0 4px 4px 0; border-left: none; }
+.tab-switcher button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+
+/* Reported card header strip */
+.reported-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px;
+}
+.reported-head .left { display: flex; align-items: center; gap: 8px; }
+.reported-head .reported-badge {
+  font-size: 10px; font-weight: 700; color: #6b7280; background: #f1f3f5;
+  padding: 2px 8px; border-radius: 4px;
+}
+.rxn-strip { display: flex; gap: 12px; font-size: 10px; }
+.rxn-strip .rxn-item { color: #6b7280; font-weight: 600; }
+.rxn-strip .rxn-item .rxn-val { font-weight: 700; }
+.rxn-strip .rxn-item .rxn-val.up { color: #16a34a; }
+.rxn-strip .rxn-item .rxn-val.down { color: #dc2626; }
+.rxn-strip .rxn-item.vs-spx .rxn-val { font-size: 11px; }
+
+/* Reported metrics table reuses .metrics-table with a SURPRISE column */
+.metrics-table td.surprise.beat { color: #16a34a; font-weight: 600; }
+.metrics-table td.surprise.miss { color: #dc2626; font-weight: 600; }
+
+/* NTM footer */
+.ntm-footer {
+  margin-top: 10px; border-top: 1px solid #f0f0f0; padding-top: 8px;
+  font-size: 10px; color: #6b7280; font-weight: 600;
+}
+.ntm-footer .val { font-weight: 700; }
+.ntm-footer .val.up { color: #16a34a; }
+.ntm-footer .val.down { color: #dc2626; }
+.ntm-footer .val.pending { color: #9ca3af; font-weight: 500; }
+
+/* Reported lane headers */
+.lane-header.reported-this-week { color: #16a34a; border-color: #16a34a; background: #f0fdf4; }
+.lane-header.reported-last-week { color: #2563eb; border-color: #2563eb; background: #eff6ff; }
+.lane-header.reported-older { color: #6b7280; border-color: #d1d5db; background: #f9fafb; }
 </style>
 </head>
 <body>
@@ -156,6 +203,10 @@ body {
     <div class="updated" id="updated"></div>
   </div>
   <div class="controls">
+    <div class="tab-switcher" id="tab-switcher">
+      <button class="active" data-tab="upcoming">Upcoming</button>
+      <button data-tab="reported">Reported</button>
+    </div>
     <a href="earnings_changes.html" style="font-size:11px;color:#2563eb;text-decoration:none;margin-right:8px;">Changes →</a>
     <label>Show:</label>
     <div class="btn-group" id="filter-group">
@@ -183,8 +234,39 @@ body {
 
 <script>
 let DATA = null;
+let TAB = localStorage.getItem('earnings_tab') || 'upcoming';
 let FILTER = localStorage.getItem('earnings_filter') || 'Portfolio';
 let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '30');
+let ZOOM_DAYS_REPORTED = parseInt(localStorage.getItem('earnings_reported_zoom') || '30');
+
+function syncRangeButtonsForTab() {
+  // Range button definitions differ between tabs; rebuild the chip set so the
+  // active class and data-days match whichever tab is live.
+  const group = document.getElementById('range-group');
+  if (TAB === 'reported') {
+    group.innerHTML = `
+      <button data-days="7">1 Week</button>
+      <button data-days="14">2 Weeks</button>
+      <button data-days="30">1 Month</button>
+      <button data-days="45">45 Days</button>
+    `;
+    const active = ZOOM_DAYS_REPORTED;
+    document.querySelectorAll('#range-group button').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.days) === active);
+    });
+  } else {
+    group.innerHTML = `
+      <button data-days="7">1 Week</button>
+      <button data-days="14">2 Weeks</button>
+      <button data-days="30">1 Month</button>
+      <button data-days="90">3 Months</button>
+    `;
+    const active = ZOOM_DAYS;
+    document.querySelectorAll('#range-group button').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.days) === active);
+    });
+  }
+}
 
 async function loadData() {
   try {
@@ -215,14 +297,105 @@ function filteredCompanies() {
   return DATA.companies.filter(c => c.group === FILTER);
 }
 
+function filteredReported() {
+  if (!DATA || !Array.isArray(DATA.reported)) return [];
+  if (FILTER === 'all') return DATA.reported;
+  return DATA.reported.filter(r => r.group === FILTER);
+}
+
+function renderReported() {
+  const lanes = document.getElementById('lanes');
+  const tl = document.getElementById('mini-timeline');
+  const empty = document.getElementById('empty');
+
+  // Reported tab has no timeline — hide it
+  tl.style.display = 'none';
+
+  const reported = filteredReported();
+  const today = new Date(DATA.snapshot_date + 'T00:00:00');
+  const cutoff = new Date(today);
+  cutoff.setDate(cutoff.getDate() - ZOOM_DAYS_REPORTED);
+
+  const windowed = reported.filter(r => {
+    if (!r.earnings_date) return false;
+    const d = new Date(r.earnings_date + 'T00:00:00');
+    return d >= cutoff && d <= today;
+  });
+
+  if (!windowed.length) {
+    lanes.style.display = 'none';
+    empty.style.display = 'block';
+    empty.innerHTML = 'No earnings reported in the selected window. Check the Upcoming tab.';
+    return;
+  }
+  empty.style.display = 'none';
+  lanes.style.display = 'flex';
+
+  // Group by Mon-Sun week of earnings_date
+  const weeks = {};
+  for (const r of windowed) {
+    const d = new Date(r.earnings_date + 'T00:00:00');
+    const day = d.getDay();
+    const mon = new Date(d);
+    mon.setDate(d.getDate() - ((day + 6) % 7));
+    const key = mon.toISOString().slice(0, 10);
+    if (!weeks[key]) weeks[key] = { monday: new Date(mon), items: [] };
+    weeks[key].items.push(r);
+  }
+  // Newest week first
+  const sortedWeeks = Object.keys(weeks).sort().reverse();
+  const todayMon = new Date(today);
+  todayMon.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+  const thisWeekKey = todayMon.toISOString().slice(0, 10);
+  const lastWeekKey = new Date(todayMon.getTime() - 7 * 86400000).toISOString().slice(0, 10);
+
+  lanes.innerHTML = '';
+  for (const key of sortedWeeks) {
+    const wk = weeks[key];
+    // Sort within lane: newest first, then ticker alpha
+    wk.items.sort((a, b) => {
+      if (a.earnings_date !== b.earnings_date) return b.earnings_date.localeCompare(a.earnings_date);
+      return a.ticker.localeCompare(b.ticker);
+    });
+    const fri = new Date(wk.monday);
+    fri.setDate(fri.getDate() + 4);
+    const monLabel = wk.monday.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+    const friLabel = fri.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+
+    let headerClass = 'reported-older';
+    let headerLabel = `${monLabel} – ${friLabel}`;
+    if (key === thisWeekKey) { headerClass = 'reported-this-week'; headerLabel = `This Week · ${monLabel} – ${friLabel}`; }
+    else if (key === lastWeekKey) { headerClass = 'reported-last-week'; headerLabel = `Last Week · ${monLabel} – ${friLabel}`; }
+
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    lane.innerHTML = `<div class="lane-header ${headerClass}">${headerLabel}<span class="count">(${wk.items.length})</span></div>`;
+    for (const r of wk.items) {
+      lane.innerHTML += buildReportedCard(r);
+    }
+    lanes.appendChild(lane);
+  }
+
+  // Attach expand/collapse handlers (reuse card pattern)
+  lanes.querySelectorAll('.card').forEach(card => {
+    card.querySelector('.card-head').addEventListener('click', () => {
+      card.classList.toggle('collapsed');
+    });
+  });
+}
+
 function render() {
-  const companies = filteredCompanies();
-  if (!companies.length) { showEmpty(); return; }
-  document.getElementById('empty').style.display = 'none';
-  document.getElementById('lanes').style.display = 'flex';
-  document.getElementById('mini-timeline').style.display = 'flex';
-  renderTimeline(companies);
-  renderLanes(companies);
+  if (TAB === 'reported') {
+    renderReported();
+  } else {
+    const companies = filteredCompanies();
+    if (!companies.length) { showEmpty(); return; }
+    document.getElementById('empty').style.display = 'none';
+    document.getElementById('lanes').style.display = 'flex';
+    document.getElementById('mini-timeline').style.display = 'flex';
+    renderTimeline(companies);
+    renderLanes(companies);
+  }
 }
 
 // --- TIMELINE ---
@@ -578,6 +751,75 @@ function buildCardNoDate(c) {
   return html;
 }
 
+function formatPct(v, digits) {
+  if (v == null) return '&mdash;';
+  const sign = v >= 0 ? '+' : '';
+  return `${sign}${(v * 100).toFixed(digits != null ? digits : 1)}%`;
+}
+function signClass(v) {
+  if (v == null) return '';
+  return v >= 0 ? 'up' : 'down';
+}
+
+function buildReportedCard(r) {
+  const dateObj = new Date(r.earnings_date + 'T00:00:00');
+  const dateLabel = dateObj.toLocaleDateString('en', { weekday: 'short', month: 'short', day: 'numeric' });
+
+  let html = `<div class="card" id="reported-${r.ticker}">`;
+
+  // Header strip
+  html += `<div class="card-head reported-head">`;
+  html += `<div class="left">`;
+  html += `<span class="ticker">${r.ticker}</span>`;
+  html += `<span class="reported-badge">Reported ${dateLabel}</span>`;
+  html += `</div>`;
+  html += `<div class="rxn-strip">`;
+  html += `<span class="rxn-item">1D <span class="rxn-val ${signClass(r.stock && r.stock.d1)}">${formatPct(r.stock && r.stock.d1)}</span></span>`;
+  html += `<span class="rxn-item">1W <span class="rxn-val ${signClass(r.stock && r.stock.w1)}">${formatPct(r.stock && r.stock.w1)}</span></span>`;
+  html += `<span class="rxn-item vs-spx">vs SPX <span class="rxn-val ${signClass(r.stock && r.stock.w1_vs_spx)}">${formatPct(r.stock && r.stock.w1_vs_spx)}</span></span>`;
+  html += `</div>`;
+  html += `</div>`;
+
+  // Collapsed summary
+  html += `<div class="card-summary">`;
+  const epsM = (r.metrics || []).find(m => m.name === 'EPS');
+  if (epsM && epsM.surprise != null) {
+    html += `<span>EPS surprise ${formatPct(epsM.surprise)}</span>`;
+  } else {
+    html += `<span>—</span>`;
+  }
+  html += `<span class="expand-icon">&#9656;</span>`;
+  html += `</div>`;
+
+  // Body
+  html += `<div class="card-body">`;
+  html += `<table class="metrics-table">`;
+  html += `<tr><th>Metric</th><th>Actual</th><th>Cons.</th><th>Surprise</th><th>Y/Y</th></tr>`;
+  for (const m of (r.metrics || [])) {
+    const surCls = m.surprise == null ? '' : (m.surprise >= 0 ? 'beat' : 'miss');
+    html += `<tr>`;
+    html += `<td class="metric-name">${m.name}</td>`;
+    html += `<td class="consensus">${m.actual != null ? formatMetric(m.name, m.actual) : '&mdash;'}</td>`;
+    html += `<td class="consensus" style="font-weight:500;color:#6b7280">${m.consensus != null ? formatMetric(m.name, m.consensus) : '&mdash;'}</td>`;
+    html += `<td class="surprise ${surCls}">${m.surprise != null ? formatPct(m.surprise) : '&mdash;'}</td>`;
+    html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
+    html += `</tr>`;
+  }
+  html += `</table>`;
+
+  // NTM EPS footer
+  html += `<div class="ntm-footer">NTM EPS change (1W post): `;
+  if (r.ntm_eps_chg == null) {
+    html += `<span class="val pending">pending</span>`;
+  } else {
+    html += `<span class="val ${signClass(r.ntm_eps_chg)}">${formatPct(r.ntm_eps_chg)}</span>`;
+  }
+  html += `</div>`;
+
+  html += `</div></div>`;
+  return html;
+}
+
 // --- EVENT LISTENERS ---
 document.getElementById('filter-group').addEventListener('click', e => {
   if (e.target.tagName !== 'BUTTON') return;
@@ -592,8 +834,24 @@ document.getElementById('range-group').addEventListener('click', e => {
   if (e.target.tagName !== 'BUTTON') return;
   document.querySelectorAll('#range-group button').forEach(b => b.classList.remove('active'));
   e.target.classList.add('active');
-  ZOOM_DAYS = parseInt(e.target.dataset.days);
-  localStorage.setItem('earnings_zoom', ZOOM_DAYS);
+  const v = parseInt(e.target.dataset.days);
+  if (TAB === 'reported') {
+    ZOOM_DAYS_REPORTED = v;
+    localStorage.setItem('earnings_reported_zoom', v);
+  } else {
+    ZOOM_DAYS = v;
+    localStorage.setItem('earnings_zoom', v);
+  }
+  render();
+});
+
+document.getElementById('tab-switcher').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#tab-switcher button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  TAB = e.target.dataset.tab;
+  localStorage.setItem('earnings_tab', TAB);
+  syncRangeButtonsForTab();
   render();
 });
 
@@ -604,6 +862,10 @@ document.querySelectorAll('#filter-group button').forEach(b => {
 document.querySelectorAll('#range-group button').forEach(b => {
   b.classList.toggle('active', parseInt(b.dataset.days) === ZOOM_DAYS);
 });
+document.querySelectorAll('#tab-switcher button').forEach(b => {
+  b.classList.toggle('active', b.dataset.tab === TAB);
+});
+syncRangeButtonsForTab();
 loadData();
 </script>
 
