@@ -714,38 +714,29 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                     tbl = df_act.to_native()
                     dates_col = [str(d) for d in tbl.column("date").to_pylist()]
                     vals_col = tbl.column("value").to_pylist()
-                    # Pick the latest row whose date is <= the announcement date
-                    # (Bloomberg dates quarterly actuals at fiscal-period end).
                     earn_str = last["date"].isoformat()
-                    best_val = best_prior = None
-                    for d, v in zip(dates_col, vals_col):
-                        try:
-                            fv = float(v)
-                        except (ValueError, TypeError):
-                            continue
+                    latest_idx = -1
+                    for i, d in enumerate(dates_col):
                         if d <= earn_str:
-                            best_prior = best_val
-                            best_val = fv
-                    if best_val is not None:
-                        actual = best_val * eps_mult if metric_name == "EPS" else best_val
-                        # Capex: Bloomberg returns negative; show magnitude
-                        if metric_name == "Capex" and actual is not None:
-                            actual = abs(actual)
-                    # Prior-year (4 quarters back) for Y/Y: walk back 4 rows
-                    if len(dates_col) >= 5:
+                            latest_idx = i
+                        else:
+                            break
+                    if latest_idx >= 0:
                         try:
-                            latest_idx = max(
-                                i for i, d in enumerate(dates_col)
-                                if d <= earn_str
-                            )
-                            if latest_idx >= 4:
-                                prior_raw = vals_col[latest_idx - 4]
-                                prior_val = float(prior_raw)
-                                if metric_name == "EPS":
-                                    prior_val *= eps_mult
-                                if metric_name == "Capex":
-                                    prior_val = abs(prior_val)
-                                yoy_str = compute_yoy(actual, prior_val, fmt)
+                            raw = float(vals_col[latest_idx])
+                            actual = raw * eps_mult if metric_name == "EPS" else raw
+                            if metric_name == "Capex" and actual is not None:
+                                actual = abs(actual)
+                        except (ValueError, TypeError):
+                            actual = None
+                    if latest_idx >= 4:
+                        try:
+                            prior_val = float(vals_col[latest_idx - 4])
+                            if metric_name == "EPS":
+                                prior_val *= eps_mult
+                            if metric_name == "Capex":
+                                prior_val = abs(prior_val)
+                            yoy_str = compute_yoy(actual, prior_val, fmt)
                         except (ValueError, TypeError):
                             pass
                 except Exception:
@@ -818,12 +809,7 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
             if pre_px and w1_px and spx_dates_sorted:
                 _, spx_pre = _price_on_or_before(
                     spx_by_date, spx_dates_sorted, last["date"] - timedelta(days=1))
-                _, spx_post = _price_on_or_after(
-                    spx_by_date, spx_dates_sorted,
-                    (last["date"] + timedelta(days=10)).isoformat())
-                # Use the same number of trading days as the ticker: match w1_day
-                if w1_day and w1_day in spx_by_date:
-                    spx_post = spx_by_date[w1_day]
+                spx_post = spx_by_date.get(w1_day) if w1_day else None
                 if spx_pre and spx_post:
                     spx_w1 = (spx_post - spx_pre) / spx_pre
                     record["stock"]["w1_vs_spx"] = round(
