@@ -863,6 +863,7 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
 
         reported.append(record)
 
+    reported.sort(key=lambda r: r["earnings_date"], reverse=True)
     return reported
 
 
