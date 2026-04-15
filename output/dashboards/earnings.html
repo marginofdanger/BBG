@@ -203,6 +203,10 @@ body {
     <div class="updated" id="updated"></div>
   </div>
   <div class="controls">
+    <div class="tab-switcher" id="tab-switcher">
+      <button class="active" data-tab="upcoming">Upcoming</button>
+      <button data-tab="reported">Reported</button>
+    </div>
     <a href="earnings_changes.html" style="font-size:11px;color:#2563eb;text-decoration:none;margin-right:8px;">Changes →</a>
     <label>Show:</label>
     <div class="btn-group" id="filter-group">
@@ -230,8 +234,39 @@ body {
 
 <script>
 let DATA = null;
+let TAB = localStorage.getItem('earnings_tab') || 'upcoming';
 let FILTER = localStorage.getItem('earnings_filter') || 'Portfolio';
 let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '30');
+let ZOOM_DAYS_REPORTED = parseInt(localStorage.getItem('earnings_reported_zoom') || '30');
+
+function syncRangeButtonsForTab() {
+  // Range button definitions differ between tabs; rebuild the chip set so the
+  // active class and data-days match whichever tab is live.
+  const group = document.getElementById('range-group');
+  if (TAB === 'reported') {
+    group.innerHTML = `
+      <button data-days="7">1 Week</button>
+      <button data-days="14">2 Weeks</button>
+      <button data-days="30">1 Month</button>
+      <button data-days="45">45 Days</button>
+    `;
+    const active = ZOOM_DAYS_REPORTED;
+    document.querySelectorAll('#range-group button').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.days) === active);
+    });
+  } else {
+    group.innerHTML = `
+      <button data-days="7">1 Week</button>
+      <button data-days="14">2 Weeks</button>
+      <button data-days="30">1 Month</button>
+      <button data-days="90">3 Months</button>
+    `;
+    const active = ZOOM_DAYS;
+    document.querySelectorAll('#range-group button').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.days) === active);
+    });
+  }
+}
 
 async function loadData() {
   try {
@@ -639,8 +674,24 @@ document.getElementById('range-group').addEventListener('click', e => {
   if (e.target.tagName !== 'BUTTON') return;
   document.querySelectorAll('#range-group button').forEach(b => b.classList.remove('active'));
   e.target.classList.add('active');
-  ZOOM_DAYS = parseInt(e.target.dataset.days);
-  localStorage.setItem('earnings_zoom', ZOOM_DAYS);
+  const v = parseInt(e.target.dataset.days);
+  if (TAB === 'reported') {
+    ZOOM_DAYS_REPORTED = v;
+    localStorage.setItem('earnings_reported_zoom', v);
+  } else {
+    ZOOM_DAYS = v;
+    localStorage.setItem('earnings_zoom', v);
+  }
+  render();
+});
+
+document.getElementById('tab-switcher').addEventListener('click', e => {
+  if (e.target.tagName !== 'BUTTON') return;
+  document.querySelectorAll('#tab-switcher button').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  TAB = e.target.dataset.tab;
+  localStorage.setItem('earnings_tab', TAB);
+  syncRangeButtonsForTab();
   render();
 });
 
@@ -651,6 +702,10 @@ document.querySelectorAll('#filter-group button').forEach(b => {
 document.querySelectorAll('#range-group button').forEach(b => {
   b.classList.toggle('active', parseInt(b.dataset.days) === ZOOM_DAYS);
 });
+document.querySelectorAll('#tab-switcher button').forEach(b => {
+  b.classList.toggle('active', b.dataset.tab === TAB);
+});
+syncRangeButtonsForTab();
 loadData();
 </script>
 
