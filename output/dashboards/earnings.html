@@ -146,6 +146,53 @@ body {
 
 /* Empty state */
 .empty { text-align: center; padding: 60px 20px; color: #999; font-size: 14px; }
+
+/* Tab switcher */
+.tab-switcher { display: flex; gap: 0; margin-right: 12px; }
+.tab-switcher button {
+  padding: 4px 14px; font-size: 11px; font-weight: 700; border: 1px solid #ccc;
+  background: #fff; cursor: pointer; color: #555; text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tab-switcher button:first-child { border-radius: 4px 0 0 4px; }
+.tab-switcher button:last-child { border-radius: 0 4px 4px 0; border-left: none; }
+.tab-switcher button.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+
+/* Reported card header strip */
+.reported-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 8px;
+}
+.reported-head .left { display: flex; align-items: center; gap: 8px; }
+.reported-head .reported-badge {
+  font-size: 10px; font-weight: 700; color: #6b7280; background: #f1f3f5;
+  padding: 2px 8px; border-radius: 4px;
+}
+.rxn-strip { display: flex; gap: 12px; font-size: 10px; }
+.rxn-strip .rxn-item { color: #6b7280; font-weight: 600; }
+.rxn-strip .rxn-item .rxn-val { font-weight: 700; }
+.rxn-strip .rxn-item .rxn-val.up { color: #16a34a; }
+.rxn-strip .rxn-item .rxn-val.down { color: #dc2626; }
+.rxn-strip .rxn-item.vs-spx .rxn-val { font-size: 11px; }
+
+/* Reported metrics table reuses .metrics-table with a SURPRISE column */
+.metrics-table td.surprise.beat { color: #16a34a; font-weight: 600; }
+.metrics-table td.surprise.miss { color: #dc2626; font-weight: 600; }
+
+/* NTM footer */
+.ntm-footer {
+  margin-top: 10px; border-top: 1px solid #f0f0f0; padding-top: 8px;
+  font-size: 10px; color: #6b7280; font-weight: 600;
+}
+.ntm-footer .val { font-weight: 700; }
+.ntm-footer .val.up { color: #16a34a; }
+.ntm-footer .val.down { color: #dc2626; }
+.ntm-footer .val.pending { color: #9ca3af; font-weight: 500; }
+
+/* Reported lane headers */
+.lane-header.reported-this-week { color: #16a34a; border-color: #16a34a; background: #f0fdf4; }
+.lane-header.reported-last-week { color: #2563eb; border-color: #2563eb; background: #eff6ff; }
+.lane-header.reported-older { color: #6b7280; border-color: #d1d5db; background: #f9fafb; }
 </style>
 </head>
 <body>
