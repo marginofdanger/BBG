@@ -295,8 +295,15 @@ function showEmpty() {
 
 function filteredCompanies() {
   if (!DATA) return [];
-  if (FILTER === 'all') return DATA.companies;
-  return DATA.companies.filter(c => c.group === FILTER);
+  // Suppress companies whose upcoming earnings_date matches a reported record
+  // for the same ticker — Bloomberg's EXPECTED_REPORT_DT lags a day after a
+  // print, so the Upcoming card would otherwise duplicate the Reported one
+  // with stale next-quarter estimates.
+  const reportedMap = new Map((DATA.reported || []).map(r => [r.ticker, r.earnings_date]));
+  const isStaleDup = (c) => reportedMap.get(c.ticker) === c.earnings_date;
+  const base = DATA.companies.filter(c => !isStaleDup(c));
+  if (FILTER === 'all') return base;
+  return base.filter(c => c.group === FILTER);
 }
 
 function filteredReported() {
