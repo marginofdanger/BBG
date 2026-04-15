@@ -650,6 +650,8 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
         abs_period = f"{yr}{parts[1]}" if len(parts) > 1 else None
         if not abs_period:
             continue
+        # Display label: "2026:Q1" -> "1Q26"
+        fiscal_period = f"{parts[1][1:]}Q{yr}" if len(parts) > 1 else None
 
         ticker_metrics = metrics_config.get(short, metrics_config["_default"])
 
@@ -658,6 +660,7 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
             "group": group_lookup.get(bt, ""),
             "earnings_date": last["date"].isoformat(),
             "earnings_time": "",
+            "fiscal_period": fiscal_period,
             "metrics": [],
             "stock": {"d1": None, "w1": None, "w1_vs_spx": None},
             "ntm_eps_chg": None,
