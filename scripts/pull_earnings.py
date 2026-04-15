@@ -817,9 +817,11 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
         except Exception:
             pass
 
-        # --- NTM EPS consensus delta (day-before -> 7 days after) ---
+        # --- Current-FY EPS consensus delta (day-before -> 7 days after).
+        # BDH does not accept "NTM" as a period override; "1BF" (current FY)
+        # is the closest stable equivalent that BDH historical supports.
         try:
-            ntm_ovr = [("BEST_FPERIOD_OVERRIDE", "NTM")]
+            ntm_ovr = [("BEST_FPERIOD_OVERRIDE", "1BF")]
             if short in USD_OVERRIDE_TICKERS and not skip_usd_est:
                 ntm_ovr.append(("EQY_FUND_CRNCY", "USD"))
             ntm_start = (last["date"] - timedelta(days=4)).strftime("%Y-%m-%d")
