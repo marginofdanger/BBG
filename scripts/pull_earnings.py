@@ -579,6 +579,42 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
     window_start = today - timedelta(days=45)
     reported = []
 
+    # Batch one SPX pull covering the whole window (+7 trading days buffer).
+    spx_by_date = {}
+    try:
+        df_spx = blp.bdh("SPX Index", "PX_LAST",
+                         (window_start - timedelta(days=7)).strftime("%Y-%m-%d"),
+                         (today + timedelta(days=2)).strftime("%Y-%m-%d"))
+        tbl = df_spx.to_native()
+        for d, v in zip(tbl.column("date").to_pylist(),
+                        tbl.column("value").to_pylist()):
+            try:
+                spx_by_date[str(d)] = float(v)
+            except (ValueError, TypeError):
+                pass
+    except Exception:
+        pass
+    spx_dates_sorted = sorted(spx_by_date.keys())
+
+    def _price_on_or_after(prices_by_date, sorted_dates, target):
+        """Return (date_str, price) for the earliest trading day >= target."""
+        t = target if isinstance(target, str) else target.isoformat()
+        for d in sorted_dates:
+            if d >= t:
+                return d, prices_by_date[d]
+        return None, None
+
+    def _price_on_or_before(prices_by_date, sorted_dates, target):
+        """Return (date_str, price) for the latest trading day <= target."""
+        t = target if isinstance(target, str) else target.isoformat()
+        out = (None, None)
+        for d in sorted_dates:
+            if d <= t:
+                out = (d, prices_by_date[d])
+            else:
+                break
+        return out
+
     for bt in bbg_tickers:
         short = bt.split(" ")[0]
 
@@ -741,6 +777,59 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                 "surprise": surprise,
                 "yoy": yoy_str,
             })
+
+        # --- Stock reaction: pull a narrow window around earnings_date ---
+        try:
+            rxn_start = (last["date"] - timedelta(days=4)).strftime("%Y-%m-%d")
+            rxn_end = (last["date"] + timedelta(days=14)).strftime("%Y-%m-%d")
+            df_rxn = blp.bdh(bt, "PX_LAST", rxn_start, rxn_end)
+            tbl = df_rxn.to_native()
+            px_by_date = {}
+            for d, v in zip(tbl.column("date").to_pylist(),
+                            tbl.column("value").to_pylist()):
+                try:
+                    px_by_date[str(d)] = float(v)
+                except (ValueError, TypeError):
+                    pass
+            px_dates = sorted(px_by_date.keys())
+
+            pre_day, pre_px = _price_on_or_before(
+                px_by_date, px_dates, last["date"] - timedelta(days=1))
+            d1_day, d1_px = _price_on_or_after(
+                px_by_date, px_dates, last["date"])
+            # "1W" = 5 trading days after the earnings-day close
+            w1_px = None
+            if d1_day is not None:
+                idx = px_dates.index(d1_day)
+                if idx + 5 < len(px_dates):
+                    w1_px = px_by_date[px_dates[idx + 5]]
+                    w1_day = px_dates[idx + 5]
+                else:
+                    w1_day = None
+            else:
+                w1_day = None
+
+            if pre_px and d1_px:
+                record["stock"]["d1"] = round((d1_px - pre_px) / pre_px, 4)
+            if pre_px and w1_px:
+                record["stock"]["w1"] = round((w1_px - pre_px) / pre_px, 4)
+
+            # Relative vs SPX over the same window
+            if pre_px and w1_px and spx_dates_sorted:
+                _, spx_pre = _price_on_or_before(
+                    spx_by_date, spx_dates_sorted, last["date"] - timedelta(days=1))
+                _, spx_post = _price_on_or_after(
+                    spx_by_date, spx_dates_sorted,
+                    (last["date"] + timedelta(days=10)).isoformat())
+                # Use the same number of trading days as the ticker: match w1_day
+                if w1_day and w1_day in spx_by_date:
+                    spx_post = spx_by_date[w1_day]
+                if spx_pre and spx_post:
+                    spx_w1 = (spx_post - spx_pre) / spx_pre
+                    record["stock"]["w1_vs_spx"] = round(
+                        record["stock"]["w1"] - spx_w1, 4)
+        except Exception:
+            pass
 
         reported.append(record)
 
