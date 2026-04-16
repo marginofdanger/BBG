@@ -34,8 +34,9 @@ EPS_OVERRIDES = {
     "GOOG US Equity": {"eps_ticker": "GOOGL US Equity", "eps_field": "IS_DILUTED_EPS",
                        "est_field": "BEST_EPS_GAAP"},
     "META US Equity": {"eps_field": "IS_DILUTED_EPS", "est_field": "BEST_EPS_GAAP"},
-    # ADR: convert from Taiwan-listed shares
-    "TSM US Equity":  {"eps_ticker": "2330 TT Equity", "eps_mult": 5, "skip_usd_est": True},
+    # ADR: convert from Taiwan-listed shares; consensus is in TWD/ADR so convert both to USD
+    "TSM US Equity":  {"eps_ticker": "2330 TT Equity", "eps_mult": 5, "skip_usd_est": True,
+                       "eps_fx_pair": "USDTWD Curncy"},
     # Alt manager: use distributable earnings
     "APO US Equity":  {"eps_field": "IS_DISTRIBUTABLE_INCOME_PER_UNIT",
                        "prior_fy_field": "IS_DISTRIBUTABLE_INCOME_PER_UNIT"},
@@ -673,7 +674,8 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
         eps_ticker = eps_ovr.get("eps_ticker", bt)
         eps_mult = eps_ovr.get("eps_mult", 1)
         skip_usd_est = eps_ovr.get("skip_usd_est", False)
-        est_usd = [] if skip_usd_est else usd_ovr
+        eps_est_usd = [] if skip_usd_est else usd_ovr
+        eps_fx_pair = eps_ovr.get("eps_fx_pair")
         # When actuals come from a different ticker, don't apply USD override
         eps_act_ovr = [] if eps_ticker != bt else usd_ovr
 
@@ -746,8 +748,9 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                     pass
 
             # --- Pre-earnings consensus: BDH BEST_* with absolute period ---
+            cons_usd = eps_est_usd if metric_name == "EPS" else usd_ovr
             try:
-                ovr = [("BEST_FPERIOD_OVERRIDE", abs_period)] + est_usd
+                ovr = [("BEST_FPERIOD_OVERRIDE", abs_period)] + cons_usd
                 df_cons = blp.bdh(bt, est_field, pre_start, pre_end,
                                   periodicitySelection="DAILY", overrides=ovr)
                 tbl = df_cons.to_native()
@@ -771,6 +774,27 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                 "surprise": surprise,
                 "yoy": yoy_str,
             })
+
+        # --- EPS FX conversion (e.g. TSM: TWD/ADR → USD/ADR) ---
+        # Actual and consensus are both in native FX, so surprise % is unaffected.
+        # yoy is a pre-computed string ratio in native FX, also unaffected.
+        if eps_fx_pair:
+            try:
+                fx_start = (last["date"] - timedelta(days=10)).strftime("%Y-%m-%d")
+                fx_end = last["date"].strftime("%Y-%m-%d")
+                df_fx = blp.bdh(eps_fx_pair, "PX_LAST", fx_start, fx_end)
+                tbl = df_fx.to_native()
+                fx_vals = [float(v) for v in tbl.column("value").to_pylist()]
+                rate = fx_vals[-1] if fx_vals else None
+                if rate and rate > 0:
+                    for m in record["metrics"]:
+                        if m["name"] == "EPS":
+                            if m["actual"] is not None:
+                                m["actual"] = m["actual"] / rate
+                            if m["consensus"] is not None:
+                                m["consensus"] = m["consensus"] / rate
+            except Exception:
+                pass
 
         # --- Stock reaction: pull a narrow window around earnings_date ---
         try:

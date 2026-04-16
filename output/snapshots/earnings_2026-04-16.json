@@ -41,29 +41,29 @@
       "metrics": [
         {
           "name": "EPS",
-          "consensus": 3.595,
+          "consensus": 3.606,
           "guidance_low": null,
           "guidance_high": null,
           "prior_year": 2.473,
-          "yoy": "+45%",
+          "yoy": "+46%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 38631.757593,
+          "consensus": 38682.820748,
           "guidance_low": 34600.0,
           "guidance_high": 35800.0,
           "prior_year": 31561.959444750002,
-          "yoy": "+22%",
+          "yoy": "+23%",
           "vs_guide": "above"
         },
         {
           "name": "Gross Margin",
-          "consensus": 64.749,
+          "consensus": 64.855,
           "guidance_low": 63.0,
           "guidance_high": 65.0,
           "prior_year": 57.944,
-          "yoy": "+680bps",
+          "yoy": "+691bps",
           "vs_guide": "above"
         },
         {
@@ -106,7 +106,7 @@
         },
         {
           "name": "Gross Margin",
-          "consensus": 63.913739463601544,
+          "consensus": 64.00881609195402,
           "guidance_low": null,
           "guidance_high": null,
           "prior_year": null,
@@ -115,7 +115,7 @@
         },
         {
           "name": "Capex",
-          "consensus": 55970.64571264367,
+          "consensus": 55985.077881226054,
           "guidance_low": 52000.0,
           "guidance_high": 56000.0,
           "prior_year": null,
@@ -2881,25 +2881,25 @@
       "annual_metrics": [
         {
           "name": "EPS",
-          "consensus": 82.56840229885057,
+          "consensus": 83.79790421455938,
           "guidance_low": null,
           "guidance_high": null,
           "prior_year": 8.29,
-          "yoy": "+896%",
+          "yoy": "+911%",
           "vs_guide": "n/a"
         },
         {
           "name": "Revenue",
-          "consensus": 144085.26155251142,
+          "consensus": 150587.9109666144,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 81099.82715200499,
-          "yoy": "+78%",
+          "prior_year": 82901.2433097063,
+          "yoy": "+82%",
           "vs_guide": "n/a"
         },
         {
           "name": "Gross Margin",
-          "consensus": 78.15027969348658,
+          "consensus": 78.96510727969348,
           "guidance_low": null,
           "guidance_high": null,
           "prior_year": null,
@@ -3162,16 +3162,16 @@
       "metrics": [
         {
           "name": "EPS",
-          "actual": 110.39999999999999,
-          "consensus": 104.424,
+          "actual": 3.498764023578627,
+          "consensus": 3.309374405780567,
           "surprise": 0.0572282233969201,
           "yoy": "+58%"
         },
         {
           "name": "Revenue",
           "actual": 35857.9487,
-          "consensus": 1123219.949,
-          "surprise": -0.9680757551253214,
+          "consensus": 35507.854,
+          "surprise": 0.009859641193748332,
           "yoy": "+41%"
         },
         {
@@ -3191,7 +3191,7 @@
         {
           "name": "Capex",
           "actual": null,
-          "consensus": 395268.647,
+          "consensus": 12495.452,
           "surprise": null,
           "yoy": null
         }
