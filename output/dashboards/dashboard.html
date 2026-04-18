@@ -53,6 +53,9 @@ td.spark-cell { padding: 4px 2px; }
 .methodology details { border-top: 1px solid #e0e0e0; padding-top: 8px; }
 .methodology summary { font-size: 11px; color: #888; cursor: pointer; padding: 4px 0; }
 .methodology p { margin-top: 4px; }
+.step-btn { padding: 0 6px; font-size: 10px; line-height: 18px; border: 1px solid #ccc; background: #fff; cursor: pointer; color: #555; border-radius: 3px; }
+.step-btn:hover:not(:disabled) { background: #f0f0f0; color: #222; }
+.step-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 .btn-group { display: flex; gap: 0; }
 .btn-group button { padding: 3px 10px; font-size: 10px; border: 1px solid #ccc; background: #fff; cursor: pointer; color: #555; }
 .btn-group button:first-child { border-radius: 4px 0 0 4px; }
@@ -119,12 +122,16 @@ td.spark-cell { padding: 4px 2px; }
   <div class="header-center" id="sliderWrap">
     <div style="display:flex;align-items:center;gap:6px;">
       <label style="width:100px;text-align:right;">BBG cons estimates:</label>
+      <button type="button" class="step-btn" id="estPrev" title="Previous date">◀</button>
       <input type="range" id="estSlider" min="0" max="0" value="0" style="width:120px;">
+      <button type="button" class="step-btn" id="estNext" title="Next date">▶</button>
       <span id="estDateLabel" style="font-weight:600;font-size:11px;min-width:80px;"></span>
     </div>
     <div style="display:flex;align-items:center;gap:6px;">
       <label style="width:100px;text-align:right;">Prices:</label>
+      <button type="button" class="step-btn" id="pricePrev" title="Previous date">◀</button>
       <input type="range" id="priceSlider" min="0" max="0" value="0" style="width:120px;">
+      <button type="button" class="step-btn" id="priceNext" title="Next date">▶</button>
       <span id="priceDateLabel" style="font-weight:600;font-size:11px;min-width:80px;"></span>
     </div>
   </div>
@@ -231,6 +238,25 @@ td.spark-cell { padding: 4px 2px; }
   const sliderWrap = document.getElementById('sliderWrap');
   sliderWrap.classList.add('visible');
 
+  // Step slider by +/- 1 and dispatch input so existing handler runs.
+  function wireStepButtons(slider, prevBtn, nextBtn) {
+    function refresh() {
+      const v = +slider.value, max = +slider.max;
+      prevBtn.disabled = v <= 0;
+      nextBtn.disabled = v >= max;
+    }
+    prevBtn.addEventListener('click', () => {
+      const v = +slider.value;
+      if (v > 0) { slider.value = v - 1; slider.dispatchEvent(new Event('input')); refresh(); }
+    });
+    nextBtn.addEventListener('click', () => {
+      const v = +slider.value, max = +slider.max;
+      if (v < max) { slider.value = v + 1; slider.dispatchEvent(new Event('input')); refresh(); }
+    });
+    slider.addEventListener('input', refresh);
+    refresh();
+  }
+
   // Estimate slider
   const estSlider = document.getElementById('estSlider');
   estSlider.max = Math.max(0, estDates.length - 1);
@@ -241,6 +267,9 @@ td.spark-cell { padding: 4px 2px; }
     document.getElementById('estDateLabel').textContent = currentEstDate;
     loadEstimates(currentEstDate);
   });
+  wireStepButtons(estSlider,
+    document.getElementById('estPrev'),
+    document.getElementById('estNext'));
 
   // Price slider
   const priceSlider = document.getElementById('priceSlider');
@@ -253,8 +282,13 @@ td.spark-cell { padding: 4px 2px; }
       document.getElementById('priceDateLabel').textContent = currentPriceDate;
       loadPrices(currentPriceDate);
     });
+    wireStepButtons(priceSlider,
+      document.getElementById('pricePrev'),
+      document.getElementById('priceNext'));
   } else {
     document.getElementById('priceDateLabel').textContent = 'N/A (run pull_prices.py)';
+    document.getElementById('pricePrev').disabled = true;
+    document.getElementById('priceNext').disabled = true;
   }
 
   await loadEstimates(currentEstDate);
