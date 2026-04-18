@@ -1,0 +1,3438 @@
+{
+  "snapshot_date": "2026-04-17",
+  "companies": [
+    {
+      "ticker": "UNH",
+      "group": "Portfolio",
+      "earnings_date": "2026-04-21",
+      "earnings_time": "Bef-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 2,
+        "down": 2
+      },
+      "eps_4wk_pct": 1.4,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 0.4,
+          "rev_beat_pct": -0.6,
+          "stock_rxn": -19.6
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 3.3,
+          "rev_beat_pct": 0.1,
+          "stock_rxn": 0.5
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": -5.8,
+          "rev_beat_pct": 0.0,
+          "stock_rxn": -7.5
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": -1.0,
+          "rev_beat_pct": -1.8,
+          "stock_rxn": -22.4
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 6.578,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 7.274,
+          "yoy": "-9.6%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 109244.68181818182,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 111559.0,
+          "yoy": "-2.1%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 18.49375384615385,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 16.35,
+          "yoy": "+13%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 444886.4221461187,
+          "guidance_low": 440000.0,
+          "guidance_high": 440000.0,
+          "prior_year": 445706.605936073,
+          "yoy": "-0.2%",
+          "vs_guide": "above"
+        }
+      ]
+    },
+    {
+      "ticker": "GE",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-21",
+      "earnings_time": "Bef-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 8,
+        "down": 3
+      },
+      "eps_4wk_pct": 1.84,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 4.0,
+          "rev_beat_pct": 5.6,
+          "stock_rxn": -7.4
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 12.1,
+          "rev_beat_pct": 8.6,
+          "stock_rxn": 1.3
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 13.6,
+          "rev_beat_pct": 5.8,
+          "stock_rxn": -2.2
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 14.4,
+          "rev_beat_pct": -0.5,
+          "stock_rxn": 6.1
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.597,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.272,
+          "yoy": "+26%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 10685.533333333335,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 9048.94117647059,
+          "yoy": "+18%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Op. Margin",
+          "consensus": null,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 7.795984615384615,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 6.37,
+          "yoy": "+22%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 49617.61228211544,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 43799.12890101967,
+          "yoy": "+13%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "IBKR",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-21",
+      "earnings_time": "16:00",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 5,
+        "down": 1
+      },
+      "eps_4wk_pct": 2.65,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 9.6,
+          "rev_beat_pct": 1.8,
+          "stock_rxn": null
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 3.6,
+          "rev_beat_pct": 4.7,
+          "stock_rxn": -1.8
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": -1.9,
+          "rev_beat_pct": 7.2,
+          "stock_rxn": -0.0
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": -1.9,
+          "rev_beat_pct": 0.0,
+          "stock_rxn": 0.3
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 0.603,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 0.47900000000000004,
+          "yoy": "+26%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 1670.2857142857144,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1395.75,
+          "yoy": "+20%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 2.591784615384616,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2.19,
+          "yoy": "+18%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 7169.134931506849,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 6363.784589041095,
+          "yoy": "+13%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "COF",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-21",
+      "earnings_time": "16:05",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 4,
+        "down": 10
+      },
+      "eps_4wk_pct": 0.64,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": -7.0,
+          "rev_beat_pct": 0.5,
+          "stock_rxn": 1.8
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 35.5,
+          "rev_beat_pct": 2.9,
+          "stock_rxn": 1.0
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 41.1,
+          "rev_beat_pct": 5.5,
+          "stock_rxn": 0.7
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 11.8,
+          "rev_beat_pct": -0.5,
+          "stock_rxn": 3.1
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 4.555,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 3.6310000000000002,
+          "yoy": "+25%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 15372.05882352941,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 10045.35,
+          "yoy": "+53%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 21.151107692307697,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 19.61,
+          "yoy": "+7.9%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 64539.740158615714,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 56435.661665465035,
+          "yoy": "+14%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "LRCX",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-22",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 5,
+        "down": 2
+      },
+      "eps_4wk_pct": 3.41,
+      "earnings_history": [
+        {
+          "quarter": "Q2'26",
+          "eps_beat_pct": 8.1,
+          "rev_beat_pct": 2.0,
+          "stock_rxn": 0.5
+        },
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 3.4,
+          "rev_beat_pct": 1.8,
+          "stock_rxn": -2.6
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 10.1,
+          "rev_beat_pct": 3.4,
+          "stock_rxn": 0.2
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 4.1,
+          "rev_beat_pct": 1.6,
+          "stock_rxn": 5.1
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.365,
+          "guidance_low": 1.0999999999999999,
+          "guidance_high": 1.3,
+          "prior_year": 0.999,
+          "yoy": "+37%",
+          "vs_guide": "above"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 5739.448275862069,
+          "guidance_low": 4900.0,
+          "guidance_high": 5500.0,
+          "prior_year": 4644.961538461538,
+          "yoy": "+24%",
+          "vs_guide": "above"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 49.175000000000004,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 48.022,
+          "yoy": "+115bps",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 6.772200000000001,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 4.17,
+          "yoy": "+62%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 27258.153424657532,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 21645.585008716425,
+          "yoy": "+26%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 49.70980000000001,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "TSLA",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-22",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 2,
+        "down": 13
+      },
+      "eps_4wk_pct": 1.1,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 11.9,
+          "rev_beat_pct": -0.8,
+          "stock_rxn": 0.1
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": -6.9,
+          "rev_beat_pct": 6.6,
+          "stock_rxn": -0.8
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": -5.7,
+          "rev_beat_pct": -0.6,
+          "stock_rxn": 0.1
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": -18.4,
+          "rev_beat_pct": -9.8,
+          "stock_rxn": 4.6
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 0.35100000000000003,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 0.434,
+          "yoy": "-19%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 22080.764705882353,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 21366.114285714288,
+          "yoy": "+3.3%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 2.1206461538461543,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.660431,
+          "yoy": "+28%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 107701.95368905067,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 97207.11860620712,
+          "yoy": "+11%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "BX",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-23",
+      "earnings_time": "Bef-mkt",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 0,
+        "down": 15
+      },
+      "eps_4wk_pct": -1.63,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 13.5,
+          "rev_beat_pct": 6.7,
+          "stock_rxn": -2.6
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 21.6,
+          "rev_beat_pct": 6.6,
+          "stock_rxn": -4.2
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 4.7,
+          "rev_beat_pct": 8.7,
+          "stock_rxn": 3.6
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 3.7,
+          "rev_beat_pct": 5.0,
+          "stock_rxn": 0.8
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.337,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.051,
+          "yoy": "+27%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 3373.3333333333335,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2632.4545454545455,
+          "yoy": "+28%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 6.574061538461539,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 5.57,
+          "yoy": "+18%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 16287.103038285915,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 13460.467496886675,
+          "yoy": "+21%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "TMO",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-23",
+      "earnings_time": "Bef-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 8,
+        "down": 2
+      },
+      "eps_4wk_pct": 1.06,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 1.9,
+          "rev_beat_pct": 2.2,
+          "stock_rxn": -2.6
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 5.3,
+          "rev_beat_pct": 1.8,
+          "stock_rxn": 1.7
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 2.4,
+          "rev_beat_pct": 1.6,
+          "stock_rxn": 9.1
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 0.8,
+          "rev_beat_pct": 1.3,
+          "stock_rxn": -0.7
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 5.239,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 5.107,
+          "yoy": "+2.6%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 10850.227272727272,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 10233.583333333334,
+          "yoy": "+6.0%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 25.31852307692308,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 22.87,
+          "yoy": "+11%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 47752.36501580611,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 45106.44499014981,
+          "yoy": "+5.9%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "HCA",
+      "group": "Portfolio",
+      "earnings_date": "2026-04-24",
+      "earnings_time": "Bef-mkt",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 0,
+        "down": 2
+      },
+      "eps_4wk_pct": 0.62,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 7.6,
+          "rev_beat_pct": -0.8,
+          "stock_rxn": 7.1
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 21.8,
+          "rev_beat_pct": 3.2,
+          "stock_rxn": 1.6
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 8.8,
+          "rev_beat_pct": 0.5,
+          "stock_rxn": -2.1
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 10.8,
+          "rev_beat_pct": 0.2,
+          "stock_rxn": -4.0
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 7.111,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 5.787,
+          "yoy": "+23%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 19081.863636363636,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 18276.57142857143,
+          "yoy": "+4.4%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 31.211307692307695,
+          "guidance_low": 29.1,
+          "guidance_high": 31.5,
+          "prior_year": 28.21,
+          "yoy": "+11%",
+          "vs_guide": "above"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 79789.27830136986,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 76624.67614445828,
+          "yoy": "+4.1%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "FICO",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-28",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 2,
+        "down": 5
+      },
+      "eps_4wk_pct": 1.07,
+      "earnings_history": [
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 3.4,
+          "rev_beat_pct": 2.1,
+          "stock_rxn": -1.3
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 5.2,
+          "rev_beat_pct": 0.3,
+          "stock_rxn": 1.4
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 11.8,
+          "rev_beat_pct": 4.3,
+          "stock_rxn": 1.5
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 5.6,
+          "rev_beat_pct": 0.1,
+          "stock_rxn": 0.9
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 11.121,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 7.3950000000000005,
+          "yoy": "+50%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 639.5,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 498.1666666666667,
+          "yoy": "+28%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 47.743561538461535,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 29.88,
+          "yoy": "+60%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 2712.7932752179327,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2264.3052837573387,
+          "yoy": "+20%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "HOOD",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-28",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 2,
+        "down": 13
+      },
+      "eps_4wk_pct": -6.55,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 3.0,
+          "rev_beat_pct": -5.0,
+          "stock_rxn": -1.1
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 11.9,
+          "rev_beat_pct": 5.3,
+          "stock_rxn": 4.2
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 33.8,
+          "rev_beat_pct": 7.3,
+          "stock_rxn": 2.7
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 10.1,
+          "rev_beat_pct": 0.6,
+          "stock_rxn": -0.5
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 0.437,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 0.336,
+          "yoy": "+30%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 1150.7272727272727,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 921.6842105263158,
+          "yoy": "+25%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 2.3253538461538463,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2.05,
+          "yoy": "+13%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 5526.185714285714,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 4728.720688845402,
+          "yoy": "+17%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "V",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-28",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 5,
+        "down": 1
+      },
+      "eps_4wk_pct": 1.08,
+      "earnings_history": [
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 1.1,
+          "rev_beat_pct": 2.0,
+          "stock_rxn": 1.5
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 0.4,
+          "rev_beat_pct": 1.0,
+          "stock_rxn": -0.3
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 4.7,
+          "rev_beat_pct": 3.1,
+          "stock_rxn": -1.2
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 2.9,
+          "rev_beat_pct": 0.4,
+          "stock_rxn": 1.2
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 3.105,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2.682,
+          "yoy": "+16%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 10744.942857142856,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 9553.81081081081,
+          "yoy": "+12%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 13.794907692307692,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 11.47,
+          "yoy": "+20%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 47203.85546188971,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 42509.49841938883,
+          "yoy": "+11%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "BKNG",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-28",
+      "earnings_time": "16:00",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 2,
+        "down": 5
+      },
+      "eps_4wk_pct": 1.24,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": -0.1,
+          "rev_beat_pct": 3.6,
+          "stock_rxn": 3.1
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 4.0,
+          "rev_beat_pct": 3.2,
+          "stock_rxn": -2.5
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 9.9,
+          "rev_beat_pct": 3.7,
+          "stock_rxn": -1.5
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 42.2,
+          "rev_beat_pct": 3.8,
+          "stock_rxn": 0.4
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.077,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 0.6980000000000001,
+          "yoy": "+54%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 5528.625,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 4586.733333333333,
+          "yoy": "+21%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 11.246200000000002,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 9.122399999999999,
+          "yoy": "+23%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 30696.840429470565,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 27662.663451807966,
+          "yoy": "+11%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "HLT",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-28",
+      "earnings_time": "Bef-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 5,
+        "down": 5
+      },
+      "eps_4wk_pct": 1.09,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 3.1,
+          "rev_beat_pct": 3.3,
+          "stock_rxn": 0.4
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 2.5,
+          "rev_beat_pct": 3.8,
+          "stock_rxn": 3.4
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 7.8,
+          "rev_beat_pct": 1.2,
+          "stock_rxn": -2.6
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 6.9,
+          "rev_beat_pct": -0.8,
+          "stock_rxn": 2.2
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.962,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.609,
+          "yoy": "+22%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 2949.714285714286,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2717.714285714286,
+          "yoy": "+8.5%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 9.431846153846156,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 8.11,
+          "yoy": "+16%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 13266.299315068492,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 12278.227853881279,
+          "yoy": "+8.0%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "META",
+      "group": "Portfolio",
+      "earnings_date": "2026-04-29",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 4,
+        "down": 2
+      },
+      "eps_4wk_pct": 2.99,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 8.5,
+          "rev_beat_pct": 2.5,
+          "stock_rxn": -0.6
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": -84.4,
+          "rev_beat_pct": 3.4,
+          "stock_rxn": 0.0
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 21.3,
+          "rev_beat_pct": 6.0,
+          "stock_rxn": -0.7
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 22.1,
+          "rev_beat_pct": 2.3,
+          "stock_rxn": -1.0
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 7.51,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 5.385,
+          "yoy": "+39%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 55405.92592592593,
+          "guidance_low": 53500.0,
+          "guidance_high": 56500.0,
+          "prior_year": 41360.596491228076,
+          "yoy": "+34%",
+          "vs_guide": "mid"
+        },
+        {
+          "name": "Op. Income",
+          "consensus": 19422.375,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 15520.511111111111,
+          "yoy": "+25%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Capex",
+          "consensus": 26711.879,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 14229.139000000001,
+          "yoy": "+88%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 34.27836923076923,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 31.42,
+          "yoy": "+9.1%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 263977.8187736847,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 214475.2824227986,
+          "yoy": "+23%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Op. Income",
+          "consensus": 91708.97405558352,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 83811.74973993203,
+          "yoy": "+9.4%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Capex",
+          "consensus": 128741.52200000001,
+          "guidance_low": 115000.0,
+          "guidance_high": 135000.0,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "mid"
+        }
+      ]
+    },
+    {
+      "ticker": "AMZN",
+      "group": "Portfolio",
+      "earnings_date": "2026-04-29",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 0,
+        "down": 2
+      },
+      "eps_4wk_pct": 1.47,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": -0.4,
+          "rev_beat_pct": 0.9,
+          "stock_rxn": -4.4
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 25.3,
+          "rev_beat_pct": 1.3,
+          "stock_rxn": -3.2
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 27.3,
+          "rev_beat_pct": 3.4,
+          "stock_rxn": 1.7
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 17.1,
+          "rev_beat_pct": 0.3,
+          "stock_rxn": 3.1
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.953,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.7830000000000001,
+          "yoy": "+9.5%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 177130.42857142855,
+          "guidance_low": 173500.0,
+          "guidance_high": 178500.0,
+          "prior_year": 155159.67796610168,
+          "yoy": "+14%",
+          "vs_guide": "mid"
+        },
+        {
+          "name": "Op. Income",
+          "consensus": 20734.456521739132,
+          "guidance_low": 16500.0,
+          "guidance_high": 21500.0,
+          "prior_year": 17514.377358490565,
+          "yoy": "+18%",
+          "vs_guide": "mid"
+        },
+        {
+          "name": "Capex",
+          "consensus": 42846.148,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 25487.593,
+          "yoy": "+68%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 9.653769230769232,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 7.17,
+          "yoy": "+35%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 834766.367418335,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 741918.0627155969,
+          "yoy": "+13%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Op. Income",
+          "consensus": 105336.00407056158,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 85537.92297327645,
+          "yoy": "+23%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Capex",
+          "consensus": 201259.9301692308,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "CVNA",
+      "group": "Portfolio",
+      "earnings_date": "2026-04-29",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 3,
+        "down": 4
+      },
+      "eps_4wk_pct": -0.4,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 264.1,
+          "rev_beat_pct": 6.4,
+          "stock_rxn": 3.0
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": -22.0,
+          "rev_beat_pct": 10.6,
+          "stock_rxn": -2.3
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 11.7,
+          "rev_beat_pct": 6.0,
+          "stock_rxn": -0.9
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 109.1,
+          "rev_beat_pct": 6.6,
+          "stock_rxn": 0.1
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.5190000000000001,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 0.722,
+          "yoy": "+110%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 6091.434782608696,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 3969.95,
+          "yoy": "+53%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 655.4285714285714,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 437.4444444444444,
+          "yoy": "+50%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 7.952415384615385,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 8.45,
+          "yoy": "-5.9%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 28713.54637184832,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 22030.70084299262,
+          "yoy": "+30%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 3194.1804483188043,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2457.215095565542,
+          "yoy": "+30%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "GOOG",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-29",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 5,
+        "down": 3
+      },
+      "eps_4wk_pct": 1.15,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 6.6,
+          "rev_beat_pct": 2.2,
+          "stock_rxn": -2.2
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 26.8,
+          "rev_beat_pct": 2.8,
+          "stock_rxn": 2.5
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 6.1,
+          "rev_beat_pct": 2.7,
+          "stock_rxn": -0.3
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 40.0,
+          "rev_beat_pct": 1.4,
+          "stock_rxn": 2.4
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 2.83,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2.057,
+          "yoy": "+38%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 91484.8,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 75398.26923076922,
+          "yoy": "+21%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Op. Margin",
+          "consensus": null,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Capex",
+          "consensus": 35641.355,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 17189.27,
+          "yoy": "+107%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 12.768215384615386,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 425405.89351761254,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 359925.4926317975,
+          "yoy": "+18%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Capex",
+          "consensus": 185074.5730769231,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "MSFT",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-29",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 0,
+        "down": 2
+      },
+      "eps_4wk_pct": 0.68,
+      "earnings_history": [
+        {
+          "quarter": "Q2'26",
+          "eps_beat_pct": 5.6,
+          "rev_beat_pct": 1.2,
+          "stock_rxn": 0.2
+        },
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 12.3,
+          "rev_beat_pct": 2.8,
+          "stock_rxn": -0.1
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 8.2,
+          "rev_beat_pct": 3.5,
+          "stock_rxn": 0.1
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 7.6,
+          "rev_beat_pct": 2.3,
+          "stock_rxn": 0.3
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 4.0440000000000005,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 3.214,
+          "yoy": "+26%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 81424.54761904762,
+          "guidance_low": 32200.000000000004,
+          "guidance_high": 32500.0,
+          "prior_year": 68484.70212765958,
+          "yoy": "+19%",
+          "vs_guide": "above"
+        },
+        {
+          "name": "Op. Income",
+          "consensus": 36888.92307692308,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 30312.347826086956,
+          "yoy": "+22%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Capex",
+          "consensus": 26694.68,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 16284.806,
+          "yoy": "+64%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 18.5512,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 13.64,
+          "yoy": "+36%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 368225.7714285715,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 317896.28659340664,
+          "yoy": "+16%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Op. Income",
+          "consensus": 170445.16702040817,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 146835.13390619407,
+          "yoy": "+16%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Capex",
+          "consensus": 123492.53720000002,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "LLY",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-30",
+      "earnings_time": "Bef-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 4,
+        "down": 7
+      },
+      "eps_4wk_pct": 1.01,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 11.1,
+          "rev_beat_pct": 7.1,
+          "stock_rxn": 10.3
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 21.9,
+          "rev_beat_pct": 9.5,
+          "stock_rxn": 3.8
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 13.4,
+          "rev_beat_pct": 5.8,
+          "stock_rxn": -14.1
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 2.3,
+          "rev_beat_pct": 0.5,
+          "stock_rxn": -11.7
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 6.942,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 3.102,
+          "yoy": "+124%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 17824.916666666668,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 12671.190476190475,
+          "yoy": "+41%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 36.681907692307696,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 24.21,
+          "yoy": "+52%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 86015.24529680365,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 69240.92444227004,
+          "yoy": "+24%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "AON",
+      "group": "Watchlist",
+      "earnings_date": "2026-05-01",
+      "earnings_time": "06:30",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 4,
+        "down": 11
+      },
+      "eps_4wk_pct": 0.39,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 2.3,
+          "rev_beat_pct": -1.8,
+          "stock_rxn": 2.0
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 5.0,
+          "rev_beat_pct": 1.1,
+          "stock_rxn": 3.8
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 2.6,
+          "rev_beat_pct": -0.1,
+          "stock_rxn": 4.6
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": -5.4,
+          "rev_beat_pct": null,
+          "stock_rxn": -8.0
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 6.357,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 5.994,
+          "yoy": "+6.1%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 4971.55,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 4841.11111111111,
+          "yoy": "+2.7%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 19.692784615384618,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 17.07,
+          "yoy": "+15%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 18299.084682440847,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 17470.829514321296,
+          "yoy": "+4.7%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "APO",
+      "group": "Portfolio",
+      "earnings_date": "2026-05-06",
+      "earnings_time": "Bef-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 0,
+        "down": 14
+      },
+      "eps_4wk_pct": -1.52,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 20.8,
+          "rev_beat_pct": null,
+          "stock_rxn": 0.7
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 14.0,
+          "rev_beat_pct": 367.0,
+          "stock_rxn": 5.3
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": null,
+          "rev_beat_pct": null,
+          "stock_rxn": 2.5
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": -1.5,
+          "rev_beat_pct": -2.3,
+          "stock_rxn": -1.8
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.931,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.847,
+          "yoy": "+4.5%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 9.438415384615386,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 8.38,
+          "yoy": "+13%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "APP",
+      "group": "Portfolio",
+      "earnings_date": "2026-05-06",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 4,
+        "down": 0
+      },
+      "eps_4wk_pct": 2.59,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 9.8,
+          "rev_beat_pct": 3.2,
+          "stock_rxn": -3.4
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 1.7,
+          "rev_beat_pct": 5.0,
+          "stock_rxn": 1.4
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 16.9,
+          "rev_beat_pct": 0.5,
+          "stock_rxn": 3.3
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": 13.3,
+          "rev_beat_pct": 7.2,
+          "stock_rxn": -0.4
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 3.428,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.459,
+          "yoy": "+135%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 1774.3703703703704,
+          "guidance_low": 1745.0,
+          "guidance_high": 1775.0,
+          "prior_year": 1383.7142857142856,
+          "yoy": "+28%",
+          "vs_guide": "above"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 1491.375,
+          "guidance_low": 1465.0,
+          "guidance_high": 1495.0,
+          "prior_year": 871.0909090909091,
+          "yoy": "+71%",
+          "vs_guide": "above"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 16.928030769230773,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 9.75,
+          "yoy": "+74%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 8732.636904618434,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 6372.86409298464,
+          "yoy": "+37%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 7330.4651897339,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 5155.352237442922,
+          "yoy": "+42%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "TDG",
+      "group": "Watchlist",
+      "earnings_date": "2026-05-06",
+      "earnings_time": "None",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 3,
+        "down": 6
+      },
+      "eps_4wk_pct": 1.07,
+      "earnings_history": [
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": null,
+          "rev_beat_pct": null,
+          "stock_rxn": -9.3
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 7.7,
+          "rev_beat_pct": 1.8,
+          "stock_rxn": 1.1
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": -2.9,
+          "rev_beat_pct": -2.6,
+          "stock_rxn": -11.9
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": null,
+          "rev_beat_pct": null,
+          "stock_rxn": -5.5
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 9.457,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 8.948,
+          "yoy": "+5.7%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 2461.6666666666665,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2164.0,
+          "yoy": "+14%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 1295.5882352941178,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1151.2380952380952,
+          "yoy": "+13%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 42.59987692307692,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 37.33,
+          "yoy": "+14%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 10548.046699875465,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 9486.450186799502,
+          "yoy": "+11%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 5585.339501722343,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 5041.31085075703,
+          "yoy": "+11%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "DASH",
+      "group": "Watchlist",
+      "earnings_date": "2026-05-06",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 0,
+        "down": 3
+      },
+      "eps_4wk_pct": 0.56,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 59.3,
+          "rev_beat_pct": -1.1,
+          "stock_rxn": 6.8
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": -1.4,
+          "rev_beat_pct": 2.7,
+          "stock_rxn": -0.8
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 31.2,
+          "rev_beat_pct": 3.7,
+          "stock_rxn": 1.1
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": -5.5,
+          "rev_beat_pct": -2.1,
+          "stock_rxn": -7.4
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.048,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.041,
+          "yoy": "+0.7%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 4153.525,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 3095.694444444445,
+          "yoy": "+34%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 745.8421052631578,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 588.6060606060606,
+          "yoy": "+27%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 5.921215384615385,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 4.628303,
+          "yoy": "+28%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 18853.437527875118,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 14950.349406392694,
+          "yoy": "+26%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 3951.8409799789247,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 3016.558721461187,
+          "yoy": "+31%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "UBER",
+      "group": "Watchlist",
+      "earnings_date": "2026-05-06",
+      "earnings_time": "Bef-mkt",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 2,
+        "down": 0
+      },
+      "eps_4wk_pct": 2.35,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": -1.8,
+          "rev_beat_pct": 0.5,
+          "stock_rxn": -5.1
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": -1.9,
+          "rev_beat_pct": 1.5,
+          "stock_rxn": -5.1
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 1.0,
+          "rev_beat_pct": 1.4,
+          "stock_rxn": -0.2
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": -2.2,
+          "rev_beat_pct": -0.7,
+          "stock_rxn": -2.5
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 0.706,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 0.533,
+          "yoy": "+32%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 13333.0,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 11617.511627906977,
+          "yoy": "+15%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 2437.4,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1844.219512195122,
+          "yoy": "+32%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 3.706723076923077,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2.45,
+          "yoy": "+51%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 60753.73367952965,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 53807.04259498579,
+          "yoy": "+13%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "EBITDA",
+          "consensus": 11412.472,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 9308.232302674494,
+          "yoy": "+23%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "NET",
+      "group": "Watchlist",
+      "earnings_date": "2026-05-07",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 0,
+        "down": 0
+      },
+      "eps_4wk_pct": 2.33,
+      "earnings_history": [
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 2.9,
+          "rev_beat_pct": 3.9,
+          "stock_rxn": 3.6
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 14.4,
+          "rev_beat_pct": 3.2,
+          "stock_rxn": -2.1
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 12.9,
+          "rev_beat_pct": 2.1,
+          "stock_rxn": 3.4
+        },
+        {
+          "quarter": "Q1'25",
+          "eps_beat_pct": -5.3,
+          "rev_beat_pct": 1.9,
+          "stock_rxn": 2.1
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 0.23600000000000002,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 0.169,
+          "yoy": "+40%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 621.7142857142858,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 469.9655172413793,
+          "yoy": "+32%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.232476923076923,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 0.93,
+          "yoy": "+33%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 3018.7218705715636,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2336.6813501095035,
+          "yoy": "+29%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "NVDA",
+      "group": "Portfolio",
+      "earnings_date": "2026-05-20",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 2,
+        "down": 0
+      },
+      "eps_4wk_pct": 2.83,
+      "earnings_history": [
+        {
+          "quarter": "Q4'26",
+          "eps_beat_pct": 5.7,
+          "rev_beat_pct": 3.4,
+          "stock_rxn": 1.4
+        },
+        {
+          "quarter": "Q3'26",
+          "eps_beat_pct": 3.3,
+          "rev_beat_pct": 3.3,
+          "stock_rxn": 2.8
+        },
+        {
+          "quarter": "Q2'26",
+          "eps_beat_pct": 3.6,
+          "rev_beat_pct": 1.1,
+          "stock_rxn": -0.1
+        },
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 7.1,
+          "rev_beat_pct": 1.8,
+          "stock_rxn": -0.5
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 1.756,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 0.927,
+          "yoy": "+89%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 78616.46666666667,
+          "guidance_low": 77998.0,
+          "guidance_high": 78002.0,
+          "prior_year": 43285.13157894737,
+          "yoy": "+82%",
+          "vs_guide": "above"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 75.026,
+          "guidance_low": 74.4,
+          "guidance_high": 75.4,
+          "prior_year": 70.968,
+          "yoy": "+406bps",
+          "vs_guide": "mid"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 8.995673076923078,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 4.77,
+          "yoy": "+89%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 393186.4105014312,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 249031.9031326882,
+          "yoy": "+58%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 74.5601923076923,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "VEEV",
+      "group": "Portfolio",
+      "earnings_date": "2026-05-28",
+      "earnings_time": "None",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 1,
+        "down": 1
+      },
+      "eps_4wk_pct": 0.7,
+      "earnings_history": [
+        {
+          "quarter": "Q4'26",
+          "eps_beat_pct": 7.2,
+          "rev_beat_pct": 3.1,
+          "stock_rxn": 1.4
+        },
+        {
+          "quarter": "Q3'26",
+          "eps_beat_pct": 4.5,
+          "rev_beat_pct": 2.3,
+          "stock_rxn": -0.9
+        },
+        {
+          "quarter": "Q2'26",
+          "eps_beat_pct": 4.8,
+          "rev_beat_pct": 2.7,
+          "stock_rxn": 2.5
+        },
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 12.6,
+          "rev_beat_pct": 4.3,
+          "stock_rxn": -1.5
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 2.132,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.75,
+          "yoy": "+22%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 856.32,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 728.0,
+          "yoy": "+18%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 9.061326923076923,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 8.1,
+          "yoy": "+12%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 3687.993810248605,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 3259.347553816047,
+          "yoy": "+13%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "COST",
+      "group": "Watchlist",
+      "earnings_date": "2026-05-28",
+      "earnings_time": "None",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 6,
+        "down": 2
+      },
+      "eps_4wk_pct": 1.06,
+      "earnings_history": [
+        {
+          "quarter": "Q2'26",
+          "eps_beat_pct": 0.7,
+          "rev_beat_pct": 0.5,
+          "stock_rxn": -2.4
+        },
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 5.2,
+          "rev_beat_pct": 0.4,
+          "stock_rxn": 1.2
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 0.9,
+          "rev_beat_pct": 0.1,
+          "stock_rxn": -0.2
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 1.0,
+          "rev_beat_pct": -0.1,
+          "stock_rxn": -0.4
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 4.9030000000000005,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 4.248,
+          "yoy": "+15%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 68957.92307692308,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 63263.73333333334,
+          "yoy": "+9.0%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 21.913353846153846,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 18.21,
+          "yoy": "+20%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 313637.8570776255,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 290480.40024007106,
+          "yoy": "+8.0%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "AVGO",
+      "group": "Portfolio",
+      "earnings_date": "2026-06-05",
+      "earnings_time": "None",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 5,
+        "down": 1
+      },
+      "eps_4wk_pct": 6.65,
+      "earnings_history": [
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 1.0,
+          "rev_beat_pct": 0.3,
+          "stock_rxn": 1.2
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 4.4,
+          "rev_beat_pct": 3.1,
+          "stock_rxn": -1.6
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 1.4,
+          "rev_beat_pct": 0.7,
+          "stock_rxn": 1.2
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 1.3,
+          "rev_beat_pct": 0.3,
+          "stock_rxn": -0.4
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 2.388,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.56,
+          "yoy": "+53%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 22061.675675675673,
+          "guidance_low": 22000.0,
+          "guidance_high": 22000.0,
+          "prior_year": 14955.871794871795,
+          "yoy": "+48%",
+          "vs_guide": "above"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 76.917,
+          "guidance_low": 77.0,
+          "guidance_high": 77.0,
+          "prior_year": 78.88,
+          "yoy": "-196bps",
+          "vs_guide": "below"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 14.278461538461539,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 6.82,
+          "yoy": "+109%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 130135.91751675896,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 82137.64610253503,
+          "yoy": "+58%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 74.94684615384615,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "MU",
+      "group": "Watchlist",
+      "earnings_date": "2026-06-25",
+      "earnings_time": "None",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 5,
+        "down": 1
+      },
+      "eps_4wk_pct": 8.74,
+      "earnings_history": [
+        {
+          "quarter": "Q2'26",
+          "eps_beat_pct": 33.7,
+          "rev_beat_pct": 20.2,
+          "stock_rxn": 0.0
+        },
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 21.0,
+          "rev_beat_pct": 5.3,
+          "stock_rxn": -3.0
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 6.6,
+          "rev_beat_pct": 1.4,
+          "stock_rxn": 1.1
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 19.4,
+          "rev_beat_pct": 5.1,
+          "stock_rxn": -0.5
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 19.354,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 1.599,
+          "yoy": "+1110%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 33624.24137931035,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 8849.857142857143,
+          "yoy": "+280%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 81.199,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 36.791000000000004,
+          "yoy": "+4441bps",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 83.76146153846155,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 8.29,
+          "yoy": "+910%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 150944.81126217588,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 83296.23858611769,
+          "yoy": "+81%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 78.97338461538462,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "JPM",
+      "group": "Portfolio",
+      "earnings_date": "2026-07-14",
+      "earnings_time": "06:45",
+      "date_confirmed": true,
+      "revisions_4wk": {
+        "up": 23,
+        "down": 2
+      },
+      "eps_4wk_pct": 2.93,
+      "earnings_history": [
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 8.5,
+          "rev_beat_pct": 2.6,
+          "stock_rxn": -0.8
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 4.5,
+          "rev_beat_pct": 0.9,
+          "stock_rxn": -4.2
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 4.9,
+          "rev_beat_pct": 3.6,
+          "stock_rxn": -1.9
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 10.9,
+          "rev_beat_pct": 3.7,
+          "stock_rxn": -0.7
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 5.405,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 4.474,
+          "yoy": "+21%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 48978.75,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 44053.25,
+          "yoy": "+11%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "NII",
+          "consensus": null,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 22.554815384615388,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 20.33,
+          "yoy": "+11%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 199482.50304079484,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 187994.8512475538,
+          "yoy": "+6.1%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "PGR",
+      "group": "Portfolio",
+      "earnings_date": "2026-07-16",
+      "earnings_time": "None",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 15,
+        "down": 8
+      },
+      "eps_4wk_pct": 0.18,
+      "earnings_history": [
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 1.3,
+          "rev_beat_pct": 0.7,
+          "stock_rxn": 2.4
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": null,
+          "rev_beat_pct": null,
+          "stock_rxn": 2.2
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": -20.1,
+          "rev_beat_pct": 0.4,
+          "stock_rxn": -5.8
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 5.5,
+          "rev_beat_pct": 1.9,
+          "stock_rxn": 1.8
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 3.7880000000000003,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 4.408,
+          "yoy": "-14%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Net Premiums",
+          "consensus": null,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Combined Ratio",
+          "consensus": null,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 16.275984615384615,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 18.251437,
+          "yoy": "-11%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
+      "ticker": "TSM",
+      "group": "Portfolio",
+      "earnings_date": "2026-07-17",
+      "earnings_time": "None",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 33,
+        "down": 1
+      },
+      "eps_4wk_pct": 9.61,
+      "earnings_history": [
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 5.7,
+          "rev_beat_pct": 1.0,
+          "stock_rxn": -3.1
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 7.5,
+          "rev_beat_pct": 3.3,
+          "stock_rxn": 4.4
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": 10.4,
+          "rev_beat_pct": 5.1,
+          "stock_rxn": -1.6
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": 5.5,
+          "rev_beat_pct": -4.4,
+          "stock_rxn": 3.4
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 3.6830000000000003,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2.473,
+          "yoy": "+49%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 39253.05803560975,
+          "guidance_low": 34600.0,
+          "guidance_high": 35800.0,
+          "prior_year": 31561.959444750002,
+          "yoy": "+24%",
+          "vs_guide": "above"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 65.44200000000001,
+          "guidance_low": 63.0,
+          "guidance_high": 65.0,
+          "prior_year": 57.944,
+          "yoy": "+750bps",
+          "vs_guide": "above"
+        },
+        {
+          "name": "Op. Margin",
+          "consensus": null,
+          "guidance_low": 54.0,
+          "guidance_high": 56.0,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Capex",
+          "consensus": 13515.884,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 10981.265,
+          "yoy": "+23%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 16.2738,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 175486.72120777582,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 132658.1746857973,
+          "yoy": "+32%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Gross Margin",
+          "consensus": 64.64023076923077,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Capex",
+          "consensus": 57263.649800000014,
+          "guidance_low": 52000.0,
+          "guidance_high": 56000.0,
+          "prior_year": null,
+          "yoy": null,
+          "vs_guide": "above"
+        }
+      ]
+    },
+    {
+      "ticker": "MC",
+      "group": "Watchlist",
+      "earnings_date": "2026-07-24",
+      "earnings_time": "None",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 1,
+        "down": 16
+      },
+      "eps_4wk_pct": -1.29,
+      "earnings_history": [
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": null,
+          "rev_beat_pct": -2.4,
+          "stock_rxn": -0.3
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": null,
+          "rev_beat_pct": 0.6,
+          "stock_rxn": 0.2
+        },
+        {
+          "quarter": "Q3'25",
+          "eps_beat_pct": null,
+          "rev_beat_pct": 0.6,
+          "stock_rxn": -1.4
+        },
+        {
+          "quarter": "Q2'25",
+          "eps_beat_pct": null,
+          "rev_beat_pct": -0.4,
+          "stock_rxn": -2.0
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 11.040000000000001,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 12.280000000000001,
+          "yoy": "-10%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 19572.0,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 19584.0,
+          "yoy": "-0.1%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 23.44326153846154,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 21.85,
+          "yoy": "+7.3%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 82221.50979978924,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 80854.23502052978,
+          "yoy": "+1.7%",
+          "vs_guide": "n/a"
+        }
+      ]
+    }
+  ],
+  "reported": [
+    {
+      "ticker": "TSM",
+      "group": "Portfolio",
+      "earnings_date": "2026-04-16",
+      "earnings_time": "",
+      "fiscal_period": "1Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 3.498764023578627,
+          "consensus": 3.309374405780567,
+          "surprise": 0.0572282233969201,
+          "yoy": "+58%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 35857.9487,
+          "consensus": 35507.854,
+          "surprise": 0.009859641193748332,
+          "yoy": "+41%"
+        },
+        {
+          "name": "Gross Margin",
+          "actual": 66.2457,
+          "consensus": 64.459,
+          "surprise": 0.027718394638452288,
+          "yoy": "+746bps"
+        },
+        {
+          "name": "Op. Margin",
+          "actual": 58.1046,
+          "consensus": null,
+          "surprise": null,
+          "yoy": "+960bps"
+        },
+        {
+          "name": "Capex",
+          "actual": null,
+          "consensus": 12495.452,
+          "surprise": null,
+          "yoy": null
+        }
+      ],
+      "stock": {
+        "d1": -0.0313,
+        "w1": null,
+        "w1_vs_spx": null
+      },
+      "ntm_eps_chg": 0.073
+    },
+    {
+      "ticker": "PGR",
+      "group": "Portfolio",
+      "earnings_date": "2026-04-15",
+      "earnings_time": "",
+      "fiscal_period": "1Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 4.96,
+          "consensus": 4.84,
+          "surprise": 0.024793388429752088,
+          "yoy": "+6.6%"
+        },
+        {
+          "name": "Net Premiums",
+          "actual": null,
+          "consensus": null,
+          "surprise": null,
+          "yoy": null
+        },
+        {
+          "name": "Combined Ratio",
+          "actual": null,
+          "consensus": null,
+          "surprise": null,
+          "yoy": null
+        }
+      ],
+      "stock": {
+        "d1": 0.0236,
+        "w1": null,
+        "w1_vs_spx": null
+      },
+      "ntm_eps_chg": 0.0017
+    },
+    {
+      "ticker": "JPM",
+      "group": "Portfolio",
+      "earnings_date": "2026-04-14",
+      "earnings_time": "",
+      "fiscal_period": "1Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 5.94,
+          "consensus": 5.426,
+          "surprise": 0.09472908219683011,
+          "yoy": "+17%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 50536.0,
+          "consensus": 49259.8,
+          "surprise": 0.025907535150365958,
+          "yoy": "+9.8%"
+        },
+        {
+          "name": "NII",
+          "actual": 25366.0,
+          "consensus": null,
+          "surprise": null,
+          "yoy": "+9.0%"
+        }
+      ],
+      "stock": {
+        "d1": -0.0082,
+        "w1": null,
+        "w1_vs_spx": null
+      },
+      "ntm_eps_chg": 0.0239
+    },
+    {
+      "ticker": "MC",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-13",
+      "earnings_time": "",
+      "fiscal_period": "1Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": null,
+          "consensus": null,
+          "surprise": null,
+          "yoy": null
+        },
+        {
+          "name": "Revenue",
+          "actual": 19121.0,
+          "consensus": 19600.545,
+          "surprise": -0.024465901330804746,
+          "yoy": "-5.9%"
+        }
+      ],
+      "stock": {
+        "d1": -0.0032,
+        "w1": null,
+        "w1_vs_spx": null
+      },
+      "ntm_eps_chg": -0.0164
+    },
+    {
+      "ticker": "MU",
+      "group": "Watchlist",
+      "earnings_date": "2026-03-18",
+      "earnings_time": "",
+      "fiscal_period": "2Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 12.2,
+          "consensus": 9.125,
+          "surprise": 0.33698630136986296,
+          "yoy": "+682%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 23860.0,
+          "consensus": 19857.278,
+          "surprise": 0.20157455619043063,
+          "yoy": "+196%"
+        },
+        {
+          "name": "Gross Margin",
+          "actual": 74.4132,
+          "consensus": 69.126,
+          "surprise": 0.07648641610971267,
+          "yoy": "+3762bps"
+        }
+      ],
+      "stock": {
+        "d1": 0.0001,
+        "w1": -0.1724,
+        "w1_vs_spx": -0.1539
+      },
+      "ntm_eps_chg": 0.5487
+    },
+    {
+      "ticker": "COST",
+      "group": "Watchlist",
+      "earnings_date": "2026-03-05",
+      "earnings_time": "",
+      "fiscal_period": "2Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 4.58,
+          "consensus": 4.549,
+          "surprise": 0.00681468454605401,
+          "yoy": "+14%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 69597.0,
+          "consensus": 69271.071,
+          "surprise": 0.0047051243079525035,
+          "yoy": "+9.2%"
+        }
+      ],
+      "stock": {
+        "d1": -0.024,
+        "w1": -0.0034,
+        "w1_vs_spx": 0.0253
+      },
+      "ntm_eps_chg": 0.0135
+    },
+    {
+      "ticker": "AVGO",
+      "group": "Portfolio",
+      "earnings_date": "2026-03-04",
+      "earnings_time": "",
+      "fiscal_period": "1Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 2.05,
+          "consensus": 2.03,
+          "surprise": 0.009852216748768483,
+          "yoy": "+28%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 19311.0,
+          "consensus": 19261.5,
+          "surprise": 0.002569893310489837,
+          "yoy": "+29%"
+        },
+        {
+          "name": "Gross Margin",
+          "actual": 68.1322,
+          "consensus": 76.866,
+          "surprise": -0.11362370879192364,
+          "yoy": "+12bps"
+        }
+      ],
+      "stock": {
+        "d1": 0.0118,
+        "w1": 0.0884,
+        "w1_vs_spx": 0.0944
+      },
+      "ntm_eps_chg": 0.1267
+    },
+    {
+      "ticker": "VEEV",
+      "group": "Portfolio",
+      "earnings_date": "2026-03-04",
+      "earnings_time": "",
+      "fiscal_period": "4Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 2.06,
+          "consensus": 1.921,
+          "surprise": 0.07235814679854242,
+          "yoy": "+18%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 835.951,
+          "consensus": 810.444,
+          "surprise": 0.03147287166047261,
+          "yoy": "+16%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0138,
+        "w1": 0.0063,
+        "w1_vs_spx": 0.0123
+      },
+      "ntm_eps_chg": 0.0339
+    }
+  ]
+}
