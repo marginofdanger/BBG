@@ -354,8 +354,10 @@ td.spark-cell { padding: 4px 2px; }
       headers.forEach((h, idx) => obj[h] = vals[idx] || '');
       rows.push(obj);
     }
-    const re = /^Q[1-4] 20\d{2}$/;
-    const qCols = headers.filter(h => re.test(h));
+    // Snapshot columns: new schema (-1yr/-6m/-3m/Current) or legacy quarterly (Q1 2024, etc.)
+    const newSchema = ['-1yr', '-6m', '-3m', 'Current'].filter(c => headers.includes(c));
+    const legacyRe = /^Q[1-4] 20\d{2}$/;
+    const qCols = newSchema.length ? newSchema : headers.filter(h => legacyRe.test(h));
     // Split by metric (EPS vs Revenue) - backward compatible if no Metric column
     const epsRows = rows.filter(r => !r.Metric || r.Metric === 'EPS');
     const revRows = rows.filter(r => r.Metric === 'Revenue');
@@ -614,7 +616,7 @@ td.spark-cell { padding: 4px 2px; }
       const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
       const m3 = getFromEnd(nonNull, 1);
       const m6 = getFromEnd(nonNull, 2);
-      const m12 = getFromEnd(nonNull, 4);
+      const m12 = getFromEnd(nonNull, m12Offset(qCols));
 
       const curTd = appendCell(rowEl, fmtEst(cur));
       curTd.classList.add('year-sep');
@@ -751,6 +753,12 @@ td.spark-cell { padding: 4px 2px; }
     return idx >= 0 ? nonNull[idx].v : null;
   }
 
+  // -12m lives 3 back in the new snapshot schema (-1yr, -6m, -3m, Current)
+  // and 4 back in the legacy quarterly schema.
+  function m12Offset(qCols) {
+    return qCols.length === 4 ? 3 : 4;
+  }
+
   function fmtEst(v) {
     if (v === null || v === undefined) return '';
     if (Math.abs(v) >= 1000) return (v / 1000).toFixed(1) + 'k';
@@ -833,8 +841,9 @@ td.spark-cell { padding: 4px 2px; }
     let html = '<table class="detail-table"><tr><th></th>';
     qCols.forEach((q, qi) => {
       const m = q.match(/Q(\d) (\d{4})/);
-      const border = (m[1] === '1' && qi > 0) ? 'border-left:2px solid #bbb;' : '';
-      html += '<th style="' + border + '">' + m[1] + 'Q' + m[2].slice(2) + '</th>';
+      const border = (m && m[1] === '1' && qi > 0) ? 'border-left:2px solid #bbb;' : '';
+      const label = m ? (m[1] + 'Q' + m[2].slice(2)) : q;
+      html += '<th style="' + border + '">' + label + '</th>';
     });
     html += '</tr>';
 
@@ -849,7 +858,8 @@ td.spark-cell { padding: 4px 2px; }
         const v = parseFloat(raw);
         const val = (isNaN(v) || raw === '') ? null : v;
         vals.push(val);
-        const border = (q.match(/Q(\d)/)[1] === '1' && qi > 0) ? 'border-left:2px solid #bbb;' : '';
+        const qm = q.match(/Q(\d)/);
+        const border = (qm && qm[1] === '1' && qi > 0) ? 'border-left:2px solid #bbb;' : '';
         const isLast = vals.filter(x => x !== null).length === vals.length && qi === qCols.length - 1;
         html += '<td style="' + border + '">' + (val !== null ? val.toFixed(2) : '') + '</td>';
       });
@@ -861,7 +871,7 @@ td.spark-cell { padding: 4px 2px; }
       let prevVal = null;
       vals.forEach((v, vi) => {
         const qm = qCols[vi].match(/Q(\d) (\d{4})/);
-        const border = (qm[1] === '1' && vi > 0) ? 'border-left:2px solid #bbb;' : '';
+        const border = (qm && qm[1] === '1' && vi > 0) ? 'border-left:2px solid #bbb;' : '';
         let cellHtml = '';
         if (v !== null && prevVal !== null && prevVal !== 0) {
           const chg = ((v - prevVal) / Math.abs(prevVal)) * 100;
@@ -956,7 +966,7 @@ td.spark-cell { padding: 4px 2px; }
         const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
         const m3 = getFromEnd(nonNull, 1);
         const m6 = getFromEnd(nonNull, 2);
-        const m12 = getFromEnd(nonNull, 4);
+        const m12 = getFromEnd(nonNull, m12Offset(qCols));
         tickerMetrics[t].yearRevs[yr] = {
           chg3: pctChgVal(cur, m3), chg36: pctChgVal(m3, m6),
           chg612: pctChgVal(m6, m12), rev12: pctChgVal(cur, m12),
@@ -1332,7 +1342,7 @@ td.spark-cell { padding: 4px 2px; }
       vals.forEach((v, i) => { if (v !== null) nonNull.push({ v, i }); });
       const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
       const m3 = getFromEnd(nonNull, 1);
-      const m12 = getFromEnd(nonNull, 4);
+      const m12 = getFromEnd(nonNull, m12Offset(qCols));
       const rev3 = pctChgVal(cur, m3);
       const rev12 = pctChgVal(cur, m12);
       const retYtd = parsePctStr(r['Return_YTD']);
@@ -1761,7 +1771,7 @@ td.spark-cell { padding: 4px 2px; }
       if (r.Year !== 'CY2026') return;
       if (revLookup[t]) return;
       const m3 = getFromEnd(nonNull, 1);
-      const m12 = getFromEnd(nonNull, 4);
+      const m12 = getFromEnd(nonNull, m12Offset(qCols));
       revLookup[t] = {
         revRev3: pctChgVal(latest, m3),
         revRev12: pctChgVal(latest, m12),
@@ -1790,7 +1800,7 @@ td.spark-cell { padding: 4px 2px; }
       const cur = nonNull.length > 0 ? nonNull[nonNull.length - 1].v : null;
       const m3 = getFromEnd(nonNull, 1);
       const m6 = getFromEnd(nonNull, 2);
-      const m12 = getFromEnd(nonNull, 4);
+      const m12 = getFromEnd(nonNull, m12Offset(qCols));
       const rev3 = pctChgVal(cur, m3);
       const rev12 = pctChgVal(cur, m12);
 
@@ -2033,7 +2043,7 @@ td.spark-cell { padding: 4px 2px; }
       const cur26 = nonNull26.length > 0 ? nonNull26[nonNull26.length - 1].v : null;
       const m3_26 = getFromEnd(nonNull26, 1);
       const m6_26 = getFromEnd(nonNull26, 2);
-      const m12_26 = getFromEnd(nonNull26, 4);
+      const m12_26 = getFromEnd(nonNull26, m12Offset(qCols));
       const rev3 = pctChgVal(cur26, m3_26);
       const rev612 = pctChgVal(m6_26, m12_26);
       const rev12 = pctChgVal(cur26, m12_26);
@@ -2440,20 +2450,28 @@ td.spark-cell { padding: 4px 2px; }
   function renderMethodology(qCols) {
     const el = document.getElementById('methodology');
     if (!el) return;
-    const labels = qCols.map(q => { const m = q.match(/Q(\d) (\d{4})/); return m[1] + "Q" + m[2].slice(2); });
-    const n = labels.length;
-    const cur = labels[n-1]||'?', m3 = labels[n-2]||'?', m6 = labels[n-3]||'?', m12 = labels[n-5]||'?';
+    const isSnapshot = qCols.length === 4 && qCols[qCols.length - 1] === 'Current';
+    const n = qCols.length;
+    let cur, m3, m6, m12;
+    if (isSnapshot) {
+      cur = 'today'; m3 = '3 months ago'; m6 = '6 months ago'; m12 = '12 months ago';
+    } else {
+      const labels = qCols.map(q => { const m = q.match(/Q(\d) (\d{4})/); return m ? (m[1] + "Q" + m[2].slice(2)) : q; });
+      cur = labels[n-1]||'?'; m3 = labels[n-2]||'?'; m6 = labels[n-3]||'?'; m12 = labels[n-5]||'?';
+    }
+    const snapshotLine = isSnapshot
+      ? 'Each value is the consensus on-or-before the target date, using the nearest prior data point when no exact match exists.'
+      : 'Each value is the last available monthly consensus snapshot within that calendar quarter.';
     el.innerHTML =
       '<details><summary>Methodology</summary>' +
       '<p><b>Data source:</b> Bloomberg BEST_EPS (adjusted, mkt cap &lt; $200B) or BEST_EPS_GAAP (mkt cap &ge; $200B). ' +
       'TSM estimates converted to USD. Historical estimates use absolute fiscal period references ("NNY" format).</p>' +
       '<p><b>FY/CY alignment:</b> Companies with fiscal year ending in Jan–Mar (NVDA, VEEV) have estimates shifted so that ' +
       'CY columns reflect the calendar year the fiscal year mostly covers. E.g. NVDA FY2027 (ending Jan 2027) is shown as CY2026.</p>' +
-      '<p><b>Estimate columns:</b> "Cur" = consensus as of end of ' + cur + '. ' +
-      '"-3m" = ' + m3 + '. "-6m" = ' + m6 + '. "-1yr" = ' + m12 + '. ' +
-      'Each value is the last available monthly consensus snapshot within that calendar quarter.</p>' +
+      '<p><b>Estimate columns:</b> "Cur" = consensus as of ' + cur + '. ' +
+      '"-3m" = ' + m3 + '. "-6m" = ' + m6 + '. "-1yr" = ' + m12 + '. ' + snapshotLine + '</p>' +
       '<p><b>% change columns:</b> "3m%" = Cur vs -3m. "3-6m%" = -3m vs -6m. "6-12m%" = -6m vs -1yr. "12m%" = Cur vs -1yr.</p>' +
-      '<p><b>Sparklines:</b> Show all available quarterly data points (up to ' + n + ' quarters). Click to expand full history.</p>' +
+      '<p><b>Sparklines:</b> Show available snapshot data points (' + n + ' columns). Click to expand full history.</p>' +
       '<p><b>Sorting:</b> Click any column header with ▲▼ to sort. Portfolio and Watchlist sections sort independently.</p>' +
       '</details>';
   }

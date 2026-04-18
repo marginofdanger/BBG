@@ -7,7 +7,7 @@ from datetime import date
 
 from xbbg import blp
 
-from bloomberg import estimate_history, USD_OVERRIDE_TICKERS
+from bloomberg import estimate_history, USD_OVERRIDE_TICKERS, SNAPSHOT_OFFSETS
 
 # ---------------------------------------------------------------------------
 # Ticker lists
@@ -106,11 +106,6 @@ def _pull_gics(bbg_tickers):
     return _bdp_batch(bbg_tickers, fields)
 
 
-def _sort_quarter_key(col):
-    parts = col.split(" ")
-    return (int(parts[1]), int(parts[0][1]))
-
-
 def _format_pct_change(prev, curr):
     if prev is None or curr is None or prev == "" or curr == "":
         return ""
@@ -195,7 +190,6 @@ def main():
 
     # Step 5: Estimate histories
     print(f"\n[5/6] Pulling estimate histories...")
-    all_quarters = set()
     ticker_estimates = {}
 
     for i, entry in enumerate(entries):
@@ -227,20 +221,15 @@ def main():
                     row["line_item"] = f"CY{fy - fye_offset}"
 
         ticker_estimates[short] = rows
-        for row in rows:
-            for key in row:
-                if key != "line_item":
-                    all_quarters.add(key)
 
-    sorted_quarters = sorted(all_quarters, key=_sort_quarter_key)
-
-    # Build CSV
+    # Build CSV: snapshot columns are fixed time offsets (e.g. -1yr, -6m, -3m, Current).
+    snapshot_cols = [label for label, _ in SNAPSHOT_OFFSETS]
     print(f"\n[6/6] Writing CSV...")
     interleaved_cols = []
-    for i, q in enumerate(sorted_quarters):
-        interleaved_cols.append(q)
+    for i, c in enumerate(snapshot_cols):
+        interleaved_cols.append(c)
         if i > 0:
-            interleaved_cols.append(f"{q} chg")
+            interleaved_cols.append(f"{c} chg")
 
     header = ["Ticker", "Group", "Category", "GICS Sector", "GICS Industry", "EPS Type", "FYE", "Metric", "Year"] + \
              interleaved_cols + ["Price", "PE", "12m Rev", "Return_YTD", "Return_3m", "Return_12m"]
@@ -269,8 +258,8 @@ def main():
             row_data = [short, group, category, gics_sector, gics_industry, eps_label, fye_label, "EPS", year_label]
 
             prev_val = None
-            for i, q in enumerate(sorted_quarters):
-                val = est_row.get(q)
+            for i, c in enumerate(snapshot_cols):
+                val = est_row.get(c)
                 row_data.append(val if val is not None else "")
                 if i > 0:
                     row_data.append(_format_pct_change(prev_val, val))
@@ -279,30 +268,21 @@ def main():
             # Price
             row_data.append(price if price is not None else "")
 
-            # PE (use price_for_pe which is adjusted for pence)
+            # PE: use Current snapshot
             pe = ""
-            if price_for_pe:
-                latest_eps = None
-                for q in reversed(sorted_quarters):
-                    if q in est_row and est_row[q] is not None:
-                        latest_eps = est_row[q]
-                        break
-                if latest_eps and float(latest_eps) != 0:
-                    pe = round(float(price_for_pe) / float(latest_eps), 1)
+            latest_eps = est_row.get("Current")
+            if price_for_pe and latest_eps and float(latest_eps) != 0:
+                pe = round(float(price_for_pe) / float(latest_eps), 1)
             row_data.append(pe)
 
-            # 12m Rev
+            # 12m Rev: revision of this CY estimate over the last year
+            # (Current vs -1yr snapshot of the same CY estimate)
             rev_12m = ""
-            for q in reversed(sorted_quarters):
-                if q in est_row and est_row[q] is not None:
-                    parts = q.split(" ")
-                    prev_year_q = f"{parts[0]} {int(parts[1]) - 1}"
-                    if prev_year_q in est_row and est_row[prev_year_q] is not None:
-                        prev_val_12m = est_row[prev_year_q]
-                        if float(prev_val_12m) != 0:
-                            chg = (float(est_row[q]) - float(prev_val_12m)) / abs(float(prev_val_12m)) * 100
-                            rev_12m = f"{'+' if chg >= 0 else ''}{chg:.1f}%"
-                    break
+            cur_est = est_row.get("Current")
+            yr_est = est_row.get("-1yr")
+            if cur_est is not None and yr_est not in (None, 0):
+                chg = (float(cur_est) - float(yr_est)) / abs(float(yr_est)) * 100
+                rev_12m = f"{'+' if chg >= 0 else ''}{chg:.1f}%"
             row_data.append(rev_12m)
 
             # Returns
@@ -371,29 +351,23 @@ def main():
                         gics_sector, gics_industry, '', fye_label, "Revenue", year_label]
 
             prev_val = None
-            for i, q in enumerate(sorted_quarters):
-                val = est_row.get(q)
+            for i, c in enumerate(snapshot_cols):
+                val = est_row.get(c)
                 row_data.append(val if val is not None else "")
                 if i > 0:
                     row_data.append(_format_pct_change(prev_val, val))
                 prev_val = val if val is not None else prev_val
 
-            # Price, PE (N/A for revenue), 12m Rev
             row_data.append(price if price is not None else "")
-            row_data.append("")  # PE not applicable
+            row_data.append("")  # PE not applicable for revenue
 
-            # 12m revision
+            # 12m Rev: Current vs -1yr snapshot of same CY estimate
             rev_12m = ""
-            for q in reversed(sorted_quarters):
-                if q in est_row and est_row[q] is not None:
-                    parts = q.split(" ")
-                    prev_year_q = f"{parts[0]} {int(parts[1]) - 1}"
-                    if prev_year_q in est_row and est_row[prev_year_q] is not None:
-                        prev_val_12m = est_row[prev_year_q]
-                        if float(prev_val_12m) != 0:
-                            chg = (float(est_row[q]) - float(prev_val_12m)) / abs(float(prev_val_12m)) * 100
-                            rev_12m = f"{'+' if chg >= 0 else ''}{chg:.1f}%"
-                    break
+            cur_est = est_row.get("Current")
+            yr_est = est_row.get("-1yr")
+            if cur_est is not None and yr_est not in (None, 0):
+                chg = (float(cur_est) - float(yr_est)) / abs(float(yr_est)) * 100
+                rev_12m = f"{'+' if chg >= 0 else ''}{chg:.1f}%"
             row_data.append(rev_12m)
 
             for f in ["CHG_PCT_YTD", "CHG_PCT_3M", "CHG_PCT_1YR"]:

@@ -204,8 +204,12 @@ async function loadAndRender() {
         price: parseNum(r.Price),
         retYtd: parseNum(r.Return_YTD), ret3m: parseNum(r.Return_3m), ret12m: parseNum(r.Return_12m),
       };
-      const quarterCols = Object.keys(r).filter(k => /^Q\d \d{4}$/.test(k));
-      const lastCol = quarterCols[quarterCols.length - 1];
+      // New schema uses "Current"; legacy schema uses rightmost Q{n} YYYY column
+      let lastCol = 'Current';
+      if (!(lastCol in r)) {
+        const quarterCols = Object.keys(r).filter(k => /^Q\d \d{4}$/.test(k));
+        lastCol = quarterCols[quarterCols.length - 1];
+      }
       out[t].years[r.Year] = { eps: parseNum(r[lastCol]), pe: parseNum(r.PE) };
     }
     return out;
