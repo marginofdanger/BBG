@@ -224,6 +224,7 @@ async function loadAndRender() {
     const rec = {
       ticker: t, group: c.group, sector: c.sector,
       priceDelta: p.price && c.price ? (c.price - p.price) / p.price * 100 : null,
+      retYtd: c.retYtd,
       retYtdDelta: p.retYtd !== null && c.retYtd !== null ? c.retYtd - p.retYtd : null,
       ret3mDelta: p.ret3m !== null && c.ret3m !== null ? c.ret3m - p.ret3m : null,
       ret12mDelta: p.ret12m !== null && c.ret12m !== null ? c.ret12m - p.ret12m : null,
@@ -255,6 +256,7 @@ const COL_META = {
   epsCY28:    { label: 'ΔEPS 28', fmt: v => fmtPct(v, 1) },
   priceDelta: { label: 'ΔPrice',  fmt: v => fmtPct(v, 1) },
   multDelta:  { label: 'ΔMult',   fmt: v => fmtPct(v, 1) },
+  retYtd:     { label: 'YTD',     fmt: v => fmtPct(v, 1) },
   retYtdDelta:{ label: 'ΔYTD',    fmt: v => fmtPp(v) },
   ret3mDelta: { label: 'Δ3M',     fmt: v => fmtPp(v) },
   ret12mDelta:{ label: 'Δ12M',    fmt: v => fmtPp(v) },
@@ -265,8 +267,8 @@ const BOARDS = [
   { id: 'eps26dn', title: 'Top EPS Revisions ↓ (CY26)', filter: r => r.epsCY26 !== null, sortKey: 'epsCY26', dir: 'asc', cols: ['epsCY26','epsCY27','epsCY28','priceDelta','multDelta'] },
   { id: 'priceup', title: 'Top Price Movers ↑', filter: r => r.priceDelta !== null, sortKey: 'priceDelta', dir: 'desc', cols: ['priceDelta','epsCY26','multDelta'] },
   { id: 'pricedn', title: 'Top Price Movers ↓', filter: r => r.priceDelta !== null, sortKey: 'priceDelta', dir: 'asc', cols: ['priceDelta','epsCY26','multDelta'] },
-  { id: 'ytdup', title: 'Best YTD Return Δ', filter: r => r.retYtdDelta !== null, sortKey: 'retYtdDelta', dir: 'desc', cols: ['retYtdDelta','priceDelta','epsCY26'] },
-  { id: 'ytddn', title: 'Worst YTD Return Δ', filter: r => r.retYtdDelta !== null, sortKey: 'retYtdDelta', dir: 'asc', cols: ['retYtdDelta','priceDelta','epsCY26'] },
+  { id: 'ytdup', title: 'Best YTD Return', filter: r => r.retYtd !== null, sortKey: 'retYtd', dir: 'desc', cols: ['retYtd','priceDelta','epsCY26'] },
+  { id: 'ytddn', title: 'Worst YTD Return', filter: r => r.retYtd !== null, sortKey: 'retYtd', dir: 'asc', cols: ['retYtd','priceDelta','epsCY26'] },
   { id: 'rerateup', title: 'Top Re-raters (Δ Multiple ↑)', filter: r => r.multDelta !== null, sortKey: 'multDelta', dir: 'desc', cols: ['multDelta','priceDelta','epsCY26'] },
   { id: 'reratedn', title: 'Top De-raters (Δ Multiple ↓)', filter: r => r.multDelta !== null, sortKey: 'multDelta', dir: 'asc', cols: ['multDelta','priceDelta','epsCY26'] },
 ];
