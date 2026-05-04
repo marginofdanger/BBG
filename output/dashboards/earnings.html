@@ -240,7 +240,7 @@ let TAB = localStorage.getItem('earnings_tab') || 'upcoming';
 let FILTER = localStorage.getItem('earnings_filter') || 'Portfolio';
 let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '30');
 let ZOOM_DAYS_REPORTED = parseInt(localStorage.getItem('earnings_reported_zoom') || '30');
-if (ZOOM_DAYS_REPORTED === 45) ZOOM_DAYS_REPORTED = 30;
+if (ZOOM_DAYS_REPORTED === 45 || ZOOM_DAYS_REPORTED === 90) ZOOM_DAYS_REPORTED = 30;
 
 function syncRangeButtonsForTab() {
   // Range button definitions differ between tabs; rebuild the chip set so the
@@ -251,7 +251,7 @@ function syncRangeButtonsForTab() {
       <button data-days="7">1 Week</button>
       <button data-days="14">2 Weeks</button>
       <button data-days="30">1 Month</button>
-      <button data-days="90">3 Months</button>
+      <button data-days="120">4 Months</button>
     `;
     const active = ZOOM_DAYS_REPORTED;
     document.querySelectorAll('#range-group button').forEach(b => {
