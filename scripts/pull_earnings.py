@@ -563,7 +563,7 @@ def pull_earnings_history(bbg_tickers, actuals_data):
 
 def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
     """Pull actuals vs. consensus, stock reaction, and NTM EPS delta for
-    tickers that reported in the last 45 days.
+    tickers that reported in the last 120 days.
 
     group_lookup: {bbg_ticker: "Portfolio"|"Watchlist"} used to tag records.
 
@@ -577,7 +577,7 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
     """
     field_map = metrics_config["_field_map"]
     today = date.today()
-    window_start = today - timedelta(days=45)
+    window_start = today - timedelta(days=120)
     reported = []
 
     # Batch one SPX pull covering the whole window (+7 trading days buffer).
@@ -1016,7 +1016,7 @@ def main():
             actuals_data = json.load(f)
     history_data = pull_earnings_history(bbg_tickers, actuals_data)
 
-    # Step 9: Reported details (last 45 days)
+    # Step 9: Reported details (last 120 days)
     print("\n[9/9] Reported actuals & post-earnings moves...")
     group_lookup = {e["bbg"]: e["group"] for e in all_tickers}
     reported_data = pull_reported_details(bbg_tickers, config, group_lookup)
