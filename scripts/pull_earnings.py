@@ -637,36 +637,14 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
         except Exception:
             continue
 
-        past = [q for q in quarters if q["date"] <= today]
-        if not past:
+        in_window = [q for q in quarters
+                     if window_start <= q["date"] <= today]
+        if not in_window:
             continue
-        past.sort(key=lambda q: q["date"], reverse=True)
-        last = past[0]
-        if last["date"] < window_start:
-            continue
+        in_window.sort(key=lambda q: q["date"], reverse=True)
 
-        # Absolute period override: "2025:Q4" -> "25Q4"
-        parts = last["period"].split(":")
-        yr = parts[0][2:] if len(parts[0]) == 4 else parts[0]
-        abs_period = f"{yr}{parts[1]}" if len(parts) > 1 else None
-        if not abs_period:
-            continue
-        # Display label: "2026:Q1" -> "1Q26"
-        fiscal_period = f"{parts[1][1:]}Q{yr}" if len(parts) > 1 else None
-
+        # Per-ticker setup (constant across this ticker's quarters)
         ticker_metrics = metrics_config.get(short, metrics_config["_default"])
-
-        record = {
-            "ticker": short,
-            "group": group_lookup.get(bt, ""),
-            "earnings_date": last["date"].isoformat(),
-            "earnings_time": "",
-            "fiscal_period": fiscal_period,
-            "metrics": [],
-            "stock": {"d1": None, "w1": None, "w1_vs_spx": None},
-            "ntm_eps_chg": None,
-        }
-
         usd_ovr = [("EQY_FUND_CRNCY", "USD")] if short in USD_OVERRIDE_TICKERS else []
         eps_ovr = EPS_OVERRIDES.get(bt, {})
         eps_actual_field_override = eps_ovr.get("eps_field")       # e.g. IS_DILUTED_EPS
@@ -679,204 +657,225 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
         # When actuals come from a different ticker, don't apply USD override
         eps_act_ovr = [] if eps_ticker != bt else usd_ovr
 
-        # Pre-earnings consensus is pulled via BDH over a 10-day window ending
-        # the day before earnings. Use the last value (= consensus going in).
-        pre_start = (last["date"] - timedelta(days=10)).strftime("%Y-%m-%d")
-        pre_end = (last["date"] - timedelta(days=1)).strftime("%Y-%m-%d")
-        # Prior-year actuals come from a 550-day BDH window (same pattern the
-        # existing earnings_history phase uses), then matched by date.
-        lookback_start = (last["date"] - timedelta(days=550)).strftime("%Y-%m-%d")
-        lookback_end = last["date"].strftime("%Y-%m-%d")
-
-        for metric_name in ticker_metrics:
-            fmt_info = field_map.get(metric_name, {})
-            if not fmt_info:
+        for last in in_window:
+            # Absolute period override: "2025:Q4" -> "25Q4"
+            parts = last["period"].split(":")
+            yr = parts[0][2:] if len(parts[0]) == 4 else parts[0]
+            abs_period = f"{yr}{parts[1]}" if len(parts) > 1 else None
+            if not abs_period:
                 continue
-            fmt = fmt_info.get("format", "number")
-            est_field = fmt_info["field"]
-            actual_field = fmt_info.get("actual_field")
+            # Display label: "2026:Q1" -> "1Q26"
+            fiscal_period = f"{parts[1][1:]}Q{yr}" if len(parts) > 1 else None
 
-            # EPS has ticker-specific field overrides
-            if metric_name == "EPS":
-                if eps_estimate_field_override:
-                    est_field = eps_estimate_field_override
-                if eps_actual_field_override:
-                    actual_field = eps_actual_field_override
+            record = {
+                "ticker": short,
+                "group": group_lookup.get(bt, ""),
+                "earnings_date": last["date"].isoformat(),
+                "earnings_time": "",
+                "fiscal_period": fiscal_period,
+                "metrics": [],
+                "stock": {"d1": None, "w1": None, "w1_vs_spx": None},
+                "ntm_eps_chg": None,
+            }
 
-            actual = None
-            consensus = None
-            yoy_str = None
+            # Pre-earnings consensus is pulled via BDH over a 10-day window ending
+            # the day before earnings. Use the last value (= consensus going in).
+            pre_start = (last["date"] - timedelta(days=10)).strftime("%Y-%m-%d")
+            pre_end = (last["date"] - timedelta(days=1)).strftime("%Y-%m-%d")
+            # Prior-year actuals come from a 550-day BDH window (same pattern the
+            # existing earnings_history phase uses), then matched by date.
+            lookback_start = (last["date"] - timedelta(days=550)).strftime("%Y-%m-%d")
+            lookback_end = last["date"].strftime("%Y-%m-%d")
 
-            # --- Actual: BDH quarterly, find the row on/near last["date"] ---
-            if actual_field:
-                act_ticker = eps_ticker if metric_name == "EPS" else bt
-                act_ovr = eps_act_ovr if metric_name == "EPS" else usd_ovr
+            for metric_name in ticker_metrics:
+                fmt_info = field_map.get(metric_name, {})
+                if not fmt_info:
+                    continue
+                fmt = fmt_info.get("format", "number")
+                est_field = fmt_info["field"]
+                actual_field = fmt_info.get("actual_field")
+
+                # EPS has ticker-specific field overrides
+                if metric_name == "EPS":
+                    if eps_estimate_field_override:
+                        est_field = eps_estimate_field_override
+                    if eps_actual_field_override:
+                        actual_field = eps_actual_field_override
+
+                actual = None
+                consensus = None
+                yoy_str = None
+
+                # --- Actual: BDH quarterly, find the row on/near last["date"] ---
+                if actual_field:
+                    act_ticker = eps_ticker if metric_name == "EPS" else bt
+                    act_ovr = eps_act_ovr if metric_name == "EPS" else usd_ovr
+                    try:
+                        df_act = blp.bdh(act_ticker, actual_field,
+                                         lookback_start, lookback_end,
+                                         periodicitySelection="QUARTERLY",
+                                         overrides=act_ovr)
+                        tbl = df_act.to_native()
+                        dates_col = [str(d) for d in tbl.column("date").to_pylist()]
+                        vals_col = tbl.column("value").to_pylist()
+                        earn_str = last["date"].isoformat()
+                        latest_idx = -1
+                        for i, d in enumerate(dates_col):
+                            if d <= earn_str:
+                                latest_idx = i
+                            else:
+                                break
+                        if latest_idx >= 0:
+                            try:
+                                raw = float(vals_col[latest_idx])
+                                actual = raw * eps_mult if metric_name == "EPS" else raw
+                                if metric_name == "Capex" and actual is not None:
+                                    actual = abs(actual)
+                            except (ValueError, TypeError):
+                                actual = None
+                        if latest_idx >= 4:
+                            try:
+                                prior_val = float(vals_col[latest_idx - 4])
+                                if metric_name == "EPS":
+                                    prior_val *= eps_mult
+                                if metric_name == "Capex":
+                                    prior_val = abs(prior_val)
+                                yoy_str = compute_yoy(actual, prior_val, fmt)
+                            except (ValueError, TypeError):
+                                pass
+                    except Exception:
+                        pass
+
+                # --- Pre-earnings consensus: BDH BEST_* with absolute period ---
+                cons_usd = eps_est_usd if metric_name == "EPS" else usd_ovr
                 try:
-                    df_act = blp.bdh(act_ticker, actual_field,
-                                     lookback_start, lookback_end,
-                                     periodicitySelection="QUARTERLY",
-                                     overrides=act_ovr)
-                    tbl = df_act.to_native()
-                    dates_col = [str(d) for d in tbl.column("date").to_pylist()]
-                    vals_col = tbl.column("value").to_pylist()
-                    earn_str = last["date"].isoformat()
-                    latest_idx = -1
-                    for i, d in enumerate(dates_col):
-                        if d <= earn_str:
-                            latest_idx = i
-                        else:
-                            break
-                    if latest_idx >= 0:
-                        try:
-                            raw = float(vals_col[latest_idx])
-                            actual = raw * eps_mult if metric_name == "EPS" else raw
-                            if metric_name == "Capex" and actual is not None:
-                                actual = abs(actual)
-                        except (ValueError, TypeError):
-                            actual = None
-                    if latest_idx >= 4:
-                        try:
-                            prior_val = float(vals_col[latest_idx - 4])
-                            if metric_name == "EPS":
-                                prior_val *= eps_mult
-                            if metric_name == "Capex":
-                                prior_val = abs(prior_val)
-                            yoy_str = compute_yoy(actual, prior_val, fmt)
-                        except (ValueError, TypeError):
-                            pass
+                    ovr = [("BEST_FPERIOD_OVERRIDE", abs_period)] + cons_usd
+                    df_cons = blp.bdh(bt, est_field, pre_start, pre_end,
+                                      periodicitySelection="DAILY", overrides=ovr)
+                    tbl = df_cons.to_native()
+                    cvals = [float(v) for v in tbl.column("value").to_pylist()]
+                    if cvals:
+                        consensus = cvals[-1]
+                        if metric_name == "Capex":
+                            consensus = abs(consensus)
                 except Exception:
                     pass
 
-            # --- Pre-earnings consensus: BDH BEST_* with absolute period ---
-            cons_usd = eps_est_usd if metric_name == "EPS" else usd_ovr
-            try:
-                ovr = [("BEST_FPERIOD_OVERRIDE", abs_period)] + cons_usd
-                df_cons = blp.bdh(bt, est_field, pre_start, pre_end,
-                                  periodicitySelection="DAILY", overrides=ovr)
-                tbl = df_cons.to_native()
-                cvals = [float(v) for v in tbl.column("value").to_pylist()]
-                if cvals:
-                    consensus = cvals[-1]
-                    if metric_name == "Capex":
-                        consensus = abs(consensus)
-            except Exception:
-                pass
+                # --- Surprise % ---
+                surprise = None
+                if actual is not None and consensus not in (None, 0):
+                    surprise = (actual - consensus) / abs(consensus)
 
-            # --- Surprise % ---
-            surprise = None
-            if actual is not None and consensus not in (None, 0):
-                surprise = (actual - consensus) / abs(consensus)
+                record["metrics"].append({
+                    "name": metric_name,
+                    "actual": actual,
+                    "consensus": consensus,
+                    "surprise": surprise,
+                    "yoy": yoy_str,
+                })
 
-            record["metrics"].append({
-                "name": metric_name,
-                "actual": actual,
-                "consensus": consensus,
-                "surprise": surprise,
-                "yoy": yoy_str,
-            })
-
-        # --- EPS FX conversion (e.g. TSM: TWD/ADR → USD/ADR) ---
-        # Actual and consensus are both in native FX, so surprise % is unaffected.
-        # yoy is a pre-computed string ratio in native FX, also unaffected.
-        if eps_fx_pair:
-            try:
-                fx_start = (last["date"] - timedelta(days=10)).strftime("%Y-%m-%d")
-                fx_end = last["date"].strftime("%Y-%m-%d")
-                df_fx = blp.bdh(eps_fx_pair, "PX_LAST", fx_start, fx_end)
-                tbl = df_fx.to_native()
-                fx_vals = [float(v) for v in tbl.column("value").to_pylist()]
-                rate = fx_vals[-1] if fx_vals else None
-                if rate and rate > 0:
-                    for m in record["metrics"]:
-                        if m["name"] == "EPS":
-                            if m["actual"] is not None:
-                                m["actual"] = m["actual"] / rate
-                            if m["consensus"] is not None:
-                                m["consensus"] = m["consensus"] / rate
-            except Exception:
-                pass
-
-        # --- Stock reaction: pull a narrow window around earnings_date ---
-        try:
-            rxn_start = (last["date"] - timedelta(days=4)).strftime("%Y-%m-%d")
-            rxn_end = (last["date"] + timedelta(days=14)).strftime("%Y-%m-%d")
-            df_rxn = blp.bdh(bt, "PX_LAST", rxn_start, rxn_end)
-            tbl = df_rxn.to_native()
-            px_by_date = {}
-            for d, v in zip(tbl.column("date").to_pylist(),
-                            tbl.column("value").to_pylist()):
+            # --- EPS FX conversion (e.g. TSM: TWD/ADR → USD/ADR) ---
+            # Actual and consensus are both in native FX, so surprise % is unaffected.
+            # yoy is a pre-computed string ratio in native FX, also unaffected.
+            if eps_fx_pair:
                 try:
-                    px_by_date[str(d)] = float(v)
-                except (ValueError, TypeError):
+                    fx_start = (last["date"] - timedelta(days=10)).strftime("%Y-%m-%d")
+                    fx_end = last["date"].strftime("%Y-%m-%d")
+                    df_fx = blp.bdh(eps_fx_pair, "PX_LAST", fx_start, fx_end)
+                    tbl = df_fx.to_native()
+                    fx_vals = [float(v) for v in tbl.column("value").to_pylist()]
+                    rate = fx_vals[-1] if fx_vals else None
+                    if rate and rate > 0:
+                        for m in record["metrics"]:
+                            if m["name"] == "EPS":
+                                if m["actual"] is not None:
+                                    m["actual"] = m["actual"] / rate
+                                if m["consensus"] is not None:
+                                    m["consensus"] = m["consensus"] / rate
+                except Exception:
                     pass
-            px_dates = sorted(px_by_date.keys())
 
-            pre_day, pre_px = _price_on_or_before(
-                px_by_date, px_dates, last["date"] - timedelta(days=1))
-            d1_day, d1_px = _price_on_or_after(
-                px_by_date, px_dates, last["date"])
-            # "1W" = 5 trading days after the earnings-day close
-            w1_px = None
-            if d1_day is not None:
-                idx = px_dates.index(d1_day)
-                if idx + 5 < len(px_dates):
-                    w1_px = px_by_date[px_dates[idx + 5]]
-                    w1_day = px_dates[idx + 5]
+            # --- Stock reaction: pull a narrow window around earnings_date ---
+            try:
+                rxn_start = (last["date"] - timedelta(days=4)).strftime("%Y-%m-%d")
+                rxn_end = (last["date"] + timedelta(days=14)).strftime("%Y-%m-%d")
+                df_rxn = blp.bdh(bt, "PX_LAST", rxn_start, rxn_end)
+                tbl = df_rxn.to_native()
+                px_by_date = {}
+                for d, v in zip(tbl.column("date").to_pylist(),
+                                tbl.column("value").to_pylist()):
+                    try:
+                        px_by_date[str(d)] = float(v)
+                    except (ValueError, TypeError):
+                        pass
+                px_dates = sorted(px_by_date.keys())
+
+                pre_day, pre_px = _price_on_or_before(
+                    px_by_date, px_dates, last["date"] - timedelta(days=1))
+                d1_day, d1_px = _price_on_or_after(
+                    px_by_date, px_dates, last["date"])
+                # "1W" = 5 trading days after the earnings-day close
+                w1_px = None
+                if d1_day is not None:
+                    idx = px_dates.index(d1_day)
+                    if idx + 5 < len(px_dates):
+                        w1_px = px_by_date[px_dates[idx + 5]]
+                        w1_day = px_dates[idx + 5]
+                    else:
+                        w1_day = None
                 else:
                     w1_day = None
-            else:
-                w1_day = None
 
-            if pre_px and d1_px:
-                record["stock"]["d1"] = round((d1_px - pre_px) / pre_px, 4)
-            if pre_px and w1_px:
-                record["stock"]["w1"] = round((w1_px - pre_px) / pre_px, 4)
+                if pre_px and d1_px:
+                    record["stock"]["d1"] = round((d1_px - pre_px) / pre_px, 4)
+                if pre_px and w1_px:
+                    record["stock"]["w1"] = round((w1_px - pre_px) / pre_px, 4)
 
-            # Relative vs SPX over the same window
-            if pre_px and w1_px and spx_dates_sorted:
-                _, spx_pre = _price_on_or_before(
-                    spx_by_date, spx_dates_sorted, last["date"] - timedelta(days=1))
-                spx_post = spx_by_date.get(w1_day) if w1_day else None
-                if spx_pre and spx_post:
-                    spx_w1 = (spx_post - spx_pre) / spx_pre
-                    record["stock"]["w1_vs_spx"] = round(
-                        record["stock"]["w1"] - spx_w1, 4)
-        except Exception:
-            pass
+                # Relative vs SPX over the same window
+                if pre_px and w1_px and spx_dates_sorted:
+                    _, spx_pre = _price_on_or_before(
+                        spx_by_date, spx_dates_sorted, last["date"] - timedelta(days=1))
+                    spx_post = spx_by_date.get(w1_day) if w1_day else None
+                    if spx_pre and spx_post:
+                        spx_w1 = (spx_post - spx_pre) / spx_pre
+                        record["stock"]["w1_vs_spx"] = round(
+                            record["stock"]["w1"] - spx_w1, 4)
+            except Exception:
+                pass
 
-        # --- Current-FY EPS consensus delta (day-before -> 7 days after).
-        # BDH does not accept "NTM" as a period override; "1BF" (current FY)
-        # is the closest stable equivalent that BDH historical supports.
-        try:
-            ntm_ovr = [("BEST_FPERIOD_OVERRIDE", "1BF")]
-            if short in USD_OVERRIDE_TICKERS and not skip_usd_est:
-                ntm_ovr.append(("EQY_FUND_CRNCY", "USD"))
-            ntm_start = (last["date"] - timedelta(days=4)).strftime("%Y-%m-%d")
-            ntm_end = (last["date"] + timedelta(days=14)).strftime("%Y-%m-%d")
-            df_ntm = blp.bdh(bt, "BEST_EPS", ntm_start, ntm_end,
-                             periodicitySelection="DAILY", overrides=ntm_ovr)
-            tbl = df_ntm.to_native()
-            ntm_by_date = {}
-            for d, v in zip(tbl.column("date").to_pylist(),
-                            tbl.column("value").to_pylist()):
-                try:
-                    ntm_by_date[str(d)] = float(v)
-                except (ValueError, TypeError):
-                    pass
-            ntm_dates = sorted(ntm_by_date.keys())
+            # --- Current-FY EPS consensus delta (day-before -> 7 days after).
+            # BDH does not accept "NTM" as a period override; "1BF" (current FY)
+            # is the closest stable equivalent that BDH historical supports.
+            try:
+                ntm_ovr = [("BEST_FPERIOD_OVERRIDE", "1BF")]
+                if short in USD_OVERRIDE_TICKERS and not skip_usd_est:
+                    ntm_ovr.append(("EQY_FUND_CRNCY", "USD"))
+                ntm_start = (last["date"] - timedelta(days=4)).strftime("%Y-%m-%d")
+                ntm_end = (last["date"] + timedelta(days=14)).strftime("%Y-%m-%d")
+                df_ntm = blp.bdh(bt, "BEST_EPS", ntm_start, ntm_end,
+                                 periodicitySelection="DAILY", overrides=ntm_ovr)
+                tbl = df_ntm.to_native()
+                ntm_by_date = {}
+                for d, v in zip(tbl.column("date").to_pylist(),
+                                tbl.column("value").to_pylist()):
+                    try:
+                        ntm_by_date[str(d)] = float(v)
+                    except (ValueError, TypeError):
+                        pass
+                ntm_dates = sorted(ntm_by_date.keys())
 
-            # Pre: latest trading day <= earnings_date - 1 day
-            _, ntm_pre = _price_on_or_before(
-                ntm_by_date, ntm_dates, last["date"] - timedelta(days=1))
-            # Post: earliest trading day >= earnings_date + 7 days
-            _, ntm_post = _price_on_or_after(
-                ntm_by_date, ntm_dates, last["date"] + timedelta(days=7))
-            if ntm_pre and ntm_post and ntm_pre != 0:
-                record["ntm_eps_chg"] = round((ntm_post - ntm_pre) / ntm_pre, 4)
-        except Exception:
-            pass
+                # Pre: latest trading day <= earnings_date - 1 day
+                _, ntm_pre = _price_on_or_before(
+                    ntm_by_date, ntm_dates, last["date"] - timedelta(days=1))
+                # Post: earliest trading day >= earnings_date + 7 days
+                _, ntm_post = _price_on_or_after(
+                    ntm_by_date, ntm_dates, last["date"] + timedelta(days=7))
+                if ntm_pre and ntm_post and ntm_pre != 0:
+                    record["ntm_eps_chg"] = round((ntm_post - ntm_pre) / ntm_pre, 4)
+            except Exception:
+                pass
 
-        reported.append(record)
+            reported.append(record)
 
     reported.sort(key=lambda r: r["earnings_date"], reverse=True)
     return reported

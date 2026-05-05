@@ -79,19 +79,19 @@
         },
         {
           "name": "Revenue",
-          "consensus": 10590.157285180572,
+          "consensus": 10592.541220423413,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 9545.433001245328,
+          "prior_year": 9548.988667496886,
           "yoy": "+11%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 5597.89562948467,
+          "consensus": 5599.390737116765,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 5051.859628180039,
+          "prior_year": 5053.356894977169,
           "yoy": "+11%",
           "vs_guide": "n/a"
         }
@@ -235,19 +235,19 @@
         },
         {
           "name": "Revenue",
-          "consensus": 8844.633872976337,
+          "consensus": 8851.166110954888,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 6478.170527189704,
-          "yoy": "+37%",
+          "prior_year": 6484.628891656288,
+          "yoy": "+36%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 7428.465589670917,
+          "consensus": 7433.98762399622,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 5256.598264840182,
+          "prior_year": 5262.768949771688,
           "yoy": "+41%",
           "vs_guide": "n/a"
         }
@@ -331,19 +331,19 @@
         },
         {
           "name": "Revenue",
-          "consensus": 19002.31688390757,
+          "consensus": 19011.898650892486,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 15127.581674277015,
+          "prior_year": 15138.729375951294,
           "yoy": "+26%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 4007.272123287671,
+          "consensus": 4010.4458904109583,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 3055.7549771689496,
+          "prior_year": 3058.0702054794515,
           "yoy": "+31%",
           "vs_guide": "n/a"
         }
@@ -427,19 +427,19 @@
         },
         {
           "name": "Revenue",
-          "consensus": 61127.29201264489,
+          "consensus": 61150.85727081138,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 54079.053264409406,
+          "prior_year": 54096.17420522098,
           "yoy": "+13%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 11574.354136986301,
+          "consensus": 11580.328767123287,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 9436.84761904762,
+          "prior_year": 9442.642857142857,
           "yoy": "+23%",
           "vs_guide": "n/a"
         }
@@ -514,10 +514,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 3052.2991591875298,
+          "consensus": 3054.395843174303,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2365.0282217546273,
+          "prior_year": 2366.8011766221493,
           "yoy": "+29%",
           "vs_guide": "n/a"
         }
@@ -601,10 +601,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 398537.43511436187,
+          "consensus": 398854.3704363727,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 255797.17533048513,
+          "prior_year": 256215.83571734533,
           "yoy": "+56%",
           "vs_guide": "n/a"
         },
@@ -688,10 +688,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 3707.317199391172,
+          "consensus": 3708.5249112125825,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 3277.9949119373778,
+          "prior_year": 3279.1603718199617,
           "yoy": "+13%",
           "vs_guide": "n/a"
         }
@@ -766,10 +766,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 314650.78858447494,
+          "consensus": 314714.096803653,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 291499.2525572972,
+          "prior_year": 291562.9308271238,
           "yoy": "+7.9%",
           "vs_guide": "n/a"
         }
@@ -778,9 +778,9 @@
     {
       "ticker": "AVGO",
       "group": "Portfolio",
-      "earnings_date": "2026-06-05",
-      "earnings_time": "None",
-      "date_confirmed": false,
+      "earnings_date": "2026-06-03",
+      "earnings_time": "Aft-mkt",
+      "date_confirmed": true,
       "revisions_4wk": {
         "up": 2,
         "down": 1
@@ -853,10 +853,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 132623.40285631013,
+          "consensus": 132778.86814339843,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 83918.3103408895,
+          "prior_year": 84029.60124736345,
           "yoy": "+58%",
           "vs_guide": "n/a"
         },
@@ -949,10 +949,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 153787.64306588392,
+          "consensus": 153966.1366601435,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 86440.3816336456,
+          "prior_year": 86637.81574107312,
           "yoy": "+78%",
           "vs_guide": "n/a"
         },
@@ -1036,10 +1036,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 108118.34158572022,
+          "consensus": 108162.62391033625,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 97540.77684662906,
+          "prior_year": 97561.88289014235,
           "yoy": "+11%",
           "vs_guide": "n/a"
         }
@@ -1123,10 +1123,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 200758.6945205479,
+          "consensus": 200779.9326484018,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 188897.43898401826,
+          "prior_year": 188935.72831050225,
           "yoy": "+6.3%",
           "vs_guide": "n/a"
         }
@@ -1288,10 +1288,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 50227.56696212731,
+          "consensus": 50240.41498791296,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 44236.29076781397,
+          "prior_year": 44254.54023253136,
           "yoy": "+14%",
           "vs_guide": "n/a"
         }
@@ -1393,11 +1393,11 @@
         },
         {
           "name": "Revenue",
-          "consensus": 178754.15539546937,
+          "consensus": 178873.5652742149,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 134892.65475035898,
-          "yoy": "+33%",
+          "prior_year": 135013.2135706107,
+          "yoy": "+32%",
           "vs_guide": "n/a"
         },
         {
@@ -1489,10 +1489,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 7291.23105022831,
+          "consensus": 7293.6316590563165,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 6418.337709284626,
+          "prior_year": 6420.7245053272445,
           "yoy": "+14%",
           "vs_guide": "n/a"
         }
@@ -1567,10 +1567,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 64880.679163662586,
+          "consensus": 64889.99279019466,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 56926.790259552996,
+          "prior_year": 56955.00187454939,
           "yoy": "+14%",
           "vs_guide": "n/a"
         }
@@ -1663,10 +1663,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 441301.05966514454,
+          "consensus": 441512.1963470319,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 366084.6911304829,
+          "prior_year": 366288.1576034315,
           "yoy": "+21%",
           "vs_guide": "n/a"
         },
@@ -1750,10 +1750,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 13430.886301369861,
+          "consensus": 13433.901065449008,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 12316.741704718415,
+          "prior_year": 12319.813546423135,
           "yoy": "+9.0%",
           "vs_guide": "n/a"
         }
@@ -1828,10 +1828,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 48573.087123287674,
+          "consensus": 48580.255890410954,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 45449.62981774866,
+          "prior_year": 45458.90172721858,
           "yoy": "+6.9%",
           "vs_guide": "n/a"
         }
@@ -1906,10 +1906,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 79851.88744292237,
+          "consensus": 79862.36301369862,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 76712.66807804068,
+          "prior_year": 76720.30396430053,
           "yoy": "+4.1%",
           "vs_guide": "n/a"
         }
@@ -1984,11 +1984,11 @@
         },
         {
           "name": "Revenue",
-          "consensus": 16035.209962640096,
+          "consensus": 16045.455790784557,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 13421.524927355747,
-          "yoy": "+19%",
+          "prior_year": 13427.098381070982,
+          "yoy": "+20%",
           "vs_guide": "n/a"
         }
       ]
@@ -2062,10 +2062,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 18368.921544209214,
+          "consensus": 18371.978829389787,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 17509.168742216687,
+          "prior_year": 17511.16313823163,
           "yoy": "+4.9%",
           "vs_guide": "n/a"
         }
@@ -2140,10 +2140,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 82423.33940990515,
+          "consensus": 82434.92992623812,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 80872.38100359724,
+          "prior_year": 80872.85293048945,
           "yoy": "+1.9%",
           "vs_guide": "n/a"
         }
@@ -2218,10 +2218,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 448569.7051816557,
+          "consensus": 448605.0011911852,
           "guidance_low": 440000.0,
           "guidance_high": 440000.0,
-          "prior_year": 446711.17488584475,
+          "prior_year": 446700.7260273972,
           "yoy": "+0.4%",
           "vs_guide": "above"
         }
@@ -2296,10 +2296,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 48210.058870698296,
+          "consensus": 48223.369328433015,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 43117.73136635055,
+          "prior_year": 43132.612363891814,
           "yoy": "+12%",
           "vs_guide": "n/a"
         }
@@ -2374,10 +2374,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 30283.604795741463,
+          "consensus": 30290.880545991746,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 27613.311348374966,
+          "prior_year": 27620.647864625298,
           "yoy": "+9.7%",
           "vs_guide": "n/a"
         }
@@ -2470,19 +2470,19 @@
         },
         {
           "name": "Revenue",
-          "consensus": 268249.97197489894,
+          "consensus": 268380.3930295834,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 217323.43183546234,
+          "prior_year": 217467.64067097506,
           "yoy": "+23%",
           "vs_guide": "n/a"
         },
         {
           "name": "Op. Income",
-          "consensus": 94382.11672435263,
+          "consensus": 94422.69330527761,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 84767.75621668127,
+          "prior_year": 84786.77225183883,
           "yoy": "+11%",
           "vs_guide": "n/a"
         },
@@ -2575,19 +2575,19 @@
         },
         {
           "name": "Revenue",
-          "consensus": 29774.205221361924,
+          "consensus": 29792.487790351403,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 22539.967896030907,
+          "prior_year": 22560.578679311555,
           "yoy": "+32%",
           "vs_guide": "n/a"
         },
         {
           "name": "EBITDA",
-          "consensus": 3332.0631382316315,
+          "consensus": 3334.6226650062267,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2512.882733228653,
+          "prior_year": 2514.964887108127,
           "yoy": "+33%",
           "vs_guide": "n/a"
         }
@@ -2662,10 +2662,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 2778.1375342465753,
+          "consensus": 2779.1983561643833,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 2320.611089367254,
+          "prior_year": 2322.14390084801,
           "yoy": "+20%",
           "vs_guide": "n/a"
         }
@@ -2740,10 +2740,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 5418.181843879104,
+          "consensus": 5421.250706675364,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 4698.920422700588,
+          "prior_year": 4700.325909980431,
           "yoy": "+15%",
           "vs_guide": "n/a"
         }
@@ -2827,10 +2827,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 29140.64951743462,
+          "consensus": 29159.953767123287,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 22429.46571572484,
+          "prior_year": 22442.790191580407,
           "yoy": "+30%",
           "vs_guide": "n/a"
         },
@@ -2932,19 +2932,19 @@
         },
         {
           "name": "Revenue",
-          "consensus": 374185.5051015588,
+          "consensus": 374333.0476617855,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 320975.16505650233,
+          "prior_year": 321111.4322757167,
           "yoy": "+17%",
           "vs_guide": "n/a"
         },
         {
           "name": "Op. Income",
-          "consensus": 174125.95015806114,
+          "consensus": 174194.33598524766,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 148800.69188619597,
+          "prior_year": 148875.47124581737,
           "yoy": "+17%",
           "vs_guide": "n/a"
         },
@@ -3046,19 +3046,19 @@
         },
         {
           "name": "Revenue",
-          "consensus": 854916.6086264179,
+          "consensus": 855203.3278373521,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 750319.137656635,
+          "prior_year": 750605.6284815891,
           "yoy": "+14%",
           "vs_guide": "n/a"
         },
         {
           "name": "Op. Income",
-          "consensus": 111317.92874440146,
+          "consensus": 111389.74254440585,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 87678.07220757935,
+          "prior_year": 87739.21305959711,
           "yoy": "+27%",
           "vs_guide": "n/a"
         },
@@ -3142,10 +3142,10 @@
         },
         {
           "name": "Revenue",
-          "consensus": 88295.28474885847,
+          "consensus": 88332.16392694064,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 70589.8779712981,
+          "prior_year": 70644.36921069797,
           "yoy": "+25%",
           "vs_guide": "n/a"
         }
@@ -4157,6 +4157,42 @@
       "ntm_eps_chg": 0.0549
     },
     {
+      "ticker": "CVNA",
+      "group": "Portfolio",
+      "earnings_date": "2026-02-18",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 4.22,
+          "consensus": 1.159,
+          "surprise": 2.6410698878343397,
+          "yoy": "+654%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 5603.0,
+          "consensus": 5265.84,
+          "surprise": 0.06402777144767023,
+          "yoy": "+58%"
+        },
+        {
+          "name": "EBITDA",
+          "actual": 510.0,
+          "consensus": 535.682,
+          "surprise": -0.047942622675393266,
+          "yoy": "+45%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0302,
+        "w1": -0.0457,
+        "w1_vs_spx": -0.0607
+      },
+      "ntm_eps_chg": 0.0176
+    },
+    {
       "ticker": "DASH",
       "group": "Watchlist",
       "earnings_date": "2026-02-18",
@@ -4193,6 +4229,35 @@
       "ntm_eps_chg": -0.0742
     },
     {
+      "ticker": "BKNG",
+      "group": "Watchlist",
+      "earnings_date": "2026-02-18",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 1.952,
+          "consensus": 1.954,
+          "surprise": -0.0010235414534288648,
+          "yoy": "+17%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 6349.0,
+          "consensus": 6128.063,
+          "surprise": 0.03605331733697906,
+          "yoy": "+16%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0314,
+        "w1": 0.0055,
+        "w1_vs_spx": -0.0095
+      },
+      "ntm_eps_chg": 0.003
+    },
+    {
       "ticker": "APP",
       "group": "Portfolio",
       "earnings_date": "2026-02-11",
@@ -4227,6 +4292,64 @@
         "w1_vs_spx": -0.1173
       },
       "ntm_eps_chg": 0.0471
+    },
+    {
+      "ticker": "HLT",
+      "group": "Watchlist",
+      "earnings_date": "2026-02-11",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 2.08,
+          "consensus": 2.018,
+          "surprise": 0.03072348860257695,
+          "yoy": "+18%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 3087.0,
+          "consensus": 2988.867,
+          "surprise": 0.03283284267918238,
+          "yoy": "+11%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0044,
+        "w1": -0.0339,
+        "w1_vs_spx": -0.0224
+      },
+      "ntm_eps_chg": -0.0033
+    },
+    {
+      "ticker": "HOOD",
+      "group": "Watchlist",
+      "earnings_date": "2026-02-10",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 0.66,
+          "consensus": 0.641,
+          "surprise": 0.029641185647425922,
+          "yoy": "-35%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 1283.0,
+          "consensus": 1350.8,
+          "surprise": -0.05019247853124072,
+          "yoy": "+27%"
+        }
+      ],
+      "stock": {
+        "d1": -0.0111,
+        "w1": -0.1311,
+        "w1_vs_spx": -0.1191
+      },
+      "ntm_eps_chg": -0.0468
     },
     {
       "ticker": "NET",
@@ -4280,6 +4403,92 @@
       "ntm_eps_chg": 0.0092
     },
     {
+      "ticker": "AMZN",
+      "group": "Portfolio",
+      "earnings_date": "2026-02-05",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 1.95,
+          "consensus": 1.958,
+          "surprise": -0.004085801838610831,
+          "yoy": "+4.8%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 213386.0,
+          "consensus": 211486.362,
+          "surprise": 0.0089823191530431,
+          "yoy": "+14%"
+        },
+        {
+          "name": "Op. Income",
+          "actual": 24977.0,
+          "consensus": 24826.542,
+          "surprise": 0.00606036877789902,
+          "yoy": "+18%"
+        },
+        {
+          "name": "Capex",
+          "actual": null,
+          "consensus": 34649.4,
+          "surprise": null,
+          "yoy": null
+        }
+      ],
+      "stock": {
+        "d1": -0.0442,
+        "w1": -0.1433,
+        "w1_vs_spx": -0.136
+      },
+      "ntm_eps_chg": -0.0313
+    },
+    {
+      "ticker": "GOOG",
+      "group": "Watchlist",
+      "earnings_date": "2026-02-04",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 2.82,
+          "consensus": 2.645,
+          "surprise": 0.06616257088846875,
+          "yoy": "+31%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 97231.0,
+          "consensus": 95166.207,
+          "surprise": 0.0216967037469509,
+          "yoy": "+19%"
+        },
+        {
+          "name": "Op. Margin",
+          "actual": 31.5687,
+          "consensus": null,
+          "surprise": null,
+          "yoy": "-54bps"
+        },
+        {
+          "name": "Capex",
+          "actual": null,
+          "consensus": 28262.865,
+          "surprise": null,
+          "yoy": null
+        }
+      ],
+      "stock": {
+        "d1": -0.0216,
+        "w1": -0.0862,
+        "w1_vs_spx": -0.0896
+      },
+      "ntm_eps_chg": 0.0162
+    },
+    {
       "ticker": "UBER",
       "group": "Watchlist",
       "earnings_date": "2026-02-04",
@@ -4316,6 +4525,35 @@
       "ntm_eps_chg": -0.0589
     },
     {
+      "ticker": "LLY",
+      "group": "Watchlist",
+      "earnings_date": "2026-02-04",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 7.54,
+          "consensus": 6.733,
+          "surprise": 0.11985741868409333,
+          "yoy": "+42%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 19292.0,
+          "consensus": 18007.913,
+          "surprise": 0.07130681939656192,
+          "yoy": "+43%"
+        }
+      ],
+      "stock": {
+        "d1": 0.1033,
+        "w1": 0.0117,
+        "w1_vs_spx": 0.0083
+      },
+      "ntm_eps_chg": 0.034
+    },
+    {
       "ticker": "TDG",
       "group": "Watchlist",
       "earnings_date": "2026-02-03",
@@ -4350,6 +4588,605 @@
         "w1_vs_spx": -0.0811
       },
       "ntm_eps_chg": -0.0032
+    },
+    {
+      "ticker": "AON",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-30",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 4.85,
+          "consensus": 4.742,
+          "surprise": 0.022775200337410303,
+          "yoy": "+9.7%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 4300.0,
+          "consensus": 4379.55,
+          "surprise": -0.018163966617574905,
+          "yoy": "+3.7%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0195,
+        "w1": -0.0027,
+        "w1_vs_spx": 0.0026
+      },
+      "ntm_eps_chg": -0.0001
+    },
+    {
+      "ticker": "V",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-29",
+      "earnings_time": "",
+      "fiscal_period": "1Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 3.17,
+          "consensus": 3.137,
+          "surprise": 0.010519604717883302,
+          "yoy": "+15%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 10901.0,
+          "consensus": 10683.8,
+          "surprise": 0.020329845186169784,
+          "yoy": "+15%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0147,
+        "w1": 0.0066,
+        "w1_vs_spx": 0.0323
+      },
+      "ntm_eps_chg": 0.0074
+    },
+    {
+      "ticker": "BX",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-29",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 1.75,
+          "consensus": 1.542,
+          "surprise": 0.13488975356679633,
+          "yoy": "+3.6%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 3935.973,
+          "consensus": 3683.9,
+          "surprise": 0.06842558158473354,
+          "yoy": "-5.1%"
+        }
+      ],
+      "stock": {
+        "d1": -0.0262,
+        "w1": -0.136,
+        "w1_vs_spx": -0.1103
+      },
+      "ntm_eps_chg": 0.0055
+    },
+    {
+      "ticker": "TMO",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-29",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 6.57,
+          "consensus": 6.447,
+          "surprise": 0.019078641228478396,
+          "yoy": "+7.7%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 12215.0,
+          "consensus": 11949.857,
+          "surprise": 0.022187964257647606,
+          "yoy": "+7.2%"
+        }
+      ],
+      "stock": {
+        "d1": -0.0261,
+        "w1": -0.108,
+        "w1_vs_spx": -0.0823
+      },
+      "ntm_eps_chg": 0.0012
+    },
+    {
+      "ticker": "META",
+      "group": "Portfolio",
+      "earnings_date": "2026-01-28",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 8.88,
+          "consensus": 8.186,
+          "surprise": 0.08477889078915231,
+          "yoy": "+11%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 59893.0,
+          "consensus": 58416.019,
+          "surprise": 0.025283835243890888,
+          "yoy": "+24%"
+        },
+        {
+          "name": "Op. Income",
+          "actual": 24745.0,
+          "consensus": 23926.804,
+          "surprise": 0.03419579146466866,
+          "yoy": "+5.9%"
+        },
+        {
+          "name": "Capex",
+          "actual": null,
+          "consensus": 21930.571,
+          "surprise": null,
+          "yoy": null
+        }
+      ],
+      "stock": {
+        "d1": -0.0063,
+        "w1": -0.0059,
+        "w1_vs_spx": 0.0078
+      },
+      "ntm_eps_chg": -0.0083
+    },
+    {
+      "ticker": "PGR",
+      "group": "Portfolio",
+      "earnings_date": "2026-01-28",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 4.6734,
+          "consensus": null,
+          "surprise": null,
+          "yoy": "+15%"
+        },
+        {
+          "name": "Net Premiums",
+          "actual": null,
+          "consensus": null,
+          "surprise": null,
+          "yoy": null
+        },
+        {
+          "name": "Combined Ratio",
+          "actual": null,
+          "consensus": null,
+          "surprise": null,
+          "yoy": null
+        }
+      ],
+      "stock": {
+        "d1": 0.0224,
+        "w1": -0.0122,
+        "w1_vs_spx": 0.0015
+      },
+      "ntm_eps_chg": -0.003
+    },
+    {
+      "ticker": "FICO",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-28",
+      "earnings_time": "",
+      "fiscal_period": "1Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 7.33,
+          "consensus": 7.087,
+          "surprise": 0.034288133201636845,
+          "yoy": "+27%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 511.959,
+          "consensus": 501.35,
+          "surprise": 0.02116086566271064,
+          "yoy": "+16%"
+        }
+      ],
+      "stock": {
+        "d1": -0.0125,
+        "w1": -0.1023,
+        "w1_vs_spx": -0.0886
+      },
+      "ntm_eps_chg": 0.0281
+    },
+    {
+      "ticker": "LRCX",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-28",
+      "earnings_time": "",
+      "fiscal_period": "2Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 1.27,
+          "consensus": 1.175,
+          "surprise": 0.08085106382978721,
+          "yoy": "+40%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 5344.791,
+          "consensus": 5241.379,
+          "surprise": 0.01972992222085071,
+          "yoy": "+22%"
+        },
+        {
+          "name": "Gross Margin",
+          "actual": 49.6027,
+          "consensus": 48.596,
+          "surprise": 0.0207156967651659,
+          "yoy": "+223bps"
+        }
+      ],
+      "stock": {
+        "d1": 0.0047,
+        "w1": -0.1203,
+        "w1_vs_spx": -0.1066
+      },
+      "ntm_eps_chg": 0.1303
+    },
+    {
+      "ticker": "MSFT",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-28",
+      "earnings_time": "",
+      "fiscal_period": "2Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 4.14,
+          "consensus": 3.922,
+          "surprise": 0.055583885772564894,
+          "yoy": "+28%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 81273.0,
+          "consensus": 80305.711,
+          "surprise": 0.01204508356821602,
+          "yoy": "+17%"
+        },
+        {
+          "name": "Op. Income",
+          "actual": 38275.0,
+          "consensus": 36530.829,
+          "surprise": 0.047745179831533584,
+          "yoy": "+21%"
+        },
+        {
+          "name": "Capex",
+          "actual": null,
+          "consensus": 23778.345,
+          "surprise": null,
+          "yoy": null
+        }
+      ],
+      "stock": {
+        "d1": 0.0022,
+        "w1": -0.1381,
+        "w1_vs_spx": -0.1244
+      },
+      "ntm_eps_chg": 0.0219
+    },
+    {
+      "ticker": "TSLA",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-28",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 0.5,
+          "consensus": 0.447,
+          "surprise": 0.11856823266219237,
+          "yoy": "-32%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 24901.0,
+          "consensus": 25111.412,
+          "surprise": -0.008379138536694005,
+          "yoy": "-3.1%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0013,
+        "w1": -0.0578,
+        "w1_vs_spx": -0.0441
+      },
+      "ntm_eps_chg": -0.0526
+    },
+    {
+      "ticker": "HCA",
+      "group": "Portfolio",
+      "earnings_date": "2026-01-27",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 8.01,
+          "consensus": 7.445,
+          "surprise": 0.07588985896574875,
+          "yoy": "+29%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 19513.0,
+          "consensus": 19678.75,
+          "surprise": -0.008422791081750619,
+          "yoy": "+6.7%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0708,
+        "w1": 0.0568,
+        "w1_vs_spx": 0.0615
+      },
+      "ntm_eps_chg": 0.0271
+    },
+    {
+      "ticker": "UNH",
+      "group": "Portfolio",
+      "earnings_date": "2026-01-27",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 2.11,
+          "consensus": 2.102,
+          "surprise": 0.0038058991436726963,
+          "yoy": "-69%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 113215.0,
+          "consensus": 113868.591,
+          "surprise": -0.005739870795450523,
+          "yoy": "+12%"
+        }
+      ],
+      "stock": {
+        "d1": -0.1961,
+        "w1": -0.1918,
+        "w1_vs_spx": -0.1871
+      },
+      "ntm_eps_chg": 0.0054
+    },
+    {
+      "ticker": "MC",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-27",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": null,
+          "consensus": 9.97,
+          "surprise": null,
+          "yoy": null
+        },
+        {
+          "name": "Revenue",
+          "actual": 22717.0,
+          "consensus": 22585.818,
+          "surprise": 0.005808158021994187,
+          "yoy": "-5.1%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0022,
+        "w1": -0.1003,
+        "w1_vs_spx": -0.0956
+      },
+      "ntm_eps_chg": -0.0169
+    },
+    {
+      "ticker": "GE",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-22",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 1.57,
+          "consensus": 1.435,
+          "surprise": 0.09407665505226481,
+          "yoy": "+19%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 11865.0,
+          "consensus": 11240.5,
+          "surprise": 0.05555802677816823,
+          "yoy": "+20%"
+        },
+        {
+          "name": "Op. Margin",
+          "actual": 18.1411,
+          "consensus": null,
+          "surprise": null,
+          "yoy": "-39bps"
+        }
+      ],
+      "stock": {
+        "d1": -0.0738,
+        "w1": -0.0617,
+        "w1_vs_spx": -0.0753
+      },
+      "ntm_eps_chg": 0.0455
+    },
+    {
+      "ticker": "COF",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-22",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 3.86,
+          "consensus": 4.149,
+          "surprise": -0.0696553386358159,
+          "yoy": "+25%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 15583.0,
+          "consensus": 15505.833,
+          "surprise": 0.004976643305780441,
+          "yoy": "+53%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0176,
+        "w1": -0.0506,
+        "w1_vs_spx": -0.0642
+      },
+      "ntm_eps_chg": -0.0219
+    },
+    {
+      "ticker": "IBKR",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-20",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 0.65,
+          "consensus": 0.593,
+          "surprise": 0.09612141652613837,
+          "yoy": "+28%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 1670.0,
+          "consensus": 1641.143,
+          "surprise": 0.017583476881661116,
+          "yoy": "+17%"
+        }
+      ],
+      "stock": {
+        "d1": -0.0252,
+        "w1": 0.0289,
+        "w1_vs_spx": 0.0233
+      },
+      "ntm_eps_chg": 0.0536
+    },
+    {
+      "ticker": "TSM",
+      "group": "Portfolio",
+      "earnings_date": "2026-01-15",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 3.0873970867637746,
+          "consensus": 2.8689360354654845,
+          "surprise": 0.07614706239445482,
+          "yoy": "+35%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 33697.4647,
+          "consensus": 32606.542,
+          "surprise": 0.03345717249010936,
+          "yoy": "+26%"
+        },
+        {
+          "name": "Gross Margin",
+          "actual": 62.326,
+          "consensus": 60.614,
+          "surprise": 0.028244299996700487,
+          "yoy": "+333bps"
+        },
+        {
+          "name": "Op. Margin",
+          "actual": 54.0028,
+          "consensus": null,
+          "surprise": null,
+          "yoy": "+499bps"
+        },
+        {
+          "name": "Capex",
+          "actual": null,
+          "consensus": 12160.071,
+          "surprise": null,
+          "yoy": null
+        }
+      ],
+      "stock": {
+        "d1": 0.0444,
+        "w1": 0.0237,
+        "w1_vs_spx": 0.0253
+      },
+      "ntm_eps_chg": 0.0309
+    },
+    {
+      "ticker": "JPM",
+      "group": "Portfolio",
+      "earnings_date": "2026-01-13",
+      "earnings_time": "",
+      "fiscal_period": "4Q25",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 5.23,
+          "consensus": 5.005,
+          "surprise": 0.04495504495504506,
+          "yoy": "+8.7%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 46767.0,
+          "consensus": 46352.188,
+          "surprise": 0.008949135259806895,
+          "yoy": "+6.9%"
+        },
+        {
+          "name": "NII",
+          "actual": 24995.0,
+          "consensus": null,
+          "surprise": null,
+          "yoy": "+7.0%"
+        }
+      ],
+      "stock": {
+        "d1": -0.0419,
+        "w1": -0.0692,
+        "w1_vs_spx": -0.0546
+      },
+      "ntm_eps_chg": 0.0144
     }
   ]
 }
