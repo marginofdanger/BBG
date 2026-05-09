@@ -12,7 +12,7 @@ PGR,Portfolio,,Financials,Insurance,Adj,Dec,194.0,,,,-9.4%,-3.7%,-27.5%
 CVNA,Portfolio,,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,77.94,,,,-7.7%,-5.3%,+45.3%
 APP,Portfolio,,Information Technology,Software & Services,Adj,Dec,468.55,,,,-30.5%,+1.8%,+42.6%
 VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,Adj,Jan,166.34,,,,-25.5%,-9.9%,-29.8%
-FICO,Watchlist,,Information Technology,Software & Services,Adj,Sep,1126.0,,,,-33.4%,-18.0%,-46.1%
+FICO,Portfolio,,Information Technology,Software & Services,Adj,Sep,1126.0,,,,-33.4%,-18.0%,-46.1%
 GOOG,Watchlist,,Communication Services,Media & Entertainment,GAAP,Dec,397.05,,,,+26.5%,+22.4%,+157.2%
 MU,Watchlist,,Information Technology,Semiconductors & Semiconductor,GAAP,Aug,746.81,,,,+161.7%,+94.7%,+769.8%
 HOOD,Watchlist,,Financials,Financial Services,Adj,Dec,77.03,,,,-31.9%,-11.0%,+41.0%
@@ -35,6 +35,7 @@ TMO,Watchlist,,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,465.0,,,,-19
 COF,Watchlist,,Financials,Financial Services,Adj,Dec,189.48,,,,-21.8%,-14.9%,+0.9%
 AON,Watchlist,,Financials,Insurance,Adj,Dec,312.79,,,,-11.4%,+0.8%,-11.7%
 MC,Watchlist,,Consumer Discretionary,Consumer Durables & Apparel,GAAP,Dec,472.7,,,,-26.7%,-11.7%,-4.6%
+STX,Watchlist,,Information Technology,Technology Hardware & Equipmen,Adj,Jun,782.64,,,,+184.2%,+84.2%,+717.7%
 SPX,Indices,Indices,,,Adj,Dec,7398.93,,,,+8.1%,+6.6%,+30.7%
 QQQ,Indices,Indices,,,GAAP,Dec,711.23,,,,+15.8%,+15.8%,+45.8%
 IWM,Indices,Indices,,,Adj,Dec,284.17,,,,+15.4%,+6.5%,+41.5%
@@ -184,7 +185,6 @@ TXN,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GA
 ADI,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Oct,416.52,,,,+53.6%,+29.0%,+100.7%
 005930,Extended,Technology,Information Technology,Technology Hardware & Equipmen,GAAP,Dec,276500.0,,,,+129.7%,+69.1%,+404.6%
 000660,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,1681000.0,,,,+157.8%,+93.4%,+784.3%
-STX,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,782.64,,,,+184.2%,+84.2%,+717.7%
 WDC,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,480.0,,,,+178.6%,+67.8%,+988.4%
 SNDK,Extended,Technology,Information Technology,Technology Hardware & Equipmen,GAAP,Jun,1562.34,,,,+558.2%,+167.8%,+4039.7%
 CLS,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Dec,375.55,,,,+27.0%,+17.6%,+303.6%

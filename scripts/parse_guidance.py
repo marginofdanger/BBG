@@ -19,7 +19,7 @@ ACTUALS_PATH = os.path.join(REPO_ROOT, "config", "actuals_overrides.json")
 TICKERS = [
     "HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR",
     "CVNA", "APP", "VEEV", "FICO", "GOOG", "MU", "HOOD", "TDG", "GE", "LRCX",
-    "DASH", "UBER", "LLY", "MSFT", "V",
+    "DASH", "UBER", "LLY", "MSFT", "V", "STX",
 ]
 
 

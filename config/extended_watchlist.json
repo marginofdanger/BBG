@@ -948,12 +948,6 @@
     "raw": "000660 KS"
   },
   {
-    "ticker": "STX",
-    "bbg": "STX US Equity",
-    "category": "Technology",
-    "raw": "STX"
-  },
-  {
     "ticker": "WDC",
     "bbg": "WDC US Equity",
     "category": "Technology",

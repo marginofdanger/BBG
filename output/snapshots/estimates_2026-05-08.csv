@@ -26,7 +26,7 @@ META,Portfolio,,Communication Services,Media & Entertainment,GAAP,Dec,EPS,CY2028
 AMZN,Portfolio,,Consumer Discretionary,Consumer Discretionary Distrib,GAAP,Dec,EPS,CY2025,6.184,7.063,+14.2%,7.102,+0.6%,7.102,+0.0%,272.68,38.4,+14.8%,+18.1%,+30.6%,+41.2%
 AMZN,Portfolio,,Consumer Discretionary,Consumer Discretionary Distrib,GAAP,Dec,EPS,CY2026,7.284,7.846,+7.7%,7.798,-0.6%,8.592,+10.2%,272.68,31.7,+18.0%,+18.1%,+30.6%,+41.2%
 AMZN,Portfolio,,Consumer Discretionary,Consumer Discretionary Distrib,GAAP,Dec,EPS,CY2027,8.968,9.546,+6.4%,9.464,-0.9%,9.923,+4.8%,272.68,27.5,+10.6%,+18.1%,+30.6%,+41.2%
-AMZN,Portfolio,,Consumer Discretionary,Consumer Discretionary Distrib,GAAP,Dec,EPS,CY2028,10.472,11.239,+7.3%,11.685,+4.0%,12.641,+8.2%,272.68,21.6,+20.7%,+18.1%,+30.6%,+41.2%
+AMZN,Portfolio,,Consumer Discretionary,Consumer Discretionary Distrib,GAAP,Dec,EPS,CY2028,10.472,11.239,+7.3%,11.685,+4.0%,12.642,+8.2%,272.68,21.6,+20.7%,+18.1%,+30.6%,+41.2%
 JPM,Portfolio,,Financials,Banks,GAAP,Dec,EPS,CY2025,18.507,20.296,+9.7%,19.774,-2.6%,19.774,+0.0%,302.1,15.3,+6.8%,-6.2%,-6.2%,+19.4%
 JPM,Portfolio,,Financials,Banks,GAAP,Dec,EPS,CY2026,19.559,21.18,+8.3%,21.317,+0.6%,22.324,+4.7%,302.1,13.5,+14.1%,-6.2%,-6.2%,+19.4%
 JPM,Portfolio,,Financials,Banks,GAAP,Dec,EPS,CY2027,21.246,22.851,+7.6%,23.039,+0.8%,23.462,+1.8%,302.1,12.9,+10.4%,-6.2%,-6.2%,+19.4%
@@ -51,10 +51,10 @@ VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,Adj,Jan,EPS,CY2025,7.
 VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,Adj,Jan,EPS,CY2026,8.057,8.449,+4.9%,8.593,+1.7%,8.869,+3.2%,166.34,18.8,+10.1%,-25.5%,-9.9%,-29.8%
 VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,Adj,Jan,EPS,CY2027,9.127,9.778,+7.1%,9.613,-1.7%,9.849,+2.5%,166.34,16.9,+7.9%,-25.5%,-9.9%,-29.8%
 VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,Adj,Jan,EPS,CY2028,,11.533,,11.316,-1.9%,11.155,-1.4%,166.34,14.9,,-25.5%,-9.9%,-29.8%
-FICO,Watchlist,,Information Technology,Software & Services,Adj,Sep,EPS,CY2025,29.225,29.52,+1.0%,29.52,+0.0%,29.52,+0.0%,1126.0,38.1,+1.0%,-33.4%,-18.0%,-46.1%
-FICO,Watchlist,,Information Technology,Software & Services,Adj,Sep,EPS,CY2026,36.263,39.807,+9.8%,41.323,+3.8%,43.062,+4.2%,1126.0,26.1,+18.7%,-33.4%,-18.0%,-46.1%
-FICO,Watchlist,,Information Technology,Software & Services,Adj,Sep,EPS,CY2027,45.587,50.218,+10.2%,52.548,+4.6%,54.242,+3.2%,1126.0,20.8,+19.0%,-33.4%,-18.0%,-46.1%
-FICO,Watchlist,,Information Technology,Software & Services,Adj,Sep,EPS,CY2028,56.346,58.781,+4.3%,62.177,+5.8%,64.932,+4.4%,1126.0,17.3,+15.2%,-33.4%,-18.0%,-46.1%
+FICO,Portfolio,,Information Technology,Software & Services,Adj,Sep,EPS,CY2025,29.225,29.52,+1.0%,29.52,+0.0%,29.52,+0.0%,1126.0,38.1,+1.0%,-33.4%,-18.0%,-46.1%
+FICO,Portfolio,,Information Technology,Software & Services,Adj,Sep,EPS,CY2026,36.263,39.807,+9.8%,41.323,+3.8%,43.062,+4.2%,1126.0,26.1,+18.7%,-33.4%,-18.0%,-46.1%
+FICO,Portfolio,,Information Technology,Software & Services,Adj,Sep,EPS,CY2027,45.587,50.218,+10.2%,52.548,+4.6%,54.242,+3.2%,1126.0,20.8,+19.0%,-33.4%,-18.0%,-46.1%
+FICO,Portfolio,,Information Technology,Software & Services,Adj,Sep,EPS,CY2028,56.346,58.781,+4.3%,62.177,+5.8%,64.932,+4.4%,1126.0,17.3,+15.2%,-33.4%,-18.0%,-46.1%
 GOOG,Watchlist,,Communication Services,Media & Entertainment,GAAP,Dec,EPS,CY2025,9.546,10.577,+10.8%,10.598,+0.2%,10.598,+0.0%,397.05,37.5,+11.0%,+26.5%,+22.4%,+157.2%
 GOOG,Watchlist,,Communication Services,Media & Entertainment,GAAP,Dec,EPS,CY2026,10.174,11.146,+9.6%,11.473,+2.9%,13.777,+20.1%,397.05,28.8,+35.4%,+26.5%,+22.4%,+157.2%
 GOOG,Watchlist,,Communication Services,Media & Entertainment,GAAP,Dec,EPS,CY2027,11.627,13.242,+13.9%,13.34,+0.7%,14.488,+8.6%,397.05,27.4,+24.6%,+26.5%,+22.4%,+157.2%
@@ -143,6 +143,10 @@ MC,Watchlist,,Consumer Discretionary,Consumer Durables & Apparel,GAAP,Dec,EPS,CY
 MC,Watchlist,,Consumer Discretionary,Consumer Durables & Apparel,GAAP,Dec,EPS,CY2026,26.94,24.098,-10.5%,23.445,-2.7%,22.367,-4.6%,472.7,21.1,-17.0%,-26.7%,-11.7%,-4.6%
 MC,Watchlist,,Consumer Discretionary,Consumer Durables & Apparel,GAAP,Dec,EPS,CY2027,29.869,27.09,-9.3%,26.931,-0.6%,25.717,-4.5%,472.7,18.4,-13.9%,-26.7%,-11.7%,-4.6%
 MC,Watchlist,,Consumer Discretionary,Consumer Durables & Apparel,GAAP,Dec,EPS,CY2028,34.371,31.283,-9.0%,30.391,-2.9%,28.7,-5.6%,472.7,16.5,-16.5%,-26.7%,-11.7%,-4.6%
+STX,Watchlist,,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2025,7.883,7.948,+0.8%,7.948,+0.0%,7.948,+0.0%,782.64,98.5,+0.8%,+184.2%,+84.2%,+717.7%
+STX,Watchlist,,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2026,9.276,11.346,+22.3%,12.977,+14.4%,14.806,+14.1%,782.64,52.9,+59.6%,+184.2%,+84.2%,+717.7%
+STX,Watchlist,,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2027,10.131,14.513,+43.3%,18.865,+30.0%,26.229,+39.0%,782.64,29.8,+158.9%,+184.2%,+84.2%,+717.7%
+STX,Watchlist,,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2028,9.525,15.972,+67.7%,22.129,+38.5%,37.961,+71.5%,782.64,20.6,+298.5%,+184.2%,+84.2%,+717.7%
 SPX,Indices,Indices,,,Adj,Dec,EPS,CY2025,,,,,,,,7398.93,,,+8.1%,+6.6%,+30.7%
 SPX,Indices,Indices,,,Adj,Dec,EPS,CY2026,274.2691,300.2013,+9.5%,317.9869,+5.9%,351.7889,+10.6%,7398.93,21.0,+28.3%,+8.1%,+6.6%,+30.7%
 SPX,Indices,Indices,,,Adj,Dec,EPS,CY2027,306.4601,338.1271,+10.3%,363.9525,+7.6%,399.5117,+9.8%,7398.93,18.5,+30.4%,+8.1%,+6.6%,+30.7%
@@ -739,10 +743,6 @@ ADI,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GA
 000660,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,EPS,CY2026,45901.906,78380.034,+70.8%,148163.173,+89.0%,272120.019,+83.7%,1681000.0,6.2,+492.8%,+157.8%,+93.4%,+784.3%
 000660,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,EPS,CY2027,53099.987,88319.326,+66.3%,184030.426,+108.4%,363860.504,+97.7%,1681000.0,4.6,+585.2%,+157.8%,+93.4%,+784.3%
 000660,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,EPS,CY2028,129387.665,193005.345,+49.2%,213186.112,+10.5%,397914.018,+86.7%,1681000.0,4.2,+207.5%,+157.8%,+93.4%,+784.3%
-STX,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2025,7.883,7.948,+0.8%,7.948,+0.0%,7.948,+0.0%,782.64,98.5,+0.8%,+184.2%,+84.2%,+717.7%
-STX,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2026,9.276,11.346,+22.3%,12.977,+14.4%,14.806,+14.1%,782.64,52.9,+59.6%,+184.2%,+84.2%,+717.7%
-STX,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2027,10.131,14.513,+43.3%,18.865,+30.0%,26.229,+39.0%,782.64,29.8,+158.9%,+184.2%,+84.2%,+717.7%
-STX,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2028,9.525,15.972,+67.7%,22.129,+38.5%,37.961,+71.5%,782.64,20.6,+298.5%,+184.2%,+84.2%,+717.7%
 WDC,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2025,5.117,5.253,+2.7%,5.253,+0.0%,5.253,+0.0%,480.0,91.4,+2.7%,+178.6%,+67.8%,+988.4%
 WDC,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2026,5.427,7.64,+40.8%,8.79,+15.1%,10.059,+14.4%,480.0,47.7,+85.4%,+178.6%,+67.8%,+988.4%
 WDC,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,EPS,CY2027,5.443,9.179,+68.6%,12.866,+40.2%,17.052,+32.5%,480.0,28.1,+213.3%,+178.6%,+67.8%,+988.4%
@@ -1080,8 +1080,8 @@ DOCU,Extended,Software,Information Technology,Software & Services,Adj,Jan,EPS,CY
 DOCU,Extended,Software,Information Technology,Software & Services,Adj,Jan,EPS,CY2027,4.239,4.467,+5.4%,4.526,+1.3%,5.06,+11.8%,47.9,9.5,+19.4%,-30.0%,+0.7%,-42.5%
 DOCU,Extended,Software,Information Technology,Software & Services,Adj,Jan,EPS,CY2028,4.43,4.527,+2.2%,4.59,+1.4%,5.436,+18.4%,47.9,8.8,+22.7%,-30.0%,+0.7%,-42.5%
 DDOG,Extended,Software,Information Technology,Software & Services,Adj,Dec,EPS,CY2025,1.706,2.002,+17.4%,2.016,+0.7%,2.016,+0.0%,200.16,99.3,+18.2%,+47.2%,+75.6%,+85.5%
-DDOG,Extended,Software,Information Technology,Software & Services,Adj,Dec,EPS,CY2026,2.156,2.384,+10.6%,2.397,+0.5%,2.398,+0.0%,200.16,83.5,+11.2%,+47.2%,+75.6%,+85.5%
-DDOG,Extended,Software,Information Technology,Software & Services,Adj,Dec,EPS,CY2027,2.902,2.938,+1.2%,2.973,+1.2%,2.938,-1.2%,200.16,68.1,+1.2%,+47.2%,+75.6%,+85.5%
+DDOG,Extended,Software,Information Technology,Software & Services,Adj,Dec,EPS,CY2026,2.156,2.384,+10.6%,2.397,+0.5%,2.412,+0.6%,200.16,83.0,+11.9%,+47.2%,+75.6%,+85.5%
+DDOG,Extended,Software,Information Technology,Software & Services,Adj,Dec,EPS,CY2027,2.902,2.938,+1.2%,2.973,+1.2%,2.956,-0.6%,200.16,67.7,+1.9%,+47.2%,+75.6%,+85.5%
 DDOG,Extended,Software,Information Technology,Software & Services,Adj,Dec,EPS,CY2028,3.422,3.853,+12.6%,3.898,+1.2%,3.888,-0.3%,200.16,51.5,+13.6%,+47.2%,+75.6%,+85.5%
 MDB,Extended,Software,Information Technology,Software & Services,Adj,Jan,EPS,CY2025,2.589,3.727,+44.0%,4.8,+28.8%,4.805,+0.1%,299.47,62.3,+85.6%,-28.6%,-16.3%,+67.7%
 MDB,Extended,Software,Information Technology,Software & Services,Adj,Jan,EPS,CY2026,3.446,4.412,+28.0%,5.703,+29.3%,5.865,+2.8%,299.47,51.1,+70.2%,-28.6%,-16.3%,+67.7%
@@ -2238,7 +2238,7 @@ REGN,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",
 VRTX,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,EPS,CY2025,17.818,18.245,+2.4%,18.294,+0.3%,18.293,-0.0%,429.82,23.5,+2.7%,-5.2%,-8.7%,+1.1%
 VRTX,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,EPS,CY2026,19.887,19.485,-2.0%,19.707,+1.1%,19.238,-2.4%,429.82,22.3,-3.3%,-5.2%,-8.7%,+1.1%
 VRTX,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,EPS,CY2027,22.498,21.868,-2.8%,22.803,+4.3%,21.277,-6.7%,429.82,20.2,-5.4%,-5.2%,-8.7%,+1.1%
-VRTX,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,EPS,CY2028,25.373,24.146,-4.8%,25.155,+4.2%,24.446,-2.8%,429.82,17.6,-3.7%,-5.2%,-8.7%,+1.1%
+VRTX,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,EPS,CY2028,25.373,24.146,-4.8%,25.155,+4.2%,24.452,-2.8%,429.82,17.6,-3.6%,-5.2%,-8.7%,+1.1%
 MRK,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,EPS,CY2025,8.246,8.148,-1.2%,8.076,-0.9%,8.076,+0.0%,111.38,13.8,-2.1%,+5.8%,-5.3%,+46.6%
 MRK,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,EPS,CY2026,9.076,8.747,-3.6%,4.964,-43.2%,3.421,-31.1%,111.38,32.6,-62.3%,+5.8%,-5.3%,+46.6%
 MRK,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,EPS,CY2027,10.032,9.564,-4.7%,8.643,-9.6%,8.499,-1.7%,111.38,13.1,-15.3%,+5.8%,-5.3%,+46.6%
@@ -2971,6 +2971,10 @@ VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,,Jan,Revenue,CY2025,3
 VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,,Jan,Revenue,CY2026,3416.852,3518.31,+3.0%,3574.0,+1.6%,3595.0,+0.6%,166.34,,+5.2%,-25.5%,-9.9%,-29.8%
 VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,,Jan,Revenue,CY2027,3863.214,3983.737,+3.1%,4005.577,+0.5%,4035.815,+0.8%,166.34,,+4.5%,-25.5%,-9.9%,-29.8%
 VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,,Jan,Revenue,CY2028,,4628.429,,4618.875,-0.2%,4553.0,-1.4%,166.34,,,-25.5%,-9.9%,-29.8%
+FICO,Portfolio,,Information Technology,Software & Services,,Sep,Revenue,CY2025,1981.053,1989.524,+0.4%,1989.524,+0.0%,1989.524,+0.0%,1126.0,,+0.4%,-33.4%,-18.0%,-46.1%
+FICO,Portfolio,,Information Technology,Software & Services,,Sep,Revenue,CY2026,2283.526,2409.952,+5.5%,2473.5,+2.6%,2549.0,+3.1%,1126.0,,+11.6%,-33.4%,-18.0%,-46.1%
+FICO,Portfolio,,Information Technology,Software & Services,,Sep,Revenue,CY2027,2655.533,2802.714,+5.5%,2896.15,+3.3%,2936.2,+1.4%,1126.0,,+10.6%,-33.4%,-18.0%,-46.1%
+FICO,Portfolio,,Information Technology,Software & Services,,Sep,Revenue,CY2028,3101.0,3155.143,+1.7%,3263.2,+3.4%,3289.0,+0.8%,1126.0,,+6.1%,-33.4%,-18.0%,-46.1%
 GOOG,Watchlist,,Communication Services,Media & Entertainment,,Dec,Revenue,CY2025,331191.219,342330.438,+3.4%,340854.848,-0.4%,340854.848,+0.0%,397.05,,+2.9%,+26.5%,+22.4%,+157.2%
 GOOG,Watchlist,,Communication Services,Media & Entertainment,,Dec,Revenue,CY2026,368378.156,390819.897,+6.1%,401784.056,+2.8%,419018.4,+4.3%,397.05,,+13.7%,+26.5%,+22.4%,+157.2%
 GOOG,Watchlist,,Communication Services,Media & Entertainment,,Dec,Revenue,CY2027,408931.0,442912.583,+8.3%,464574.393,+4.9%,500559.81,+7.7%,397.05,,+22.4%,+26.5%,+22.4%,+157.2%

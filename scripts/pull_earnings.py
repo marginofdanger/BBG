@@ -14,9 +14,9 @@ METRICS_PATH = os.path.join(REPO_ROOT, "config", "earnings_metrics.json")
 GUIDANCE_PATH = os.path.join(REPO_ROOT, "config", "guidance_overrides.json")
 ACTUALS_PATH = os.path.join(REPO_ROOT, "config", "actuals_overrides.json")
 
-PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV"]
-WATCHLIST = ["FICO", "GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V",
-             "BX", "BKNG", "HLT", "IBKR", "NET", "COST", "TSLA", "TMO", "COF", "AON", "MC"]
+PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV", "FICO"]
+WATCHLIST = ["GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V",
+             "BX", "BKNG", "HLT", "IBKR", "NET", "COST", "TSLA", "TMO", "COF", "AON", "MC", "STX"]
 
 # Non-US tickers that need explicit Bloomberg identifiers
 BBG_OVERRIDES = {"MC": "MC FP Equity"}

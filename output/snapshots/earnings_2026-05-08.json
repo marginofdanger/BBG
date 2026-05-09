@@ -1862,6 +1862,84 @@
       ]
     },
     {
+      "ticker": "STX",
+      "group": "Watchlist",
+      "earnings_date": "2026-07-29",
+      "earnings_time": "None",
+      "date_confirmed": false,
+      "revisions_4wk": {
+        "up": 22,
+        "down": 0
+      },
+      "eps_4wk_pct": 34.71,
+      "earnings_history": [
+        {
+          "quarter": "Q3'26",
+          "eps_beat_pct": 17.1,
+          "rev_beat_pct": 5.4,
+          "stock_rxn": -2.8
+        },
+        {
+          "quarter": "Q2'26",
+          "eps_beat_pct": 10.0,
+          "rev_beat_pct": 2.7,
+          "stock_rxn": 3.8
+        },
+        {
+          "quarter": "Q1'26",
+          "eps_beat_pct": 10.0,
+          "rev_beat_pct": 3.1,
+          "stock_rxn": -3.2
+        },
+        {
+          "quarter": "Q4'25",
+          "eps_beat_pct": 5.5,
+          "rev_beat_pct": 0.9,
+          "stock_rxn": 1.5
+        }
+      ],
+      "metrics": [
+        {
+          "name": "EPS",
+          "consensus": 5.029,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2.454,
+          "yoy": "+105%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 3473.714285714286,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 2422.3,
+          "yoy": "+43%",
+          "vs_guide": "n/a"
+        }
+      ],
+      "annual_metrics": [
+        {
+          "name": "EPS",
+          "consensus": 24.60341923076923,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 8.1,
+          "yoy": "+204%",
+          "vs_guide": "n/a"
+        },
+        {
+          "name": "Revenue",
+          "consensus": 15749.462684931506,
+          "guidance_low": null,
+          "guidance_high": null,
+          "prior_year": 11633.77541271514,
+          "yoy": "+35%",
+          "vs_guide": "n/a"
+        }
+      ]
+    },
+    {
       "ticker": "META",
       "group": "Portfolio",
       "earnings_date": "2026-07-30",
@@ -2073,7 +2151,7 @@
     },
     {
       "ticker": "FICO",
-      "group": "Watchlist",
+      "group": "Portfolio",
       "earnings_date": "2026-07-30",
       "earnings_time": "None",
       "date_confirmed": false,
@@ -2495,7 +2573,7 @@
         },
         {
           "name": "Op. Income",
-          "consensus": 23440.791666666668,
+          "consensus": 23430.36170212766,
           "guidance_low": 16500.0,
           "guidance_high": 21500.0,
           "prior_year": 17004.03846153846,
@@ -2536,7 +2614,7 @@
           "consensus": 112782.01725487549,
           "guidance_low": null,
           "guidance_high": null,
-          "prior_year": 88328.50555301733,
+          "prior_year": 88315.6608223906,
           "yoy": "+28%",
           "vs_guide": "n/a"
         },
@@ -3616,7 +3694,7 @@
     },
     {
       "ticker": "FICO",
-      "group": "Watchlist",
+      "group": "Portfolio",
       "earnings_date": "2026-04-28",
       "earnings_time": "",
       "fiscal_period": "2Q26",
@@ -3758,6 +3836,35 @@
         "w1_vs_spx": -0.0711
       },
       "ntm_eps_chg": 0.0009
+    },
+    {
+      "ticker": "STX",
+      "group": "Watchlist",
+      "earnings_date": "2026-04-28",
+      "earnings_time": "",
+      "fiscal_period": "3Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 4.1,
+          "consensus": 3.501,
+          "surprise": 0.17109397315052835,
+          "yoy": "+116%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 3112.0,
+          "consensus": 2953.591,
+          "surprise": 0.053632679677044014,
+          "yoy": "+44%"
+        }
+      ],
+      "stock": {
+        "d1": -0.0282,
+        "w1": 0.2939,
+        "w1_vs_spx": 0.282
+      },
+      "ntm_eps_chg": 0.2667
     },
     {
       "ticker": "HCA",
@@ -4981,7 +5088,7 @@
     },
     {
       "ticker": "FICO",
-      "group": "Watchlist",
+      "group": "Portfolio",
       "earnings_date": "2026-01-28",
       "earnings_time": "",
       "fiscal_period": "1Q26",
@@ -5202,6 +5309,35 @@
         "w1_vs_spx": -0.0956
       },
       "ntm_eps_chg": -0.0169
+    },
+    {
+      "ticker": "STX",
+      "group": "Watchlist",
+      "earnings_date": "2026-01-27",
+      "earnings_time": "",
+      "fiscal_period": "2Q26",
+      "metrics": [
+        {
+          "name": "EPS",
+          "actual": 3.11,
+          "consensus": 2.826,
+          "surprise": 0.10049539985845711,
+          "yoy": "+53%"
+        },
+        {
+          "name": "Revenue",
+          "actual": 2825.0,
+          "consensus": 2751.773,
+          "surprise": 0.026610843263597635,
+          "yoy": "+22%"
+        }
+      ],
+      "stock": {
+        "d1": 0.0376,
+        "w1": 0.2405,
+        "w1_vs_spx": 0.2452
+      },
+      "ntm_eps_chg": 0.1364
     },
     {
       "ticker": "GE",
