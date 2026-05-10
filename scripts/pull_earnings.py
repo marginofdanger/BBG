@@ -13,6 +13,68 @@ SNAPSHOT_DIR = os.path.join(REPO_ROOT, "output", "snapshots")
 METRICS_PATH = os.path.join(REPO_ROOT, "config", "earnings_metrics.json")
 GUIDANCE_PATH = os.path.join(REPO_ROOT, "config", "guidance_overrides.json")
 ACTUALS_PATH = os.path.join(REPO_ROOT, "config", "actuals_overrides.json")
+TIMING_OVERRIDES_PATH = os.path.join(REPO_ROOT, "config", "earnings_timing_overrides.json")
+
+
+def _load_timing_overrides():
+    """Return {short_ticker: 'AMC'|'BMO'|'DUR'} from the override config."""
+    try:
+        with open(TIMING_OVERRIDES_PATH, encoding="utf-8") as f:
+            raw = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+    out = {}
+    for k, v in raw.items():
+        if k.startswith("_"):
+            continue
+        if not isinstance(v, str):
+            continue
+        u = v.upper().strip()
+        if u in ("AMC", "BMO", "DUR"):
+            out[k.upper()] = u
+    return out
+
+
+_TIMING_OVERRIDES = _load_timing_overrides()
+
+
+def _classify_amc_bmo_heuristic(t_minus_1_px, t_px, t1_px,
+                                 ratio_threshold=1.5, abs_threshold=0.01):
+    """Heuristic AMC/BMO classifier from same-day vs next-day return magnitudes.
+
+    AMC reporters print after T close; the earnings reaction lands on T+1.
+    BMO reporters print before T open; the reaction lands on T (close-to-close
+    from T-1). When the next-day return is materially larger than the same-day
+    return AND clears a minimum absolute threshold, classify as AMC.
+
+    Defaults BMO when prices are missing or the call is ambiguous — preserves
+    the historical pull_earnings.py behavior (which always treated entries as
+    BMO).
+    """
+    if not (t_minus_1_px and t_px and t1_px):
+        return "BMO"
+    try:
+        bmo_move = abs((t_px - t_minus_1_px) / t_minus_1_px)
+        amc_move = abs((t1_px - t_px) / t_px)
+    except ZeroDivisionError:
+        return "BMO"
+    if amc_move >= abs_threshold and amc_move > bmo_move * ratio_threshold:
+        return "AMC"
+    return "BMO"
+
+
+def _classify_timing(short_ticker, t_minus_1_px, t_px, t1_px):
+    """Resolve AMC/BMO via override-then-heuristic. Returns 'AMC' or 'BMO'.
+
+    'DUR' (during market hours, rare) is mapped to BMO since both compute
+    same-day return; the BMO baseline matches.
+    """
+    override = _TIMING_OVERRIDES.get(short_ticker.upper())
+    if override == "AMC":
+        return "AMC"
+    if override in ("BMO", "DUR"):
+        return "BMO"
+    return _classify_amc_bmo_heuristic(t_minus_1_px, t_px, t1_px)
 
 PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV", "FICO"]
 WATCHLIST = ["GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V",
@@ -795,7 +857,11 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                 except Exception:
                     pass
 
-            # --- Stock reaction: pull a narrow window around earnings_date ---
+            # --- Stock reaction: pull a narrow window around earnings_date.
+            # AMC reporters print after T close so the reaction lands on T+1;
+            # BMO reporters print before T open so the reaction lands on T
+            # (close-to-close from T-1). _classify_timing() picks the right
+            # anchors via config override → heuristic → BMO default.
             try:
                 rxn_start = (last["date"] - timedelta(days=4)).strftime("%Y-%m-%d")
                 rxn_end = (last["date"] + timedelta(days=14)).strftime("%Y-%m-%d")
@@ -810,31 +876,51 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                         pass
                 px_dates = sorted(px_by_date.keys())
 
-                pre_day, pre_px = _price_on_or_before(
+                # Candidate prices for both BMO and AMC interpretations.
+                t_minus_1_day, t_minus_1_px = _price_on_or_before(
                     px_by_date, px_dates, last["date"] - timedelta(days=1))
-                d1_day, d1_px = _price_on_or_after(
+                t_day, t_px = _price_on_or_after(
                     px_by_date, px_dates, last["date"])
-                # "1W" = 5 trading days after the earnings-day close
-                w1_px = None
-                if d1_day is not None:
-                    idx = px_dates.index(d1_day)
-                    if idx + 5 < len(px_dates):
-                        w1_px = px_by_date[px_dates[idx + 5]]
-                        w1_day = px_dates[idx + 5]
-                    else:
-                        w1_day = None
+                t1_day, t1_px = (None, None)
+                if t_day is not None and t_day in px_dates:
+                    t_idx = px_dates.index(t_day)
+                    if t_idx + 1 < len(px_dates):
+                        t1_day = px_dates[t_idx + 1]
+                        t1_px = px_by_date[t1_day]
+
+                timing = _classify_timing(short, t_minus_1_px, t_px, t1_px)
+                record["earnings_time"] = timing
+
+                if timing == "AMC":
+                    pre_day, pre_px = t_day, t_px
+                    d1_day, d1_px = t1_day, t1_px
                 else:
-                    w1_day = None
+                    pre_day, pre_px = t_minus_1_day, t_minus_1_px
+                    d1_day, d1_px = t_day, t_px
+
+                # "1W" = 5 trading days after the post-print close.
+                w1_day, w1_px = None, None
+                if d1_day is not None and d1_day in px_dates:
+                    d1_idx = px_dates.index(d1_day)
+                    if d1_idx + 5 < len(px_dates):
+                        w1_day = px_dates[d1_idx + 5]
+                        w1_px = px_by_date[w1_day]
 
                 if pre_px and d1_px:
                     record["stock"]["d1"] = round((d1_px - pre_px) / pre_px, 4)
                 if pre_px and w1_px:
                     record["stock"]["w1"] = round((w1_px - pre_px) / pre_px, 4)
 
-                # Relative vs SPX over the same window
+                # Relative vs SPX over the same window. SPX baseline must
+                # match the stock baseline (AMC: T close; BMO: T-1 close).
                 if pre_px and w1_px and spx_dates_sorted:
-                    _, spx_pre = _price_on_or_before(
-                        spx_by_date, spx_dates_sorted, last["date"] - timedelta(days=1))
+                    if timing == "AMC":
+                        _, spx_pre = _price_on_or_after(
+                            spx_by_date, spx_dates_sorted, last["date"])
+                    else:
+                        _, spx_pre = _price_on_or_before(
+                            spx_by_date, spx_dates_sorted,
+                            last["date"] - timedelta(days=1))
                     spx_post = spx_by_date.get(w1_day) if w1_day else None
                     if spx_pre and spx_post:
                         spx_w1 = (spx_post - spx_pre) / spx_pre
@@ -864,10 +950,16 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                         pass
                 ntm_dates = sorted(ntm_by_date.keys())
 
-                # Pre: latest trading day <= earnings_date - 1 day
-                _, ntm_pre = _price_on_or_before(
-                    ntm_by_date, ntm_dates, last["date"] - timedelta(days=1))
-                # Post: earliest trading day >= earnings_date + 7 days
+                # Pre: for AMC, anchor at T close (last unrevised consensus).
+                # For BMO, anchor at T-1 (pre-print close as before).
+                ntm_timing = record.get("earnings_time") or "BMO"
+                if ntm_timing == "AMC":
+                    _, ntm_pre = _price_on_or_before(
+                        ntm_by_date, ntm_dates, last["date"])
+                else:
+                    _, ntm_pre = _price_on_or_before(
+                        ntm_by_date, ntm_dates, last["date"] - timedelta(days=1))
+                # Post: earliest trading day >= earnings_date + 7 days.
                 _, ntm_post = _price_on_or_after(
                     ntm_by_date, ntm_dates, last["date"] + timedelta(days=7))
                 if ntm_pre and ntm_post and ntm_pre != 0:
