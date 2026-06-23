@@ -57,6 +57,61 @@ def _bdp_batch(bbg_tickers, fields, batch_size=50):
     return result
 
 
+def _bdp_period(bbg_tickers, field, period, batch_size=50):
+    """Pull a single estimate field at a fixed forecast period via bdp override.
+
+    period is an absolute Bloomberg fiscal-year override like "26Y".
+    Returns {bbg_ticker: float}. Tickers with no estimate are omitted.
+    """
+    result = {}
+    for i in range(0, len(bbg_tickers), batch_size):
+        batch = bbg_tickers[i:i+batch_size]
+        try:
+            df = blp.bdp(batch, field, BEST_FPERIOD_OVERRIDE=period)
+            for row in df.rows():
+                ticker, _field, value = row[0], row[1], row[2]
+                try:
+                    result[ticker] = float(value)
+                except (ValueError, TypeError):
+                    pass
+        except Exception as e:
+            print(f"    WARNING: bdp {field} {period} batch failed: {e}")
+    return result
+
+
+def _build_metric_row(entry, metric, year_label, current_val, snapshot_cols,
+                      gics_data, returns_data, fye_label):
+    """Build a CSV row for a growth metric (Revenue/OpInc), Current snapshot only.
+
+    Mirrors the EPS/Revenue row schema so the column count stays aligned; the
+    -1yr/-6m/-3m snapshot and chg columns are left blank (growth needs only Current).
+    """
+    bbg = entry['bbg']
+    gics = gics_data.get(bbg, {})
+    ret = returns_data.get(bbg, {})
+    price = ret.get("PX_LAST")
+    row = [entry['short'], entry['group'], entry.get('category', ''),
+           gics.get("GICS_SECTOR_NAME", ""), gics.get("GICS_INDUSTRY_GROUP_NAME", ""),
+           '', fye_label, metric, year_label]
+
+    est_row = {"Current": current_val}
+    prev_val = None
+    for i, c in enumerate(snapshot_cols):
+        val = est_row.get(c)
+        row.append(val if val is not None else "")
+        if i > 0:
+            row.append(_format_pct_change(prev_val, val))
+        prev_val = val if val is not None else prev_val
+
+    row.append(price if price is not None else "")  # Price
+    row.append("")  # PE (n/a)
+    row.append("")  # 12m Rev (n/a — no -1yr snapshot)
+    for f in ["CHG_PCT_YTD", "CHG_PCT_3M", "CHG_PCT_1YR"]:
+        r = ret.get(f)
+        row.append(f"{'+' if r >= 0 else ''}{r:.1f}%" if r is not None else "")
+    return row
+
+
 def _determine_eps_fields(bbg_tickers):
     """Return {bbg_ticker: ('BEST_EPS_GAAP'|'BEST_EPS', 'GAAP'|'Adj')} based on market cap."""
     data = _bdp_batch(bbg_tickers, "CUR_MKT_CAP")
@@ -378,6 +433,44 @@ def main():
                     row_data.append("")
 
             csv_rows.append(row_data)
+
+    # --- Operating income (all names) + revenue (names not covered above) ---
+    # Approach A: cheap batched bdp snapshots of current consensus per fiscal
+    # period. Growth columns on the dashboard only need the Current value per
+    # calendar year, so no daily history is pulled.
+    print("\n[6c/6] Pulling current revenue + operating income consensus (all names)...")
+    non_index = [e for e in entries if e['group'] != 'Indices']
+    non_index_bbg = [e['bbg'] for e in non_index]
+    peer_rev_set = set(PORTFOLIO) | PEER_TICKERS
+    # FYE offset is 0 or +1, so fiscal years 2025..2029 cover calendar 2025..2028.
+    growth_fiscal_years = [cy for cy in CALENDAR_YEARS] + [CALENDAR_YEARS[-1] + 1]
+
+    def _pull_period_metric(field):
+        return {fy: _bdp_period(non_index_bbg, field, f"{fy % 100}Y")
+                for fy in growth_fiscal_years}
+
+    print("  BEST_SALES (revenue)...")
+    sales_by_fy = _pull_period_metric("BEST_SALES")
+    print("  BEST_OPP (operating income)...")
+    opp_by_fy = _pull_period_metric("BEST_OPP")
+
+    for entry in non_index:
+        short = entry['short']
+        bbg = entry['bbg']
+        fye_label, fye_offset = fye_data.get(bbg, ("Dec", 0))
+
+        # Operating income for every non-index name (blank where BBG has no estimate)
+        for cy in CALENDAR_YEARS:
+            val = opp_by_fy.get(cy + fye_offset, {}).get(bbg)
+            csv_rows.append(_build_metric_row(entry, "OpInc", f"CY{cy}", val,
+                            snapshot_cols, gics_data, returns_data, fye_label))
+
+        # Revenue only for names not already pulled by the peer-revenue step above
+        if short not in peer_rev_set:
+            for cy in CALENDAR_YEARS:
+                val = sales_by_fy.get(cy + fye_offset, {}).get(bbg)
+                csv_rows.append(_build_metric_row(entry, "Revenue", f"CY{cy}", val,
+                                snapshot_cols, gics_data, returns_data, fye_label))
 
     csv_path = os.path.join(SNAPSHOT_DIR, f"estimates_{today_str}.csv")
     with open(csv_path, "w", newline="", encoding="utf-8") as f:

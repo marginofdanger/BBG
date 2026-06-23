@@ -22,6 +22,10 @@ thead tr:first-child th { top: 0; background: #f4f4f4; box-shadow: inset 0 -2px 
 thead tr:nth-child(2) th { top: 23px; background: #fafafa; box-shadow: inset 0 -2px 0 #ccc; }
 th.col-group { text-align: center; background: #f4f4f4; }
 td:first-child, th:first-child { text-align: left; }
+/* Sticky Ticker (first) column when scrolling horizontally */
+.row-even td:first-child, .row-odd td:first-child { position: sticky; left: 0; z-index: 1; }
+thead th:first-child { left: 0; z-index: 3; }
+.group-header td, .subgroup-header td { position: sticky; left: 0; }
 th.sortable { cursor: pointer; user-select: none; }
 th.sortable:hover { background: #e8e8e8; }
 th.sort-asc::after { content: ' ▲'; font-size: 9px; }
@@ -341,7 +345,7 @@ td.spark-cell { padding: 4px 2px; }
       if (r.Year === 'CY2027' && p.PE_CY2027) updated.PE = p.PE_CY2027;
       if (r.Year === 'CY2028' && p.PE_CY2028) updated.PE = p.PE_CY2028;
       return updated;
-    }), revRows: estData.revRows || [] };
+    }), revRows: estData.revRows || [], opIncRows: estData.opIncRows || [] };
     return merged;
   }
 
@@ -392,10 +396,11 @@ td.spark-cell { padding: 4px 2px; }
     const newSchema = ['-1yr', '-6m', '-3m', 'Current'].filter(c => headers.includes(c));
     const legacyRe = /^Q[1-4] 20\d{2}$/;
     const qCols = newSchema.length ? newSchema : headers.filter(h => legacyRe.test(h));
-    // Split by metric (EPS vs Revenue) - backward compatible if no Metric column
+    // Split by metric (EPS vs Revenue vs OpInc) - backward compatible if no Metric column
     const epsRows = rows.filter(r => !r.Metric || r.Metric === 'EPS');
     const revRows = rows.filter(r => r.Metric === 'Revenue');
-    return { headers, rows: epsRows, revRows, qCols };
+    const opIncRows = rows.filter(r => r.Metric === 'OpInc');
+    return { headers, rows: epsRows, revRows, opIncRows, qCols };
   }
 
   function parseCsvLine(line) {
@@ -425,7 +430,7 @@ td.spark-cell { padding: 4px 2px; }
 
   function render(data) {
     lastData = data;
-    const { rows, qCols } = data;
+    const { rows, qCols, revRows, opIncRows } = data;
     currentQCols = qCols;
 
     const tickers = [];
@@ -444,11 +449,38 @@ td.spark-cell { padding: 4px 2px; }
       tickerMap[t].years[r.Year] = r;
     });
 
+    // Revenue & operating-income growth (latest consensus per calendar year).
+    // CYn growth = CYn / CY(n-1) - 1, mirroring the Peers tab logic.
+    const buildByTickerYear = (metricRows) => {
+      const map = {};
+      (metricRows || []).forEach(r => {
+        const vals = qCols.map(q => { const v = parseFloat(r[q]); return isNaN(v) ? null : v; });
+        const nonNull = vals.filter(v => v !== null);
+        map[r.Ticker + '_' + r.Year] = nonNull.length ? nonNull[nonNull.length - 1] : null;
+      });
+      return map;
+    };
+    const revBTY = buildByTickerYear(revRows);
+    const opiBTY = buildByTickerYear(opIncRows);
+    const growthOf = (map, t, curYr, baseYr) => {
+      const base = map[t + '_' + baseYr], cur = map[t + '_' + curYr];
+      return (base && base !== 0 && cur != null) ? (cur / base - 1) * 100 : null;
+    };
+    tickers.forEach(t => {
+      const k = t.ticker;
+      t.revGrow26 = growthOf(revBTY, k, 'CY2026', 'CY2025');
+      t.revGrow27 = growthOf(revBTY, k, 'CY2027', 'CY2026');
+      t.revGrow28 = growthOf(revBTY, k, 'CY2028', 'CY2027');
+      t.opiGrow26 = growthOf(opiBTY, k, 'CY2026', 'CY2025');
+      t.opiGrow27 = growthOf(opiBTY, k, 'CY2027', 'CY2026');
+      t.opiGrow28 = growthOf(opiBTY, k, 'CY2028', 'CY2027');
+    });
+
     const portfolio = tickers.filter(t => t.group === 'Portfolio');
     const watchlist = tickers.filter(t => t.group === 'Watchlist');
     const indices = tickers.filter(t => t.group === 'Indices');
     const extended = tickers.filter(t => t.group === 'Extended');
-    const totalCols = 6 + displayYears.length * COLS_PER_YEAR + 3;
+    const totalCols = 6 + displayYears.length * COLS_PER_YEAR + 3 + 6; // +6: Rev growth + Op inc growth
 
     const table = document.createElement('table');
     table.id = 'mainTable';
@@ -461,6 +493,8 @@ td.spark-cell { padding: 4px 2px; }
     addTH(h1, '', 1, 'col-group'); // FYE
     displayYears.forEach(y => addTH(h1, y, COLS_PER_YEAR, 'col-group year-sep'));
     addTH(h1, 'Returns', 3, 'col-group year-sep');
+    addTH(h1, 'Rev growth', 3, 'col-group year-sep');
+    addTH(h1, 'Op inc growth', 3, 'col-group year-sep');
 
     // Header row 2 (all sortable)
     const h2 = document.createElement('tr');
@@ -484,6 +518,12 @@ td.spark-cell { padding: 4px 2px; }
     addSortTH(h2, 'YTD', 'retytd', 'year-sep');
     addSortTH(h2, 'L3M', 'ret3m');
     addSortTH(h2, '1Y', 'ret12');
+    addSortTH(h2, "'26", 'revg26', 'year-sep');
+    addSortTH(h2, "'27", 'revg27');
+    addSortTH(h2, "'28", 'revg28');
+    addSortTH(h2, "'26", 'opig26', 'year-sep');
+    addSortTH(h2, "'27", 'opig27');
+    addSortTH(h2, "'28", 'opig28');
 
     const thead = document.createElement('thead');
     thead.appendChild(h1);
@@ -699,6 +739,17 @@ td.spark-cell { padding: 4px 2px; }
     rowEl._sortData.ret3m = ret3m;
     appendReturnCell(rowEl, retRow['Return_12m']);
     rowEl._sortData.ret12 = ret12;
+
+    // Rev growth + Op inc growth: '26 / '27 / '28 (year-sep starts each group)
+    const growthCols = [
+      ['revg26', tk.revGrow26, true], ['revg27', tk.revGrow27, false], ['revg28', tk.revGrow28, false],
+      ['opig26', tk.opiGrow26, true], ['opig27', tk.opiGrow27, false], ['opig28', tk.opiGrow28, false],
+    ];
+    growthCols.forEach(([key, val, sep]) => {
+      const td = appendCell(rowEl, fmtPctRaw(val), true);
+      if (sep) td.classList.add('year-sep');
+      rowEl._sortData[key] = (val == null ? -Infinity : val);
+    });
 
     tbody.appendChild(rowEl);
   }
