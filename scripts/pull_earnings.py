@@ -973,6 +973,33 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
     return reported
 
 
+def _calendar_quarter(d):
+    """Calendar quarter of a date as 'YYYYQn' (binning key for the matrix)."""
+    return f"{d.year}Q{(d.month - 1) // 3 + 1}"
+
+
+def _build_date_history(date_strings, today, max_days=1188):
+    """Parse, window-filter, bin, and sort a ticker's announcement dates.
+
+    Keeps dates in [today - max_days, today]. Returns a list of
+    {"date": "YYYY-MM-DD", "cq": "YYYYQn"} sorted ascending by date.
+    Unparseable entries are skipped. max_days defaults to ~3.25 years so the
+    3-year view has a little headroom.
+    """
+    cutoff = today - timedelta(days=max_days)
+    out = []
+    for s in date_strings:
+        try:
+            d = date.fromisoformat(str(s)[:10])
+        except (ValueError, TypeError):
+            continue
+        if d > today or d < cutoff:
+            continue
+        out.append({"date": d.isoformat(), "cq": _calendar_quarter(d)})
+    out.sort(key=lambda r: r["date"])
+    return out
+
+
 def pull_prior_year_annual_eps(bbg_tickers):
     """Pull prior FY actual EPS using IS_EPS (reported) for annual y/y.
 
