@@ -462,6 +462,7 @@ td.spark-cell { padding: 4px 2px; }
     };
     const revBTY = buildByTickerYear(revRows);
     const opiBTY = buildByTickerYear(opIncRows);
+    const epsBTY = buildByTickerYear(rows); // EPS rows already drive the table
     const growthOf = (map, t, curYr, baseYr) => {
       const base = map[t + '_' + baseYr], cur = map[t + '_' + curYr];
       return (base && base !== 0 && cur != null) ? (cur / base - 1) * 100 : null;
@@ -474,13 +475,16 @@ td.spark-cell { padding: 4px 2px; }
       t.opiGrow26 = growthOf(opiBTY, k, 'CY2026', 'CY2025');
       t.opiGrow27 = growthOf(opiBTY, k, 'CY2027', 'CY2026');
       t.opiGrow28 = growthOf(opiBTY, k, 'CY2028', 'CY2027');
+      t.epsGrow26 = growthOf(epsBTY, k, 'CY2026', 'CY2025');
+      t.epsGrow27 = growthOf(epsBTY, k, 'CY2027', 'CY2026');
+      t.epsGrow28 = growthOf(epsBTY, k, 'CY2028', 'CY2027');
     });
 
     const portfolio = tickers.filter(t => t.group === 'Portfolio');
     const watchlist = tickers.filter(t => t.group === 'Watchlist');
     const indices = tickers.filter(t => t.group === 'Indices');
     const extended = tickers.filter(t => t.group === 'Extended');
-    const totalCols = 6 + displayYears.length * COLS_PER_YEAR + 3 + 6; // +6: Rev growth + Op inc growth
+    const totalCols = 6 + displayYears.length * COLS_PER_YEAR + 3 + 9; // +9: Rev + Op inc + EPS growth
 
     const table = document.createElement('table');
     table.id = 'mainTable';
@@ -495,6 +499,7 @@ td.spark-cell { padding: 4px 2px; }
     addTH(h1, 'Returns', 3, 'col-group year-sep');
     addTH(h1, 'Rev growth', 3, 'col-group year-sep');
     addTH(h1, 'Op inc growth', 3, 'col-group year-sep');
+    addTH(h1, 'EPS growth', 3, 'col-group year-sep');
 
     // Header row 2 (all sortable)
     const h2 = document.createElement('tr');
@@ -524,6 +529,9 @@ td.spark-cell { padding: 4px 2px; }
     addSortTH(h2, "'26", 'opig26', 'year-sep');
     addSortTH(h2, "'27", 'opig27');
     addSortTH(h2, "'28", 'opig28');
+    addSortTH(h2, "'26", 'epsg26', 'year-sep');
+    addSortTH(h2, "'27", 'epsg27');
+    addSortTH(h2, "'28", 'epsg28');
 
     const thead = document.createElement('thead');
     thead.appendChild(h1);
@@ -744,6 +752,7 @@ td.spark-cell { padding: 4px 2px; }
     const growthCols = [
       ['revg26', tk.revGrow26, true], ['revg27', tk.revGrow27, false], ['revg28', tk.revGrow28, false],
       ['opig26', tk.opiGrow26, true], ['opig27', tk.opiGrow27, false], ['opig28', tk.opiGrow28, false],
+      ['epsg26', tk.epsGrow26, true], ['epsg27', tk.epsGrow27, false], ['epsg28', tk.epsGrow28, false],
     ];
     growthCols.forEach(([key, val, sep]) => {
       const td = appendCell(rowEl, fmtPctRaw(val), true);
