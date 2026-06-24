@@ -25,7 +25,11 @@ try:
 except ImportError:
     sys.modules["bloomberg"] = type("M", (), {"USD_OVERRIDE_TICKERS": set()})()
 
-from pull_earnings import _build_date_history, _calendar_quarter  # noqa: E402
+from pull_earnings import (  # noqa: E402
+    _build_date_history,
+    _calendar_quarter,
+    _quarterly_dates_from_rows,
+)
 
 
 # --- _calendar_quarter ---
@@ -69,3 +73,22 @@ def test_build_skips_unparseable_and_trims_time():
     today = date(2026, 6, 23)
     out = _build_date_history(["not-a-date", "", "2025-04-11T00:00:00"], today)
     assert out == [{"date": "2025-04-11", "cq": "2025Q2"}]
+
+
+# --- _quarterly_dates_from_rows ---
+
+def test_quarterly_filter_keeps_q_drops_annual():
+    rows = [
+        ["JPM US Equity", "ERN_ANN_DT_AND_PER", "2025-04-11", "2025:Q1"],
+        ["MC FP Equity", "ERN_ANN_DT_AND_PER", "2025-07-24", "2025:Q2"],
+        ["MC FP Equity", "ERN_ANN_DT_AND_PER", "2025-01-28", "2024:A"],
+        ["X US Equity", "ERN_ANN_DT_AND_PER", "2025-02-10", "2024:S2"],
+    ]
+    assert _quarterly_dates_from_rows(rows) == ["2025-04-11", "2025-07-24"]
+
+
+def test_quarterly_filter_period_fallback_to_index2():
+    # No separate period column: index 2 is used for the period test; a
+    # non-':Q' value is dropped (mirrors the sibling phases' fallback).
+    rows = [["T", "F", "2025:Q3"], ["T", "F", "2025-05-01"]]
+    assert _quarterly_dates_from_rows(rows) == ["2025:Q3"]

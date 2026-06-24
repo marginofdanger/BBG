@@ -1000,11 +1000,30 @@ def _build_date_history(date_strings, today, max_days=1188):
     return out
 
 
+def _quarterly_dates_from_rows(rows):
+    """Announcement-date strings for quarterly (':Q') periods only.
+
+    Mirrors the ':Q' period filter used by pull_earnings_history and
+    pull_reported_details so the date-history matrix excludes annual /
+    half-year announcement rows (e.g. the semi-annual filer MC). Each row is
+    a Bloomberg BDS row: date at index 2, period at index 3 (falls back to
+    index 2 when the row has no separate period column).
+    """
+    out = []
+    for row in rows:
+        period = str(row[3]) if len(row) > 3 else str(row[2])
+        if ":Q" not in period:
+            continue
+        out.append(str(row[2]))
+    return out
+
+
 def pull_earnings_date_history(bbg_tickers, today, max_days=1188):
     """Pull historical earnings announcement dates (last ~3 years) per ticker.
 
     Reads ERN_ANN_DT_AND_PER (BDS) — the same field the earnings_history and
-    reported phases use — and delegates parsing/binning to _build_date_history.
+    reported phases use — keeps quarterly (':Q') periods only to match those
+    phases, then delegates parsing/binning to _build_date_history.
 
     Returns {short_ticker: [{"date", "cq"}, ...]} sorted ascending by date.
     One bad ticker is logged and yields [], never aborts the phase.
@@ -1014,7 +1033,7 @@ def pull_earnings_date_history(bbg_tickers, today, max_days=1188):
         short = bt.split(" ")[0]
         try:
             df = blp.bds(bt, "ERN_ANN_DT_AND_PER")
-            date_strings = [str(row[2]) for row in df.rows()]
+            date_strings = _quarterly_dates_from_rows(df.rows())
         except Exception as e:
             print(f"  WARNING: date-history pull failed for {short}: {e}")
             result[short] = []
