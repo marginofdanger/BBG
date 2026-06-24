@@ -215,10 +215,13 @@ body {
 .hist-matrix td.hist-ticker { text-align: left; font-weight: 700; color: #111; }
 .hist-matrix td.hist-empty { color: #ccc; }
 .hist-matrix th.qstart, .hist-matrix td.qstart { border-left: 2px solid #d1d5db; }
-.hist-matrix th.qcol { cursor: pointer; user-select: none; }
-.hist-matrix th.qcol:hover { color: #2563eb; background: #f3f6fc; }
-.hist-matrix th .sort-ind { font-size: 8px; color: #c4c8cf; margin-left: 3px; }
-.hist-matrix th.qcol:hover .sort-ind { color: #2563eb; }
+.hist-matrix th.qgrp { text-align: center; color: #6b7280; font-size: 11px; font-weight: 700; }
+.hist-matrix th.ycol { cursor: pointer; user-select: none; }
+.hist-matrix th.ycol:hover { color: #2563eb; background: #f3f6fc; }
+.hist-matrix th.ycol.sorted { color: #2563eb; font-weight: 700; }
+.hist-matrix th.hist-ticker-h { cursor: pointer; }
+.hist-matrix th .sort-ind { font-size: 8px; color: #2563eb; margin-left: 2px; }
+.hist-matrix td.sortcol { background: #f3f6fc; }
 .hist-matrix tr:hover td { background: #f8fafc; }
 /* sticky ticker column */
 .hist-matrix th.hist-ticker-h,
@@ -279,8 +282,10 @@ if (ZOOM_DAYS_REPORTED === 45 || ZOOM_DAYS_REPORTED === 90) ZOOM_DAYS_REPORTED =
 let ZOOM_YEARS_HISTORY = parseInt(localStorage.getItem('earnings_history_zoom') || '4');
 // Migrate old day-based values (365/730/1095) to a year-count.
 if (!(ZOOM_YEARS_HISTORY >= 1 && ZOOM_YEARS_HISTORY <= 6)) ZOOM_YEARS_HISTORY = 4;
-// Year-sort direction within each quarter bucket: 'asc' (23→26) or 'desc' (26→23).
-let HIST_YEAR_DIR = localStorage.getItem('earnings_history_dir') === 'desc' ? 'desc' : 'asc';
+// Row sort: click a year sub-column to order tickers by that column's earnings
+// date. HIST_SORT_CQ = the active "YYYYQn" column (null = default alpha order).
+let HIST_SORT_CQ = localStorage.getItem('earnings_history_sortcq') || null;
+let HIST_SORT_DIR = localStorage.getItem('earnings_history_sortdir') === 'desc' ? 'desc' : 'asc';
 
 function syncRangeButtonsForTab() {
   // Range button definitions differ between tabs; rebuild the chip set so the
@@ -930,11 +935,9 @@ function renderHistorical() {
       if (start && Number(e.cq.slice(0, 4)) >= minYear && start <= today) cqSet.add(e.cq);
     }
   }
-  // Group columns by quarter number (all Q1s, then Q2s, ...); year order within
-  // each group follows HIST_YEAR_DIR (click a quarter header to toggle).
-  const dir = HIST_YEAR_DIR === 'desc' ? -1 : 1;
+  // Columns: grouped by quarter number (Q1->Q4), years ascending within each.
   const cols = Array.from(cqSet).sort((a, b) =>
-    (a.slice(5) - b.slice(5)) || dir * (a.slice(0, 4) - b.slice(0, 4)));
+    (a.slice(5) - b.slice(5)) || (a.slice(0, 4) - b.slice(0, 4)));
   // First column of each quarter group gets a divider on its left edge.
   const qStart = cols.map((cq, i) => i === 0 || cq.slice(5) !== cols[i - 1].slice(5));
 
@@ -948,13 +951,50 @@ function renderHistorical() {
   empty.style.display = 'none';
   lanes.style.display = 'block';
 
-  let html = '<div class="hist-wrap"><table class="hist-matrix">';
-  const arrow = HIST_YEAR_DIR === 'desc' ? '&#9660;' : '&#9650;';
-  html += '<thead><tr><th class="hist-ticker-h">Ticker</th>';
+  // Row sort: when a year sub-column is active, order tickers by that column's
+  // earnings date (Portfolio block before Watchlist); missing dates sort last.
+  const sortActive = HIST_SORT_CQ && cols.indexOf(HIST_SORT_CQ) !== -1;
+  if (sortActive) {
+    const sgn = HIST_SORT_DIR === 'desc' ? -1 : 1;
+    const grpRank = g => (g === 'Portfolio' ? 0 : 1);
+    const dateAt = t => {
+      let best = null;
+      for (const e of (dh[t] || [])) if (e.cq === HIST_SORT_CQ && (!best || e.date > best)) best = e.date;
+      return best;
+    };
+    rows.sort((a, b) => {
+      if (grpRank(a.group) !== grpRank(b.group)) return grpRank(a.group) - grpRank(b.group);
+      const da = dateAt(a.ticker), db = dateAt(b.ticker);
+      if (da == null && db == null) return a.ticker.localeCompare(b.ticker);
+      if (da == null) return 1;
+      if (db == null) return -1;
+      return sgn * da.localeCompare(db) || a.ticker.localeCompare(b.ticker);
+    });
+  }
+
+  // Quarter groups (in column order) for the two-level header.
+  const groups = [];
   for (let i = 0; i < cols.length; i++) {
-    const cls = 'qcol' + (qStart[i] ? ' qstart' : '');
-    html += `<th class="${cls}" title="Click to sort years ${HIST_YEAR_DIR === 'desc' ? 'oldest-first' : 'newest-first'}">`
-      + `${cqLabel(cols[i])}<span class="sort-ind">${arrow}</span></th>`;
+    const q = cols[i].slice(5);
+    if (!groups.length || groups[groups.length - 1].q !== q) groups.push({ q, count: 0 });
+    groups[groups.length - 1].count++;
+  }
+
+  let html = '<div class="hist-wrap"><table class="hist-matrix">';
+  // Header row 1: Ticker (spans both rows) + big quarter bands.
+  html += '<thead><tr>';
+  html += `<th class="hist-ticker-h" rowspan="2" title="${sortActive ? 'Click to reset to alphabetical order' : 'Tickers in alphabetical order'}">Ticker</th>`;
+  for (const g of groups) html += `<th class="qgrp qstart" colspan="${g.count}">Q${g.q}</th>`;
+  html += '</tr><tr>';
+  // Header row 2: year sub-columns (click to sort tickers by that date).
+  for (let i = 0; i < cols.length; i++) {
+    const cq = cols[i];
+    const isSorted = cq === HIST_SORT_CQ;
+    const ind = isSorted
+      ? ` <span class="sort-ind">${HIST_SORT_DIR === 'desc' ? '&#9660;' : '&#9650;'}</span>` : '';
+    const cls = 'ycol' + (qStart[i] ? ' qstart' : '') + (isSorted ? ' sorted' : '');
+    html += `<th class="${cls}" data-cq="${cq}" title="Sort tickers by Q${cq.slice(5)} '${cq.slice(2, 4)} date">`
+      + `&rsquo;${cq.slice(2, 4)}${ind}</th>`;
   }
   html += '</tr></thead><tbody>';
 
@@ -973,13 +1013,18 @@ function renderHistorical() {
     html += `<tr><td class="hist-ticker">${row.ticker}</td>`;
     for (let i = 0; i < cols.length; i++) {
       const iso = byCq[cols[i]];
+      const classes = [];
+      if (qStart[i]) classes.push('qstart');
+      if (cols[i] === HIST_SORT_CQ) classes.push('sortcol');
+      if (!iso) classes.push('hist-empty');
+      const clsAttr = classes.length ? ` class="${classes.join(' ')}"` : '';
       if (iso) {
         const d = new Date(iso + 'T00:00:00');
         const cell = d.toLocaleDateString('en', { month: 'short', day: 'numeric' });
         const tip = d.toLocaleDateString('en', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-        html += `<td${qStart[i] ? ' class="qstart"' : ''} title="${tip}">${cell}</td>`;
+        html += `<td${clsAttr} title="${tip}">${cell}</td>`;
       } else {
-        html += `<td class="hist-empty${qStart[i] ? ' qstart' : ''}">&mdash;</td>`;
+        html += `<td${clsAttr}>&mdash;</td>`;
       }
     }
     html += '</tr>';
@@ -987,13 +1032,23 @@ function renderHistorical() {
   html += '</tbody></table></div>';
   lanes.innerHTML = html;
 
-  // Click any quarter header to flip the year-sort direction within buckets.
-  lanes.querySelectorAll('.hist-matrix th.qcol').forEach(th => {
+  // Click a year sub-column to sort tickers by that column's date (toggles
+  // asc/desc); click the Ticker header to reset to alphabetical order.
+  lanes.querySelectorAll('.hist-matrix th.ycol').forEach(th => {
     th.addEventListener('click', () => {
-      HIST_YEAR_DIR = HIST_YEAR_DIR === 'asc' ? 'desc' : 'asc';
-      localStorage.setItem('earnings_history_dir', HIST_YEAR_DIR);
+      const cq = th.dataset.cq;
+      if (HIST_SORT_CQ === cq) HIST_SORT_DIR = HIST_SORT_DIR === 'asc' ? 'desc' : 'asc';
+      else { HIST_SORT_CQ = cq; HIST_SORT_DIR = 'asc'; }
+      localStorage.setItem('earnings_history_sortcq', HIST_SORT_CQ);
+      localStorage.setItem('earnings_history_sortdir', HIST_SORT_DIR);
       renderHistorical();
     });
+  });
+  const tickerHdr = lanes.querySelector('.hist-matrix th.hist-ticker-h');
+  if (tickerHdr) tickerHdr.addEventListener('click', () => {
+    HIST_SORT_CQ = null;
+    localStorage.removeItem('earnings_history_sortcq');
+    renderHistorical();
   });
 }
 
