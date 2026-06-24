@@ -922,10 +922,10 @@ function renderHistorical() {
       if (start && start >= cutoff && start <= today) cqSet.add(e.cq);
     }
   }
-  // Group columns by quarter number (all Q1s, then Q2s, ...), ascending year
-  // within each group, so the usual reporting window for a quarter reads down.
+  // Group columns by quarter number (all Q1s, then Q2s, ...), newest year
+  // first within each group, so the usual reporting window for a quarter reads down.
   const cols = Array.from(cqSet).sort((a, b) =>
-    (a.slice(5) - b.slice(5)) || (a.slice(0, 4) - b.slice(0, 4)));
+    (a.slice(5) - b.slice(5)) || (b.slice(0, 4) - a.slice(0, 4)));
   // First column of each quarter group gets a divider on its left edge.
   const qStart = cols.map((cq, i) => i === 0 || cq.slice(5) !== cols[i - 1].slice(5));
 
