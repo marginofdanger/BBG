@@ -272,7 +272,9 @@ let FILTER = localStorage.getItem('earnings_filter') || 'Portfolio';
 let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '30');
 let ZOOM_DAYS_REPORTED = parseInt(localStorage.getItem('earnings_reported_zoom') || '30');
 if (ZOOM_DAYS_REPORTED === 45 || ZOOM_DAYS_REPORTED === 90) ZOOM_DAYS_REPORTED = 30;
-let ZOOM_DAYS_HISTORY = parseInt(localStorage.getItem('earnings_history_zoom') || '1095');
+let ZOOM_YEARS_HISTORY = parseInt(localStorage.getItem('earnings_history_zoom') || '4');
+// Migrate old day-based values (365/730/1095) to a year-count.
+if (!(ZOOM_YEARS_HISTORY >= 1 && ZOOM_YEARS_HISTORY <= 6)) ZOOM_YEARS_HISTORY = 4;
 
 function syncRangeButtonsForTab() {
   // Range button definitions differ between tabs; rebuild the chip set so the
@@ -280,11 +282,11 @@ function syncRangeButtonsForTab() {
   const group = document.getElementById('range-group');
   if (TAB === 'historical') {
     group.innerHTML = `
-      <button data-days="365">1 Year</button>
-      <button data-days="730">2 Years</button>
-      <button data-days="1095">3 Years</button>
+      <button data-days="2">2 Years</button>
+      <button data-days="3">3 Years</button>
+      <button data-days="4">4 Years</button>
     `;
-    const active = ZOOM_DAYS_HISTORY;
+    const active = ZOOM_YEARS_HISTORY;
     document.querySelectorAll('#range-group button').forEach(b => {
       b.classList.toggle('active', parseInt(b.dataset.days) === active);
     });
@@ -909,23 +911,23 @@ function renderHistorical() {
 
   const dh = DATA.date_history || {};
   const today = new Date(DATA.snapshot_date + 'T00:00:00');
-  const cutoff = new Date(today);
-  cutoff.setDate(cutoff.getDate() - ZOOM_DAYS_HISTORY);
+  // Show whole calendar years: the selected count back from the snapshot year.
+  const minYear = today.getFullYear() - (ZOOM_YEARS_HISTORY - 1);
 
   const rows = filteredHistoryTickers();
 
-  // Distinct calendar quarters within range across the filtered tickers.
+  // Distinct calendar quarters (>= minYear, not in the future) across the tickers.
   const cqSet = new Set();
   for (const row of rows) {
     for (const e of (dh[row.ticker] || [])) {
       const start = cqStart(e.cq);
-      if (start && start >= cutoff && start <= today) cqSet.add(e.cq);
+      if (start && Number(e.cq.slice(0, 4)) >= minYear && start <= today) cqSet.add(e.cq);
     }
   }
-  // Group columns by quarter number (all Q1s, then Q2s, ...), newest year
-  // first within each group, so the usual reporting window for a quarter reads down.
+  // Group columns by quarter number (all Q1s, then Q2s, ...), ascending year
+  // within each group, so the usual reporting window for a quarter reads down.
   const cols = Array.from(cqSet).sort((a, b) =>
-    (a.slice(5) - b.slice(5)) || (b.slice(0, 4) - a.slice(0, 4)));
+    (a.slice(5) - b.slice(5)) || (a.slice(0, 4) - b.slice(0, 4)));
   // First column of each quarter group gets a divider on its left edge.
   const qStart = cols.map((cq, i) => i === 0 || cq.slice(5) !== cols[i - 1].slice(5));
 
@@ -933,7 +935,7 @@ function renderHistorical() {
     lanes.style.display = 'none';
     empty.style.display = 'block';
     empty.innerHTML = 'No historical earnings dates in this snapshot. '
-      + 'Run <code>python pull_earnings.py</code> to populate the last 3 years.';
+      + 'Run <code>python pull_earnings.py</code> to populate the last few years.';
     return;
   }
   empty.style.display = 'none';
@@ -992,7 +994,7 @@ document.getElementById('range-group').addEventListener('click', e => {
   e.target.classList.add('active');
   const v = parseInt(e.target.dataset.days);
   if (TAB === 'historical') {
-    ZOOM_DAYS_HISTORY = v;
+    ZOOM_YEARS_HISTORY = v;
     localStorage.setItem('earnings_history_zoom', v);
   } else if (TAB === 'reported') {
     ZOOM_DAYS_REPORTED = v;

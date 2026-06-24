@@ -978,13 +978,14 @@ def _calendar_quarter(d):
     return f"{d.year}Q{(d.month - 1) // 3 + 1}"
 
 
-def _build_date_history(date_strings, today, max_days=1188):
+def _build_date_history(date_strings, today, max_days=1500):
     """Parse, window-filter, bin, and sort a ticker's announcement dates.
 
     Keeps dates in [today - max_days, today]. Returns a list of
     {"date": "YYYY-MM-DD", "cq": "YYYYQn"} sorted ascending by date.
-    Unparseable entries are skipped. max_days defaults to ~3.25 years so the
-    3-year view has a little headroom.
+    Unparseable entries are skipped. max_days defaults to ~4.1 years so the
+    Historical tab's 4-calendar-year view is fully covered (incl. early-Jan
+    prints of the oldest year).
     """
     cutoff = today - timedelta(days=max_days)
     out = []
@@ -1018,7 +1019,7 @@ def _quarterly_dates_from_rows(rows):
     return out
 
 
-def pull_earnings_date_history(bbg_tickers, today, max_days=1188):
+def pull_earnings_date_history(bbg_tickers, today, max_days=1500):
     """Pull historical earnings announcement dates (last ~3 years) per ticker.
 
     Reads ERN_ANN_DT_AND_PER (BDS) — the same field the earnings_history and

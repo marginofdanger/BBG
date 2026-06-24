@@ -56,8 +56,8 @@ def test_build_filters_future_dates():
 
 def test_build_filters_too_old_dates():
     today = date(2026, 6, 23)
-    too_old = (today - timedelta(days=1200)).isoformat()
-    in_window = (today - timedelta(days=1100)).isoformat()
+    too_old = (today - timedelta(days=1600)).isoformat()   # beyond the ~4.1yr window
+    in_window = (today - timedelta(days=1400)).isoformat()  # inside it
     out = _build_date_history([too_old, in_window], today)
     assert [r["date"] for r in out] == [in_window]
 
