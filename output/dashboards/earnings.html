@@ -195,6 +195,35 @@ body {
 .lane-header.reported-this-week { color: #16a34a; border-color: #16a34a; background: #f0fdf4; }
 .lane-header.reported-last-week { color: #2563eb; border-color: #2563eb; background: #eff6ff; }
 .lane-header.reported-older { color: #6b7280; border-color: #d1d5db; background: #f9fafb; }
+
+/* Historical matrix */
+.hist-wrap {
+  overflow-x: auto; background: #fff; border: 1px solid #e2e5e9;
+  border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.hist-matrix { border-collapse: collapse; font-size: 11px; white-space: nowrap; }
+.hist-matrix th {
+  color: #999; font-weight: 600; font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.3px; padding: 8px 10px; text-align: right;
+  border-bottom: 1px solid #e2e5e9; background: #fff;
+}
+.hist-matrix th.hist-ticker-h { text-align: left; }
+.hist-matrix td {
+  padding: 6px 10px; text-align: right; color: #333;
+  border-bottom: 1px solid #f3f4f6;
+}
+.hist-matrix td.hist-ticker { text-align: left; font-weight: 700; color: #111; }
+.hist-matrix td.hist-empty { color: #ccc; }
+.hist-matrix tr:hover td { background: #f8fafc; }
+/* sticky ticker column */
+.hist-matrix th.hist-ticker-h,
+.hist-matrix td.hist-ticker { position: sticky; left: 0; background: #fff; z-index: 2; }
+.hist-matrix tr:hover td.hist-ticker { background: #f8fafc; }
+.hist-matrix tr.hist-group td {
+  background: #f1f3f5; color: #6b7280; font-weight: 700; font-size: 9px;
+  text-transform: uppercase; letter-spacing: 0.5px; text-align: left;
+  position: sticky; left: 0;
+}
 </style>
 </head>
 <body>
@@ -208,6 +237,7 @@ body {
     <div class="tab-switcher" id="tab-switcher">
       <button class="active" data-tab="upcoming">Upcoming</button>
       <button data-tab="reported">Reported</button>
+      <button data-tab="historical">Historical</button>
     </div>
     <a href="earnings_changes.html" style="font-size:11px;color:#2563eb;text-decoration:none;margin-right:8px;">Changes →</a>
     <label>Show:</label>
@@ -241,12 +271,23 @@ let FILTER = localStorage.getItem('earnings_filter') || 'Portfolio';
 let ZOOM_DAYS = parseInt(localStorage.getItem('earnings_zoom') || '30');
 let ZOOM_DAYS_REPORTED = parseInt(localStorage.getItem('earnings_reported_zoom') || '30');
 if (ZOOM_DAYS_REPORTED === 45 || ZOOM_DAYS_REPORTED === 90) ZOOM_DAYS_REPORTED = 30;
+let ZOOM_DAYS_HISTORY = parseInt(localStorage.getItem('earnings_history_zoom') || '1095');
 
 function syncRangeButtonsForTab() {
   // Range button definitions differ between tabs; rebuild the chip set so the
   // active class and data-days match whichever tab is live.
   const group = document.getElementById('range-group');
-  if (TAB === 'reported') {
+  if (TAB === 'historical') {
+    group.innerHTML = `
+      <button data-days="365">1 Year</button>
+      <button data-days="730">2 Years</button>
+      <button data-days="1095">3 Years</button>
+    `;
+    const active = ZOOM_DAYS_HISTORY;
+    document.querySelectorAll('#range-group button').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.days) === active);
+    });
+  } else if (TAB === 'reported') {
     group.innerHTML = `
       <button data-days="7">1 Week</button>
       <button data-days="14">2 Weeks</button>
@@ -395,7 +436,9 @@ function renderReported() {
 }
 
 function render() {
-  if (TAB === 'reported') {
+  if (TAB === 'historical') {
+    renderHistorical();
+  } else if (TAB === 'reported') {
     renderReported();
   } else {
     const companies = filteredCompanies();
@@ -833,6 +876,98 @@ function buildReportedCard(r) {
   return html;
 }
 
+// --- HISTORICAL MATRIX ---
+function cqLabel(cq) {
+  // "2025Q2" -> "Q2 '25"
+  const m = /^(\d{4})Q([1-4])$/.exec(cq);
+  return m ? `Q${m[2]} '${m[1].slice(2)}` : cq;
+}
+function cqStart(cq) {
+  // "2025Q2" -> Date(2025, 3, 1) (quarter-start, local midnight)
+  const m = /^(\d{4})Q([1-4])$/.exec(cq);
+  return m ? new Date(parseInt(m[1]), (parseInt(m[2]) - 1) * 3, 1) : null;
+}
+function filteredHistoryTickers() {
+  // Portfolio group first, then Watchlist; alpha within group. Group is read
+  // from DATA.companies; tickers absent there default to Watchlist.
+  if (!DATA || !DATA.date_history) return [];
+  const groupOf = {};
+  for (const c of (DATA.companies || [])) groupOf[c.ticker] = c.group;
+  let list = Object.keys(DATA.date_history)
+    .map(t => ({ ticker: t, group: groupOf[t] || 'Watchlist' }));
+  if (FILTER !== 'all') list = list.filter(x => x.group === FILTER);
+  const rank = g => (g === 'Portfolio' ? 0 : 1);
+  list.sort((a, b) => rank(a.group) - rank(b.group) || a.ticker.localeCompare(b.ticker));
+  return list;
+}
+function renderHistorical() {
+  const lanes = document.getElementById('lanes');
+  const tl = document.getElementById('mini-timeline');
+  const empty = document.getElementById('empty');
+  tl.style.display = 'none';
+
+  const dh = DATA.date_history || {};
+  const today = new Date(DATA.snapshot_date + 'T00:00:00');
+  const cutoff = new Date(today);
+  cutoff.setDate(cutoff.getDate() - ZOOM_DAYS_HISTORY);
+
+  const rows = filteredHistoryTickers();
+
+  // Distinct calendar quarters within range across the filtered tickers.
+  const cqSet = new Set();
+  for (const row of rows) {
+    for (const e of (dh[row.ticker] || [])) {
+      const start = cqStart(e.cq);
+      if (start && start >= cutoff && start <= today) cqSet.add(e.cq);
+    }
+  }
+  const cols = Array.from(cqSet).sort(); // "YYYYQn" sorts chronologically
+
+  if (!rows.length || !cols.length) {
+    lanes.style.display = 'none';
+    empty.style.display = 'block';
+    empty.innerHTML = 'No historical earnings dates in this snapshot. '
+      + 'Run <code>python pull_earnings.py</code> to populate the last 3 years.';
+    return;
+  }
+  empty.style.display = 'none';
+  lanes.style.display = 'block';
+
+  let html = '<div class="hist-wrap"><table class="hist-matrix">';
+  html += '<thead><tr><th class="hist-ticker-h">Ticker</th>';
+  for (const cq of cols) html += `<th>${cqLabel(cq)}</th>`;
+  html += '</tr></thead><tbody>';
+
+  let lastGroup = null;
+  const showDividers = (FILTER === 'all');
+  for (const row of rows) {
+    if (showDividers && row.group !== lastGroup) {
+      html += `<tr class="hist-group"><td colspan="${cols.length + 1}">${row.group}</td></tr>`;
+      lastGroup = row.group;
+    }
+    // cq -> latest date (latest wins if a quarter has >1 print)
+    const byCq = {};
+    for (const e of (dh[row.ticker] || [])) {
+      if (!byCq[e.cq] || e.date > byCq[e.cq]) byCq[e.cq] = e.date;
+    }
+    html += `<tr><td class="hist-ticker">${row.ticker}</td>`;
+    for (const cq of cols) {
+      const iso = byCq[cq];
+      if (iso) {
+        const d = new Date(iso + 'T00:00:00');
+        const cell = d.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+        const tip = d.toLocaleDateString('en', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+        html += `<td title="${tip}">${cell}</td>`;
+      } else {
+        html += `<td class="hist-empty">&mdash;</td>`;
+      }
+    }
+    html += '</tr>';
+  }
+  html += '</tbody></table></div>';
+  lanes.innerHTML = html;
+}
+
 // --- EVENT LISTENERS ---
 document.getElementById('filter-group').addEventListener('click', e => {
   if (e.target.tagName !== 'BUTTON') return;
@@ -848,7 +983,10 @@ document.getElementById('range-group').addEventListener('click', e => {
   document.querySelectorAll('#range-group button').forEach(b => b.classList.remove('active'));
   e.target.classList.add('active');
   const v = parseInt(e.target.dataset.days);
-  if (TAB === 'reported') {
+  if (TAB === 'historical') {
+    ZOOM_DAYS_HISTORY = v;
+    localStorage.setItem('earnings_history_zoom', v);
+  } else if (TAB === 'reported') {
     ZOOM_DAYS_REPORTED = v;
     localStorage.setItem('earnings_reported_zoom', v);
   } else {
