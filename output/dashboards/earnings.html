@@ -215,6 +215,10 @@ body {
 .hist-matrix td.hist-ticker { text-align: left; font-weight: 700; color: #111; }
 .hist-matrix td.hist-empty { color: #ccc; }
 .hist-matrix th.qstart, .hist-matrix td.qstart { border-left: 2px solid #d1d5db; }
+.hist-matrix th.qcol { cursor: pointer; user-select: none; }
+.hist-matrix th.qcol:hover { color: #2563eb; background: #f3f6fc; }
+.hist-matrix th .sort-ind { font-size: 8px; color: #c4c8cf; margin-left: 3px; }
+.hist-matrix th.qcol:hover .sort-ind { color: #2563eb; }
 .hist-matrix tr:hover td { background: #f8fafc; }
 /* sticky ticker column */
 .hist-matrix th.hist-ticker-h,
@@ -275,6 +279,8 @@ if (ZOOM_DAYS_REPORTED === 45 || ZOOM_DAYS_REPORTED === 90) ZOOM_DAYS_REPORTED =
 let ZOOM_YEARS_HISTORY = parseInt(localStorage.getItem('earnings_history_zoom') || '4');
 // Migrate old day-based values (365/730/1095) to a year-count.
 if (!(ZOOM_YEARS_HISTORY >= 1 && ZOOM_YEARS_HISTORY <= 6)) ZOOM_YEARS_HISTORY = 4;
+// Year-sort direction within each quarter bucket: 'asc' (23→26) or 'desc' (26→23).
+let HIST_YEAR_DIR = localStorage.getItem('earnings_history_dir') === 'desc' ? 'desc' : 'asc';
 
 function syncRangeButtonsForTab() {
   // Range button definitions differ between tabs; rebuild the chip set so the
@@ -924,10 +930,11 @@ function renderHistorical() {
       if (start && Number(e.cq.slice(0, 4)) >= minYear && start <= today) cqSet.add(e.cq);
     }
   }
-  // Group columns by quarter number (all Q1s, then Q2s, ...), ascending year
-  // within each group, so the usual reporting window for a quarter reads down.
+  // Group columns by quarter number (all Q1s, then Q2s, ...); year order within
+  // each group follows HIST_YEAR_DIR (click a quarter header to toggle).
+  const dir = HIST_YEAR_DIR === 'desc' ? -1 : 1;
   const cols = Array.from(cqSet).sort((a, b) =>
-    (a.slice(5) - b.slice(5)) || (a.slice(0, 4) - b.slice(0, 4)));
+    (a.slice(5) - b.slice(5)) || dir * (a.slice(0, 4) - b.slice(0, 4)));
   // First column of each quarter group gets a divider on its left edge.
   const qStart = cols.map((cq, i) => i === 0 || cq.slice(5) !== cols[i - 1].slice(5));
 
@@ -942,9 +949,12 @@ function renderHistorical() {
   lanes.style.display = 'block';
 
   let html = '<div class="hist-wrap"><table class="hist-matrix">';
+  const arrow = HIST_YEAR_DIR === 'desc' ? '&#9660;' : '&#9650;';
   html += '<thead><tr><th class="hist-ticker-h">Ticker</th>';
   for (let i = 0; i < cols.length; i++) {
-    html += `<th${qStart[i] ? ' class="qstart"' : ''}>${cqLabel(cols[i])}</th>`;
+    const cls = 'qcol' + (qStart[i] ? ' qstart' : '');
+    html += `<th class="${cls}" title="Click to sort years ${HIST_YEAR_DIR === 'desc' ? 'oldest-first' : 'newest-first'}">`
+      + `${cqLabel(cols[i])}<span class="sort-ind">${arrow}</span></th>`;
   }
   html += '</tr></thead><tbody>';
 
@@ -976,6 +986,15 @@ function renderHistorical() {
   }
   html += '</tbody></table></div>';
   lanes.innerHTML = html;
+
+  // Click any quarter header to flip the year-sort direction within buckets.
+  lanes.querySelectorAll('.hist-matrix th.qcol').forEach(th => {
+    th.addEventListener('click', () => {
+      HIST_YEAR_DIR = HIST_YEAR_DIR === 'asc' ? 'desc' : 'asc';
+      localStorage.setItem('earnings_history_dir', HIST_YEAR_DIR);
+      renderHistorical();
+    });
+  });
 }
 
 // --- EVENT LISTENERS ---
