@@ -222,6 +222,10 @@ body {
 .hist-matrix th.hist-ticker-h { cursor: pointer; }
 .hist-matrix th .sort-ind { font-size: 8px; color: #2563eb; margin-left: 2px; }
 .hist-matrix td.sortcol { background: #f3f6fc; }
+.hist-matrix td.est { font-style: italic; color: #94a3b8; }
+.hist-matrix td.est-confirmed { color: #2563eb; }
+.hist-matrix th.ycol-est { font-style: italic; color: #94a3b8; }
+.hist-matrix th.ycol-est:hover { color: #2563eb; }
 .hist-matrix tr:hover td { background: #f8fafc; }
 /* sticky ticker column */
 .hist-matrix th.hist-ticker-h,
@@ -927,13 +931,27 @@ function renderHistorical() {
 
   const rows = filteredHistoryTickers();
 
-  // Distinct calendar quarters (>= minYear, not in the future) across the tickers.
+  // Upcoming estimated date per ticker = the next expected report (future-dated)
+  // from the Upcoming feed, binned into its calendar quarter (e.g. Q3 2026).
+  const expectedByTicker = {};
+  for (const c of (DATA.companies || [])) {
+    if (!c.earnings_date) continue;
+    const ed = new Date(c.earnings_date + 'T00:00:00');
+    if (!(ed > today)) continue;  // only genuinely upcoming dates
+    const cq = `${ed.getFullYear()}Q${Math.floor(ed.getMonth() / 3) + 1}`;
+    expectedByTicker[c.ticker] = { cq, date: c.earnings_date, confirmed: !!c.date_confirmed };
+  }
+
+  // Distinct calendar quarters: historical (>= minYear, not future) plus each
+  // filtered ticker's upcoming estimate quarter.
   const cqSet = new Set();
   for (const row of rows) {
     for (const e of (dh[row.ticker] || [])) {
       const start = cqStart(e.cq);
       if (start && Number(e.cq.slice(0, 4)) >= minYear && start <= today) cqSet.add(e.cq);
     }
+    const ex = expectedByTicker[row.ticker];
+    if (ex) cqSet.add(ex.cq);
   }
   // Columns: grouped by quarter number (Q1->Q4), years ascending within each.
   const cols = Array.from(cqSet).sort((a, b) =>
@@ -960,6 +978,8 @@ function renderHistorical() {
     const dateAt = t => {
       let best = null;
       for (const e of (dh[t] || [])) if (e.cq === HIST_SORT_CQ && (!best || e.date > best)) best = e.date;
+      const ex = expectedByTicker[t];
+      if (best == null && ex && ex.cq === HIST_SORT_CQ) best = ex.date;  // upcoming estimate
       return best;
     };
     rows.sort((a, b) => {
@@ -990,11 +1010,12 @@ function renderHistorical() {
   for (let i = 0; i < cols.length; i++) {
     const cq = cols[i];
     const isSorted = cq === HIST_SORT_CQ;
+    const isFuture = cqStart(cq) > today;  // upcoming estimate column
     const ind = isSorted
       ? ` <span class="sort-ind">${HIST_SORT_DIR === 'desc' ? '&#9660;' : '&#9650;'}</span>` : '';
-    const cls = 'ycol' + (qStart[i] ? ' qstart' : '') + (isSorted ? ' sorted' : '');
-    html += `<th class="${cls}" data-cq="${cq}" title="Sort tickers by Q${cq.slice(5)} '${cq.slice(2, 4)} date">`
-      + `&rsquo;${cq.slice(2, 4)}${ind}</th>`;
+    const cls = 'ycol' + (qStart[i] ? ' qstart' : '') + (isSorted ? ' sorted' : '') + (isFuture ? ' ycol-est' : '');
+    const ttl = (isFuture ? 'Upcoming estimate — s' : 'S') + `ort tickers by Q${cq.slice(5)} '${cq.slice(2, 4)} date`;
+    html += `<th class="${cls}" data-cq="${cq}" title="${ttl}">&rsquo;${cq.slice(2, 4)}${ind}</th>`;
   }
   html += '</tr></thead><tbody>';
 
@@ -1005,24 +1026,35 @@ function renderHistorical() {
       html += `<tr class="hist-group"><td colspan="${cols.length + 1}">${row.group}</td></tr>`;
       lastGroup = row.group;
     }
-    // cq -> latest date (latest wins if a quarter has >1 print)
+    // Per-quarter value: historical actual (latest wins), or the upcoming
+    // estimate for the future quarter.
     const byCq = {};
     for (const e of (dh[row.ticker] || [])) {
-      if (!byCq[e.cq] || e.date > byCq[e.cq]) byCq[e.cq] = e.date;
+      if (!byCq[e.cq] || e.date > byCq[e.cq].date) byCq[e.cq] = { date: e.date, est: false };
     }
+    const exRow = expectedByTicker[row.ticker];
+    if (exRow && !byCq[exRow.cq]) byCq[exRow.cq] = { date: exRow.date, est: true, confirmed: exRow.confirmed };
+
     html += `<tr><td class="hist-ticker">${row.ticker}</td>`;
     for (let i = 0; i < cols.length; i++) {
-      const iso = byCq[cols[i]];
+      const v = byCq[cols[i]];
       const classes = [];
       if (qStart[i]) classes.push('qstart');
       if (cols[i] === HIST_SORT_CQ) classes.push('sortcol');
-      if (!iso) classes.push('hist-empty');
+      if (!v) classes.push('hist-empty');
+      if (v && v.est) classes.push(v.confirmed ? 'est est-confirmed' : 'est');
       const clsAttr = classes.length ? ` class="${classes.join(' ')}"` : '';
-      if (iso) {
-        const d = new Date(iso + 'T00:00:00');
-        const cell = d.toLocaleDateString('en', { month: 'short', day: 'numeric' });
-        const tip = d.toLocaleDateString('en', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-        html += `<td${clsAttr} title="${tip}">${cell}</td>`;
+      if (v) {
+        const d = new Date(v.date + 'T00:00:00');
+        const md = d.toLocaleDateString('en', { month: 'short', day: 'numeric' });
+        const full = d.toLocaleDateString('en', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+        if (v.est) {
+          const txt = (v.confirmed ? '' : '~') + md;
+          const tip = (v.confirmed ? 'Confirmed (upcoming): ' : 'Estimated (upcoming): ') + full;
+          html += `<td${clsAttr} title="${tip}">${txt}</td>`;
+        } else {
+          html += `<td${clsAttr} title="${full}">${md}</td>`;
+        }
       } else {
         html += `<td${clsAttr}>&mdash;</td>`;
       }
