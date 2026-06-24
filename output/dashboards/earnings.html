@@ -214,6 +214,7 @@ body {
 }
 .hist-matrix td.hist-ticker { text-align: left; font-weight: 700; color: #111; }
 .hist-matrix td.hist-empty { color: #ccc; }
+.hist-matrix th.qstart, .hist-matrix td.qstart { border-left: 2px solid #d1d5db; }
 .hist-matrix tr:hover td { background: #f8fafc; }
 /* sticky ticker column */
 .hist-matrix th.hist-ticker-h,
@@ -921,7 +922,12 @@ function renderHistorical() {
       if (start && start >= cutoff && start <= today) cqSet.add(e.cq);
     }
   }
-  const cols = Array.from(cqSet).sort(); // "YYYYQn" sorts chronologically
+  // Group columns by quarter number (all Q1s, then Q2s, ...), ascending year
+  // within each group, so the usual reporting window for a quarter reads down.
+  const cols = Array.from(cqSet).sort((a, b) =>
+    (a.slice(5) - b.slice(5)) || (a.slice(0, 4) - b.slice(0, 4)));
+  // First column of each quarter group gets a divider on its left edge.
+  const qStart = cols.map((cq, i) => i === 0 || cq.slice(5) !== cols[i - 1].slice(5));
 
   if (!rows.length || !cols.length) {
     lanes.style.display = 'none';
@@ -935,7 +941,9 @@ function renderHistorical() {
 
   let html = '<div class="hist-wrap"><table class="hist-matrix">';
   html += '<thead><tr><th class="hist-ticker-h">Ticker</th>';
-  for (const cq of cols) html += `<th>${cqLabel(cq)}</th>`;
+  for (let i = 0; i < cols.length; i++) {
+    html += `<th${qStart[i] ? ' class="qstart"' : ''}>${cqLabel(cols[i])}</th>`;
+  }
   html += '</tr></thead><tbody>';
 
   let lastGroup = null;
@@ -951,15 +959,15 @@ function renderHistorical() {
       if (!byCq[e.cq] || e.date > byCq[e.cq]) byCq[e.cq] = e.date;
     }
     html += `<tr><td class="hist-ticker">${row.ticker}</td>`;
-    for (const cq of cols) {
-      const iso = byCq[cq];
+    for (let i = 0; i < cols.length; i++) {
+      const iso = byCq[cols[i]];
       if (iso) {
         const d = new Date(iso + 'T00:00:00');
         const cell = d.toLocaleDateString('en', { month: 'short', day: 'numeric' });
         const tip = d.toLocaleDateString('en', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
-        html += `<td title="${tip}">${cell}</td>`;
+        html += `<td${qStart[i] ? ' class="qstart"' : ''} title="${tip}">${cell}</td>`;
       } else {
-        html += `<td class="hist-empty">&mdash;</td>`;
+        html += `<td class="hist-empty${qStart[i] ? ' qstart' : ''}">&mdash;</td>`;
       }
     }
     html += '</tr>';
