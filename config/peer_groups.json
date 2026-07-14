@@ -1,0 +1,4 @@
+{
+  "_comment": "Peer tickers pulled alongside PORTFOLIO and WATCHLIST so peer-comparison dashboards get identical consensus and stock-reaction coverage. Keys are group ids; values are short tickers.",
+  "hospitals": ["THC", "UHS"]
+}

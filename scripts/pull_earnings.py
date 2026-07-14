@@ -14,6 +14,7 @@ METRICS_PATH = os.path.join(REPO_ROOT, "config", "earnings_metrics.json")
 GUIDANCE_PATH = os.path.join(REPO_ROOT, "config", "guidance_overrides.json")
 ACTUALS_PATH = os.path.join(REPO_ROOT, "config", "actuals_overrides.json")
 TIMING_OVERRIDES_PATH = os.path.join(REPO_ROOT, "config", "earnings_timing_overrides.json")
+PEER_GROUPS_PATH = os.path.join(REPO_ROOT, "config", "peer_groups.json")
 
 
 def _load_timing_overrides():
@@ -32,6 +33,29 @@ def _load_timing_overrides():
         u = v.upper().strip()
         if u in ("AMC", "BMO", "DUR"):
             out[k.upper()] = u
+    return out
+
+
+def _load_peer_tickers():
+    """Return a flat, de-duplicated list of peer tickers from config/peer_groups.json.
+
+    Peers are companies we compare our holdings against but do not hold. They are
+    pulled so peer-comparison dashboards get the same consensus and stock-reaction
+    coverage as portfolio names. Missing or malformed config is not fatal — the
+    pull simply proceeds with portfolio + watchlist only.
+    """
+    try:
+        with open(PEER_GROUPS_PATH, encoding="utf-8") as f:
+            raw = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return []
+    out = []
+    for group, tickers in raw.items():
+        if group.startswith("_") or not isinstance(tickers, list):
+            continue
+        for t in tickers:
+            if isinstance(t, str) and t.upper() not in out:
+                out.append(t.upper())
     return out
 
 
@@ -1132,10 +1156,18 @@ def main():
 
     # Build ticker list
     all_tickers = []
+    seen = set()
     for t in PORTFOLIO:
         all_tickers.append({"short": t, "bbg": _bbg_ticker(t), "group": "Portfolio"})
+        seen.add(t)
     for t in WATCHLIST:
         all_tickers.append({"short": t, "bbg": _bbg_ticker(t), "group": "Watchlist"})
+        seen.add(t)
+    for t in _load_peer_tickers():
+        if t in seen:
+            continue  # already covered as a holding or watchlist name
+        all_tickers.append({"short": t, "bbg": _bbg_ticker(t), "group": "Peer"})
+        seen.add(t)
 
     bbg_tickers = [e["bbg"] for e in all_tickers]
 
