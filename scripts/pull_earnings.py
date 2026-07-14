@@ -49,6 +49,8 @@ def _load_peer_tickers():
             raw = json.load(f)
     except (OSError, json.JSONDecodeError):
         return []
+    if not isinstance(raw, dict):
+        return []
     out = []
     for group, tickers in raw.items():
         if group.startswith("_") or not isinstance(tickers, list):
@@ -1159,12 +1161,12 @@ def main():
     seen = set()
     for t in PORTFOLIO:
         all_tickers.append({"short": t, "bbg": _bbg_ticker(t), "group": "Portfolio"})
-        seen.add(t)
+        seen.add(t.upper())
     for t in WATCHLIST:
         all_tickers.append({"short": t, "bbg": _bbg_ticker(t), "group": "Watchlist"})
-        seen.add(t)
+        seen.add(t.upper())
     for t in _load_peer_tickers():
-        if t in seen:
+        if t in seen:  # t is already uppercased by _load_peer_tickers
             continue  # already covered as a holding or watchlist name
         all_tickers.append({"short": t, "bbg": _bbg_ticker(t), "group": "Peer"})
         seen.add(t)
