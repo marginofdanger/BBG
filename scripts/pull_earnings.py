@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 from datetime import date, timedelta
 
 from xbbg import blp
@@ -89,18 +90,117 @@ def _classify_amc_bmo_heuristic(t_minus_1_px, t_px, t1_px,
     return "BMO"
 
 
-def _classify_timing(short_ticker, t_minus_1_px, t_px, t1_px):
-    """Resolve AMC/BMO via override-then-heuristic. Returns 'AMC' or 'BMO'.
+def _timing_from_expected_report_time(raw):
+    """Map Bloomberg EXPECTED_REPORT_TIME to the first post-print close.
 
-    'DUR' (during market hours, rare) is mapped to BMO since both compute
-    same-day return; the BMO baseline matches.
+    Bloomberg returns labels such as ``Aft-mkt`` / ``Bef-mkt`` or an exchange-
+    local time such as ``16:05``. A print at or after 16:00 is AMC; anything
+    earlier uses that day's close and therefore shares the BMO anchor.
+    """
+    if raw is None:
+        return None
+    value = str(raw).strip().lower()
+    if not value:
+        return None
+    normalized = re.sub(r"[^a-z0-9]+", " ", value).strip()
+    if normalized in {"aft mkt", "after market", "after close", "post market", "amc"}:
+        return "AMC"
+    if normalized in {
+        "bef mkt", "before market", "before open", "pre market", "bmo",
+        "during market", "dur",
+    }:
+        return "BMO"
+
+    match = re.fullmatch(
+        r"\s*(\d{1,2}):(\d{2})(?::\d{2})?\s*([ap]m)?\s*",
+        value,
+    )
+    if match is None:
+        return None
+    hour, minute = int(match.group(1)), int(match.group(2))
+    suffix = match.group(3)
+    if minute > 59 or hour > (12 if suffix else 23):
+        return None
+    if suffix:
+        hour %= 12
+        if suffix == "pm":
+            hour += 12
+    return "AMC" if hour * 60 + minute >= 16 * 60 else "BMO"
+
+
+def _resolve_timing(
+    short_ticker,
+    t_minus_1_px,
+    t_px,
+    t1_px,
+    expected_report_time=None,
+    prior_event_timing=None,
+):
+    """Return ``(AMC|BMO|None, source)`` without guessing prematurely.
+
+    Priority is manual override, an already-recorded timing for this exact
+    ticker/event date, Bloomberg's date-matched expected report time, then the
+    price-action heuristic. The heuristic only runs once both candidate closes
+    exist; before then the reaction remains pending.
     """
     override = _TIMING_OVERRIDES.get(short_ticker.upper())
     if override == "AMC":
-        return "AMC"
+        return "AMC", "manual_override"
     if override in ("BMO", "DUR"):
-        return "BMO"
-    return _classify_amc_bmo_heuristic(t_minus_1_px, t_px, t1_px)
+        return "BMO", "manual_override"
+
+    prior = str(prior_event_timing or "").upper().strip()
+    if prior in ("AMC", "BMO"):
+        return prior, "prior_event"
+
+    expected = _timing_from_expected_report_time(expected_report_time)
+    if expected is not None:
+        return expected, "bloomberg_expected_report_time"
+
+    if t1_px is None:
+        return None, "pending_next_close"
+    return (
+        _classify_amc_bmo_heuristic(t_minus_1_px, t_px, t1_px),
+        "price_action_heuristic",
+    )
+
+
+def _classify_timing(
+    short_ticker,
+    t_minus_1_px,
+    t_px,
+    t1_px,
+    expected_report_time=None,
+    prior_event_timing=None,
+):
+    """Backward-compatible timing value without the provenance string."""
+    return _resolve_timing(
+        short_ticker,
+        t_minus_1_px,
+        t_px,
+        t1_px,
+        expected_report_time,
+        prior_event_timing,
+    )[0]
+
+
+def _reaction_anchors(
+    timing,
+    t_minus_1,
+    t_close,
+    t1_close,
+    event_date=None,
+):
+    """Return ``(baseline, first_post_print_close)`` date/price tuples."""
+    if timing == "AMC":
+        # A weekend/holiday print has no event-date close. In that case the
+        # prior trading close is the baseline and the first later close is T+1.
+        if event_date is not None and t_close[0] != event_date:
+            return t_minus_1, t_close
+        return t_close, t1_close
+    if timing == "BMO":
+        return t_minus_1, t_close
+    return (None, None), (None, None)
 
 PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV", "FICO"]
 WATCHLIST = ["GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V",
@@ -649,7 +749,12 @@ def pull_earnings_history(bbg_tickers, actuals_data):
     return result
 
 
-def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
+def pull_reported_details(
+    bbg_tickers,
+    metrics_config,
+    group_lookup,
+    timing_history=None,
+):
     """Pull actuals vs. consensus, stock reaction, and NTM EPS delta for
     tickers that reported in the last 120 days.
 
@@ -657,16 +762,26 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
 
     Returns a list of dicts:
         {
-          "ticker", "group", "earnings_date", "earnings_time",
+          "ticker", "group", "earnings_date", "earnings_time", "timing_source",
           "metrics": [{"name", "actual", "consensus", "surprise", "yoy"}, ...],
-          "stock":   {"d1", "w1", "w1_vs_spx"},
+          "stock":   {
+              "d1", "w1", "w1_vs_spx",
+              "baseline_date", "d1_date", "w1_date",
+          },
           "ntm_eps_chg": float or None,
         }
+
+    ``timing_history`` is an optional ``{(ticker, earnings_date): AMC|BMO}``
+    map from a prior durable snapshot. It prevents a later refresh from losing
+    an event's already-established timing after Bloomberg rolls its expected
+    report date forward to the next quarter.
     """
     field_map = metrics_config["_field_map"]
     today = date.today()
     window_start = today - timedelta(days=120)
     reported = []
+    timing_history = timing_history or {}
+    expected_schedule = pull_earnings_dates(bbg_tickers)
 
     # Batch one SPX pull covering the whole window (+7 trading days buffer).
     spx_by_date = {}
@@ -759,10 +874,19 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                 "ticker": short,
                 "group": group_lookup.get(bt, ""),
                 "earnings_date": last["date"].isoformat(),
-                "earnings_time": "",
+                "earnings_time": None,
+                "expected_report_time": None,
+                "timing_source": None,
                 "fiscal_period": fiscal_period,
                 "metrics": [],
-                "stock": {"d1": None, "w1": None, "w1_vs_spx": None},
+                "stock": {
+                    "d1": None,
+                    "w1": None,
+                    "w1_vs_spx": None,
+                    "baseline_date": None,
+                    "d1_date": None,
+                    "w1_date": None,
+                },
                 "ntm_eps_chg": None,
             }
 
@@ -914,15 +1038,36 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                         t1_day = px_dates[t_idx + 1]
                         t1_px = px_by_date[t1_day]
 
-                timing = _classify_timing(short, t_minus_1_px, t_px, t1_px)
+                schedule = expected_schedule.get(bt, {})
+                expected_time = (
+                    schedule.get("time")
+                    if schedule.get("date") == last["date"].isoformat()
+                    else None
+                )
+                record["expected_report_time"] = expected_time
+                prior_timing = timing_history.get(
+                    (short, last["date"].isoformat())
+                )
+                timing, timing_source = _resolve_timing(
+                    short,
+                    t_minus_1_px,
+                    t_px,
+                    t1_px,
+                    expected_time,
+                    prior_timing,
+                )
                 record["earnings_time"] = timing
+                record["timing_source"] = timing_source
 
-                if timing == "AMC":
-                    pre_day, pre_px = t_day, t_px
-                    d1_day, d1_px = t1_day, t1_px
-                else:
-                    pre_day, pre_px = t_minus_1_day, t_minus_1_px
-                    d1_day, d1_px = t_day, t_px
+                (pre_day, pre_px), (d1_day, d1_px) = _reaction_anchors(
+                    timing,
+                    (t_minus_1_day, t_minus_1_px),
+                    (t_day, t_px),
+                    (t1_day, t1_px),
+                    last["date"].isoformat(),
+                )
+                record["stock"]["baseline_date"] = pre_day
+                record["stock"]["d1_date"] = d1_day
 
                 # "1W" = 5 trading days after the post-print close.
                 w1_day, w1_px = None, None
@@ -931,6 +1076,7 @@ def pull_reported_details(bbg_tickers, metrics_config, group_lookup):
                     if d1_idx + 5 < len(px_dates):
                         w1_day = px_dates[d1_idx + 5]
                         w1_px = px_by_date[w1_day]
+                record["stock"]["w1_date"] = w1_day
 
                 if pre_px and d1_px:
                     record["stock"]["d1"] = round((d1_px - pre_px) / pre_px, 4)

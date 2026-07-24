@@ -32,7 +32,10 @@ except ImportError:
 from pull_earnings import (  # noqa: E402
     _classify_amc_bmo_heuristic,
     _classify_timing,
+    _reaction_anchors,
+    _resolve_timing,
     _TIMING_OVERRIDES,
+    _timing_from_expected_report_time,
 )
 
 
@@ -116,3 +119,80 @@ def test_thc_override_stays_amc_before_t1_close_exists():
     """THC reports after the close; a missing next-day close must not relabel it BMO."""
     assert _TIMING_OVERRIDES.get("THC") == "AMC"
     assert _classify_timing("THC", 100.0, 101.9, None) == "AMC"
+
+
+def test_bloomberg_expected_report_time_labels_and_clock_times():
+    assert _timing_from_expected_report_time("Aft-mkt") == "AMC"
+    assert _timing_from_expected_report_time("Bef-mkt") == "BMO"
+    assert _timing_from_expected_report_time("16:05") == "AMC"
+    assert _timing_from_expected_report_time("06:45") == "BMO"
+    assert _timing_from_expected_report_time("3:59 PM") == "BMO"
+    assert _timing_from_expected_report_time("4:00 PM") == "AMC"
+    assert _timing_from_expected_report_time(None) is None
+    assert _timing_from_expected_report_time("TBD") is None
+
+
+def test_date_matched_bloomberg_time_beats_price_action():
+    timing, source = _resolve_timing(
+        "NO_OVERRIDE_XYZ",
+        100.0,
+        102.0,
+        102.1,
+        expected_report_time="16:05",
+    )
+    assert timing == "AMC"
+    assert source == "bloomberg_expected_report_time"
+
+
+def test_unknown_timing_remains_pending_until_next_close_exists():
+    timing, source = _resolve_timing(
+        "NO_OVERRIDE_XYZ",
+        100.0,
+        102.0,
+        None,
+    )
+    assert timing is None
+    assert source == "pending_next_close"
+
+
+def test_prior_event_timing_survives_bloomberg_schedule_roll_forward():
+    timing, source = _resolve_timing(
+        "NO_OVERRIDE_XYZ",
+        100.0,
+        102.0,
+        103.0,
+        prior_event_timing="AMC",
+    )
+    assert timing == "AMC"
+    assert source == "prior_event"
+
+
+def test_reaction_anchor_dates_follow_event_timing():
+    t_minus_1 = ("2026-07-22", 100.0)
+    t_close = ("2026-07-23", 102.0)
+    t1_close = ("2026-07-24", 105.0)
+    assert _reaction_anchors("AMC", t_minus_1, t_close, t1_close) == (
+        t_close,
+        t1_close,
+    )
+    assert _reaction_anchors("BMO", t_minus_1, t_close, t1_close) == (
+        t_minus_1,
+        t_close,
+    )
+    assert _reaction_anchors(None, t_minus_1, t_close, t1_close) == (
+        (None, None),
+        (None, None),
+    )
+
+
+def test_weekend_amc_uses_prior_and_first_subsequent_trading_closes():
+    friday = ("2026-07-24", 100.0)
+    monday = ("2026-07-27", 105.0)
+    tuesday = ("2026-07-28", 106.0)
+    assert _reaction_anchors(
+        "AMC",
+        friday,
+        monday,
+        tuesday,
+        event_date="2026-07-26",
+    ) == (friday, monday)
