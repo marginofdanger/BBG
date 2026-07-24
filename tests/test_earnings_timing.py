@@ -110,3 +110,9 @@ def test_app_override_yields_amc():
     if "APP" not in _TIMING_OVERRIDES:
         return
     assert _classify_timing("APP", 530.0, 520.0, 553.0) == "AMC"
+
+
+def test_thc_override_stays_amc_before_t1_close_exists():
+    """THC reports after the close; a missing next-day close must not relabel it BMO."""
+    assert _TIMING_OVERRIDES.get("THC") == "AMC"
+    assert _classify_timing("THC", 100.0, 101.9, None) == "AMC"
