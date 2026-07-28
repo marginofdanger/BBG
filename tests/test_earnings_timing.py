@@ -121,6 +121,12 @@ def test_thc_override_stays_amc_before_t1_close_exists():
     assert _classify_timing("THC", 100.0, 101.9, None) == "AMC"
 
 
+def test_uhs_override_stays_amc_before_t1_close_exists():
+    """UHS reports after the close; its incomplete T+1 session must remain pending."""
+    assert _TIMING_OVERRIDES.get("UHS") == "AMC"
+    assert _classify_timing("UHS", 100.0, 102.3, None) == "AMC"
+
+
 def test_bloomberg_expected_report_time_labels_and_clock_times():
     assert _timing_from_expected_report_time("Aft-mkt") == "AMC"
     assert _timing_from_expected_report_time("Bef-mkt") == "BMO"
