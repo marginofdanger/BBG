@@ -26,12 +26,43 @@ function Log($msg) {
 
 Log "=== Weekly BBG update starting ==="
 
+# The Python pull scripts report their own status via scripts\_hub_reporting.py,
+# but a run that skips before they start reported nothing at all -- so the hub
+# kept showing the prior week's green "success" while the site went stale.
+# Anything that ends the run early has to report for itself.
+$hubDir = $env:AUTOMATION_HUB_DIR
+if (-not $hubDir) { $hubDir = 'C:\Users\AdrianOw\Projects\automation-hub' }
+
+function Send-HubReport($status, $message) {
+    Push-Location $hubDir
+    try {
+        python -m scripts.hub_report bbg --status $status --message $message 2>&1 |
+            Tee-Object -FilePath $log -Append
+    } catch {
+        # Reporting must never mask the run's own result.
+        Log "hub_report failed: $_"
+    } finally {
+        Pop-Location
+    }
+}
+
 # 1) Bloomberg connectivity precheck.
-Log "Checking Bloomberg Terminal connection..."
-python -c "from xbbg import blp; v = blp.bdp('AAPL US Equity', 'PX_LAST'); assert v is not None and len(v) > 0" 2>&1 |
-    Tee-Object -FilePath $log -Append
-if ($LASTEXITCODE -ne 0) {
-    Log "Bloomberg Terminal not connected -- skipping this week's run (no snapshot committed)."
+# One probe is too strict: the terminal is sometimes still coming up at 4:30pm,
+# and on 2026-08-21 a merely-late terminal cost the site a full week of data.
+$connected = $false
+for ($attempt = 1; $attempt -le 3; $attempt++) {
+    Log "Checking Bloomberg Terminal connection (attempt $attempt of 3)..."
+    python -c "from xbbg import blp; v = blp.bdp('AAPL US Equity', 'PX_LAST'); assert v is not None and len(v) > 0" 2>&1 |
+        Tee-Object -FilePath $log -Append
+    if ($LASTEXITCODE -eq 0) { $connected = $true; break }
+    if ($attempt -lt 3) {
+        Log "Not connected -- retrying in 5 minutes."
+        Start-Sleep -Seconds 300
+    }
+}
+if (-not $connected) {
+    Log "Bloomberg Terminal not connected after 3 attempts -- skipping this week's run (no snapshot committed)."
+    Send-HubReport 'awaiting_human' 'Bloomberg Terminal not connected - weekly snapshot skipped; needs a terminal login and a manual run'
     exit 0
 }
 Log "Bloomberg connected."

@@ -1,3 +1,4 @@
 .superpowers/
 output/_estimate_cache.pkl
 .worktrees/
+output/snapshots/_quarantine_*/
