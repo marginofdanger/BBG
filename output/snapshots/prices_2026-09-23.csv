@@ -1,0 +1,920 @@
+Ticker,Group,Category,GICS Sector,GICS Industry,EPS Type,FYE,Price,PE_CY2026,PE_CY2027,PE_CY2028,Return_YTD,Return_3m,Return_12m
+HCA,Portfolio,,Health Care,Health Care Equipment & Servic,Adj,Dec,438.12,,,,-6.2%,+13.2%,+7.0%
+UNH,Portfolio,,Health Care,Health Care Equipment & Servic,GAAP,Dec,372.95,,,,+13.0%,-8.9%,+7.3%
+TSM,Portfolio,,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,452.0,,,,+48.7%,+3.6%,+59.9%
+AVGO,Portfolio,,Information Technology,Semiconductors & Semiconductor,GAAP,Oct,364.54,,,,+5.3%,-4.1%,+7.6%
+NVDA,Portfolio,,Information Technology,Semiconductors & Semiconductor,GAAP,Jan,228.87,,,,+22.7%,+14.4%,+28.3%
+META,Portfolio,,Communication Services,Media & Entertainment,GAAP,Dec,736.595,,,,+11.6%,+31.0%,-2.5%
+AMZN,Portfolio,,Consumer Discretionary,Consumer Discretionary Distrib,GAAP,Dec,254.98,,,,+10.5%,+8.9%,+15.5%
+JPM,Portfolio,,Financials,Banks,GAAP,Dec,340.0,,,,+5.5%,+1.8%,+8.7%
+APO,Portfolio,,Financials,Financial Services,Adj,Dec,124.15,,,,-14.2%,-4.9%,-14.3%
+PGR,Portfolio,,Financials,Insurance,Adj,Dec,206.94,,,,-3.4%,-4.1%,-7.8%
+CVNA,Portfolio,,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,65.4,,,,-22.5%,+0.9%,-13.5%
+APP,Portfolio,,Communication Services,Media & Entertainment,Adj,Dec,328.73,,,,-51.2%,-29.6%,-49.5%
+VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,Adj,Jan,260.91,,,,+16.9%,+63.4%,-6.4%
+FICO,Portfolio,,Information Technology,Software & Services,Adj,Sep,914.48,,,,-45.9%,-16.8%,-40.4%
+GOOG,Watchlist,,Communication Services,Media & Entertainment,GAAP,Dec,347.41,,,,+10.7%,+0.4%,+37.7%
+MU,Watchlist,,Information Technology,Semiconductors & Semiconductor,GAAP,Aug,1096.16,,,,+284.1%,+4.2%,+558.7%
+HOOD,Watchlist,,Financials,Financial Services,Adj,Dec,124.25,,,,+9.9%,+20.3%,-1.5%
+TDG,Watchlist,,Industrials,Capital Goods,Adj,Sep,1112.42,,,,-16.3%,-14.3%,-14.4%
+GE,Watchlist,,Industrials,Capital Goods,GAAP,Dec,319.22,,,,+3.6%,-10.4%,+4.4%
+LRCX,Watchlist,,Information Technology,Semiconductors & Semiconductor,GAAP,Jun,310.96,,,,+81.7%,-16.3%,+135.7%
+DASH,Watchlist,,Consumer Discretionary,Consumer Services,Adj,Dec,192.21,,,,-15.1%,+12.1%,-27.7%
+UBER,Watchlist,,Industrials,Transportation,Adj,Dec,69.89,,,,-14.5%,+0.3%,-28.5%
+LLY,Watchlist,,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,1170.14,,,,+8.9%,+5.7%,+56.6%
+MSFT,Watchlist,,Information Technology,Software & Services,GAAP,Jun,498.0,,,,+3.0%,+33.2%,-2.2%
+V,Watchlist,,Financials,Financial Services,GAAP,Sep,362.04,,,,+3.2%,+10.2%,+6.9%
+BX,Watchlist,,Financials,Financial Services,Adj,Dec,124.01,,,,-19.5%,+3.3%,-32.9%
+BKNG,Watchlist,,Consumer Discretionary,Consumer Services,Adj,Dec,164.22,,,,-23.3%,-2.8%,-25.5%
+HLT,Watchlist,,Consumer Discretionary,Consumer Services,Adj,Dec,308.44,,,,+7.4%,-10.3%,+17.0%
+IBKR,Watchlist,,Financials,Financial Services,Adj,Dec,91.88,,,,+42.9%,-3.0%,+40.3%
+NET,Watchlist,,Information Technology,Software & Services,Adj,Dec,353.0,,,,+79.1%,+56.9%,+58.1%
+COST,Watchlist,,Consumer Staples,Consumer Staples Distribution,GAAP,Aug,899.41,,,,+4.3%,-6.1%,-4.7%
+TSLA,Watchlist,,Consumer Discretionary,Automobiles & Components,GAAP,Dec,378.9,,,,-15.7%,-0.7%,-11.0%
+TMO,Watchlist,,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,658.52,,,,+13.6%,+40.3%,+40.2%
+COF,Watchlist,,Financials,Financial Services,Adj,Dec,200.55,,,,-17.3%,+1.4%,-10.1%
+AON,Watchlist,,Financials,Insurance,Adj,Dec,286.1,,,,-18.9%,-10.8%,-19.0%
+MC,Watchlist,,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,401.75,,,,-37.7%,-16.9%,-23.2%
+STX,Watchlist,,Information Technology,Technology Hardware & Equipmen,GAAP,Jun,919.84,,,,+234.0%,-11.4%,+303.2%
+SPX,Indices,Indices,,,Adj,Dec,7764.64,,,,+13.4%,+5.4%,+16.6%
+QQQ,Indices,Indices,,,GAAP,Dec,747.46,,,,+21.7%,+4.7%,+25.0%
+IWM,Indices,Indices,,,Adj,Dec,287.21,,,,+16.7%,-2.7%,+17.8%
+SOX,Indices,Indices,,,Adj,Dec,12689.82,,,,+79.2%,-5.9%,+101.2%
+IGV,Indices,Indices,,,Adj,Dec,106.75,,,,+1.0%,+22.3%,-8.3%
+AER,Extended,Uncategorized,Industrials,Capital Goods,Adj,Dec,144.22,,,,+0.3%,-1.5%,+17.9%
+MA,Extended,Uncategorized,Financials,Financial Services,GAAP,Dec,555.89,,,,-2.6%,+13.9%,-2.5%
+BRK/A,Extended,Uncategorized,Financials,Financial Services,GAAP,Dec,755649.1,,,,+0.1%,+2.4%,+2.2%
+CSU,Extended,Uncategorized,Information Technology,Software & Services,Adj,Dec,2821.97,,,,-14.7%,+1.1%,-29.4%
+DHR,Extended,Uncategorized,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,221.09,,,,-3.4%,+23.5%,+16.5%
+AAPL,Extended,Uncategorized,Information Technology,Technology Hardware & Equipmen,GAAP,Sep,339.75,,,,+25.0%,+15.4%,+33.5%
+NFLX,Extended,Uncategorized,Communication Services,Media & Entertainment,GAAP,Dec,72.16,,,,-23.0%,-0.9%,-40.8%
+QCOM,Extended,Uncategorized,Information Technology,Semiconductors & Semiconductor,GAAP,Sep,198.27,,,,+15.9%,-2.9%,+17.0%
+UMG,Extended,Uncategorized,Communication Services,Media & Entertainment,Adj,Dec,14.445,,,,-35.0%,-21.3%,-38.8%
+ASML,Extended,Uncategorized,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,1505.6,,,,+63.4%,-3.5%,+83.7%
+AMAT,Extended,Uncategorized,Information Technology,Semiconductors & Semiconductor,GAAP,Oct,472.46,,,,+83.8%,-19.4%,+135.2%
+KLAC,Extended,Uncategorized,Information Technology,Semiconductors & Semiconductor,GAAP,Jun,188.32,,,,+55.0%,-23.0%,+75.8%
+KKR,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,98.44,,,,-22.8%,+5.3%,-33.1%
+BAM,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,46.01,,,,-12.2%,-2.0%,-24.8%
+ARES,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,124.72,,,,-22.8%,+3.3%,-31.2%
+OWL,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,9.88,,,,-33.9%,+10.9%,-47.0%
+CG,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,40.23,,,,-31.9%,-6.2%,-40.1%
+BN,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,37.85,,,,-17.5%,-13.9%,-20.7%
+TPG,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,45.62,,,,-28.5%,+15.3%,-29.1%
+BEP,Extended,Uncategorized,Utilities,Utilities,Adj,Dec,29.78,,,,+10.4%,-16.0%,+18.1%
+BIP,Extended,Uncategorized,Utilities,Utilities,Adj,Dec,35.78,,,,+3.0%,-2.7%,+13.5%
+MAR,Extended,Uncategorized,Consumer Discretionary,Consumer Services,Adj,Dec,348.06,,,,+12.2%,-10.0%,+32.9%
+DPZ,Extended,Uncategorized,Consumer Discretionary,Consumer Services,Adj,Dec,297.115,,,,-28.7%,+5.0%,-29.9%
+CMG,Extended,Uncategorized,Consumer Discretionary,Consumer Services,Adj,Dec,32.63,,,,-11.8%,+5.4%,-17.8%
+MCO,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,469.25,,,,-8.1%,+5.7%,-1.6%
+SPGI,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,402.44,,,,-18.6%,+6.3%,-14.3%
+MSCI,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,548.88,,,,-4.3%,-5.6%,-3.5%
+CSGP,Extended,Uncategorized,Real Estate,Real Estate Management & Devel,Adj,Dec,28.77,,,,-57.2%,-4.9%,-66.3%
+LPLA,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,307.5,,,,-13.9%,+4.2%,-9.7%
+SCHW,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,100.35,,,,+0.4%,+7.7%,+6.9%
+CRM,Extended,Uncategorized,Information Technology,Software & Services,Adj,Jan,233.28,,,,-11.9%,+52.1%,-4.6%
+WDAY,Extended,Uncategorized,Information Technology,Software & Services,Adj,Jan,188.23,,,,-12.4%,+63.5%,-21.7%
+ADBE,Extended,Uncategorized,Information Technology,Software & Services,Adj,Nov,238.25,,,,-31.9%,+20.7%,-34.1%
+SHOP,Extended,Uncategorized,Information Technology,Software & Services,Adj,Dec,147.74,,,,-8.2%,+37.2%,-1.5%
+GWRE,Extended,Uncategorized,Information Technology,Software & Services,Adj,Jul,150.46,,,,-25.1%,+37.2%,-37.8%
+NOW,Extended,Uncategorized,Information Technology,Software & Services,Adj,Dec,137.0,,,,-10.6%,+42.8%,-26.2%
+ELV,Extended,Uncategorized,Health Care,Health Care Equipment & Servic,Adj,Dec,402.43,,,,+14.8%,+1.9%,+24.3%
+ISRG,Extended,Uncategorized,Health Care,Health Care Equipment & Servic,Adj,Dec,402.09,,,,-29.0%,-0.3%,-10.2%
+BLDR,Extended,Uncategorized,Industrials,Capital Goods,Adj,Dec,60.87,,,,-40.8%,-20.7%,-49.8%
+FERG,Extended,Uncategorized,Industrials,Capital Goods,Adj,Jul,221.17,,,,-0.7%,-5.5%,-5.3%
+CRH,Extended,Uncategorized,Materials,Materials,Adj,Dec,88.04,,,,-29.5%,-20.2%,-22.8%
+FND,Extended,Uncategorized,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,49.09,,,,-19.4%,-4.6%,-40.1%
+WMT,Extended,Uncategorized,Consumer Staples,Consumer Staples Distribution,GAAP,Jan,110.12,,,,-1.2%,-7.8%,+7.4%
+PM,Extended,Uncategorized,Consumer Staples,"Food, Beverage & Tobacco",GAAP,Dec,190.23,,,,+18.6%,+6.5%,+16.2%
+CP,Extended,Uncategorized,Industrials,Transportation,Adj,Dec,87.99,,,,+19.5%,+3.2%,+18.7%
+CNR,Extended,Uncategorized,Industrials,Transportation,Adj,Dec,168.26,,,,+23.9%,+3.1%,+31.9%
+UNP,Extended,Uncategorized,Industrials,Transportation,Adj,Dec,274.41,,,,+18.6%,+6.1%,+20.4%
+CSX,Extended,Uncategorized,Industrials,Transportation,Adj,Dec,46.59,,,,+28.5%,+0.9%,+36.7%
+NVR,Extended,Uncategorized,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,6338.92,,,,-13.1%,-0.8%,-20.6%
+PDD,Extended,Uncategorized,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,80.35,,,,-29.1%,+5.0%,-37.5%
+MSI,Extended,Uncategorized,Information Technology,Technology Hardware & Equipmen,Adj,Dec,456.7,,,,+19.1%,+17.3%,-3.0%
+TPL,Extended,Uncategorized,Energy,Energy,Adj,Dec,355.24,,,,+23.7%,-4.0%,+14.4%
+APG,Extended,Uncategorized,Industrials,Capital Goods,Adj,Dec,37.76,,,,-1.3%,-9.2%,+9.7%
+CACC,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,562.34,,,,+26.8%,-4.7%,+14.3%
+GL,Extended,Uncategorized,Financials,Insurance,Adj,Dec,169.43,,,,+21.1%,-3.5%,+15.6%
+LAD,Extended,Uncategorized,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,312.32,,,,-6.0%,+5.1%,-6.5%
+CHTR,Extended,Uncategorized,Communication Services,Media & Entertainment,Adj,Dec,117.26,,,,-43.8%,-11.0%,-56.1%
+ABG,Extended,Uncategorized,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,187.06,,,,-19.6%,-6.2%,-22.8%
+ALRM,Extended,Uncategorized,Information Technology,Software & Services,Adj,Dec,53.16,,,,+4.2%,+23.4%,-1.8%
+OPTU,Extended,Uncategorized,Communication Services,Media & Entertainment,Adj,Dec,1.13,,,,-31.5%,-16.3%,-56.9%
+CMCSA,Extended,Uncategorized,Communication Services,Telecommunication Services,Adj,Dec,22.42,,,,-19.9%,-1.7%,-24.3%
+WRLD,Extended,Uncategorized,Financials,Financial Services,Adj,Mar,172.99,,,,+23.2%,-6.3%,-1.4%
+CARG,Extended,Uncategorized,Communication Services,Media & Entertainment,Adj,Dec,31.94,,,,-16.7%,+4.9%,-14.4%
+ARMK,Extended,Uncategorized,Consumer Discretionary,Consumer Services,Adj,Sep,56.59,,,,+53.5%,+5.3%,+49.0%
+QSR,Extended,Uncategorized,Consumer Discretionary,Consumer Services,Adj,Dec,71.91,,,,+5.4%,+0.4%,+12.1%
+W,Extended,Uncategorized,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,107.35,,,,+6.9%,+26.5%,+29.3%
+MO,Extended,Uncategorized,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,68.64,,,,+19.0%,-4.1%,+5.8%
+CI,Extended,Uncategorized,Health Care,Health Care Equipment & Servic,Adj,Dec,273.74,,,,-0.5%,-3.3%,-5.6%
+CVS,Extended,Uncategorized,Health Care,Health Care Equipment & Servic,Adj,Dec,87.1,,,,+9.8%,-14.2%,+13.9%
+SSNC,Extended,Uncategorized,Industrials,Commercial & Professional Serv,Adj,Dec,79.26,,,,-9.3%,+19.8%,-10.8%
+SPOT,Extended,Uncategorized,Communication Services,Media & Entertainment,Adj,Dec,501.3,,,,-13.7%,+10.1%,-30.3%
+BABA,Extended,Uncategorized,Consumer Discretionary,Consumer Discretionary Distrib,GAAP,Mar,116.31,,,,-20.7%,+13.4%,-28.7%
+IAC,Extended,Uncategorized,Communication Services,Media & Entertainment,Adj,Dec,,,,,,,
+PYPL,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,52.89,,,,-9.4%,+26.8%,-21.4%
+THC,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,262.06,,,,+31.9%,+44.9%,+35.7%
+UHS,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,179.29,,,,-17.8%,+22.9%,-7.9%
+CYH,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,3.02,,,,-3.2%,-1.9%,-4.4%
+DVA,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,183.72,,,,+61.7%,-12.9%,+38.3%
+LH,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,311.54,,,,+24.2%,+20.5%,+11.3%
+DGX,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,234.76,,,,+35.3%,+19.1%,+25.6%
+IDXX,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,521.5,,,,-22.9%,-3.7%,-19.6%
+ENSG,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,176.32,,,,+1.2%,+11.0%,+5.7%
+MD,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,26.35,,,,+23.2%,+10.4%,+59.9%
+AMN,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,34.54,,,,+119.2%,+10.6%,+87.8%
+CCRN,Extended,Healthcare providers,,,Adj,Dec,,,,,,,
+EVH,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,3.8,,,,-5.0%,-20.8%,-54.7%
+HUM,Extended,Managed Care,Health Care,Health Care Equipment & Servic,Adj,Dec,372.0,,,,+45.2%,+3.6%,+44.0%
+ALHC,Extended,Managed Care,Health Care,Health Care Equipment & Servic,Adj,Dec,7.99,,,,-59.5%,-63.1%,-53.1%
+CNC,Extended,Managed Care,Health Care,Health Care Equipment & Servic,Adj,Dec,63.3,,,,+53.8%,+0.3%,+93.3%
+MOH,Extended,Managed Care,Health Care,Health Care Equipment & Servic,Adj,Dec,191.19,,,,+10.2%,-2.7%,+4.7%
+IQV,Extended,Clinical Labs,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,270.09,,,,+19.8%,+57.7%,+44.9%
+ICLR,Extended,Clinical Labs,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,167.11,,,,-8.3%,+17.1%,-1.9%
+MEDP,Extended,Clinical Labs,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,630.19,,,,+12.2%,+33.1%,+27.0%
+CRL,Extended,Clinical Labs,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,285.11,,,,+42.9%,+52.8%,+89.8%
+EHTH,Extended,Clinical Labs,Financials,Insurance,Adj,Dec,0.8809,,,,-80.8%,-44.2%,-78.6%
+TMUS,Extended,Cable / Telco,Communication Services,Telecommunication Services,Adj,Dec,162.41,,,,-20.0%,-12.0%,-32.2%
+VZ,Extended,Cable / Telco,Communication Services,Telecommunication Services,Adj,Dec,46.45,,,,+14.0%,-0.6%,+7.2%
+T,Extended,Cable / Telco,Communication Services,Telecommunication Services,Adj,Dec,25.1,,,,+1.0%,+10.0%,-12.8%
+CABO,Extended,Cable / Telco,Communication Services,Media & Entertainment,Adj,Dec,17.06,,,,-84.9%,-61.0%,-89.4%
+LBRDK,Extended,Cable / Telco,,,Adj,Dec,36.02,,,,-25.9%,+16.7%,-41.2%
+VOD,Extended,Cable / Telco,Communication Services,Telecommunication Services,Adj,Mar,16.62,,,,+25.8%,+18.3%,+46.3%
+DTE,Extended,Cable / Telco,Communication Services,Telecommunication Services,Adj,Dec,26.77,,,,-3.2%,+1.9%,-5.7%
+TEF,Extended,Cable / Telco,Communication Services,Telecommunication Services,Adj,Dec,3.38,,,,-3.2%,-8.4%,-22.8%
+GOOGL,Extended,Internet,Communication Services,Media & Entertainment,GAAP,Dec,351.16,,,,+12.2%,+1.5%,+39.5%
+PINS,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,18.39,,,,-29.0%,-5.8%,-47.9%
+SNAP,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,5.62,,,,-30.4%,+26.0%,-33.3%
+RDDT,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,155.67,,,,-32.3%,-6.0%,-34.4%
+ABNB,Extended,Internet,Consumer Discretionary,Consumer Services,Adj,Dec,161.81,,,,+19.2%,+16.5%,+31.0%
+EBAY,Extended,Internet,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,109.28,,,,+25.5%,+0.3%,+20.0%
+TTD,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,13.18,,,,-65.3%,-26.5%,-71.9%
+ROKU,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,154.25,,,,+42.2%,+14.2%,+55.8%
+ETSY,Extended,Internet,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,75.14,,,,+35.5%,+0.3%,+20.0%
+MTCH,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,41.71,,,,+29.2%,+18.1%,+12.9%
+U,Extended,Internet,Information Technology,Software & Services,Adj,Dec,43.11,,,,-2.4%,+56.1%,-3.2%
+ZG,Extended,Internet,Real Estate,Real Estate Management & Devel,Adj,Dec,31.59,,,,-53.7%,+3.4%,-58.7%
+RMV,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,467.4,,,,-10.0%,+10.6%,-35.5%
+YELP,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,18.96,,,,-37.6%,-16.4%,-39.6%
+ANGI,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,5.54,,,,-57.2%,+14.7%,-66.6%
+TREE,Extended,Internet,Financials,Financial Services,Adj,Dec,26.05,,,,-50.9%,-29.1%,-63.0%
+XYZ,Extended,Internet,Financials,Financial Services,Adj,Dec,77.53,,,,+19.1%,+7.1%,+1.3%
+CRTO,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,16.85,,,,-18.2%,-2.9%,-23.4%
+CARS,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,10.8,,,,-11.5%,+9.8%,-14.4%
+OCDO,Extended,Internet,Consumer Staples,Consumer Staples Distribution,Adj,Nov,228.2,,,,-3.3%,+31.5%,+2.1%
+VRSN,Extended,Internet,Information Technology,Software & Services,Adj,Dec,299.42,,,,+23.2%,+21.1%,+4.5%
+CDLX,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,3.58,,,,-68.9%,-33.0%,-82.9%
+DHER,Extended,Internet,Consumer Discretionary,Consumer Services,Adj,Dec,36.91,,,,+62.5%,+3.2%,+40.7%
+PTON,Extended,Internet,Consumer Discretionary,Consumer Durables & Apparel,Adj,Jun,5.02,,,,-18.5%,-7.7%,-37.5%
+LYFT,Extended,Internet,Industrials,Transportation,Adj,Dec,14.9,,,,-23.1%,+7.8%,-32.5%
+PRX,Extended,Internet,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Mar,35.9,,,,-32.1%,-2.9%,-36.9%
+AUTO,Extended,Internet,Communication Services,Media & Entertainment,Adj,Mar,464.2,,,,-20.8%,-5.0%,-39.6%
+DKNG,Extended,Internet,Consumer Discretionary,Consumer Services,Adj,Dec,21.8,,,,-36.7%,-13.3%,-49.6%
+FLUT,Extended,Internet,Consumer Discretionary,Consumer Services,Adj,Dec,88.62,,,,-58.8%,-9.4%,-68.8%
+FLTR,Extended,Internet,Consumer Discretionary,Consumer Services,Adj,Dec,,,,,,,
+WMG,Extended,Internet,Communication Services,Media & Entertainment,Adj,Sep,27.39,,,,-10.7%,-0.5%,-17.8%
+SCOR,Extended,Internet,Communication Services,Media & Entertainment,Adj,Dec,4.84,,,,-25.5%,-29.8%,-21.9%
+ASM,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Dec,853.4,,,,+64.9%,-14.1%,+70.7%
+ARM,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Mar,333.2,,,,+204.8%,-9.1%,+136.3%
+MRVL,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Jan,262.36,,,,+208.7%,-6.0%,+251.6%
+AMD,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,623.77,,,,+191.3%,+20.0%,+287.7%
+INTC,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,123.86,,,,+235.7%,-6.4%,+322.2%
+TXN,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,271.41,,,,+56.4%,-10.8%,+49.1%
+ADI,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Oct,390.37,,,,+43.9%,-4.1%,+58.2%
+005930,Extended,Technology,Information Technology,Technology Hardware & Equipmen,GAAP,Dec,285500.0,,,,+137.1%,-8.1%,+237.1%
+000660,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,1862000.0,,,,+185.6%,-27.5%,+415.8%
+WDC,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,464.6,,,,+169.7%,-30.7%,+321.4%
+SNDK,Extended,Technology,Information Technology,Technology Hardware & Equipmen,GAAP,Jun,1887.04,,,,+694.9%,-3.9%,+1673.5%
+CLS,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Dec,356.09,,,,+20.5%,+1.4%,+38.2%
+QRVO,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Mar,118.44,,,,+40.1%,+18.9%,+26.2%
+SWKS,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Sep,89.96,,,,+41.9%,+22.5%,+10.7%
+DELL,Extended,Technology,Information Technology,Technology Hardware & Equipmen,GAAP,Jan,548.92,,,,+336.1%,+28.3%,+308.6%
+SMCI,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,41.54,,,,+41.9%,+24.7%,-11.6%
+IBM,Extended,Technology,Information Technology,Software & Services,GAAP,Dec,231.38,,,,-21.9%,-12.7%,-15.0%
+XRX,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Dec,3.49,,,,+47.3%,+11.1%,-11.0%
+HPE,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Oct,61.03,,,,+154.1%,+24.8%,+147.1%
+HPQ,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Oct,32.04,,,,+43.8%,+35.4%,+12.3%
+FLEX,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Mar,114.45,,,,+89.4%,-24.6%,+92.9%
+CDW,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Dec,147.43,,,,+8.2%,+13.4%,-10.4%
+SNX,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Nov,283.25,,,,+88.5%,-2.4%,+86.5%
+AVT,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,98.25,,,,+104.3%,+9.7%,+85.3%
+ARW,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Dec,221.83,,,,+101.3%,-1.6%,+83.3%
+BA,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,197.72,,,,-8.9%,-8.8%,-8.6%
+AIR,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,193.24,,,,-2.6%,-0.0%,-0.5%
+SAF,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,332.2,,,,+11.7%,+0.3%,+13.9%
+RTX,Extended,Aerospace / defense,Industrials,Capital Goods,GAAP,Dec,190.99,,,,+4.1%,+2.5%,+19.0%
+LMT,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,522.34,,,,+8.0%,+3.7%,+7.3%
+GD,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,343.39,,,,+2.0%,-2.0%,+6.2%
+NOC,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,509.86,,,,-10.6%,-0.7%,-11.6%
+MOG/A,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Sep,367.83,,,,+51.0%,-8.6%,+82.7%
+HEI,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Oct,307.77,,,,-4.9%,-7.9%,-3.8%
+RR/,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,1483.4,,,,+29.0%,+6.6%,+27.4%
+CRS,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Jun,400.02,,,,+27.1%,-30.8%,+67.4%
+HWM,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,225.36,,,,+9.9%,-18.1%,+16.4%
+WWD,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Sep,326.14,,,,+7.9%,-23.8%,+36.4%
+HXL,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,85.98,,,,+16.3%,-10.5%,+39.0%
+AL,Extended,Aerospace / defense,,,Adj,Dec,,,,,,,
+2588,Extended,Aerospace / defense,Industrials,Capital Goods,Adj,Dec,71.6,,,,-1.6%,-8.5%,+2.3%
+FDS,Extended,Data / Information Svc,Financials,Financial Services,Adj,Aug,276.42,,,,-4.7%,+26.7%,-4.2%
+EXPN,Extended,Data / Information Svc,Industrials,Commercial & Professional Serv,Adj,Mar,2671.0,,,,-20.6%,+6.0%,-29.0%
+EFX,Extended,Data / Information Svc,Industrials,Commercial & Professional Serv,Adj,Dec,159.78,,,,-26.4%,+4.8%,-38.0%
+TRU,Extended,Data / Information Svc,Industrials,Commercial & Professional Serv,Adj,Dec,71.87,,,,-16.2%,+9.0%,-18.5%
+ADP,Extended,Data / Information Svc,Industrials,Commercial & Professional Serv,Adj,Jun,269.64,,,,+4.8%,+22.3%,-6.8%
+PAYX,Extended,Data / Information Svc,Industrials,Commercial & Professional Serv,Adj,May,114.53,,,,+2.1%,+16.9%,-11.4%
+PAYC,Extended,Data / Information Svc,Industrials,Commercial & Professional Serv,Adj,Dec,224.61,,,,+40.9%,+80.7%,+2.3%
+MKTX,Extended,Data / Information Svc,Financials,Financial Services,Adj,Dec,163.43,,,,-9.8%,+38.3%,-8.8%
+VRSK,Extended,Data / Information Svc,Industrials,Commercial & Professional Serv,Adj,Dec,171.94,,,,-23.1%,-1.6%,-29.0%
+EXPE,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,280.7,,,,-0.9%,+14.5%,+26.9%
+TRIP,Extended,Travel / tourism,Communication Services,Media & Entertainment,Adj,Dec,8.55,,,,-41.3%,-31.0%,-53.4%
+UHAL,Extended,Travel / tourism,Industrials,Transportation,Adj,Mar,62.07,,,,+23.1%,-1.1%,+7.6%
+MGM,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,38.9,,,,+6.6%,-17.1%,+11.9%
+WYNN,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,82.51,,,,-31.4%,-20.8%,-35.3%
+H,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,157.8,,,,-1.6%,-20.3%,+13.9%
+IHG,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,154.95,,,,+10.1%,-8.7%,+30.6%
+AMS,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,53.92,,,,-14.2%,+3.1%,-18.6%
+SABR,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,2.27,,,,+66.9%,+29.7%,+23.4%
+EFN,Extended,Travel / tourism,Industrials,Commercial & Professional Serv,Adj,Dec,24.82,,,,-31.2%,-14.0%,-31.6%
+CAR,Extended,Travel / tourism,Industrials,Transportation,Adj,Dec,107.73,,,,-16.0%,-43.4%,-32.4%
+HTZ,Extended,Travel / tourism,Industrials,Transportation,Adj,Dec,1.85,,,,-64.0%,-63.4%,-73.4%
+DAL,Extended,Travel / tourism,Industrials,Transportation,Adj,Dec,83.92,,,,+20.9%,-3.2%,+42.8%
+UAL,Extended,Travel / tourism,Industrials,Transportation,Adj,Dec,115.21,,,,+3.0%,-5.2%,+10.6%
+AAL,Extended,Travel / tourism,Industrials,Transportation,Adj,Dec,13.61,,,,-11.2%,-15.7%,+11.6%
+LHA,Extended,Travel / tourism,Industrials,Transportation,Adj,Dec,7.696,,,,-8.4%,-16.3%,+3.5%
+RYAAY,Extended,Travel / tourism,Industrials,Transportation,Adj,Mar,55.85,,,,-22.6%,-10.4%,-1.9%
+LUV,Extended,Travel / tourism,Industrials,Transportation,Adj,Dec,42.08,,,,+1.8%,-14.8%,+26.2%
+ULCC,Extended,Travel / tourism,Industrials,Transportation,Adj,Dec,6.2,,,,+31.6%,-14.5%,+19.5%
+MTN,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Jul,138.98,,,,+4.7%,-2.4%,-5.5%
+RCL,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,234.89,,,,-15.8%,-24.1%,-28.9%
+CCL,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Nov,22.28,,,,-27.0%,-22.4%,-27.5%
+PK,Extended,Travel / tourism,Real Estate,Equity Real Estate Investment,Adj,Dec,15.19,,,,+45.2%,+5.3%,+30.4%
+ORCL,Extended,Software,Information Technology,Software & Services,GAAP,May,149.2,,,,-23.5%,-9.7%,-52.5%
+INTU,Extended,Software,Information Technology,Software & Services,Adj,Jul,292.35,,,,-55.9%,+13.3%,-58.2%
+SAP,Extended,Software,Information Technology,Software & Services,GAAP,Dec,185.28,,,,-11.1%,+37.7%,-18.1%
+CRWD,Extended,Software,Information Technology,Software & Services,GAAP,Jan,250.06,,,,+113.4%,+46.9%,+106.6%
+PLTR,Extended,Software,Information Technology,Software & Services,GAAP,Dec,184.99,,,,+4.1%,+58.5%,+1.3%
+PANW,Extended,Software,Information Technology,Software & Services,GAAP,Jul,374.57,,,,+103.3%,+28.8%,+84.3%
+FTNT,Extended,Software,Information Technology,Software & Services,Adj,Dec,174.26,,,,+119.4%,+17.7%,+104.4%
+TEAM,Extended,Software,Information Technology,Software & Services,Adj,Jun,188.65,,,,+16.4%,+131.9%,+13.9%
+TYL,Extended,Software,Information Technology,Software & Services,Adj,Dec,331.05,,,,-27.1%,+18.6%,-37.3%
+BLKB,Extended,Software,Information Technology,Software & Services,Adj,Dec,42.13,,,,-33.5%,+56.2%,-36.2%
+TWLO,Extended,Software,Information Technology,Software & Services,Adj,Dec,284.53,,,,+100.0%,+54.6%,+175.1%
+DBX,Extended,Software,Information Technology,Software & Services,Adj,Dec,33.9,,,,+21.9%,+27.6%,+10.2%
+BOX,Extended,Software,Information Technology,Software & Services,Adj,Jan,32.87,,,,+9.9%,+31.6%,+1.5%
+ZM,Extended,Software,Information Technology,Software & Services,Adj,Jan,90.95,,,,+5.4%,+5.2%,+10.1%
+AXON,Extended,Software,Industrials,Capital Goods,Adj,Dec,459.32,,,,-19.1%,+6.1%,-40.9%
+UPLD,Extended,Software,Information Technology,Software & Services,Adj,Dec,3.7,,,,-74.1%,-23.7%,-85.5%
+SNOW,Extended,Software,Information Technology,Software & Services,Adj,Jan,336.59,,,,+53.4%,+46.1%,+50.6%
+BILL,Extended,Software,Information Technology,Software & Services,Adj,Jun,46.49,,,,-14.8%,+44.0%,-13.1%
+WIX,Extended,Software,Information Technology,Software & Services,Adj,Dec,80.1,,,,-22.9%,+98.1%,-55.0%
+DOCU,Extended,Software,Information Technology,Software & Services,Adj,Jan,66.76,,,,-2.4%,+56.5%,-21.3%
+DDOG,Extended,Software,Information Technology,Software & Services,Adj,Dec,247.475,,,,+82.0%,+12.2%,+80.0%
+MDB,Extended,Software,Information Technology,Software & Services,Adj,Jan,427.69,,,,+1.9%,+33.2%,+34.1%
+ESTC,Extended,Software,Information Technology,Software & Services,Adj,Apr,89.22,,,,+18.3%,+51.3%,+2.8%
+DT,Extended,Software,Information Technology,Software & Services,Adj,Mar,57.2,,,,+32.0%,+41.6%,+19.7%
+GTM,Extended,Software,Communication Services,Media & Entertainment,Adj,Dec,3.88,,,,-61.8%,+43.2%,-67.4%
+RAMP,Extended,Software,Information Technology,Software & Services,Adj,Mar,37.55,,,,+27.9%,-0.1%,+34.8%
+PAR,Extended,Software,Information Technology,Software & Services,Adj,Dec,15.15,,,,-58.2%,-1.5%,-63.7%
+FSLY,Extended,Software,Information Technology,Software & Services,Adj,Dec,26.08,,,,+156.2%,+56.5%,+204.7%
+ASAN,Extended,Software,Information Technology,Software & Services,Adj,Jan,9.08,,,,-33.8%,+36.1%,-36.1%
+APPN,Extended,Software,Information Technology,Software & Services,Adj,Dec,36.9,,,,+4.2%,+79.9%,+10.6%
+BL,Extended,Software,Information Technology,Software & Services,Adj,Dec,27.85,,,,-49.6%,+5.0%,-48.8%
+DSY,Extended,Software,Information Technology,Software & Services,Adj,Dec,21.1,,,,-11.5%,+21.1%,-24.6%
+WK,Extended,Software,Information Technology,Software & Services,Adj,Dec,69.83,,,,-19.0%,+48.6%,-16.2%
+AXP,Extended,Payments,Financials,Financial Services,GAAP,Dec,305.07,,,,-17.5%,-9.7%,-10.7%
+ADYEN,Extended,Payments,Financials,Financial Services,Adj,Dec,875.1,,,,-36.4%,+5.1%,-36.3%
+STNE,Extended,Payments,Financials,Financial Services,Adj,Dec,9.86,,,,-19.3%,-8.0%,-37.7%
+NU,Extended,Payments,Financials,Banks,Adj,Dec,14.16,,,,-15.4%,+12.5%,-12.3%
+FISV,Extended,Payments,Financials,Financial Services,Adj,Dec,46.1,,,,-31.4%,-2.5%,-64.5%
+FIS,Extended,Payments,Financials,Financial Services,Adj,Dec,34.96,,,,-47.4%,-8.1%,-44.8%
+GPN,Extended,Payments,Financials,Financial Services,Adj,Dec,84.78,,,,+9.5%,+31.9%,-1.5%
+TOST,Extended,Payments,Financials,Financial Services,Adj,Dec,29.65,,,,-16.5%,+21.0%,-21.9%
+FOUR,Extended,Payments,Financials,Financial Services,Adj,Dec,39.07,,,,-38.0%,+1.0%,-53.4%
+CPAY,Extended,Payments,Financials,Financial Services,Adj,Dec,392.95,,,,+30.6%,+15.8%,+31.9%
+SEIC,Extended,Payments,Financials,Financial Services,Adj,Dec,103.76,,,,+26.5%,+15.0%,+20.4%
+DBD,Extended,Payments,Information Technology,Technology Hardware & Equipmen,Adj,Dec,64.39,,,,-5.2%,-22.1%,+12.1%
+JKHY,Extended,Payments,Financials,Financial Services,Adj,Jun,149.1,,,,-18.3%,+19.0%,-0.6%
+WU,Extended,Payments,Financials,Financial Services,Adj,Dec,6.22,,,,-33.2%,-11.5%,-23.4%
+FCFS,Extended,Payments,Financials,Financial Services,Adj,Dec,220.87,,,,+38.6%,-1.2%,+48.4%
+EEFT,Extended,Payments,Financials,Financial Services,Adj,Dec,65.69,,,,-13.7%,+2.0%,-24.8%
+WEX,Extended,Payments,Financials,Financial Services,Adj,Dec,181.23,,,,+21.6%,+39.1%,+13.9%
+EQT,Extended,Financials and related,Energy,Energy,Adj,Dec,50.81,,,,-5.2%,-1.6%,-0.3%
+HLNE,Extended,Financials and related,Financials,Financial Services,Adj,Mar,87.6,,,,-34.8%,+15.8%,-41.6%
+STEP,Extended,Financials and related,Financials,Financial Services,Adj,Mar,46.57,,,,-26.5%,+8.5%,-30.0%
+TROW,Extended,Financials and related,Financials,Financial Services,Adj,Dec,104.17,,,,+1.7%,-1.7%,-0.5%
+SYF,Extended,Financials and related,Financials,Financial Services,Adj,Dec,72.67,,,,-12.9%,-3.2%,-2.8%
+BFH,Extended,Financials and related,Financials,Financial Services,Adj,Dec,102.69,,,,+38.7%,-1.1%,+68.2%
+ICE,Extended,Financials and related,Financials,Financial Services,Adj,Dec,152.93,,,,-5.6%,+15.0%,-9.0%
+CME,Extended,Financials and related,Financials,Financial Services,Adj,Dec,267.21,,,,-0.2%,+10.3%,+4.0%
+SLM,Extended,Financials and related,Financials,Financial Services,Adj,Dec,24.25,,,,-10.4%,+4.3%,-13.3%
+CBOE,Extended,Financials and related,Financials,Financial Services,Adj,Dec,266.83,,,,+6.3%,+3.7%,+11.0%
+NDAQ,Extended,Financials and related,Financials,Financial Services,Adj,Dec,94.5,,,,-2.7%,+14.6%,+6.9%
+NAVI,Extended,Financials and related,Financials,Financial Services,Adj,Dec,9.48,,,,-27.1%,+18.8%,-26.6%
+FG,Extended,Financials and related,Financials,Insurance,Adj,Dec,22.22,,,,-28.0%,-20.2%,-32.3%
+BEN,Extended,Financials and related,Financials,Financial Services,Adj,Sep,33.13,,,,+38.7%,-2.0%,+37.9%
+ALLY,Extended,Financials and related,Financials,Financial Services,Adj,Dec,39.07,,,,-13.7%,-13.6%,-8.5%
+RM,Extended,Financials and related,Financials,Financial Services,Adj,Dec,31.28,,,,-19.3%,-19.6%,-28.0%
+OMF,Extended,Financials and related,Financials,Financial Services,Adj,Dec,59.08,,,,-12.5%,+1.7%,-2.2%
+OPRT,Extended,Financials and related,Financials,Financial Services,Adj,Dec,8.29,,,,+56.7%,+49.4%,+23.2%
+ENVA,Extended,Financials and related,Financials,Financial Services,Adj,Dec,168.98,,,,+7.5%,-19.9%,+34.8%
+ECPG,Extended,Financials and related,Financials,Financial Services,Adj,Dec,98.29,,,,+80.8%,+14.4%,+116.9%
+EQR,Extended,Financials and related,Real Estate,Equity Real Estate Investment,Adj,Dec,,,,,,,
+MCD,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,250.35,,,,-18.1%,-7.8%,-17.4%
+YUM,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,139.71,,,,-7.6%,-7.8%,-6.5%
+WEN,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,6.81,,,,-18.2%,+8.9%,-25.1%
+YUMC,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,41.58,,,,-12.9%,+1.5%,-2.3%
+SBUX,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Sep,95.11,,,,+12.9%,-5.9%,+11.0%
+WING,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,102.38,,,,-57.1%,-31.9%,-59.7%
+CAVA,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,52.66,,,,-10.3%,-32.1%,-19.2%
+BROS,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,38.76,,,,-36.7%,-42.5%,-30.0%
+SHAK,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,58.09,,,,-28.4%,+7.3%,-40.7%
+ARCO,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,7.62,,,,+3.8%,-6.0%,+9.2%
+EAT,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,9.9,,,,-26.1%,-10.5%,-32.2%
+DMP,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Jun,19.34,,,,-7.9%,+21.0%,+42.0%
+DOM,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,207.6,,,,+19.7%,+12.2%,+5.1%
+LW,Extended,Food / Restaurants,Consumer Staples,"Food, Beverage & Tobacco",Adj,May,46.36,,,,+10.7%,+3.3%,-14.7%
+SYY,Extended,Food / Restaurants,Consumer Staples,Consumer Staples Distribution,Adj,Jun,78.67,,,,+6.8%,-0.8%,-4.3%
+USFD,Extended,Food / Restaurants,Consumer Staples,Consumer Staples Distribution,Adj,Dec,94.2,,,,+25.1%,+0.2%,+21.3%
+PZZA,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,20.4,,,,-47.0%,-42.2%,-55.5%
+CASY,Extended,Food / Restaurants,Consumer Staples,Consumer Staples Distribution,Adj,Apr,584.83,,,,+5.8%,-29.7%,+6.1%
+ACI,Extended,Food / Restaurants,Consumer Staples,Consumer Staples Distribution,Adj,Feb,12.07,,,,-29.7%,-13.2%,-31.3%
+DIN,Extended,Food / Restaurants,Consumer Discretionary,Consumer Services,Adj,Dec,28.58,,,,-11.1%,-14.1%,+16.7%
+KR,Extended,Food / Restaurants,Consumer Staples,Consumer Staples Distribution,Adj,Jan,58.56,,,,-6.3%,+2.6%,-10.4%
+MRSH,Extended,Insurance Brokers / Consultants,Financials,Insurance,Adj,Dec,170.01,,,,-8.4%,+3.8%,-13.9%
+WTW,Extended,Insurance Brokers / Consultants,Financials,Insurance,Adj,Dec,301.73,,,,-8.2%,+17.2%,-11.5%
+AJG,Extended,Insurance Brokers / Consultants,Financials,Insurance,Adj,Dec,230.45,,,,-11.0%,+6.8%,-24.3%
+BRO,Extended,Insurance Brokers / Consultants,Financials,Insurance,Adj,Dec,62.44,,,,-21.7%,+3.4%,-32.3%
+ACN,Extended,Insurance Brokers / Consultants,Information Technology,Software & Services,Adj,Aug,183.72,,,,-31.5%,+44.7%,-22.0%
+CTSH,Extended,Insurance Brokers / Consultants,Information Technology,Software & Services,Adj,Dec,58.68,,,,-29.3%,+43.3%,-13.3%
+CNDT,Extended,Insurance Brokers / Consultants,Industrials,Commercial & Professional Serv,Adj,Dec,1.65,,,,-14.1%,+24.1%,-40.6%
+TCS,Extended,Insurance Brokers / Consultants,Information Technology,Software & Services,GAAP,Mar,2089.6,,,,-33.9%,+1.5%,-30.8%
+DXC,Extended,Insurance Brokers / Consultants,Information Technology,Software & Services,Adj,Mar,10.93,,,,-25.4%,+30.1%,-20.0%
+RHI,Extended,Insurance Brokers / Consultants,Industrials,Commercial & Professional Serv,Adj,Dec,37.58,,,,+38.4%,+28.1%,+11.2%
+MAN,Extended,Insurance Brokers / Consultants,Industrials,Commercial & Professional Serv,Adj,Dec,57.63,,,,+93.8%,+78.6%,+54.4%
+FCN,Extended,Insurance Brokers / Consultants,Industrials,Commercial & Professional Serv,Adj,Dec,134.7,,,,-21.1%,-6.2%,-14.7%
+JLL,Extended,Insurance Brokers / Consultants,Real Estate,Real Estate Management & Devel,Adj,Dec,335.36,,,,-0.3%,+12.2%,+7.1%
+G,Extended,Insurance Brokers / Consultants,Industrials,Commercial & Professional Serv,Adj,Dec,33.89,,,,-27.6%,+19.8%,-17.5%
+CBRE,Extended,Insurance Brokers / Consultants,Real Estate,Real Estate Management & Devel,Adj,Dec,141.05,,,,-12.3%,+5.9%,-13.5%
+NSP,Extended,Insurance Brokers / Consultants,Industrials,Commercial & Professional Serv,Adj,Dec,50.26,,,,+29.8%,+35.7%,-0.6%
+BAC,Extended,Banks,Financials,Banks,GAAP,Dec,56.2,,,,+2.2%,-3.0%,+8.7%
+WFC,Extended,Banks,Financials,Banks,GAAP,Dec,83.15,,,,-10.8%,-1.2%,-1.4%
+USB,Extended,Banks,Financials,Banks,Adj,Dec,59.44,,,,+11.4%,-1.0%,+20.4%
+PNC,Extended,Banks,Financials,Banks,Adj,Dec,227.96,,,,+9.2%,-4.5%,+11.8%
+GS,Extended,Banks,Financials,Financial Services,GAAP,Dec,949.49,,,,+8.0%,-13.2%,+17.8%
+MS,Extended,Banks,Financials,Financial Services,GAAP,Dec,200.18,,,,+12.8%,-11.4%,+24.5%
+C,Extended,Banks,Financials,Banks,GAAP,Dec,132.47,,,,+13.5%,-8.6%,+28.6%
+TFC,Extended,Banks,Financials,Banks,Adj,Dec,48.07,,,,-2.3%,-3.2%,+5.2%
+MTB,Extended,Banks,Financials,Banks,Adj,Dec,223.42,,,,+10.9%,-3.4%,+11.4%
+BK,Extended,Banks,Financials,Financial Services,Adj,Dec,,,,,,,
+STT,Extended,Banks,Financials,Financial Services,Adj,Dec,180.25,,,,+39.7%,+3.8%,+59.6%
+CB,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,335.77,,,,+7.6%,+1.1%,+21.7%
+CCC,Extended,Insurance and reinsurance,Information Technology,Software & Services,Adj,Dec,6.57,,,,-17.4%,+50.0%,-29.7%
+ALL,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,229.5,,,,+10.3%,-0.9%,+10.5%
+TRV,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,362.01,,,,+24.8%,+14.2%,+31.0%
+AIG,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,75.18,,,,-12.1%,-1.8%,-2.0%
+ACGL,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,94.95,,,,-1.0%,+1.3%,+7.3%
+HIG,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,128.73,,,,-6.6%,-2.0%,-2.3%
+WRB,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,68.17,,,,-2.1%,-1.1%,-6.0%
+MKL,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,1763.36,,,,-18.0%,-6.9%,-9.0%
+MET,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,95.92,,,,+21.5%,+9.0%,+19.4%
+PRU,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,117.66,,,,+4.2%,+8.5%,+14.1%
+LNC,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,41.01,,,,-7.9%,+7.4%,+1.1%
+PRI,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,275.65,,,,+6.7%,-2.8%,-3.5%
+AFL,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,114.6,,,,+3.9%,-3.5%,+5.9%
+DIS,Extended,Media content,Communication Services,Media & Entertainment,Adj,Sep,103.82,,,,-8.7%,+0.3%,-7.5%
+FOXA,Extended,Media content,Communication Services,Media & Entertainment,Adj,Jun,64.25,,,,-12.1%,+31.7%,+4.3%
+AMCX,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,12.08,,,,+26.9%,+23.0%,+52.3%
+TTWO,Extended,Media content,Communication Services,Media & Entertainment,Adj,Mar,205.53,,,,-19.7%,-15.3%,-18.2%
+RBLX,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,49.87,,,,-38.5%,+5.9%,-62.3%
+EA,Extended,Media content,,,Adj,Mar,,,,,,,
+SBGI,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,13.17,,,,-13.9%,-5.7%,-10.5%
+TGNA,Extended,Media content,,,Adj,Dec,,,,,,,
+NYT,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,65.45,,,,-5.7%,-10.1%,+12.9%
+NXST,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,167.53,,,,-17.5%,+0.3%,-17.1%
+FWONA,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,86.67,,,,-3.0%,+5.2%,-7.4%
+FWONK,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,94.62,,,,-3.9%,+6.1%,-8.2%
+LYV,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,169.84,,,,+19.2%,+0.7%,+3.5%
+SIRI,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,26.53,,,,+32.7%,-5.5%,+15.1%
+LBTYA,Extended,Media content,Communication Services,Telecommunication Services,Adj,Dec,9.97,,,,-10.5%,-11.1%,-13.6%
+BATRK,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,52.835,,,,+33.9%,+2.4%,+27.8%
+LAMR,Extended,Media content,Real Estate,Equity Real Estate Investment,Adj,Dec,145.13,,,,+14.7%,-4.8%,+17.0%
+OUT,Extended,Media content,Real Estate,Equity Real Estate Investment,Adj,Dec,28.19,,,,+17.0%,-12.3%,+50.1%
+TV,Extended,Media content,Communication Services,Telecommunication Services,Adj,Dec,2.48,,,,-14.8%,-8.5%,-11.1%
+LUMN,Extended,Media content,Communication Services,Telecommunication Services,Adj,Dec,6.38,,,,-17.9%,-18.6%,+10.0%
+WPP,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,382.1,,,,+13.2%,+45.2%,+6.0%
+BCE,Extended,Media content,Communication Services,Telecommunication Services,Adj,Dec,30.57,,,,-6.6%,-6.6%,-5.1%
+OMC,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,75.34,,,,-6.7%,+3.3%,-1.2%
+AMT,Extended,Telco infrastructure,Real Estate,Equity Real Estate Investment,Adj,Dec,175.25,,,,-0.2%,-2.3%,-9.8%
+SBAC,Extended,Telco infrastructure,Real Estate,Equity Real Estate Investment,Adj,Dec,175.84,,,,-9.1%,-7.3%,-11.6%
+CCI,Extended,Telco infrastructure,Real Estate,Equity Real Estate Investment,Adj,Dec,72.37,,,,-18.6%,-14.2%,-23.3%
+EQIX,Extended,Telco infrastructure,Real Estate,Equity Real Estate Investment,Adj,Dec,1059.26,,,,+38.3%,-5.1%,+31.9%
+ERICB,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,GAAP,Dec,95.9,,,,+5.8%,-14.4%,+22.7%
+GDS,Extended,Telco infrastructure,Information Technology,Software & Services,Adj,Dec,33.75,,,,-3.3%,+5.9%,-10.3%
+NOK,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,Adj,Dec,10.82,,,,+67.2%,-21.0%,+123.1%
+BDC,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,Adj,Dec,113.02,,,,-3.0%,-4.6%,-13.9%
+HLIT,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,Adj,Dec,11.29,,,,+14.2%,-23.0%,+11.1%
+VISN,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,Adj,Dec,6.48,,,,+28.5%,-9.1%,+43.9%
+ANET,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,GAAP,Dec,205.19,,,,+56.6%,+26.5%,+42.4%
+VRT,Extended,Telco infrastructure,Industrials,Capital Goods,Adj,Dec,253.46,,,,+56.4%,-20.4%,+77.7%
+MTZ,Extended,Telco infrastructure,Industrials,Capital Goods,Adj,Dec,221.69,,,,+2.0%,-43.2%,+7.5%
+DY,Extended,Telco infrastructure,Industrials,Capital Goods,Adj,Jan,282.02,,,,-16.5%,-39.3%,-0.2%
+GLW,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,Adj,Dec,159.69,,,,+82.4%,-17.7%,+97.1%
+APH,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,GAAP,Dec,82.84,,,,+22.6%,+4.4%,+32.1%
+UI,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,Adj,Jun,580.88,,,,+5.0%,+3.2%,-11.4%
+CALX,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,Adj,Dec,35.15,,,,-33.6%,-3.3%,-43.7%
+PRY,Extended,Telco infrastructure,Industrials,Capital Goods,Adj,Dec,127.8,,,,+48.0%,-13.9%,+52.8%
+NTCT,Extended,Telco infrastructure,Information Technology,Technology Hardware & Equipmen,Adj,Mar,39.14,,,,+44.6%,-3.7%,+50.5%
+DOX,Extended,Telco infrastructure,Information Technology,Software & Services,Adj,Sep,58.79,,,,-27.0%,+12.3%,-29.3%
+MCK,Extended,Drug distributors / PBMs,Health Care,Health Care Equipment & Servic,Adj,Mar,891.23,,,,+8.6%,+16.7%,+20.2%
+CAH,Extended,Drug distributors / PBMs,Health Care,Health Care Equipment & Servic,Adj,Jun,222.04,,,,+8.0%,-3.0%,+43.6%
+COR,Extended,Drug distributors / PBMs,Health Care,Health Care Equipment & Servic,Adj,Sep,314.43,,,,-6.9%,+11.9%,+4.0%
+AZO,Extended,Autos,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Aug,2894.73,,,,-14.6%,-5.0%,-29.7%
+AAP,Extended,Autos,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,42.66,,,,+8.5%,-22.2%,-29.0%
+ORLY,Extended,Autos,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,85.82,,,,-5.9%,-2.0%,-17.3%
+KMX,Extended,Autos,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Feb,56.84,,,,+47.1%,+9.5%,-1.3%
+MNRO,Extended,Autos,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Mar,14.29,,,,-28.7%,-7.3%,-21.3%
+AN,Extended,Autos,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,169.61,,,,-17.9%,-11.7%,-23.0%
+GPI,Extended,Autos,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,253.75,,,,-35.5%,-20.3%,-44.1%
+SAH,Extended,Autos,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,65.34,,,,+5.6%,-19.8%,-17.2%
+CPRT,Extended,Autos,Industrials,Commercial & Professional Serv,Adj,Jul,28.795,,,,-26.4%,-2.7%,-36.4%
+LKQ,Extended,Autos,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,23.59,,,,-21.9%,-8.3%,-22.4%
+WAB,Extended,Auto / Truck Supply Chain,Industrials,Capital Goods,Adj,Dec,289.71,,,,+35.7%,+7.2%,+48.9%
+ALSN,Extended,Auto / Truck Supply Chain,Industrials,Capital Goods,Adj,Dec,115.38,,,,+17.9%,-1.4%,+32.0%
+GNTX,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,22.3,,,,-4.2%,-9.9%,-21.5%
+TEL,Extended,Auto / Truck Supply Chain,Information Technology,Technology Hardware & Equipmen,Adj,Sep,213.48,,,,-6.2%,+5.1%,-2.8%
+GT,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,5.49,,,,-37.3%,-6.9%,-33.4%
+TEN,Extended,Auto / Truck Supply Chain,Energy,Energy,Adj,Dec,48.27,,,,+115.3%,+17.3%,+106.0%
+LEA,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,122.4,,,,+6.8%,-10.4%,+18.7%
+ADNT,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Sep,18.3,,,,-4.5%,-10.7%,-25.2%
+JCI,Extended,Auto / Truck Supply Chain,Industrials,Capital Goods,Adj,Sep,146.44,,,,+22.3%,+3.7%,+35.2%
+LNR,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,96.22,,,,+16.0%,-4.9%,+26.8%
+CON,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,69.48,,,,+2.2%,-4.3%,+22.4%
+PCAR,Extended,Auto / Truck Supply Chain,Industrials,Capital Goods,Adj,Dec,113.9,,,,+4.0%,-2.5%,+18.0%
+HOG,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,26.03,,,,+27.0%,+1.8%,-9.7%
+GM,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,83.45,,,,+2.6%,+5.7%,+42.5%
+BC,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,66.59,,,,-10.3%,-18.0%,+6.5%
+F,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,13.1,,,,-0.2%,-6.4%,+11.7%
+STLA,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,4.83,,,,-55.6%,-19.0%,-51.2%
+EXO,Extended,Auto / Truck Supply Chain,Financials,Financial Services,Adj,Dec,72.75,,,,+0.4%,+12.4%,-13.7%
+VOW,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,73.45,,,,-30.1%,-7.7%,-22.6%
+BMW,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,Adj,Dec,58.08,,,,-37.6%,-4.9%,-30.5%
+005380,Extended,Auto / Truck Supply Chain,Consumer Discretionary,Automobiles & Components,GAAP,Dec,353500.0,,,,+19.0%,-30.0%,+61.4%
+ECL,Extended,Recurring services,Materials,Materials,Adj,Dec,276.22,,,,+5.2%,+2.8%,+3.9%
+CLH,Extended,Recurring services,Industrials,Commercial & Professional Serv,Adj,Dec,312.85,,,,+33.4%,+7.9%,+32.5%
+PSA,Extended,Recurring services,Real Estate,Equity Real Estate Investment,Adj,Dec,289.71,,,,+11.6%,-9.8%,+2.6%
+EXR,Extended,Recurring services,Real Estate,Equity Real Estate Investment,Adj,Dec,134.99,,,,+3.7%,-8.6%,-2.6%
+SCI,Extended,Recurring services,Consumer Discretionary,Consumer Services,Adj,Dec,78.11,,,,+0.2%,+5.7%,-4.0%
+ADT,Extended,Recurring services,Consumer Discretionary,Consumer Services,Adj,Dec,6.54,,,,-19.0%,-0.3%,-23.8%
+IRM,Extended,Recurring services,Real Estate,Equity Real Estate Investment,Adj,Dec,118.13,,,,+42.4%,-11.2%,+13.5%
+SECUB,Extended,Recurring services,Industrials,Commercial & Professional Serv,Adj,Dec,150.5,,,,+2.2%,-0.1%,+7.5%
+CTAS,Extended,Recurring services,Industrials,Commercial & Professional Serv,Adj,May,198.8,,,,+5.7%,+17.8%,-0.9%
+ROL,Extended,Recurring services,Industrials,Commercial & Professional Serv,Adj,Dec,32.86,,,,-45.3%,-26.4%,-40.7%
+TRUP,Extended,Recurring services,Financials,Insurance,Adj,Dec,23.63,,,,-36.8%,+0.3%,-46.5%
+WAT,Extended,Instruments,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,425.74,,,,+12.1%,+19.2%,+42.3%
+QGEN,Extended,Instruments,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,43.69,,,,-3.0%,+17.4%,-4.4%
+BRKR,Extended,Instruments,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,61.21,,,,+29.9%,+11.1%,+83.8%
+MTD,Extended,Instruments,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,1490.76,,,,+6.9%,+28.9%,+18.6%
+KEYS,Extended,Instruments,Information Technology,Technology Hardware & Equipmen,Adj,Oct,347.32,,,,+70.9%,-1.5%,+95.2%
+A,Extended,Instruments,Health Care,"Pharmaceuticals, Biotechnology",Adj,Oct,167.26,,,,+22.9%,+32.0%,+32.8%
+ILMN,Extended,Instruments,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,247.46,,,,+88.7%,+50.0%,+149.0%
+ABBV,Extended,Instruments,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,265.21,,,,+16.1%,+13.0%,+19.1%
+TGT,Extended,Retailers,Consumer Staples,Consumer Staples Distribution,Adj,Jan,159.02,,,,+62.7%,+18.6%,+82.7%
+BJ,Extended,Retailers,Consumer Staples,Consumer Staples Distribution,Adj,Jan,90.97,,,,+1.0%,+5.6%,-5.2%
+KSS,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,18.27,,,,-10.5%,+4.2%,+5.7%
+TJX,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,130.79,,,,-14.9%,-20.4%,-6.4%
+SIG,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,100.42,,,,+21.2%,+18.3%,+5.4%
+ROST,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,232.51,,,,+29.1%,+1.5%,+59.6%
+M,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,22.78,,,,+3.3%,-4.9%,+33.0%
+DKS,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,133.94,,,,-32.3%,-43.4%,-41.4%
+ZAL,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,22.0,,,,-13.2%,-13.7%,-17.6%
+CHWY,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,19.66,,,,-40.5%,+10.1%,-48.6%
+SFIX,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jul,2.99,,,,-43.0%,-30.9%,-45.2%
+LEVI,Extended,Retailers,Consumer Discretionary,Consumer Durables & Apparel,Adj,Nov,20.06,,,,-3.3%,-14.2%,-13.1%
+DG,Extended,Retailers,Consumer Staples,Consumer Staples Distribution,Adj,Jan,122.63,,,,-7.6%,+7.0%,+18.3%
+DLTR,Extended,Retailers,Consumer Staples,Consumer Staples Distribution,Adj,Jan,115.04,,,,-6.5%,+1.4%,+21.5%
+FIVE,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,232.28,,,,+23.3%,+24.9%,+50.0%
+BURL,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,256.85,,,,-11.1%,-22.7%,-1.2%
+BBY,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,94.82,,,,+41.7%,+26.2%,+29.9%
+HD,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,GAAP,Jan,305.35,,,,-11.3%,-5.9%,-25.7%
+LOW,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,196.08,,,,-18.7%,-8.2%,-24.5%
+SBH,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Sep,16.96,,,,+18.9%,+27.3%,+8.2%
+ULTA,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,553.86,,,,-8.5%,+20.6%,+5.6%
+TPR,Extended,Luxury / fashion,Consumer Discretionary,Consumer Durables & Apparel,Adj,Jun,112.59,,,,-11.9%,-25.2%,-3.1%
+CPRI,Extended,Luxury / fashion,Consumer Discretionary,Consumer Durables & Apparel,Adj,Mar,15.19,,,,-37.7%,-20.7%,-25.7%
+FOSL,Extended,Luxury / fashion,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,6.41,,,,+70.5%,+59.9%,+113.0%
+RMS,Extended,Luxury / fashion,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,1357.0,,,,-36.1%,-15.5%,-36.4%
+UHR,Extended,Luxury / fashion,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,179.4,,,,+6.6%,-12.2%,+13.6%
+KER,Extended,Luxury / fashion,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,228.05,,,,-23.9%,-13.2%,-15.2%
+CFR,Extended,Luxury / fashion,Consumer Discretionary,Consumer Durables & Apparel,Adj,Mar,171.45,,,,+0.3%,-3.3%,+13.3%
+DECK,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Mar,79.83,,,,-23.0%,-23.0%,-28.7%
+PVH,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Jan,75.89,,,,+13.2%,+3.4%,-13.5%
+VFC,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Mar,13.55,,,,-25.1%,-19.9%,-8.6%
+KTB,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,67.82,,,,+11.0%,-11.7%,-15.3%
+ONON,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,29.39,,,,-36.8%,-16.4%,-35.9%
+GIL,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,47.01,,,,-24.7%,-10.9%,-18.1%
+CRI,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,30.86,,,,-4.8%,-27.8%,+4.6%
+LULU,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Jan,103.73,,,,-50.1%,-4.8%,-40.2%
+LB,Extended,Apparel,Real Estate,Real Estate Management & Devel,Adj,Dec,86.91,,,,+77.4%,+35.9%,+51.8%
+RL,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Mar,346.06,,,,-2.1%,-15.0%,+11.4%
+NKE,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,May,36.1,,,,-43.3%,-14.8%,-49.1%
+AS,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,27.65,,,,-26.0%,-20.5%,-19.4%
+GOOS,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Mar,7.62,,,,-41.2%,-18.8%,-44.0%
+GAP,Extended,Apparel,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,21.46,,,,-16.2%,+4.9%,-6.1%
+CROX,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,124.58,,,,+45.7%,+2.8%,+59.4%
+SN,Extended,Apparel,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,169.01,,,,+51.0%,+25.3%,+54.1%
+ANF,Extended,Apparel,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,136.21,,,,+8.2%,+61.7%,+56.1%
+AEO,Extended,Apparel,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,15.92,,,,-39.6%,-10.2%,-11.4%
+URBN,Extended,Apparel,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,75.02,,,,-0.3%,+5.7%,+4.1%
+BALL,Extended,Packaging,Materials,Materials,Adj,Dec,59.97,,,,+13.2%,-0.9%,+23.6%
+CCK,Extended,Packaging,Materials,Materials,Adj,Dec,109.64,,,,+6.5%,+4.0%,+15.7%
+SLGN,Extended,Packaging,Materials,Materials,Adj,Dec,37.45,,,,-7.2%,-11.4%,-10.9%
+OI,Extended,Packaging,Materials,Materials,Adj,Dec,6.19,,,,-58.1%,-31.9%,-53.6%
+AA,Extended,Packaging,Materials,Materials,Adj,Dec,44.71,,,,-15.9%,-18.8%,+41.8%
+PKG,Extended,Packaging,Materials,Materials,Adj,Dec,238.23,,,,+15.5%,+2.3%,+11.5%
+GPK,Extended,Packaging,Materials,Materials,Adj,Dec,9.57,,,,-36.5%,-6.5%,-49.8%
+SEE,Extended,Packaging,,,Adj,Dec,,,,,,,
+IP,Extended,Packaging,Materials,Materials,Adj,Dec,35.71,,,,-9.3%,-2.3%,-23.0%
+MHK,Extended,Housing,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,121.23,,,,+10.9%,+11.6%,-5.2%
+JELD,Extended,Housing,Industrials,Capital Goods,Adj,Dec,1.84,,,,-25.2%,+21.1%,-65.2%
+AMWD,Extended,Housing,,,Adj,Apr,,,,,,,
+MAS,Extended,Housing,Industrials,Capital Goods,Adj,Dec,69.96,,,,+10.2%,-4.4%,-2.3%
+FBIN,Extended,Housing,Industrials,Capital Goods,Adj,Dec,40.22,,,,-19.6%,-1.1%,-25.7%
+TOL,Extended,Housing,Consumer Discretionary,Consumer Durables & Apparel,Adj,Oct,137.57,,,,+1.7%,-8.9%,+0.7%
+KBH,Extended,Housing,Consumer Discretionary,Consumer Durables & Apparel,Adj,Nov,48.59,,,,-13.9%,-7.9%,-22.1%
+LEN,Extended,Housing,Consumer Discretionary,Consumer Durables & Apparel,Adj,Nov,83.06,,,,-19.2%,-4.9%,-32.6%
+LGIH,Extended,Housing,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,52.205,,,,+21.5%,-6.9%,-3.7%
+WMS,Extended,Housing,Industrials,Capital Goods,Adj,Mar,130.73,,,,-9.7%,-6.7%,-9.4%
+POOL,Extended,Housing,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,168.6,,,,-26.3%,-13.5%,-46.1%
+ALLE,Extended,Housing,Industrials,Capital Goods,Adj,Dec,153.95,,,,-3.3%,+19.6%,-13.2%
+FDX,Extended,Transportation,Industrials,Transportation,Adj,May,295.94,,,,+27.2%,-6.7%,+57.3%
+UPS,Extended,Transportation,Industrials,Transportation,Adj,Dec,95.87,,,,-3.3%,-9.4%,+13.6%
+XPO,Extended,Transportation,Industrials,Transportation,Adj,Dec,177.67,,,,+30.7%,-10.8%,+33.3%
+EXPD,Extended,Transportation,Industrials,Transportation,Adj,Dec,187.51,,,,+25.8%,+16.2%,+54.8%
+CHRW,Extended,Transportation,Industrials,Transportation,Adj,Dec,149.56,,,,-7.0%,-16.4%,+11.4%
+KNX,Extended,Transportation,Industrials,Transportation,Adj,Dec,67.09,,,,+28.3%,-9.3%,+70.1%
+JBHT,Extended,Transportation,Industrials,Transportation,Adj,Dec,237.41,,,,+22.2%,-11.8%,+79.9%
+WERN,Extended,Transportation,Industrials,Transportation,Adj,Dec,34.79,,,,+15.9%,-15.2%,+30.4%
+NOVOB,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,253.8,,,,-22.0%,-17.5%,-32.2%
+BIIB,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,225.36,,,,+28.1%,+14.3%,+61.8%
+REGN,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,803.9,,,,+4.1%,+30.1%,+41.6%
+VRTX,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,514.99,,,,+13.6%,+9.9%,+35.6%
+MRK,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,150.91,,,,+43.4%,+26.2%,+88.7%
+JNJ,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,269.19,,,,+30.1%,+12.6%,+52.4%
+ABT,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Dec,103.69,,,,-17.2%,+14.5%,-23.7%
+PFE,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,27.93,,,,+12.2%,+13.0%,+15.7%
+GSK,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,50.72,,,,+3.4%,-2.6%,+25.2%
+BHC,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,5.81,,,,-16.4%,+21.0%,-13.4%
+TEVA,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,39.52,,,,+38.1%,+30.3%,+97.6%
+BMY,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,62.25,,,,+15.4%,+12.1%,+38.6%
+ALGN,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Dec,153.29,,,,-1.8%,-9.0%,+18.8%
+ZBH,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Dec,93.98,,,,+4.5%,+7.3%,-6.3%
+XRAY,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Dec,9.95,,,,-12.9%,-2.5%,-23.2%
+SYK,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Dec,275.09,,,,-21.7%,-11.3%,-26.4%
+GILD,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,152.67,,,,+24.4%,+22.1%,+33.5%
+GRF,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,9.488,,,,-11.3%,+6.0%,-22.5%
+CSL,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Jun,179.24,,,,+3.8%,+60.0%,-10.4%
+PRGO,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,14.31,,,,+2.8%,+50.8%,-32.2%
+DXCM,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Dec,89.53,,,,+34.9%,+29.9%,+31.3%
+PODD,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Dec,139.38,,,,-51.0%,-3.1%,-57.5%
+MASI,Extended,Pharma / Med Devices,,,Adj,Dec,,,,,,,
+UTHR,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,497.59,,,,+2.1%,-8.6%,+14.6%
+HOLX,Extended,Pharma / Med Devices,,,Adj,Sep,,,,,,,
+MDT,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Apr,90.77,,,,-5.5%,+12.6%,-4.4%
+COO,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Oct,55.29,,,,-32.5%,-16.4%,-18.1%
+ELAN,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,22.93,,,,+1.3%,-1.1%,+23.7%
+XOM,Extended,Energy,Energy,Energy,GAAP,Dec,158.71,,,,+31.9%,+13.6%,+39.3%
+CVX,Extended,Energy,Energy,Energy,GAAP,Dec,202.41,,,,+32.8%,+15.0%,+28.6%
+PSX,Extended,Energy,Energy,Energy,Adj,Dec,256.78,,,,+99.0%,+50.7%,+94.1%
+VLO,Extended,Energy,Energy,Energy,Adj,Dec,377.14,,,,+131.7%,+54.8%,+121.3%
+MPC,Extended,Energy,Energy,Energy,Adj,Dec,389.68,,,,+139.6%,+56.8%,+104.2%
+KMI,Extended,Energy,Energy,Energy,Adj,Dec,31.27,,,,+13.8%,-3.9%,+13.8%
+HAL,Extended,Energy,Energy,Energy,Adj,Dec,32.85,,,,+16.2%,-6.4%,+35.4%
+LNG,Extended,Energy,Energy,Energy,Adj,Dec,272.96,,,,+40.4%,+16.5%,+16.2%
+OII,Extended,Energy,Energy,Energy,Adj,Dec,46.11,,,,+91.9%,+27.1%,+81.9%
+NOV,Extended,Energy,Energy,Energy,Adj,Dec,20.18,,,,+29.7%,+7.6%,+55.1%
+AR,Extended,Energy,Energy,Energy,Adj,Dec,34.42,,,,-0.1%,-0.3%,+3.2%
+SLB,Extended,Energy,Energy,Energy,Adj,Dec,52.12,,,,+35.8%,+9.1%,+51.1%
+CLB,Extended,Energy,Energy,Energy,Adj,Dec,10.94,,,,-31.8%,-6.0%,-11.0%
+KO,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",GAAP,Dec,88.61,,,,+26.7%,+10.3%,+32.8%
+PEP,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,131.19,,,,-8.6%,-7.6%,-7.5%
+ABI,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,67.68,,,,+23.3%,-6.3%,+35.5%
+TAP,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,36.88,,,,-21.0%,-7.1%,-16.4%
+STZ,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Feb,117.59,,,,-14.8%,-18.0%,-10.8%
+MNST,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,44.27,,,,+15.5%,-5.5%,+37.3%
+OR,Extended,Cons. staples,Consumer Staples,Household & Personal Products,GAAP,Dec,387.6,,,,+5.7%,+3.1%,+3.4%
+EL,Extended,Cons. staples,Consumer Staples,Household & Personal Products,Adj,Jun,100.29,,,,-4.2%,+19.7%,+14.3%
+NESN,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,77.52,,,,-1.5%,-3.4%,+8.2%
+PG,Extended,Cons. staples,Consumer Staples,Household & Personal Products,GAAP,Jun,148.22,,,,+3.4%,-1.7%,-2.8%
+UNA,Extended,Cons. staples,Consumer Staples,Household & Personal Products,Adj,Dec,54.99,,,,-1.3%,+6.0%,+0.3%
+MDLZ,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,61.08,,,,+13.5%,+0.0%,-4.3%
+MKC,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Nov,49.42,,,,-27.4%,+4.3%,-23.1%
+GIS,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,May,35.45,,,,-23.8%,+3.0%,-29.9%
+CPB,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Jul,20.21,,,,-27.5%,-4.7%,-40.1%
+HSY,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,168.46,,,,-7.4%,-6.0%,-11.7%
+ENR,Extended,Cons. staples,Consumer Staples,Household & Personal Products,Adj,Sep,22.35,,,,+12.4%,+3.5%,-14.5%
+NWL,Extended,Cons. staples,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,5.77,,,,+55.1%,+12.7%,+7.1%
+HRL,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Oct,20.33,,,,-14.2%,-17.8%,-16.8%
+HLF,Extended,Cons. staples,Consumer Staples,Household & Personal Products,Adj,Dec,12.23,,,,-5.1%,-0.2%,+35.3%
+IFF,Extended,Cons. staples,Materials,Materials,Adj,Dec,85.79,,,,+27.3%,+14.8%,+37.5%
+KHC,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,24.0,,,,-1.0%,+6.8%,-9.6%
+BATS,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,4165.0,,,,-1.2%,-9.2%,+6.9%
+POST,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Sep,75.97,,,,-23.3%,-14.6%,-27.3%
+DGE,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Jun,1632.5,,,,+1.8%,+5.2%,-8.2%
+SGI,Extended,Bedding / furniture / household goods,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,64.73,,,,-27.5%,-12.3%,-23.3%
+WSM,Extended,Bedding / furniture / household goods,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,232.69,,,,+30.3%,+2.9%,+16.1%
+RH,Extended,Bedding / furniture / household goods,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Jan,130.64,,,,-27.1%,-7.8%,-40.2%
+WHR,Extended,Bedding / furniture / household goods,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,33.56,,,,-53.5%,-7.3%,-58.0%
+SNBR,Extended,Bedding / furniture / household goods,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,,,,,,,
+HVT,Extended,Bedding / furniture / household goods,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,28.27,,,,+21.0%,+14.3%,+24.1%
+LEG,Extended,Bedding / furniture / household goods,,,Adj,Dec,9.2,,,,-16.4%,-15.8%,+0.9%
+CULP,Extended,Bedding / furniture / household goods,Consumer Discretionary,Consumer Durables & Apparel,Adj,Apr,3.6,,,,+1.1%,+15.4%,-16.7%
+AWI,Extended,Bedding / furniture / household goods,Industrials,Capital Goods,Adj,Dec,163.81,,,,-14.3%,+5.7%,-16.0%
+REZI,Extended,Bedding / furniture / household goods,Industrials,Capital Goods,Adj,Dec,18.88,,,,-22.7%,-11.1%,-35.0%
+INVH,Extended,Bedding / furniture / household goods,Real Estate,Equity Real Estate Investment,Adj,Dec,27.14,,,,-2.3%,-6.6%,-8.6%
+AMH,Extended,Bedding / furniture / household goods,Real Estate,Equity Real Estate Investment,Adj,Dec,31.28,,,,-2.6%,-3.6%,-6.7%
+HON,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,211.85,,,,+3.6%,-9.1%,+2.5%
+GEV,Extended,Industrial / Cyclical,Industrials,Capital Goods,GAAP,Dec,950.28,,,,+45.4%,-8.2%,+50.0%
+ETN,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,442.49,,,,+38.9%,+9.2%,+20.1%
+PH,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Jun,964.85,,,,+9.8%,+1.8%,+26.9%
+ROP,Extended,Industrial / Cyclical,Information Technology,Software & Services,Adj,Dec,363.85,,,,-18.3%,+10.4%,-27.8%
+AME,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,245.41,,,,+19.5%,+4.8%,+31.5%
+FTV,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,55.95,,,,+1.3%,-7.3%,+15.5%
+EMN,Extended,Industrial / Cyclical,Materials,Materials,Adj,Dec,67.07,,,,+5.1%,-3.5%,+4.4%
+NDSN,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Oct,319.67,,,,+33.0%,+9.8%,+42.2%
+IEX,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,225.69,,,,+26.8%,+2.0%,+41.6%
+TDY,Extended,Industrial / Cyclical,Information Technology,Technology Hardware & Equipmen,Adj,Dec,612.74,,,,+20.0%,-0.0%,+7.9%
+SWK,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,92.13,,,,+24.0%,+9.9%,+22.4%
+CAT,Extended,Industrial / Cyclical,Industrials,Capital Goods,GAAP,Dec,808.01,,,,+41.0%,-17.9%,+71.5%
+MMM,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,169.3,,,,+5.7%,+4.6%,+8.3%
+PPG,Extended,Industrial / Cyclical,Materials,Materials,Adj,Dec,107.77,,,,+5.2%,-8.4%,+1.4%
+AXTA,Extended,Industrial / Cyclical,Materials,Materials,Adj,Dec,33.04,,,,+2.3%,-1.8%,+13.2%
+SHW,Extended,Industrial / Cyclical,Materials,Materials,Adj,Dec,328.35,,,,+1.3%,+1.7%,-4.7%
+AVY,Extended,Industrial / Cyclical,Materials,Materials,Adj,Dec,172.09,,,,-5.4%,+9.0%,+5.4%
+SNA,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,371.8,,,,+7.9%,-3.6%,+9.3%
+ST,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,42.16,,,,+26.6%,-13.6%,+37.3%
+ZBRA,Extended,Industrial / Cyclical,Information Technology,Technology Hardware & Equipmen,Adj,Dec,361.61,,,,+48.9%,+52.1%,+15.1%
+LIN,Extended,Industrial / Cyclical,Materials,Materials,GAAP,Dec,464.91,,,,+9.0%,-9.2%,-3.1%
+APD,Extended,Industrial / Cyclical,Materials,Materials,Adj,Sep,287.86,,,,+16.5%,+1.9%,+4.1%
+URI,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,1043.04,,,,+28.9%,-1.9%,+9.2%
+WSC,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,18.35,,,,-2.5%,-34.1%,-16.4%
+FLR,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,54.03,,,,+36.3%,+1.2%,+22.7%
+J,Extended,Industrial / Cyclical,Industrials,Commercial & Professional Serv,Adj,Sep,143.12,,,,+8.0%,+18.4%,-3.2%
+ACM,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Sep,62.27,,,,-34.7%,-9.8%,-52.1%
+DE,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Oct,703.12,,,,+51.0%,+18.8%,+49.1%
+DOW,Extended,Industrial / Cyclical,Materials,Materials,Adj,Dec,28.2,,,,+20.6%,-7.0%,+23.4%
+FMC,Extended,Industrial / Cyclical,Materials,Materials,Adj,Dec,10.57,,,,-23.8%,-4.1%,-69.5%
+MWA,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Sep,22.02,,,,-7.6%,-14.1%,-13.0%
+BNR,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,59.16,,,,+19.4%,+10.9%,+16.3%
+MIDD,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,112.79,,,,-5.7%,-14.4%,+4.6%
+LECO,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,262.99,,,,+9.7%,-2.3%,+11.3%
+GWW,Extended,Distributors,Industrials,Capital Goods,Adj,Dec,1268.62,,,,+25.7%,-3.9%,+30.0%
+FAST,Extended,Distributors,Industrials,Capital Goods,Adj,Dec,50.08,,,,+24.8%,+9.8%,+4.4%
+WSO,Extended,Distributors,Industrials,Capital Goods,Adj,Dec,325.58,,,,-3.4%,-16.0%,-17.7%
+WCC,Extended,Distributors,Industrials,Capital Goods,Adj,Dec,362.08,,,,+48.0%,+2.5%,+72.3%
+MSM,Extended,Distributors,Industrials,Capital Goods,Adj,Aug,121.37,,,,+44.3%,+4.4%,+33.6%
+SITE,Extended,Distributors,Industrials,Capital Goods,Adj,Dec,94.39,,,,-24.2%,-10.4%,-29.6%
+GPC,Extended,Distributors,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,129.59,,,,+5.4%,+21.7%,-6.5%
+DNOW,Extended,Distributors,Industrials,Capital Goods,Adj,Dec,15.56,,,,+17.4%,+16.0%,+0.6%
+TCEHY,Extended,China equities,Communication Services,Media & Entertainment,GAAP,Dec,57.91,,,,-24.4%,+8.0%,-29.0%
+BIDU,Extended,China equities,Communication Services,Media & Entertainment,Adj,Dec,92.43,,,,-29.3%,-16.1%,-26.4%
+JD,Extended,China equities,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,27.38,,,,-4.6%,+4.8%,-16.9%
+700,Extended,China equities,Communication Services,Media & Entertainment,GAAP,Dec,441.0,,,,-26.4%,+6.3%,-30.6%
+TCOM,Extended,China equities,Consumer Discretionary,Consumer Services,Adj,Dec,40.85,,,,-43.2%,-10.2%,-46.7%
+3988,Extended,China equities,Financials,Banks,GAAP,Dec,6.0,,,,+34.5%,+12.4%,+40.2%
+3690,Extended,China equities,Consumer Discretionary,Consumer Services,GAAP,Dec,72.85,,,,-29.5%,+4.7%,-27.9%
+1398,Extended,China equities,Financials,Banks,GAAP,Dec,7.54,,,,+19.9%,+8.3%,+30.4%
+VIPS,Extended,China equities,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,12.67,,,,-28.4%,-3.8%,-30.6%
+2199,Extended,China equities,Consumer Discretionary,Consumer Durables & Apparel,Adj,Mar,2.4,,,,-2.3%,+34.1%,+15.0%
+600104,Extended,China equities,Consumer Discretionary,Automobiles & Components,Adj,Dec,10.87,,,,-28.6%,+5.4%,-41.9%
+175,Extended,China equities,Consumer Discretionary,Automobiles & Components,Adj,Dec,15.76,,,,-12.0%,-11.6%,-13.6%
+2333,Extended,China equities,Consumer Discretionary,Automobiles & Components,Adj,Dec,7.355,,,,-51.9%,-24.3%,-55.8%
+NRG,Extended,Utilities,Utilities,Utilities,Adj,Dec,102.75,,,,-35.5%,-25.4%,-38.6%
+CEG,Extended,Utilities,Utilities,Utilities,Adj,Dec,263.46,,,,-25.4%,-2.5%,-21.7%
+VST,Extended,Utilities,Utilities,Utilities,Adj,Dec,140.41,,,,-13.0%,-13.5%,-31.3%
+AI,Extended,Technology,Information Technology,Software & Services,Adj,Apr,10.85,,,,-19.5%,+12.1%,-40.1%
+PATH,Extended,Software,Information Technology,Software & Services,Adj,Jan,13.25,,,,-19.2%,+30.4%,+5.7%
+ON,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Dec,73.6,,,,+35.9%,-37.1%,+46.0%
+MCHP,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Mar,75.82,,,,+19.0%,-18.7%,+17.2%
+NXPI,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Dec,237.57,,,,+9.4%,-20.8%,+5.3%
+HIMS,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,30.43,,,,-6.3%,-7.7%,-45.7%
+DOCS,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Mar,26.51,,,,-40.1%,+29.4%,-64.1%
+COIN,Extended,Financials and related,Financials,Financial Services,Adj,Dec,201.07,,,,-11.1%,+27.1%,-37.2%
+SOFI,Extended,Financials and related,Financials,Financial Services,Adj,Dec,17.16,,,,-34.5%,-0.8%,-41.0%
+CPNG,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,14.61,,,,-38.1%,-16.6%,-54.7%
+MELI,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,1826.58,,,,-9.3%,+15.3%,-26.8%
+SE,Extended,Internet,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,103.67,,,,-18.7%,+12.9%,-44.0%
+GTLB,Extended,Software,Information Technology,Software & Services,Adj,Jan,48.82,,,,+30.1%,+80.8%,-0.0%
+CFLT,Extended,Software,,,Adj,Dec,,,,,,,
+IONQ,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Dec,40.74,,,,-9.2%,-29.6%,-45.8%
+ZS,Extended,Software,Information Technology,Software & Services,Adj,Jul,210.18,,,,-6.6%,+66.6%,-27.3%
+S,Extended,Software,Information Technology,Software & Services,Adj,Jan,23.85,,,,+59.0%,+57.6%,+29.2%
+AFRM,Extended,Payments,Financials,Financial Services,Adj,Jun,71.77,,,,-3.6%,-0.1%,-13.2%
+GRAB,Extended,Internet,Industrials,Transportation,Adj,Dec,3.17,,,,-36.5%,-8.4%,-49.8%
+GLBE,Extended,Internet,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,41.55,,,,+5.7%,+29.2%,+12.7%
+DUOL,Extended,Internet,Consumer Discretionary,Consumer Services,Adj,Dec,147.71,,,,-15.8%,+11.7%,-50.7%
+INSP,Extended,Pharma / Med Devices,Health Care,Health Care Equipment & Servic,Adj,Dec,71.3,,,,-22.7%,+70.8%,-7.5%
+GDRX,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,3.44,,,,+26.9%,+28.8%,-14.9%
+OSCR,Extended,Managed Care,Financials,Insurance,Adj,Dec,30.67,,,,+113.4%,+2.5%,+72.7%
+FSLR,Extended,Energy,Information Technology,Semiconductors & Semiconductor,Adj,Dec,200.78,,,,-23.1%,-19.4%,-6.9%
+ENPH,Extended,Energy,Information Technology,Semiconductors & Semiconductor,Adj,Dec,34.42,,,,+7.4%,-27.1%,-7.9%
+RUN,Extended,Energy,Industrials,Capital Goods,Adj,Dec,8.79,,,,-52.2%,-31.4%,-46.6%
+PLUG,Extended,Energy,Industrials,Capital Goods,Adj,Dec,2.11,,,,+7.1%,-22.1%,-16.6%
+GFS,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Dec,47.95,,,,+37.3%,-42.5%,+45.0%
+2454,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,5185.0,,,,+262.6%,+14.3%,+277.1%
+AMG,Extended,Financials and related,Financials,Financial Services,Adj,Dec,360.28,,,,+25.0%,+2.9%,+49.0%
+AB,Extended,Financials and related,Financials,Financial Services,Adj,Dec,36.19,,,,-6.0%,+1.1%,-5.2%
+BLK,Extended,Financials and related,Financials,Financial Services,Adj,Dec,1066.66,,,,-0.3%,+5.1%,-5.8%
+FHI,Extended,Financials and related,Financials,Financial Services,Adj,Dec,56.92,,,,+9.3%,-3.9%,+8.5%
+JHG,Extended,Financials and related,,,Adj,Dec,,,,,,,
+IVZ,Extended,Financials and related,Financials,Financial Services,Adj,Dec,30.85,,,,+17.4%,+14.2%,+37.5%
+IR,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,73.85,,,,-6.8%,-3.6%,-9.2%
+BRK/B,Extended,Financials and related,Financials,Financial Services,GAAP,Dec,503.49,,,,+0.2%,+2.2%,+1.9%
+CSCO,Extended,Technology,Information Technology,Technology Hardware & Equipmen,GAAP,Jul,106.44,,,,+38.2%,-12.1%,+57.6%
+AMGN,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",GAAP,Dec,410.24,,,,+25.3%,+18.2%,+43.0%
+NEE,Extended,Utilities,Utilities,Utilities,Adj,Dec,79.26,,,,-1.3%,-8.3%,+9.6%
+WELL,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,230.39,,,,+24.1%,+5.8%,+33.5%
+PLD,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,135.88,,,,+6.4%,-6.5%,+18.7%
+COP,Extended,Energy,Energy,Energy,Adj,Dec,125.27,,,,+33.8%,+13.9%,+34.0%
+TT,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,437.82,,,,+12.5%,-7.7%,+8.1%
+SO,Extended,Utilities,Utilities,Utilities,Adj,Dec,85.15,,,,-2.4%,-10.3%,-9.1%
+PWR,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,642.63,,,,+52.3%,-8.5%,+65.0%
+NEM,Extended,Materials,Materials,Materials,Adj,Dec,127.26,,,,+27.5%,+30.1%,+50.3%
+CDNS,Extended,Software,Information Technology,Software & Services,Adj,Dec,302.95,,,,-3.1%,-20.1%,-17.3%
+BNY,Extended,Financials and related,Financials,Financial Services,Adj,Dec,150.17,,,,+29.4%,+2.0%,+38.2%
+CMI,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,526.13,,,,+3.1%,-24.7%,+24.0%
+DUK,Extended,Utilities,Utilities,Utilities,Adj,Dec,116.31,,,,-0.8%,-7.0%,-5.5%
+WMB,Extended,Energy,Energy,Energy,Adj,Dec,70.98,,,,+18.1%,-6.3%,+15.6%
+FCX,Extended,Materials,Materials,Materials,Adj,Dec,74.35,,,,+46.4%,+15.5%,+63.9%
+WM,Extended,Industrial / Cyclical,Industrials,Commercial & Professional Serv,Adj,Dec,207.68,,,,-5.5%,-5.1%,-4.8%
+SNPS,Extended,Software,Information Technology,Software & Services,Adj,Oct,409.24,,,,-12.9%,-11.3%,-16.5%
+EMR,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Sep,154.19,,,,+16.2%,+7.7%,+17.3%
+ITW,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,270.47,,,,+9.8%,+3.4%,+3.5%
+COHR,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,310.39,,,,+68.2%,-18.6%,+184.0%
+AEP,Extended,Utilities,Utilities,Utilities,Adj,Dec,120.27,,,,+4.3%,-10.1%,+11.2%
+CL,Extended,Cons. staples,Consumer Staples,Household & Personal Products,Adj,Dec,87.05,,,,+10.2%,-4.8%,+8.6%
+SPG,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,205.95,,,,+11.3%,-5.0%,+11.9%
+MPWR,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Dec,1380.62,,,,+52.3%,-3.0%,+51.0%
+EOG,Extended,Energy,Energy,Energy,Adj,Dec,139.52,,,,+32.9%,+3.4%,+20.6%
+TER,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Dec,398.69,,,,+106.0%,-5.1%,+196.0%
+ALAB,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Dec,363.46,,,,+118.5%,-8.5%,+58.0%
+FIX,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,1625.13,,,,+74.1%,-14.8%,+102.1%
+NSC,Extended,Industrial / Cyclical,Industrials,Transportation,Adj,Dec,314.0,,,,+8.8%,+3.5%,+7.5%
+DLR,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,185.65,,,,+20.0%,-4.8%,+6.6%
+WBD,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,30.83,,,,+7.0%,+14.7%,+57.6%
+CIEN,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Oct,368.56,,,,+57.6%,-19.9%,+164.2%
+BSX,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,44.92,,,,-52.9%,-1.5%,-54.0%
+RSG,Extended,Industrial / Cyclical,Industrials,Commercial & Professional Serv,Adj,Dec,213.88,,,,+0.9%,+2.3%,-6.0%
+NBIS,Extended,Software,Information Technology,Software & Services,Adj,Dec,236.12,,,,+182.1%,-14.2%,+119.0%
+LITE,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,945.67,,,,+156.6%,+14.2%,+476.7%
+CARR,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,55.26,,,,+4.6%,-21.9%,-7.5%
+D,Extended,Utilities,Utilities,Utilities,Adj,Dec,62.43,,,,+6.6%,-8.8%,+2.1%
+SRE,Extended,Utilities,Utilities,Utilities,Adj,Dec,80.98,,,,-8.3%,-12.3%,-5.9%
+TRGP,Extended,Energy,Energy,Energy,Adj,Dec,282.15,,,,+52.9%,+5.0%,+65.8%
+O,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,56.53,,,,+0.3%,-8.1%,-5.1%
+BKR,Extended,Energy,Energy,Energy,Adj,Dec,57.26,,,,+25.7%,-2.4%,+17.0%
+NUE,Extended,Materials,Materials,Materials,Adj,Dec,245.66,,,,+50.6%,+2.5%,+81.6%
+OKE,Extended,Energy,Energy,Energy,Adj,Dec,90.09,,,,+22.6%,+2.3%,+24.1%
+CRWV,Extended,Software,Information Technology,Software & Services,Adj,Dec,86.76,,,,+21.2%,-17.9%,-33.7%
+ETR,Extended,Utilities,Utilities,Utilities,Adj,Dec,101.16,,,,+9.4%,-11.1%,+11.3%
+CTVA,Extended,Materials,Materials,Materials,Adj,Dec,80.34,,,,+19.9%,+1.6%,+15.6%
+LHX,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,239.89,,,,-18.3%,-18.3%,-16.2%
+ROK,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Sep,427.19,,,,+9.8%,-6.4%,+24.6%
+EW,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,88.78,,,,+4.1%,+2.1%,+19.1%
+FANG,Extended,Energy,Energy,Energy,Adj,Dec,184.5,,,,+22.7%,-1.8%,+29.8%
+FER,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,56.3,,,,-12.9%,-19.6%,-1.8%
+OXY,Extended,Energy,Energy,Energy,Adj,Dec,56.31,,,,+36.9%,+7.8%,+21.3%
+XEL,Extended,Utilities,Utilities,Utilities,Adj,Dec,72.06,,,,-2.4%,-10.3%,-1.3%
+FITB,Extended,Banks,Financials,Banks,Adj,Dec,52.76,,,,+12.7%,-3.5%,+16.9%
+RKLB,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,71.98,,,,+3.2%,-24.3%,+36.0%
+DVN,Extended,Energy,Energy,Energy,Adj,Dec,46.93,,,,+28.1%,+8.2%,+36.1%
+EXC,Extended,Utilities,Utilities,Utilities,Adj,Dec,41.8,,,,-4.1%,-10.3%,-5.5%
+DHI,Extended,Consumer discretionary,Consumer Discretionary,Consumer Durables & Apparel,Adj,Sep,144.11,,,,+0.1%,-7.7%,-13.3%
+ODFL,Extended,Industrial / Cyclical,Industrials,Transportation,Adj,Dec,177.31,,,,+13.1%,-18.5%,+27.2%
+GRMN,Extended,Consumer discretionary,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,284.67,,,,+40.3%,+20.4%,+19.9%
+CCEP,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,102.31,,,,+12.8%,+4.6%,+14.5%
+KDP,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,31.51,,,,+12.5%,+2.1%,+18.9%
+AMP,Extended,Financials and related,Financials,Financial Services,Adj,Dec,512.37,,,,+4.5%,+9.9%,+3.7%
+VTR,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,86.86,,,,+12.3%,+1.7%,+26.7%
+BDX,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Sep,183.0,,,,+17.8%,+27.2%,+22.6%
+VMC,Extended,Materials,Materials,Materials,Adj,Dec,247.87,,,,-13.1%,-17.1%,-16.7%
+PEG,Extended,Utilities,Utilities,Utilities,Adj,Dec,69.12,,,,-13.9%,-15.1%,-15.9%
+ED,Extended,Utilities,Utilities,Utilities,Adj,Dec,103.84,,,,+4.6%,-4.5%,+5.4%
+ADSK,Extended,Software,Information Technology,Software & Services,Adj,Jan,219.62,,,,-25.8%,+16.3%,-32.4%
+JBL,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Aug,308.98,,,,+35.5%,-17.2%,+31.8%
+ALNY,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,251.65,,,,-36.7%,-12.7%,-44.6%
+TKO,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,188.87,,,,-9.6%,-6.8%,-6.6%
+EME,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,756.5,,,,+23.7%,-9.8%,+17.3%
+MLM,Extended,Materials,Materials,Materials,Adj,Dec,499.34,,,,-19.8%,-17.4%,-18.9%
+WEC,Extended,Utilities,Utilities,Utilities,Adj,Dec,102.83,,,,-2.5%,-9.9%,-8.0%
+PCG,Extended,Utilities,Utilities,Utilities,Adj,Dec,12.88,,,,-19.9%,-23.2%,-12.6%
+HBAN,Extended,Banks,Financials,Banks,Adj,Dec,15.69,,,,-9.6%,-9.8%,-9.6%
+KVUE,Extended,Cons. staples,Consumer Staples,Household & Personal Products,Adj,Dec,17.86,,,,+3.5%,-3.0%,+3.6%
+ADM,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,82.34,,,,+43.2%,+8.6%,+35.7%
+STLD,Extended,Materials,Materials,Materials,Adj,Dec,233.99,,,,+38.1%,-4.0%,+71.2%
+KMB,Extended,Cons. staples,Consumer Staples,Household & Personal Products,Adj,Dec,98.91,,,,-2.0%,-4.8%,-20.1%
+TRI,Extended,Industrial / Cyclical,Industrials,Commercial & Professional Serv,Adj,Dec,95.66,,,,-27.5%,+18.5%,-40.5%
+Q,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Dec,124.86,,,,+52.9%,-22.5%,
+ZTS,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,72.86,,,,-42.1%,-5.2%,-48.9%
+NTRS,Extended,Financials and related,Financials,Financial Services,Adj,Dec,173.4,,,,+26.9%,-1.6%,+32.9%
+AEE,Extended,Utilities,Utilities,Utilities,Adj,Dec,101.66,,,,+1.8%,-9.0%,+0.7%
+LVS,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,39.7,,,,-39.0%,-16.9%,-25.2%
+DOV,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,186.54,,,,-4.5%,-16.6%,+10.3%
+MSTR,Extended,Software,Information Technology,Software & Services,Adj,Dec,167.33,,,,+10.1%,+61.1%,-49.0%
+NTAP,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Apr,192.91,,,,+80.1%,+22.2%,+56.3%
+CFG,Extended,Banks,Financials,Banks,Adj,Dec,65.49,,,,+12.1%,-5.1%,+23.3%
+RJF,Extended,Financials and related,Financials,Financial Services,Adj,Sep,159.39,,,,-0.7%,+1.2%,-9.3%
+GEHC,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,66.27,,,,-19.2%,+4.0%,-11.2%
+RMD,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Jun,221.97,,,,-7.8%,+16.1%,-19.5%
+VICI,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,23.98,,,,-14.7%,-9.9%,-24.9%
+ATO,Extended,Utilities,Utilities,Utilities,Adj,Sep,157.34,,,,-6.1%,-8.0%,-5.4%
+CNP,Extended,Utilities,Utilities,Utilities,Adj,Dec,37.85,,,,-1.3%,-13.0%,-2.4%
+EIX,Extended,Utilities,Utilities,Utilities,Adj,Dec,55.05,,,,-8.3%,-24.5%,-0.5%
+OTIS,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,68.08,,,,-22.1%,-5.1%,-23.6%
+HUBB,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,458.83,,,,+3.3%,-10.0%,+5.4%
+XYL,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,107.85,,,,-20.8%,-2.3%,-24.6%
+CINF,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,165.83,,,,+1.5%,-5.7%,+7.4%
+PPL,Extended,Utilities,Utilities,Utilities,Adj,Dec,32.88,,,,-6.1%,-9.4%,-9.4%
+FE,Extended,Utilities,Utilities,Utilities,Adj,Dec,44.73,,,,-0.1%,-5.7%,+2.1%
+ECHO,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,95.46,,,,-12.2%,-8.1%,+29.6%
+ES,Extended,Utilities,Utilities,Utilities,Adj,Dec,66.38,,,,-1.4%,-6.5%,-4.4%
+PHM,Extended,Consumer discretionary,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,122.29,,,,+4.3%,-3.4%,-6.0%
+AVB,Extended,Real Estate,,,Adj,Dec,184.06,,,,+1.5%,+1.0%,-5.3%
+RF,Extended,Banks,Financials,Banks,Adj,Dec,27.91,,,,+3.0%,-4.7%,+4.4%
+KEY,Extended,Banks,Financials,Banks,Adj,Dec,20.48,,,,-0.8%,-11.0%,+9.3%
+AWK,Extended,Utilities,Utilities,Utilities,Adj,Dec,133.82,,,,+2.5%,+5.7%,-2.4%
+WST,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,371.09,,,,+34.9%,+10.3%,+48.0%
+SW,Extended,Materials,Materials,Materials,Adj,Dec,46.45,,,,+20.1%,+4.7%,+6.0%
+DRI,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,May,213.54,,,,+16.0%,+1.4%,+14.5%
+FDXF,Extended,Industrial / Cyclical,Industrials,Transportation,Adj,May,119.0,,,,,-28.5%,
+CMS,Extended,Utilities,Utilities,Utilities,Adj,Dec,64.27,,,,-8.1%,-14.7%,-10.1%
+MRNA,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,182.56,,,,+519.1%,+199.3%,+607.9%
+CHD,Extended,Cons. staples,Consumer Staples,Household & Personal Products,Adj,Dec,96.12,,,,+14.6%,-0.4%,+10.2%
+L,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,105.91,,,,+0.6%,-4.2%,+8.1%
+PFG,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,113.59,,,,+28.8%,+1.1%,+37.9%
+NI,Extended,Utilities,Utilities,Utilities,Adj,Dec,39.88,,,,-4.5%,-15.6%,-4.1%
+FFIV,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Sep,453.33,,,,+77.6%,+16.4%,+39.6%
+INCY,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,126.93,,,,+28.5%,+21.6%,+50.1%
+VLTO,Extended,Industrial / Cyclical,Industrials,Commercial & Professional Serv,Adj,Dec,95.79,,,,-4.0%,+13.2%,-9.1%
+BG,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Dec,110.0,,,,+23.5%,-0.8%,+40.2%
+EXE,Extended,Energy,Energy,Energy,Adj,Dec,87.03,,,,-21.1%,-1.9%,-13.6%
+STE,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Mar,208.79,,,,-17.6%,+2.7%,-16.2%
+TSN,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Sep,51.82,,,,-11.6%,-9.8%,-3.8%
+EVRG,Extended,Utilities,Utilities,Utilities,Adj,Dec,79.27,,,,+9.4%,-6.6%,+8.2%
+AMCR,Extended,Materials,Materials,Materials,Adj,Jun,43.24,,,,+3.7%,+7.0%,+6.9%
+LII,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,371.68,,,,-23.5%,-29.0%,-30.0%
+FOX,Extended,Media content,Communication Services,Media & Entertainment,Adj,Jun,57.32,,,,-11.7%,+28.7%,+3.4%
+LNT,Extended,Utilities,Utilities,Utilities,Adj,Dec,64.62,,,,-0.6%,-13.3%,-0.3%
+DD,Extended,Materials,Industrials,Capital Goods,Adj,Dec,131.8,,,,+9.3%,-5.9%,+35.6%
+VTRS,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,17.18,,,,+38.0%,+9.1%,+79.0%
+WY,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,21.54,,,,-9.1%,-11.9%,-11.6%
+ESS,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,274.76,,,,+5.0%,-1.6%,+2.6%
+LYB,Extended,Materials,Materials,Materials,Adj,Dec,59.24,,,,+36.8%,+2.8%,+17.6%
+KIM,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,22.55,,,,+11.2%,-10.5%,+3.0%
+HST,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,22.28,,,,+29.4%,-7.5%,+32.8%
+GNRC,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,206.17,,,,+51.2%,-24.9%,+23.6%
+ALB,Extended,Materials,Materials,Materials,Adj,Dec,116.8,,,,-17.4%,-22.1%,+45.8%
+AKAM,Extended,Software,Information Technology,Software & Services,Adj,Dec,118.34,,,,+35.6%,-1.3%,+57.2%
+TSCO,Extended,Retailers,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,32.84,,,,-34.3%,+10.6%,-43.9%
+BR,Extended,Industrial / Cyclical,Industrials,Commercial & Professional Serv,Adj,Jun,163.02,,,,-27.0%,+19.6%,-31.7%
+CF,Extended,Materials,Materials,Materials,Adj,Dec,120.59,,,,+55.9%,+18.0%,+38.4%
+MAA,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,119.15,,,,-14.2%,-11.0%,-15.6%
+TXT,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,77.88,,,,-10.7%,-9.9%,-6.2%
+REG,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,73.53,,,,+6.5%,-6.5%,+2.9%
+NWS,Extended,Media content,Communication Services,Media & Entertainment,Adj,Jun,32.38,,,,+9.3%,+14.4%,-4.1%
+NWSA,Extended,Media content,Communication Services,Media & Entertainment,Adj,Jun,29.25,,,,+12.0%,+17.1%,-4.3%
+DOC,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,20.6,,,,+28.1%,+0.2%,+9.1%
+GEN,Extended,Software,Information Technology,Software & Services,Adj,Mar,27.29,,,,+0.4%,+17.3%,-5.7%
+EG,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,370.96,,,,+9.3%,+8.0%,+9.8%
+SOLV,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,88.75,,,,+12.0%,+19.9%,+20.9%
+PTC,Extended,Software,Information Technology,Software & Services,Adj,Sep,140.0,,,,-19.6%,+24.6%,-31.4%
+AIZ,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,271.08,,,,+12.6%,+2.2%,+27.6%
+APTV,Extended,Autos,Consumer Discretionary,Automobiles & Components,Adj,Dec,44.61,,,,-30.8%,-27.4%,-38.4%
+LDOS,Extended,Industrial / Cyclical,Industrials,Commercial & Professional Serv,Adj,Dec,123.31,,,,-31.6%,+16.2%,-34.1%
+PNW,Extended,Utilities,Utilities,Utilities,Adj,Dec,93.16,,,,+5.0%,-10.5%,+7.0%
+BF/B,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Apr,26.56,,,,+1.9%,-2.5%,-1.7%
+UDR,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,34.1,,,,-7.0%,-10.9%,-9.1%
+RVTY,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Dec,143.31,,,,+48.1%,+43.5%,+67.2%
+PNR,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,55.49,,,,-46.7%,-24.2%,-49.6%
+ERIE,Extended,Insurance and reinsurance,Financials,Insurance,Adj,Dec,234.38,,,,-18.2%,+6.0%,-26.1%
+SJM,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,Apr,121.11,,,,+23.8%,+9.6%,+12.1%
+HAS,Extended,Consumer discretionary,Consumer Discretionary,Consumer Durables & Apparel,Adj,Dec,86.91,,,,+6.0%,+4.9%,+16.2%
+TRMB,Extended,Software,Information Technology,Software & Services,Adj,Dec,59.3,,,,-24.3%,+20.6%,-27.7%
+APA,Extended,Energy,Energy,Energy,Adj,Dec,42.3,,,,+72.9%,+23.6%,+76.3%
+CLX,Extended,Cons. staples,Consumer Staples,Household & Personal Products,Adj,Jun,87.15,,,,-13.6%,-5.9%,-27.6%
+CPT,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,99.31,,,,-9.8%,-10.1%,-8.1%
+BAX,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,23.68,,,,+23.9%,+17.8%,+3.6%
+TECH,Extended,Pharma / Med Devices,Health Care,"Pharmaceuticals, Biotechnology",Adj,Jun,72.55,,,,+23.4%,+29.0%,+37.1%
+HII,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,270.95,,,,-20.3%,-4.4%,-1.8%
+PSKY,Extended,Media content,Communication Services,Media & Entertainment,Adj,Dec,10.11,,,,-24.6%,+4.1%,-48.8%
+FRT,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,110.46,,,,+9.6%,-10.7%,+10.4%
+GDDY,Extended,Software,Information Technology,Software & Services,Adj,Dec,98.24,,,,-20.8%,+29.1%,-31.3%
+AES,Extended,Utilities,Utilities,Utilities,Adj,Dec,14.82,,,,+3.3%,+0.8%,+12.8%
+BXP,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,64.31,,,,-4.7%,-0.0%,-15.6%
+NCLH,Extended,Travel / tourism,Consumer Discretionary,Consumer Services,Adj,Dec,14.22,,,,-36.3%,-30.3%,-44.4%
+HSIC,Extended,Healthcare providers,Health Care,Health Care Equipment & Servic,Adj,Dec,87.43,,,,+15.7%,+9.2%,+26.3%
+ARE,Extended,Real Estate,Real Estate,Equity Real Estate Investment,Adj,Dec,53.85,,,,+10.0%,+4.4%,-38.1%
+IT,Extended,Software,Information Technology,Software & Services,Adj,Dec,178.75,,,,-29.1%,+38.4%,-30.7%
+AOS,Extended,Industrial / Cyclical,Industrials,Capital Goods,Adj,Dec,58.16,,,,-13.0%,+1.3%,-19.4%
+MOS,Extended,Materials,Materials,Materials,Adj,Dec,24.73,,,,+2.7%,+16.4%,-27.2%
+CAG,Extended,Cons. staples,Consumer Staples,"Food, Beverage & Tobacco",Adj,May,14.78,,,,-14.6%,+10.1%,-18.8%
