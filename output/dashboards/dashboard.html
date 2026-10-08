@@ -629,6 +629,11 @@ td.spark-cell { padding: 4px 2px; }
     list.forEach((tk, idx) => buildTickerRow(tbody, tk, idx, qCols, totalCols));
   }
 
+  function formatPrice(ticker, price) {
+    const symbol = ticker === '000660' ? '\u20a9' : '$';
+    return price > 10000 ? symbol + (price / 1000).toFixed(0) + 'k' : symbol + Math.round(price);
+  }
+
   function buildTickerRow(tbody, tk, idx, qCols, totalCols) {
     const rowEl = document.createElement('tr');
     rowEl.className = idx % 2 === 0 ? 'row-even' : 'row-odd';
@@ -643,16 +648,12 @@ td.spark-cell { padding: 4px 2px; }
     rowEl.appendChild(tdTicker);
     rowEl._sortData.ticker = tk.ticker;
 
-    // Price with $ (divide by 1000 if >10000 for Korean stocks, /100 for UK pence)
+    // Price in the listing currency; abbreviate large Korean-won quotes.
     const anyRow = tk.years['CY2025'] || tk.years['CY2026'] || Object.values(tk.years)[0];
     let price = parseFloat(anyRow.Price);
     let priceDisplay = '';
     if (!isNaN(price)) {
-      if (price > 10000) {
-        priceDisplay = '$' + (price / 1000).toFixed(0) + 'k';
-      } else {
-        priceDisplay = '$' + Math.round(price);
-      }
+      priceDisplay = formatPrice(tk.ticker, price);
     }
     appendCell(rowEl, priceDisplay);
     rowEl._sortData.price = isNaN(price) ? 0 : price;
@@ -2091,7 +2092,7 @@ td.spark-cell { padding: 4px 2px; }
             } else if (col.type === 'num') {
               const td = document.createElement('td');
               if (col.key === 'price' && val) {
-                td.textContent = val > 10000 ? '$' + (val/1000).toFixed(0) + 'k' : '$' + Math.round(val);
+                td.textContent = formatPrice(t, val);
               } else if (val) {
                 td.textContent = Math.abs(val) >= 1000 ? (val/1000).toFixed(1) + 'k' : val.toFixed(2);
               }

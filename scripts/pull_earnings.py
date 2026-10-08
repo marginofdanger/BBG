@@ -202,12 +202,12 @@ def _reaction_anchors(
         return t_minus_1, t_close
     return (None, None), (None, None)
 
-PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV", "FICO"]
+PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV"]
 WATCHLIST = ["GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V",
-             "BX", "BKNG", "HLT", "IBKR", "NET", "COST", "TSLA", "TMO", "COF", "AON", "MC", "STX"]
+             "BX", "BKNG", "HLT", "IBKR", "NET", "COST", "TSLA", "TMO", "COF", "AON", "MC", "STX", "FICO", "000660", "SNDK", "SPGI", "MCO"]
 
 # Non-US tickers that need explicit Bloomberg identifiers
-BBG_OVERRIDES = {"MC": "MC FP Equity"}
+BBG_OVERRIDES = {"MC": "MC FP Equity", "000660": "000660 KS Equity"}
 
 # Ticker-specific overrides for EPS actuals/estimates
 # eps_ticker: which BBG ticker to pull actuals from

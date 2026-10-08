@@ -578,24 +578,25 @@ function revisionsClass(rev) {
   if (net < 0 && rev.up === 0) return 'negative';
   return 'mixed';
 }
-function formatGuidance(low, high, name) {
+function formatGuidance(low, high, name, ticker) {
   if (low == null && high == null) return '&mdash;';
-  if (low === high) return formatMetric(name, low);
-  return `${formatMetric(name, low)} &ndash; ${formatMetric(name, high)}`;
+  if (low === high) return formatMetric(name, low, ticker);
+  return `${formatMetric(name, low, ticker)} &ndash; ${formatMetric(name, high, ticker)}`;
 }
-function formatNum(v) {
+function formatNum(v, symbol = '$') {
   if (v == null) return '&mdash;';
   const abs = Math.abs(v);
-  if (abs >= 1000) return `$${(v / 1000).toFixed(1)}B`;
-  if (abs >= 100) return `$${v.toFixed(0)}M`;
+  if (abs >= 1000) return `${symbol}${(v / 1000).toFixed(1)}B`;
+  if (abs >= 100) return `${symbol}${v.toFixed(0)}M`;
   if (abs >= 1) return v.toFixed(2);
   return v.toFixed(2);
 }
 function isMargin(name) { return /margin|ratio/i.test(name); }
-function formatMetric(name, v) {
+function formatMetric(name, v, ticker) {
   if (v == null) return '&mdash;';
   if (isMargin(name)) return v.toFixed(1);
-  return formatNum(v);
+  if (name === 'EPS') return (ticker === '000660' ? '\u20a9' : '') + v.toFixed(2);
+  return formatNum(v, ticker === '000660' ? '\u20a9' : '$');
 }
 function vsGuideClass(vs) {
   if (vs === 'above') return 'above';
@@ -710,7 +711,7 @@ function buildCard(c, collapsed) {
 
   // Collapsed summary
   const epsMetric = c.metrics.find(m => m.name === 'EPS');
-  const epsStr = epsMetric && epsMetric.consensus != null ? `EPS: ${epsMetric.consensus.toFixed(2)}` : '';
+  const epsStr = epsMetric && epsMetric.consensus != null ? `EPS: ${formatMetric('EPS', epsMetric.consensus, c.ticker)}` : '';
   html += `<div class="card-summary">`;
   html += `<span>${epsStr}</span>`;
   html += `<span class="revisions ${revCls}" style="margin:0">&#9650;${rev.up}/&#9660;${rev.down}</span>`;
@@ -731,8 +732,8 @@ function buildCard(c, collapsed) {
   for (const m of c.metrics) {
     html += `<tr>`;
     html += `<td class="metric-name">${m.name}</td>`;
-    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high, m.name)}</td>`;
-    html += `<td class="consensus">${m.consensus != null ? formatMetric(m.name, m.consensus) : '&mdash;'}</td>`;
+    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high, m.name, c.ticker)}</td>`;
+    html += `<td class="consensus">${m.consensus != null ? formatMetric(m.name, m.consensus, c.ticker) : '&mdash;'}</td>`;
     html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
     html += `<td class="vs-guide ${vsGuideClass(m.vs_guide)}">${m.vs_guide}</td>`;
     html += `</tr>`;
@@ -742,8 +743,8 @@ function buildCard(c, collapsed) {
     for (const m of c.annual_metrics) {
       html += `<tr>`;
       html += `<td class="metric-name">${m.name} (FY)</td>`;
-      html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high, m.name)}</td>`;
-      html += `<td class="consensus">${m.consensus != null ? formatMetric(m.name, m.consensus) : '&mdash;'}</td>`;
+      html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high, m.name, c.ticker)}</td>`;
+      html += `<td class="consensus">${m.consensus != null ? formatMetric(m.name, m.consensus, c.ticker) : '&mdash;'}</td>`;
       html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
       html += `<td class="vs-guide ${vsGuideClass(m.vs_guide)}">${m.vs_guide}</td>`;
       html += `</tr>`;
@@ -812,8 +813,8 @@ function buildCardNoDate(c) {
   for (const m of c.metrics) {
     html += `<tr>`;
     html += `<td class="metric-name">${m.name}</td>`;
-    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high, m.name)}</td>`;
-    html += `<td class="consensus">${m.consensus != null ? formatMetric(m.name, m.consensus) : '&mdash;'}</td>`;
+    html += `<td class="guidance">${formatGuidance(m.guidance_low, m.guidance_high, m.name, c.ticker)}</td>`;
+    html += `<td class="consensus">${m.consensus != null ? formatMetric(m.name, m.consensus, c.ticker) : '&mdash;'}</td>`;
     html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
     html += `<td class="vs-guide ${vsGuideClass(m.vs_guide)}">${m.vs_guide}</td>`;
     html += `</tr>`;
@@ -873,8 +874,8 @@ function buildReportedCard(r) {
     const surCls = m.surprise == null ? '' : (m.surprise >= 0 ? 'beat' : 'miss');
     html += `<tr>`;
     html += `<td class="metric-name">${m.name}</td>`;
-    html += `<td class="consensus">${m.actual != null ? formatMetric(m.name, m.actual) : '&mdash;'}</td>`;
-    html += `<td class="consensus" style="font-weight:500;color:#6b7280">${m.consensus != null ? formatMetric(m.name, m.consensus) : '&mdash;'}</td>`;
+    html += `<td class="consensus">${m.actual != null ? formatMetric(m.name, m.actual, r.ticker) : '&mdash;'}</td>`;
+    html += `<td class="consensus" style="font-weight:500;color:#6b7280">${m.consensus != null ? formatMetric(m.name, m.consensus, r.ticker) : '&mdash;'}</td>`;
     html += `<td class="surprise ${surCls}">${m.surprise != null ? formatPct(m.surprise) : '&mdash;'}</td>`;
     html += `<td class="yoy ${yoyClass(m.yoy)}">${m.yoy || '&mdash;'}</td>`;
     html += `</tr>`;

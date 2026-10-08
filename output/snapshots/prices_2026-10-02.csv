@@ -12,7 +12,7 @@ PGR,Portfolio,,Financials,Insurance,Adj,Dec,210.31,,,,-1.8%,-9.4%,-8.2%
 CVNA,Portfolio,,Consumer Discretionary,Consumer Discretionary Distrib,Adj,Dec,63.77,,,,-24.4%,-7.0%,-19.2%
 APP,Portfolio,,Communication Services,Media & Entertainment,Adj,Dec,268.22,,,,-60.2%,-49.1%,-60.8%
 VEEV,Portfolio,,Health Care,Health Care Equipment & Servic,Adj,Jan,273.33,,,,+22.4%,+41.8%,-9.1%
-FICO,Portfolio,,Information Technology,Software & Services,Adj,Sep,661.25,,,,-60.9%,-48.0%,-62.9%
+FICO,Watchlist,,Information Technology,Software & Services,Adj,Sep,661.25,,,,-60.9%,-48.0%,-62.9%
 GOOG,Watchlist,,Communication Services,Media & Entertainment,GAAP,Dec,340.35,,,,+8.5%,-4.4%,+38.1%
 MU,Watchlist,,Information Technology,Semiconductors & Semiconductor,GAAP,Aug,1074.89,,,,+276.6%,+10.2%,+485.0%
 HOOD,Watchlist,,Financials,Financial Services,Adj,Dec,112.74,,,,-0.3%,+0.0%,-22.6%
@@ -65,8 +65,8 @@ BIP,Extended,Uncategorized,Utilities,Utilities,Adj,Dec,36.52,,,,+5.1%,-1.3%,+9.3
 MAR,Extended,Uncategorized,Consumer Discretionary,Consumer Services,Adj,Dec,358.96,,,,+15.7%,-3.8%,+34.7%
 DPZ,Extended,Uncategorized,Consumer Discretionary,Consumer Services,Adj,Dec,297.615,,,,-28.6%,-4.5%,-31.0%
 CMG,Extended,Uncategorized,Consumer Discretionary,Consumer Services,Adj,Dec,32.36,,,,-12.5%,-8.6%,-19.6%
-MCO,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,441.36,,,,-13.6%,-10.0%,-8.5%
-SPGI,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,386.27,,,,-21.9%,-12.2%,-14.3%
+MCO,Watchlist,,Financials,Financial Services,Adj,Dec,441.36,,,,-13.6%,-10.0%,-8.5%
+SPGI,Watchlist,,Financials,Financial Services,Adj,Dec,386.27,,,,-21.9%,-12.2%,-14.3%
 MSCI,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,535.95,,,,-6.6%,-11.1%,-4.4%
 CSGP,Extended,Uncategorized,Real Estate,Real Estate Management & Devel,Adj,Dec,27.38,,,,-59.3%,-8.7%,-67.4%
 LPLA,Extended,Uncategorized,Financials,Financial Services,Adj,Dec,316.44,,,,-11.4%,+7.2%,+1.1%
@@ -184,9 +184,9 @@ INTC,Extended,Technology,Information Technology,Semiconductors & Semiconductor,G
 TXN,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,293.8,,,,+69.3%,+0.2%,+61.1%
 ADI,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Oct,417.15,,,,+53.8%,+10.6%,+72.6%
 005930,Extended,Technology,Information Technology,Technology Hardware & Equipmen,GAAP,Dec,276000.0,,,,+129.2%,-12.2%,+210.1%
-000660,Extended,Technology,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,1841000.0,,,,+182.4%,-24.1%,+365.5%
+000660,Watchlist,,Information Technology,Semiconductors & Semiconductor,GAAP,Dec,1841000.0,,,,+182.4%,-24.1%,+365.5%
 WDC,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Jun,415.29,,,,+141.1%,-23.0%,+216.4%
-SNDK,Extended,Technology,Information Technology,Technology Hardware & Equipmen,GAAP,Jun,1719.99,,,,+624.6%,-1.4%,+1285.5%
+SNDK,Watchlist,,Information Technology,Technology Hardware & Equipmen,GAAP,Jun,1719.99,,,,+624.6%,-1.4%,+1285.5%
 CLS,Extended,Technology,Information Technology,Technology Hardware & Equipmen,Adj,Dec,387.32,,,,+31.0%,+15.2%,+54.4%
 QRVO,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Mar,114.17,,,,+35.1%,+30.4%,+24.7%
 SWKS,Extended,Technology,Information Technology,Semiconductors & Semiconductor,Adj,Sep,85.03,,,,+34.1%,+35.9%,+9.9%
