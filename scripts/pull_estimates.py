@@ -12,9 +12,9 @@ from bloomberg import estimate_history, USD_OVERRIDE_TICKERS, SNAPSHOT_OFFSETS
 # ---------------------------------------------------------------------------
 # Ticker lists
 # ---------------------------------------------------------------------------
-PORTFOLIO = ["HCA", "UNH", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "VEEV"]
-WATCHLIST_CORE = ["GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "MSFT", "V",
-                  "BX", "BKNG", "HLT", "IBKR", "NET", "COST", "TSLA", "TMO", "COF", "AON", "MC", "STX", "FICO", "000660", "SNDK", "SPGI", "MCO"]
+PORTFOLIO = ["HCA", "TSM", "AVGO", "NVDA", "META", "AMZN", "JPM", "APO", "PGR", "CVNA", "APP", "MSFT"]
+WATCHLIST_CORE = ["GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LLY", "V",
+                  "BX", "BKNG", "HLT", "IBKR", "NET", "COST", "TSLA", "TMO", "COF", "AON", "MC", "STX", "UNH", "VEEV", "FICO", "000660", "SNDK", "SPGI", "MCO"]
 
 # Non-US tickers that need explicit Bloomberg identifiers
 BBG_OVERRIDES = {"MC": "MC FP Equity", "000660": "000660 KS Equity"}
