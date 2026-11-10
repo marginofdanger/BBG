@@ -19,7 +19,13 @@ WATCHLIST_CORE = ["GOOG", "MU", "HOOD", "TDG", "GE", "LRCX", "DASH", "UBER", "LL
 # Non-US tickers that need explicit Bloomberg identifiers
 BBG_OVERRIDES = {"MC": "MC FP Equity", "000660": "000660 KS Equity"}
 
-CALENDAR_YEARS = [2025, 2026, 2027, 2028]
+def calendar_years(today: date) -> list[int]:
+    """Calendar years to pull: keeps CY2025 (the dashboard still hard-codes it),
+    and runs through FY+2 of today's year so the next year-end is covered."""
+    return list(range(min(2025, today.year - 1), today.year + 3))
+
+
+CALENDAR_YEARS = calendar_years(date.today())
 LOOKBACK_CORE = 24   # months for portfolio + core watchlist
 LOOKBACK_EXT = 12    # months for extended watchlist
 MKTCAP_GAAP_THRESHOLD = 200_000_000_000
